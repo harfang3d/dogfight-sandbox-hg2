@@ -1,0 +1,114 @@
+{
+	"cameras": [
+		{
+			"fov": 0.6981317400932312,
+			"ortho": false,
+			"size": 1.0,
+			"zrange": {
+				"zfar": 1000.0,
+				"znear": 0.009999999776482582
+			}
+		}
+	],
+	"canvas": {
+		"clear_color": true,
+		"clear_z": true,
+		"color": [
+			253,
+			255,
+			147,
+			255
+		]
+	},
+	"environment": {
+		"ambient": [
+			0,
+			0,
+			0,
+			0
+		],
+		"brdf_map": "core/pbr/brdf.dds",
+		"current_camera": 0,
+		"fog_color": [
+			0,
+			0,
+			0,
+			0
+		],
+		"fog_far": 0.0,
+		"fog_near": 0.0,
+		"irradiance_map": "core/pbr/probe.hdr.irradiance",
+		"radiance_map": "core/pbr/probe.hdr.radiance"
+	},
+	"instances": [
+		{
+			"name": "machines/eurofighter/eurofighter_anim.scn"
+		}
+	],
+	"key_values": null,
+	"nodes": [
+		{
+			"components": [
+				0,
+				0,
+				4294967295,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 0,
+			"name": "Camera"
+		},
+		{
+			"components": [
+				1,
+				4294967295,
+				4294967295,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 2,
+			"instance": 0,
+			"name": "eurofighter_anim"
+		}
+	],
+	"transforms": [
+		{
+			"parent": null,
+			"pos": [
+				-9.24611759185791,
+				-6.971810817718506,
+				13.997529029846191
+			],
+			"rot": [
+				-27.213979721069336,
+				140.84332275390625,
+				0.0
+			],
+			"scl": [
+				1.0000050067901611,
+				0.9999905824661255,
+				1.0
+			]
+		},
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		}
+	]
+}

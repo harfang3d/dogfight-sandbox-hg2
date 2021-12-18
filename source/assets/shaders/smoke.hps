@@ -1,0 +1,6 @@
+{
+	"uniforms": [
+		{"name": "uColor", "type": "Color", "value": [1.0, 1.0, 1.0, 1.0]},
+		{"name": "uColorMap", "type": "Sampler", "channel": 0}
+				]
+}

@@ -1,0 +1,3 @@
+vec3 vWorldPos : TEXCOORD1;
+
+vec3 a_position : POSITION;

@@ -1,0 +1,199 @@
+{
+	"canvas": {
+		"clear_color": true,
+		"clear_z": true,
+		"color": [
+			0,
+			0,
+			0,
+			255
+		]
+	},
+	"environment": {
+		"ambient": [
+			255,
+			254,
+			254,
+			255
+		],
+		"brdf_map": "core/pbr/brdf.dds",
+		"current_camera": null,
+		"fog_color": [
+			255,
+			255,
+			255,
+			255
+		],
+		"fog_far": 0.0,
+		"fog_near": 0.0,
+		"irradiance_map": "core/pbr/probe.hdr.irradiance",
+		"radiance_map": "core/pbr/probe.hdr.radiance"
+	},
+	"key_values": null,
+	"nodes": [
+		{
+			"components": [
+				0,
+				4294967295,
+				0,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 22,
+			"name": "Mica"
+		},
+		{
+			"components": [
+				1,
+				4294967295,
+				4294967295,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 24,
+			"name": "dummy_Mica"
+		},
+		{
+			"components": [
+				2,
+				4294967295,
+				4294967295,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 26,
+			"name": "Mica_engine_slot.001"
+		}
+	],
+	"objects": [
+		{
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "ccw",
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "weaponry/MICA_Diff.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "weaponry/MICA_norm.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "weaponry/MICA_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.75,
+								0.656000018119812,
+								1.0,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "weaponry/MICA IR001.geo"
+		}
+	],
+	"transforms": [
+		{
+			"parent": 24,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 24,
+			"pos": [
+				0.0,
+				0.0,
+				-1.5779027938842773
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		}
+	]
+}

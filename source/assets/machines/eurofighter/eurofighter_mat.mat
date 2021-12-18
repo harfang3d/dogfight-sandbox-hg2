@@ -1,0 +1,60 @@
+{
+	"blend_mode": "opaque",
+	"depth_test": "less",
+	"face_culling": "cw",
+	"program": "core/shader/pbr.hps",
+	"textures": [
+		{
+			"name": "uBaseOpacityMap",
+			"path": "machines/eurofighter/Eurofighter_diff.png",
+			"stage": 0
+		},
+		{
+			"name": "uNormalMap",
+			"path": "machines/eurofighter/Eurofighter_Normal.png",
+			"stage": 2
+		},
+		{
+			"name": "uOcclusionRoughnessMetalnessMap",
+			"path": "machines/eurofighter/Eurofighter4k_ORM.png",
+			"stage": 1
+		}
+	],
+	"values": [
+		{
+			"name": "uBaseOpacityColor",
+			"type": "vec4",
+			"value": [
+				0.75,
+				0.75,
+				0.75,
+				1.0
+			]
+		},
+		{
+			"name": "uOcclusionRoughnessMetalnessColor",
+			"type": "vec4",
+			"value": [
+				1.0,
+				0.5,
+				0.10000000149011612,
+				1.0
+			]
+		},
+		{
+			"name": "uSelfColor",
+			"type": "vec4",
+			"value": [
+				9.999999974752427e-07,
+				9.999899930335232e-07,
+				9.999899930335232e-07,
+				-1.0
+			]
+		}
+	],
+	"write_a": true,
+	"write_b": true,
+	"write_g": true,
+	"write_r": true,
+	"write_z": true
+}

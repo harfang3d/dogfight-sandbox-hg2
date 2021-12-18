@@ -1,0 +1,3006 @@
+{
+	"canvas": {
+		"clear_color": true,
+		"clear_z": true,
+		"color": [
+			0,
+			0,
+			0,
+			255
+		]
+	},
+	"environment": {
+		"ambient": [
+			0,
+			0,
+			0,
+			255
+		],
+		"brdf_map": "core/pbr/brdf.dds",
+		"current_camera": null,
+		"fog_color": [
+			255,
+			255,
+			255,
+			255
+		],
+		"fog_far": 0.0,
+		"fog_near": 0.0,
+		"irradiance_map": "core/pbr/probe.hdr.irradiance",
+		"radiance_map": "core/pbr/probe.hdr.radiance"
+	},
+	"key_values": null,
+	"nodes": [
+		{
+			"components": [
+				0,
+				4294967295,
+				0,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 0,
+			"name": "SM_S400_VarA_01_01_Truck_1"
+		},
+		{
+			"components": [
+				1,
+				4294967295,
+				1,
+				4294967295,
+				4294967295
+			],
+			"disabled": true,
+			"idx": 1,
+			"name": "col_shape.005"
+		},
+		{
+			"components": [
+				2,
+				4294967295,
+				2,
+				4294967295,
+				4294967295
+			],
+			"disabled": true,
+			"idx": 2,
+			"name": "col_shape.006"
+		},
+		{
+			"components": [
+				3,
+				4294967295,
+				3,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 3,
+			"name": "slot_link.002"
+		},
+		{
+			"components": [
+				4,
+				4294967295,
+				4,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 4,
+			"name": "SM_S400_VarA_01_01_Rockets_4"
+		},
+		{
+			"components": [
+				5,
+				4294967295,
+				5,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 5,
+			"name": "dummy_jnt_missile_rotate00"
+		},
+		{
+			"components": [
+				6,
+				4294967295,
+				6,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 6,
+			"name": "jnt_missile_rotate00"
+		},
+		{
+			"components": [
+				7,
+				4294967295,
+				7,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 7,
+			"name": "dummy_jnt_missile_rotate01"
+		},
+		{
+			"components": [
+				8,
+				4294967295,
+				8,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 8,
+			"name": "jnt_missile_rotate01"
+		},
+		{
+			"components": [
+				9,
+				4294967295,
+				9,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 9,
+			"name": "dummy_jnt_missile_rotate00_base"
+		},
+		{
+			"components": [
+				10,
+				4294967295,
+				10,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 10,
+			"name": "jnt_missile_rotate00_base"
+		},
+		{
+			"components": [
+				11,
+				4294967295,
+				11,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 11,
+			"name": "missile_door.001"
+		},
+		{
+			"components": [
+				12,
+				4294967295,
+				12,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 12,
+			"name": "missile_door.002"
+		},
+		{
+			"components": [
+				13,
+				4294967295,
+				13,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 13,
+			"name": "missile_door.003"
+		},
+		{
+			"components": [
+				14,
+				4294967295,
+				14,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 14,
+			"name": "missile_door.004"
+		},
+		{
+			"components": [
+				15,
+				4294967295,
+				15,
+				4294967295,
+				4294967295
+			],
+			"disabled": true,
+			"idx": 15,
+			"name": "col_shape.001"
+		},
+		{
+			"components": [
+				16,
+				4294967295,
+				16,
+				4294967295,
+				4294967295
+			],
+			"disabled": true,
+			"idx": 16,
+			"name": "col_shape.002"
+		},
+		{
+			"components": [
+				17,
+				4294967295,
+				17,
+				4294967295,
+				4294967295
+			],
+			"disabled": true,
+			"idx": 17,
+			"name": "col_shape.003"
+		},
+		{
+			"components": [
+				18,
+				4294967295,
+				18,
+				4294967295,
+				4294967295
+			],
+			"disabled": true,
+			"idx": 18,
+			"name": "col_shape.004"
+		},
+		{
+			"components": [
+				19,
+				4294967295,
+				19,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 19,
+			"name": "slot_link.001"
+		},
+		{
+			"components": [
+				20,
+				4294967295,
+				4294967295,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 20,
+			"name": "missile_slot.001"
+		},
+		{
+			"components": [
+				21,
+				4294967295,
+				4294967295,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 21,
+			"name": "missile_slot.002"
+		},
+		{
+			"components": [
+				22,
+				4294967295,
+				4294967295,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 22,
+			"name": "missile_slot.003"
+		},
+		{
+			"components": [
+				23,
+				4294967295,
+				4294967295,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 23,
+			"name": "missile_slot.004"
+		},
+		{
+			"components": [
+				24,
+				4294967295,
+				4294967295,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 24,
+			"name": "pilotebody.01"
+		},
+		{
+			"components": [
+				25,
+				4294967295,
+				4294967295,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 25,
+			"name": "pilotehead.01"
+		}
+	],
+	"objects": [
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "M_S400_01_01_Truck"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/missile_launcher/T_S400_Truck_01_01_A.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/missile_launcher/T_S400_Truck_01_01_N.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/missile_launcher/truck_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.031250011175870895
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/missile_launcher/SM_S400_VarA_01_01_Truck_1_40.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_col_shape"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.8000000715255737,
+								0.0,
+								0.00657991599291563,
+								0.47524750232696533
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.0,
+								0.0016449789982289076,
+								0.390625
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/missile_launcher/col_shape.005_56.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_col_shape"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.8000000715255737,
+								0.0,
+								0.00657991599291563,
+								0.47524750232696533
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.0,
+								0.0016449789982289076,
+								0.390625
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/missile_launcher/col_shape.006_57.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_slot"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.8000000715255737,
+								0.7288938164710999,
+								0.0,
+								0.5198019742965698
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.18222345411777496,
+								0.0,
+								0.390625
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/missile_launcher/slot_link.002_59.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "M_S400_01_01_Truck.001"
+				},
+				{
+					"name": "M_S400_01_01_Rockets"
+				},
+				{
+					"name": "Material #2"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/missile_launcher/T_S400_Truck_01_01_A.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/missile_launcher/T_S400_Truck_01_01_N.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/missile_launcher/truck_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.031250011175870895
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_A.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_N.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/missile_launcher/missiles_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.031250011175870895
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_A.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_N.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/missile_launcher/missiles_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.871999979019165,
+								0.0,
+								0.0,
+								0.031250011175870895
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/missile_launcher/SM_S400_VarA_01_01_Rockets_4_41.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_dummy"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.8000000715255737,
+								0.005442583933472633,
+								0.48514848947525024
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.20000001788139343,
+								0.0013606459833681583,
+								0.390625
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/missile_launcher/dummy_jnt_missile_rotate00_49.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "M_S400_01_01_Truck.001"
+				},
+				{
+					"name": "M_S400_01_01_Rockets"
+				},
+				{
+					"name": "Material #2"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/missile_launcher/T_S400_Truck_01_01_A.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/missile_launcher/T_S400_Truck_01_01_N.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/missile_launcher/truck_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.031250011175870895
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_A.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_N.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/missile_launcher/missiles_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.031250011175870895
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_A.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.031250011175870895
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/missile_launcher/jnt_missile_rotate00_47.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_dummy"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.8000000715255737,
+								0.005442583933472633,
+								0.48514848947525024
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.20000001788139343,
+								0.0013606459833681583,
+								0.390625
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/missile_launcher/dummy_jnt_missile_rotate01_50.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "M_S400_01_01_Truck.001"
+				},
+				{
+					"name": "M_S400_01_01_Rockets"
+				},
+				{
+					"name": "Material #2"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/missile_launcher/T_S400_Truck_01_01_A.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/missile_launcher/T_S400_Truck_01_01_N.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/missile_launcher/truck_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.031250011175870895
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_A.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_N.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/missile_launcher/missiles_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.031250011175870895
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_A.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_N.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/missile_launcher/missiles_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.031250011175870895
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/missile_launcher/jnt_missile_rotate01_48.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_dummy"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.8000000715255737,
+								0.005442583933472633,
+								0.48514848947525024
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.20000001788139343,
+								0.0013606459833681583,
+								0.390625
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/missile_launcher/dummy_jnt_missile_rotate00_base_51.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "M_S400_01_01_Truck.001"
+				},
+				{
+					"name": "M_S400_01_01_Rockets"
+				},
+				{
+					"name": "Material #2"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/missile_launcher/T_S400_Truck_01_01_A.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/missile_launcher/T_S400_Truck_01_01_N.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/missile_launcher/truck_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.031250011175870895
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_A.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_N.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/missile_launcher/missiles_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								0.004000000189989805
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.031250011175870895
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								9.999999974752427e-07,
+								9.999899930335232e-07,
+								9.999899930335232e-07,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_A.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.031250011175870895
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/missile_launcher/jnt_missile_rotate00_base_42.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "M_S400_01_01_Truck.001"
+				},
+				{
+					"name": "M_S400_01_01_Rockets"
+				},
+				{
+					"name": "Material #2"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/missile_launcher/T_S400_Truck_01_01_A.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.031250011175870895
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_A.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_N.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/missile_launcher/missiles_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.031250011175870895
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_A.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_N.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/missile_launcher/missiles_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.031250011175870895
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/missile_launcher/missile_door.001_43.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "M_S400_01_01_Truck.001"
+				},
+				{
+					"name": "M_S400_01_01_Rockets"
+				},
+				{
+					"name": "Material #2"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/missile_launcher/T_S400_Truck_01_01_A.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.031250011175870895
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_A.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_N.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/missile_launcher/missiles_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.031250011175870895
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_A.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.031250011175870895
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/missile_launcher/missile_door.002_44.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "M_S400_01_01_Truck.001"
+				},
+				{
+					"name": "M_S400_01_01_Rockets"
+				},
+				{
+					"name": "Material #2"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/missile_launcher/T_S400_Truck_01_01_A.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.031250011175870895
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_A.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_N.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/missile_launcher/missiles_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.031250011175870895
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_A.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.031250011175870895
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/missile_launcher/missile_door.003_45.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "M_S400_01_01_Truck.001"
+				},
+				{
+					"name": "M_S400_01_01_Rockets"
+				},
+				{
+					"name": "Material #2"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/missile_launcher/T_S400_Truck_01_01_A.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.031250011175870895
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_A.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_N.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/missile_launcher/missiles_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.031250011175870895
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/missile_launcher/T_S400_Rockets_01_01_A.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.031250011175870895
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/missile_launcher/missile_door.004_46.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_col_shape"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.8000000715255737,
+								0.0,
+								0.00657991599291563,
+								0.47524750232696533
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.0,
+								0.0016449789982289076,
+								0.390625
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/missile_launcher/col_shape.001_52.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_col_shape"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.8000000715255737,
+								0.0,
+								0.00657991599291563,
+								0.47524750232696533
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.0,
+								0.0016449789982289076,
+								0.390625
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/missile_launcher/col_shape.002_53.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_col_shape"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.8000000715255737,
+								0.0,
+								0.00657991599291563,
+								0.47524750232696533
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.0,
+								0.0016449789982289076,
+								0.390625
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/missile_launcher/col_shape.003_54.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_col_shape"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.8000000715255737,
+								0.0,
+								0.00657991599291563,
+								0.47524750232696533
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.0,
+								0.0016449789982289076,
+								0.390625
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/missile_launcher/col_shape.004_55.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_slot"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.8000000715255737,
+								0.7288938164710999,
+								0.0,
+								0.5198019742965698
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.18222345411777496,
+								0.0,
+								0.390625
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/missile_launcher/slot_link.001_58.geo"
+		}
+	],
+	"transforms": [
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				9.334663445770275e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				8.583425369579345e-05,
+				0.7519887089729309,
+				3.2710635662078857
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				8.583425369579345e-05,
+				2.1733171939849854,
+				5.48201847076416
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-6.504308203147957e-11,
+				1.6689163446426392,
+				1.0219165311514455e-16
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-6.504308203147957e-11,
+				1.6689163446426392,
+				-2.7190097284801595e-07
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 4,
+			"pos": [
+				8.565407188143581e-05,
+				-0.46534979343414307,
+				-6.321237087249756
+			],
+			"rot": [
+				-41.09998321533203,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 5,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 6,
+			"pos": [
+				-0.00013910238340031356,
+				1.55678129196167,
+				0.0011687278747558594
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 7,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 4,
+			"pos": [
+				8.583431190345436e-05,
+				-0.25534987449645996,
+				-7.371237754821777
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 9,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 10,
+			"pos": [
+				1.059633731842041,
+				7.163266658782959,
+				-1.1374106407165527
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 10,
+			"pos": [
+				0.6178199052810669,
+				7.163272857666016,
+				-2.2188634872436523
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 10,
+			"pos": [
+				-1.0598012208938599,
+				7.163267135620117,
+				-1.1374101638793945
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 10,
+			"pos": [
+				-0.6179875731468201,
+				7.163269996643066,
+				-2.218865394592285
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 10,
+			"pos": [
+				-7.275957614183426e-12,
+				2.9412670135498047,
+				-1.6462039947509766
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 4,
+			"pos": [
+				8.583431917941198e-05,
+				-0.7682920098304749,
+				-3.426668882369995
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 4,
+			"pos": [
+				8.583431917941198e-05,
+				0.48486053943634033,
+				-0.5052087903022766
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 4,
+			"pos": [
+				8.583431917941198e-05,
+				1.2911299467086792,
+				2.009645938873291
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 4,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 10,
+			"pos": [
+				1.0595999956130981,
+				2.7564001083374023,
+				-1.1373988389968872
+			],
+			"rot": [
+				-90.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 10,
+			"pos": [
+				0.6177999973297119,
+				2.7564001083374023,
+				-2.218899965286255
+			],
+			"rot": [
+				-90.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 10,
+			"pos": [
+				-1.0598000288009644,
+				2.7564001083374023,
+				-1.1374000310897827
+			],
+			"rot": [
+				-90.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 10,
+			"pos": [
+				-0.6179999709129333,
+				2.7564001083374023,
+				-2.218899965286255
+			],
+			"rot": [
+				-90.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-0.7984428405761719,
+				1.8019225597381592,
+				6.729401111602783
+			],
+			"rot": [
+				-9.334663445770275e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 24,
+			"pos": [
+				0.0,
+				0.5530165433883667,
+				-0.09788799285888672
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		}
+	]
+}

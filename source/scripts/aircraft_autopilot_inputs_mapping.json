@@ -1,0 +1,31 @@
+000
+{"AircraftAutopilotInputsMapping":
+	{
+		"Keyboard":{
+			"ACTIVATE_USER_CONTROL": "K_S",
+			"INCREASE_SPEED": "K_Home",
+			"DECREASE_SPEED": "K_End",
+			"SET_SPEED": "",
+			"INCREASE_HEADING": "K_Right",
+			"DECREASE_HEADING": "K_Left",
+			"SET_HEADING": "",
+			"INCREASE_ALTITUDE": "K_Up",
+			"DECREASE_ALTITUDE": "K_Down",
+			"SET_ALTITUDE": ""
+		},
+		"GamePad":{
+			"ACTIVATE_USER_CONTROL": "",
+			"INCREASE_SPEED": "",
+			"DECREASE_SPEED": "",
+			"SET_SPEED": "",
+			"INCREASE_HEADING": "",
+			"DECREASE_HEADING": "",
+			"SET_HEADING": "",
+			"INCREASE_ALTITUDE": "",
+			"DECREASE_ALTITUDE": "",
+			"SET_ALTITUDE": ""
+		},
+		"Mouse":{
+		}
+	}
+}

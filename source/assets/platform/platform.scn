@@ -1,0 +1,141 @@
+{
+	"canvas": {
+		"clear_color": true,
+		"clear_z": true,
+		"color": [
+			0,
+			0,
+			0,
+			255
+		]
+	},
+	"environment": {
+		"ambient": [
+			0,
+			0,
+			0,
+			255
+		],
+		"brdf_map": "core/pbr/brdf.dds",
+		"current_camera": null,
+		"fog_color": [
+			255,
+			255,
+			255,
+			255
+		],
+		"fog_far": 0.0,
+		"fog_near": 0.0,
+		"irradiance_map": "core/pbr/probe.hdr.irradiance",
+		"radiance_map": "core/pbr/probe.hdr.radiance"
+	},
+	"key_values": null,
+	"nodes": [
+		{
+			"components": [
+				0,
+				4294967295,
+				0,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 0,
+			"name": "foam concrete block"
+		}
+	],
+	"objects": [
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "gas concrete"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "platform/gas_concrete1.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "platform/gas_normal.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "platform/gas_orm.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.5,
+								0.5,
+								0.5,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.8399999737739563,
+								0.009999999776482582,
+								0.5
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "platform/foam concrete block_40.geo"
+		}
+	],
+	"transforms": [
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				9.334665264759678e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		}
+	]
+}

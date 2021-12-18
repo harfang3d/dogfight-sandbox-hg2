@@ -1,0 +1,216 @@
+{
+	"canvas": {
+		"clear_color": true,
+		"clear_z": true,
+		"color": [
+			0,
+			0,
+			0,
+			255
+		]
+	},
+	"environment": {
+		"ambient": [
+			0,
+			0,
+			0,
+			255
+		],
+		"brdf_map": "core/pbr/brdf.dds",
+		"current_camera": null,
+		"fog_color": [
+			255,
+			255,
+			255,
+			255
+		],
+		"fog_far": 0.0,
+		"fog_near": 0.0,
+		"irradiance_map": "core/pbr/probe.hdr.irradiance",
+		"radiance_map": "core/pbr/probe.hdr.radiance"
+	},
+	"key_values": null,
+	"nodes": [
+		{
+			"components": [
+				0,
+				4294967295,
+				0,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 0,
+			"name": "dummy_CFT"
+		},
+		{
+			"components": [
+				1,
+				4294967295,
+				1,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 1,
+			"name": "CFT"
+		}
+	],
+	"objects": [
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "Material.004"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.0005904744029976428,
+								0.8000000715255737,
+								0.0,
+								0.20297032594680786
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0001476186007494107,
+								0.20000001788139343,
+								0.0,
+								0.390625
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.30393677949905396,
+								0.9699350595474243,
+								0.26446568965911865,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "weaponry/dummy_CFT.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "f-16"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "weaponry/f16_missiles.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.800000011920929,
+								0.800000011920929,
+								0.800000011920929,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.20000000298023224,
+								0.20000000298023224,
+								0.20000000298023224,
+								0.390625
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "weaponry/CFT.geo"
+		}
+	],
+	"transforms": [
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				9.334665264759678e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		}
+	]
+}

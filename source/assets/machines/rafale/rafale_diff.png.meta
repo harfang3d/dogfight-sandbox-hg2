@@ -1,0 +1,9 @@
+{
+	"profiles": {
+		"default": {
+			"compression": "BC7",
+			"mag-filter": "Anisotropic",
+			"min-filter": "Anisotropic"
+		}
+	}
+}

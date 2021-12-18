@@ -1,0 +1,9 @@
+{
+	
+	"features": ["OptionalBaseColorOpacityMap","OptionalOcclusionRoughnessMetalnessMap", "OptionalNormalMap", "OptionalSelfMap", "OptionalSkinning"],
+	"uniforms": [
+					{"name": "ORMN_scale", "type": "Vec4"},
+					{"name": "ORMN_offset", "type": "Vec4"},
+					{"name": "base_texel_range", "type": "Vec4"}
+				]
+}

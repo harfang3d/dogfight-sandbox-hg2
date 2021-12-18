@@ -1,0 +1,31 @@
+{
+	"canvas": {
+		"clear_color": true,
+		"clear_z": true,
+		"color": [
+			0,
+			0,
+			0,
+			255
+		]
+	},
+	"environment": {
+		"ambient": [
+			0,
+			0,
+			0,
+			0
+		],
+		"current_camera": null,
+		"fog_color": [
+			0,
+			0,
+			0,
+			0
+		],
+		"fog_far": 0.0,
+		"fog_near": 0.0
+	},
+	"key_values": null,
+	"nodes": null
+}

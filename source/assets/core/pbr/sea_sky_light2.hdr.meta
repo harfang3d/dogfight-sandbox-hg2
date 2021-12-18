@@ -1,0 +1,7 @@
+{
+	"profiles": {
+		"default": {
+			"generate-probe": true
+		}
+	}
+}

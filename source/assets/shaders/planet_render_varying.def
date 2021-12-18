@@ -1,0 +1,7 @@
+vec3 vNormal : NORMAL;
+vec2 uv : TEXCOORD0;
+vec2 position: POSITION1;
+vec3 screen_ray: POSITION2;
+vec3 pos_test: POSITION3;
+vec3 a_position  : POSITION0;
+vec3 a_normal  : NORMAL;

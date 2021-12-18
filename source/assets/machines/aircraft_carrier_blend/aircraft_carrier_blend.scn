@@ -1,0 +1,734 @@
+{
+	"canvas": {
+		"clear_color": true,
+		"clear_z": true,
+		"color": [
+			0,
+			0,
+			0,
+			255
+		]
+	},
+	"environment": {
+		"ambient": [
+			0,
+			0,
+			0,
+			255
+		],
+		"brdf_map": "core/pbr/brdf.dds",
+		"current_camera": null,
+		"fog_color": [
+			255,
+			255,
+			255,
+			255
+		],
+		"fog_far": 0.0,
+		"fog_near": 0.0,
+		"irradiance_map": "core/pbr/probe.hdr.irradiance",
+		"radiance_map": "core/pbr/probe.hdr.radiance"
+	},
+	"key_values": null,
+	"nodes": [
+		{
+			"components": [
+				0,
+				4294967295,
+				0,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 0,
+			"name": "aircraft_carrier"
+		},
+		{
+			"components": [
+				1,
+				4294967295,
+				1,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 1,
+			"name": "aircraft_carrier_radar"
+		},
+		{
+			"components": [
+				2,
+				4294967295,
+				2,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 2,
+			"name": "carrier_aircraft_start_point.001"
+		},
+		{
+			"components": [
+				3,
+				4294967295,
+				3,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 3,
+			"name": "carrier_col_shape.003"
+		},
+		{
+			"components": [
+				4,
+				4294967295,
+				4,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 4,
+			"name": "carrier_col_shape.002"
+		},
+		{
+			"components": [
+				5,
+				4294967295,
+				5,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 5,
+			"name": "carrier_col_shape.001"
+		},
+		{
+			"components": [
+				6,
+				4294967295,
+				4294967295,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 6,
+			"name": "carrier_aircraft_start_point.002"
+		},
+		{
+			"components": [
+				7,
+				4294967295,
+				4294967295,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 7,
+			"name": "landing_point.001"
+		},
+		{
+			"components": [
+				8,
+				4294967295,
+				4294967295,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 8,
+			"name": "landing_point.002"
+		},
+		{
+			"components": [
+				9,
+				4294967295,
+				4294967295,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 9,
+			"name": "fps_start_point"
+		}
+	],
+	"objects": [
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "aircraft_carrier"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/aircraft_carrier_blend/carrier_diffuse_4k_pbr.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/aircraft_carrier_blend/ORM_4k.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.8312236070632935,
+								0.14029091596603394,
+								0.14029091596603394,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								9.999999974752427e-07,
+								9.999899930335232e-07,
+								9.999899930335232e-07,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft_carrier_blend/aircraft_carrier.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "aircraft_carrier"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/aircraft_carrier_blend/carrier_diffuse_4k_pbr.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.75,
+								0.75,
+								0.75,
+								1.0
+							]
+						},
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.5879999995231628,
+								0.5879999995231628,
+								0.5879999995231628,
+								0.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.007884029299020767,
+								0.007884029299020767,
+								0.007884029299020767,
+								0.03063725121319294
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft_carrier_blend/aircraft_carrier_radar.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [],
+			"materials": [],
+			"name": "machines/aircraft_carrier_blend/carrier_aircraft_start_point.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_collision_shape"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uOpacityMap",
+							"path": "textures/opacity_0.png",
+							"stage": 5
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.0,
+								0.0,
+								0.46399998664855957
+							]
+						},
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.64000004529953,
+								0.0,
+								0.0024342432152479887,
+								0.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.014000000432133675,
+								0.9700000286102295,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.649789035320282,
+								0.21659636497497559,
+								0.21659636497497559,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.25,
+								0.25,
+								0.25,
+								0.15012255311012268
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft_carrier_blend/carrier_col_shape.002.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_collision_shape"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uOpacityMap",
+							"path": "textures/opacity_0.png",
+							"stage": 5
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.0,
+								0.0,
+								0.46399998664855957
+							]
+						},
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.64000004529953,
+								0.0,
+								0.0024342432152479887,
+								0.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.014000000432133675,
+								0.9700000286102295,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.649789035320282,
+								0.21659636497497559,
+								0.21659636497497559,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.25,
+								0.25,
+								0.25,
+								0.15012255311012268
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft_carrier_blend/carrier_col_shape.001.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_collision_shape"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uOpacityMap",
+							"path": "textures/opacity_0.png",
+							"stage": 5
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.0,
+								0.0,
+								0.46399998664855957
+							]
+						},
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.64000004529953,
+								0.0,
+								0.0024342432152479887,
+								0.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.014000000432133675,
+								0.9700000286102295,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.649789035320282,
+								0.21659636497497559,
+								0.21659636497497559,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.25,
+								0.25,
+								0.25,
+								0.15012255311012268
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft_carrier_blend/carrier_col_shape.geo"
+		}
+	],
+	"transforms": [
+		{
+			"parent": null,
+			"pos": [
+				-7.62939453125e-06,
+				0.0,
+				0.0
+			],
+			"rot": [
+				9.334663445770275e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				27.65729522705078,
+				38.41913986206055,
+				-36.45643997192383
+			],
+			"rot": [
+				2.504477834008867e-06,
+				-90.00000762939453,
+				2.1718636275275954e-13
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				10.0,
+				17.5,
+				40.0
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				0.9999993443489075,
+				0.9999999403953552,
+				0.9999997615814209
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-31.12032127380371,
+				15.448800086975098,
+				-10.222070693969727
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				0.10000000149011612,
+				0.10000000149011612,
+				0.10000000149011612
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-1.3857769966125488,
+				15.448807716369629,
+				15.394819259643555
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				0.10000000149011612,
+				0.10000000149011612,
+				0.10000000149011612
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				27.71367645263672,
+				15.448800086975098,
+				-10.222068786621094
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				0.10000000149011612,
+				0.10000000149011612,
+				0.10000000149011612
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-23.519365310668945,
+				17.36128044128418,
+				-19.88064193725586
+			],
+			"rot": [
+				8.142221705892405e-13,
+				6.056514739990234,
+				1.0177777132365506e-13
+			],
+			"scl": [
+				0.9999996423721313,
+				1.0,
+				0.9999996423721313
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				5.659461498260498,
+				17.399999618530273,
+				-119.56460571289063
+			],
+			"rot": [
+				-0.0,
+				-9.999996185302734,
+				0.0
+			],
+			"scl": [
+				0.9999999403953552,
+				0.9999997019767761,
+				0.9999998807907104
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-30.405258178710938,
+				17.399999618530273,
+				71.75503540039063
+			],
+			"rot": [
+				-0.0,
+				169.99990844726563,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				18.19287109375,
+				32.822509765625,
+				3.745826688827947e-07
+			],
+			"rot": [
+				21.256868362426758,
+				-19.987375259399414,
+				-4.6979076273601095e-07
+			],
+			"scl": [
+				0.9999995827674866,
+				0.9999996423721313,
+				0.999999463558197
+			]
+		}
+	]
+}

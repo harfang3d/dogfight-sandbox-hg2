@@ -1,0 +1,61 @@
+{
+	"blend_mode": "opaque",
+	"depth_test": "less",
+	"face_culling": "cw",
+	"flags": [],
+	"program": "core/shader/pbr.hps",
+	"textures": [
+		{
+			"name": "uBaseOpacityMap",
+			"path": "machines/missile_launcher/T_S400_Truck_01_01_A.png",
+			"stage": 0
+		},
+		{
+			"name": "uNormalMap",
+			"path": "machines/missile_launcher/T_S400_Truck_01_01_N.png",
+			"stage": 2
+		},
+		{
+			"name": "uOcclusionRoughnessMetalnessMap",
+			"path": "machines/missile_launcher/truck_ORM.png",
+			"stage": 1
+		}
+	],
+	"values": [
+		{
+			"name": "uBaseOpacityColor",
+			"type": "vec4",
+			"value": [
+				0.5879999995231628,
+				0.5879999995231628,
+				0.5879999995231628,
+				1.0
+			]
+		},
+		{
+			"name": "uOcclusionRoughnessMetalnessColor",
+			"type": "vec4",
+			"value": [
+				0.0,
+				0.0,
+				0.0,
+				0.031250011175870895
+			]
+		},
+		{
+			"name": "uSelfColor",
+			"type": "vec4",
+			"value": [
+				0.0,
+				0.0,
+				0.0,
+				-1.0
+			]
+		}
+	],
+	"write_a": true,
+	"write_b": true,
+	"write_g": true,
+	"write_r": true,
+	"write_z": true
+}

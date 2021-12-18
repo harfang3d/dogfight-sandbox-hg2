@@ -1,0 +1,1348 @@
+{
+	"canvas": {
+		"clear_color": true,
+		"clear_z": true,
+		"color": [
+			0,
+			0,
+			0,
+			255
+		]
+	},
+	"environment": {
+		"ambient": [
+			255,
+			254,
+			254,
+			255
+		],
+		"brdf_map": "core/pbr/brdf.dds",
+		"current_camera": null,
+		"fog_color": [
+			255,
+			255,
+			255,
+			255
+		],
+		"fog_far": 0.0,
+		"fog_near": 0.0,
+		"irradiance_map": "core/pbr/probe.hdr.irradiance",
+		"radiance_map": "core/pbr/probe.hdr.radiance"
+	},
+	"key_values": null,
+	"nodes": [
+		{
+			"components": [
+				0,
+				4294967295,
+				0,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 0,
+			"name": "enemymissile_smoke.16"
+		},
+		{
+			"components": [
+				1,
+				4294967295,
+				1,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 1,
+			"name": "enemymissile_smoke.15"
+		},
+		{
+			"components": [
+				2,
+				4294967295,
+				2,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 2,
+			"name": "enemymissile_smoke.14"
+		},
+		{
+			"components": [
+				3,
+				4294967295,
+				3,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 3,
+			"name": "enemymissile_smoke.13"
+		},
+		{
+			"components": [
+				4,
+				4294967295,
+				4,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 4,
+			"name": "enemymissile_smoke.12"
+		},
+		{
+			"components": [
+				5,
+				4294967295,
+				5,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 5,
+			"name": "enemymissile_smoke.11"
+		},
+		{
+			"components": [
+				6,
+				4294967295,
+				6,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 6,
+			"name": "enemymissile_smoke.10"
+		},
+		{
+			"components": [
+				7,
+				4294967295,
+				7,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 7,
+			"name": "enemymissile_smoke.9"
+		},
+		{
+			"components": [
+				8,
+				4294967295,
+				8,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 8,
+			"name": "enemymissile_smoke.8"
+		},
+		{
+			"components": [
+				9,
+				4294967295,
+				9,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 9,
+			"name": "enemymissile_smoke.7"
+		},
+		{
+			"components": [
+				10,
+				4294967295,
+				10,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 10,
+			"name": "enemymissile_smoke.6"
+		},
+		{
+			"components": [
+				11,
+				4294967295,
+				11,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 11,
+			"name": "enemymissile_smoke.5"
+		},
+		{
+			"components": [
+				12,
+				4294967295,
+				12,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 12,
+			"name": "enemymissile_smoke.4"
+		},
+		{
+			"components": [
+				13,
+				4294967295,
+				13,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 13,
+			"name": "enemymissile_smoke.3"
+		},
+		{
+			"components": [
+				14,
+				4294967295,
+				14,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 14,
+			"name": "enemymissile_smoke.2"
+		},
+		{
+			"components": [
+				15,
+				4294967295,
+				15,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 15,
+			"name": "enemymissile_smoke.1"
+		},
+		{
+			"components": [
+				16,
+				4294967295,
+				16,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 16,
+			"name": "enemymissile_smoke.0"
+		},
+		{
+			"components": [
+				17,
+				4294967295,
+				17,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 17,
+			"name": "gun_bullet"
+		}
+	],
+	"objects": [
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "disabled",
+					"flags": [],
+					"program": "shaders/smoke.hps",
+					"textures": [
+						{
+							"name": "uColorMap",
+							"path": "weaponry/smoke_diff.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": false
+				}
+			],
+			"name": "weaponry/enemymissile_smoke.16.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "disabled",
+					"flags": [],
+					"program": "shaders/smoke.hps",
+					"textures": [
+						{
+							"name": "uColorMap",
+							"path": "weaponry/smoke_diff.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": false
+				}
+			],
+			"name": "weaponry/enemymissile_smoke.15.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "disabled",
+					"flags": [],
+					"program": "shaders/smoke.hps",
+					"textures": [
+						{
+							"name": "uColorMap",
+							"path": "weaponry/smoke_diff.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": false
+				}
+			],
+			"name": "weaponry/enemymissile_smoke.14.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "disabled",
+					"flags": [],
+					"program": "shaders/smoke.hps",
+					"textures": [
+						{
+							"name": "uColorMap",
+							"path": "weaponry/smoke_diff.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": false
+				}
+			],
+			"name": "weaponry/enemymissile_smoke.13.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "disabled",
+					"flags": [],
+					"program": "shaders/smoke.hps",
+					"textures": [
+						{
+							"name": "uColorMap",
+							"path": "weaponry/smoke_diff.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": false
+				}
+			],
+			"name": "weaponry/enemymissile_smoke.12.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "disabled",
+					"flags": [],
+					"program": "shaders/smoke.hps",
+					"textures": [
+						{
+							"name": "uColorMap",
+							"path": "weaponry/smoke_diff.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": false
+				}
+			],
+			"name": "weaponry/enemymissile_smoke.11.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "disabled",
+					"flags": [],
+					"program": "shaders/smoke.hps",
+					"textures": [
+						{
+							"name": "uColorMap",
+							"path": "weaponry/smoke_diff.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": false
+				}
+			],
+			"name": "weaponry/enemymissile_smoke.10.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "disabled",
+					"flags": [],
+					"program": "shaders/smoke.hps",
+					"textures": [
+						{
+							"name": "uColorMap",
+							"path": "weaponry/smoke_diff.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": false
+				}
+			],
+			"name": "weaponry/enemymissile_smoke.9.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "disabled",
+					"flags": [],
+					"program": "shaders/smoke.hps",
+					"textures": [
+						{
+							"name": "uColorMap",
+							"path": "weaponry/smoke_diff.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": false
+				}
+			],
+			"name": "weaponry/enemymissile_smoke.8.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "disabled",
+					"flags": [],
+					"program": "shaders/smoke.hps",
+					"textures": [
+						{
+							"name": "uColorMap",
+							"path": "weaponry/smoke_diff.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": false
+				}
+			],
+			"name": "weaponry/enemymissile_smoke.7.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "disabled",
+					"flags": [],
+					"program": "shaders/smoke.hps",
+					"textures": [
+						{
+							"name": "uColorMap",
+							"path": "weaponry/smoke_diff.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": false
+				}
+			],
+			"name": "weaponry/enemymissile_smoke.6.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "disabled",
+					"flags": [],
+					"program": "shaders/smoke.hps",
+					"textures": [
+						{
+							"name": "uColorMap",
+							"path": "weaponry/smoke_diff.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": false
+				}
+			],
+			"name": "weaponry/enemymissile_smoke.5.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "disabled",
+					"flags": [],
+					"program": "shaders/smoke.hps",
+					"textures": [
+						{
+							"name": "uColorMap",
+							"path": "weaponry/smoke_diff.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": false
+				}
+			],
+			"name": "weaponry/enemymissile_smoke.4.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "disabled",
+					"flags": [],
+					"program": "shaders/smoke.hps",
+					"textures": [
+						{
+							"name": "uColorMap",
+							"path": "weaponry/smoke_diff.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": false
+				}
+			],
+			"name": "weaponry/enemymissile_smoke.3.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "disabled",
+					"flags": [],
+					"program": "shaders/smoke.hps",
+					"textures": [
+						{
+							"name": "uColorMap",
+							"path": "weaponry/smoke_diff.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": false
+				}
+			],
+			"name": "weaponry/enemymissile_smoke.2.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "disabled",
+					"flags": [],
+					"program": "shaders/smoke.hps",
+					"textures": [
+						{
+							"name": "uColorMap",
+							"path": "weaponry/smoke_diff.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": false
+				}
+			],
+			"name": "weaponry/enemymissile_smoke.1.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "disabled",
+					"flags": [],
+					"program": "shaders/smoke.hps",
+					"textures": [
+						{
+							"name": "uColorMap",
+							"path": "weaponry/smoke_diff.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": false
+				}
+			],
+			"name": "weaponry/enemymissile_smoke.0.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "shaders/bullets.hps",
+					"values": [
+						{
+							"name": "uColor0",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								0.0,
+								1.0
+							]
+						},
+						{
+							"name": "uColor1",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.0,
+								0.0,
+								0.0
+							]
+						},
+						{
+							"name": "uZRange",
+							"type": "vec4",
+							"value": [
+								0.0,
+								-1.0,
+								0.0,
+								0.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": false
+				}
+			],
+			"name": "weaponry/gun_bullet.geo"
+		}
+	],
+	"transforms": [
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				0.0,
+				-24.54323959350586
+			],
+			"rot": [
+				9.334663445770275e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				0.0,
+				-23.09954071044922
+			],
+			"rot": [
+				9.334663445770275e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				0.0,
+				-21.655839920043945
+			],
+			"rot": [
+				9.334663445770275e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				0.0,
+				-20.212139129638672
+			],
+			"rot": [
+				9.334663445770275e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				0.0,
+				-18.76844024658203
+			],
+			"rot": [
+				9.334663445770275e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				0.0,
+				-17.324739456176758
+			],
+			"rot": [
+				9.334663445770275e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				0.0,
+				-15.8810396194458
+			],
+			"rot": [
+				9.334663445770275e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				0.0,
+				-14.437339782714844
+			],
+			"rot": [
+				9.334663445770275e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				0.0,
+				-12.993639945983887
+			],
+			"rot": [
+				9.334663445770275e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				0.0,
+				-11.54994010925293
+			],
+			"rot": [
+				9.334663445770275e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				0.0,
+				-10.106180191040039
+			],
+			"rot": [
+				9.334663445770275e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				0.0,
+				-8.662440299987793
+			],
+			"rot": [
+				9.334663445770275e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				0.0,
+				-7.218700408935547
+			],
+			"rot": [
+				9.334663445770275e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				0.0,
+				-5.774959564208984
+			],
+			"rot": [
+				9.334663445770275e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				0.0,
+				-4.331220626831055
+			],
+			"rot": [
+				9.334663445770275e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				0.0,
+				-2.887479782104492
+			],
+			"rot": [
+				9.334663445770275e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				0.0,
+				-1.4437408447265625
+			],
+			"rot": [
+				9.334663445770275e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				0.9999967813491821
+			]
+		},
+		{
+			"parent": null,
+			"pos": [
+				-2.318847417831421,
+				0.0,
+				0.3458833694458008
+			],
+			"rot": [
+				9.334663445770275e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		}
+	]
+}

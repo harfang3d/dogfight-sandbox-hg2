@@ -1,0 +1,4404 @@
+{
+	"canvas": {
+		"clear_color": true,
+		"clear_z": true,
+		"color": [
+			0,
+			0,
+			0,
+			255
+		]
+	},
+	"environment": {
+		"ambient": [
+			0,
+			0,
+			0,
+			255
+		],
+		"brdf_map": "core/pbr/brdf.dds",
+		"current_camera": null,
+		"fog_color": [
+			255,
+			255,
+			255,
+			255
+		],
+		"fog_far": 0.0,
+		"fog_near": 0.0,
+		"irradiance_map": "core/pbr/irradiance.dds",
+		"radiance_map": "core/pbr/radiance.dds"
+	},
+	"key_values": null,
+	"lights": [
+		{
+			"diffuse": [
+				255,
+				255,
+				255,
+				255
+			],
+			"diffuse_intensity": 1.0,
+			"inner_angle": 0.5235987901687622,
+			"outer_angle": 0.7853981852531433,
+			"priority": 0.0,
+			"pssm_split": [
+				10.0,
+				50.0,
+				100.0,
+				500.0
+			],
+			"radius": 0.0,
+			"shadow_bias": 9.999999747378752e-06,
+			"shadow_type": "none",
+			"specular": [
+				0,
+				0,
+				0,
+				255
+			],
+			"specular_intensity": 1.0,
+			"type": "point"
+		}
+	],
+	"nodes": [
+		{
+			"components": [
+				0,
+				4294967295,
+				0,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 0,
+			"name": "dummy_aircraft_fuselage"
+		},
+		{
+			"components": [
+				1,
+				4294967295,
+				1,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 1,
+			"name": "dummy_aircraft_slot.2"
+		},
+		{
+			"components": [
+				2,
+				4294967295,
+				2,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 2,
+			"name": "dummy_aircraft_slot.3"
+		},
+		{
+			"components": [
+				3,
+				4294967295,
+				3,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 3,
+			"name": "dummy_aircraft_slot.4"
+		},
+		{
+			"components": [
+				4,
+				4294967295,
+				4,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 4,
+			"name": "dummy_aircraft_slot.1"
+		},
+		{
+			"components": [
+				5,
+				4294967295,
+				5,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 5,
+			"name": "aircraft_fuselage"
+		},
+		{
+			"components": [
+				6,
+				4294967295,
+				6,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 6,
+			"name": "dummy_aircraft_configurable_wing_r"
+		},
+		{
+			"components": [
+				7,
+				4294967295,
+				7,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 7,
+			"name": "aircraft_col_shape_wing_r"
+		},
+		{
+			"components": [
+				8,
+				4294967295,
+				8,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 8,
+			"name": "aircraft_configurable_wing_r"
+		},
+		{
+			"components": [
+				9,
+				4294967295,
+				9,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 9,
+			"name": "dummy_aircraft_aileron_r"
+		},
+		{
+			"components": [
+				10,
+				4294967295,
+				10,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 10,
+			"name": "aircraft_aileron_r"
+		},
+		{
+			"components": [
+				11,
+				4294967295,
+				11,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 11,
+			"name": "dummy_aircraft_configurable_wing_l"
+		},
+		{
+			"components": [
+				12,
+				4294967295,
+				12,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 12,
+			"name": "aircraft_configurable_wing_l"
+		},
+		{
+			"components": [
+				13,
+				4294967295,
+				13,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 13,
+			"name": "dummy_aircraft_aileron_l"
+		},
+		{
+			"components": [
+				14,
+				4294967295,
+				14,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 14,
+			"name": "aircraft_aileron_l"
+		},
+		{
+			"components": [
+				15,
+				4294967295,
+				15,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 15,
+			"name": "aircraft_col_shape_wing_l"
+		},
+		{
+			"components": [
+				16,
+				4294967295,
+				16,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 16,
+			"name": "dummy_aircraft_elevator_changepitch_r"
+		},
+		{
+			"components": [
+				17,
+				4294967295,
+				17,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 17,
+			"name": "aircraft_elevator_changepitch_r"
+		},
+		{
+			"components": [
+				18,
+				4294967295,
+				18,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 18,
+			"name": "dummy_aircraft_elevator_changepitch_l"
+		},
+		{
+			"components": [
+				19,
+				4294967295,
+				19,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 19,
+			"name": "aircraft_elevator_changepitch_l"
+		},
+		{
+			"components": [
+				20,
+				4294967295,
+				20,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 20,
+			"name": "dummy_aircraft_rudder_changeyaw_r"
+		},
+		{
+			"components": [
+				21,
+				4294967295,
+				21,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 21,
+			"name": "aircraft_rudder_changeyaw_r"
+		},
+		{
+			"components": [
+				22,
+				4294967295,
+				22,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 22,
+			"name": "dummy_aircraft_rudder_changeyaw_l"
+		},
+		{
+			"components": [
+				23,
+				4294967295,
+				23,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 23,
+			"name": "aircraft_rudder_changeyaw_l"
+		},
+		{
+			"components": [
+				24,
+				4294967295,
+				24,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 24,
+			"name": "pilote_low"
+		},
+		{
+			"components": [
+				25,
+				4294967295,
+				25,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 25,
+			"name": "pilote_low001"
+		},
+		{
+			"components": [
+				26,
+				4294967295,
+				26,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 26,
+			"name": "aircraft_col_shape.001"
+		},
+		{
+			"components": [
+				27,
+				4294967295,
+				27,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 27,
+			"name": "aircraft_col_shape.004"
+		},
+		{
+			"components": [
+				28,
+				4294967295,
+				28,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 28,
+			"name": "aircraft_col_shape.003"
+		},
+		{
+			"components": [
+				29,
+				4294967295,
+				29,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 29,
+			"name": "aircraft_col_shape.002"
+		},
+		{
+			"components": [
+				30,
+				4294967295,
+				4294967295,
+				0,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 30,
+			"name": "Light"
+		}
+	],
+	"objects": [
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.47040000557899475,
+								0.47040000557899475,
+								0.47040000557899475,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.030637254938483238
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/dummy_aircraft_fuselage.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [],
+			"materials": [],
+			"name": ""
+		},
+		{
+			"bones": [],
+			"material_infos": [],
+			"materials": [],
+			"name": ""
+		},
+		{
+			"bones": [],
+			"material_infos": [],
+			"materials": [],
+			"name": ""
+		},
+		{
+			"bones": [],
+			"material_infos": [],
+			"materials": [],
+			"name": ""
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				},
+				{
+					"name": ""
+				},
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/aircraft/diffus_aircraft_body_02.png",
+							"stage": 0
+						},
+						{
+							"name": "uDiffuseMap",
+							"path": "machines/aircraft/diffus_aircraft_body_02.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/aircraft/normal_aircraft_body_inverted.png",
+							"stage": 2
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.36399999260902405
+							]
+						},
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.18642300367355347,
+								0.18642300367355347,
+								0.18642300367355347,
+								0.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.9869999885559082,
+								0.5669999718666077,
+								0.9869999885559082,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.36542168259620667,
+								0.36542168259620667,
+								0.36542168259620667,
+								0.05821078270673752
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.3105984032154083,
+								0.5336805582046509,
+								0.6033755540847778,
+								1.0
+							]
+						},
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								1.0,
+								0.0,
+								0.5,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.44999998807907104,
+								0.44999998807907104,
+								0.44999998807907104,
+								0.23284313082695007
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"textures": [
+						{
+							"name": "uDiffuseMap",
+							"path": "machines/aircraft/diffus_aircraft_mobil_parts.png",
+							"stage": 0
+						},
+						{
+							"name": "uLightMap",
+							"path": "machines/aircraft/occ_aircraft_mobil_parts.png",
+							"stage": 3
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/aircraft/normal_aircraft_mobil_parts_inverted.png",
+							"stage": 2
+						},
+						{
+							"name": "uOpacityMap",
+							"path": "machines/aircraft/occ_aircraft_mobil_parts.png",
+							"stage": 5
+						},
+						{
+							"name": "uSelfMap",
+							"path": "machines/aircraft/occ_aircraft_mobil_parts.png",
+							"stage": 4
+						}
+					],
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.35999998450279236,
+								0.35999998450279236,
+								0.35999998450279236,
+								0.05821078270673752
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/aircraft_fuselage.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.47040000557899475,
+								0.47040000557899475,
+								0.47040000557899475,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.030637254938483238
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/dummy_aircraft_configurable_wing_r.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.64000004529953,
+								0.0,
+								0.0018471839139238,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.25,
+								0.25,
+								0.25,
+								0.15012255311012268
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/aircraft_col_shape_wing_r.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				},
+				{
+					"name": ""
+				},
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"textures": [
+						{
+							"name": "uDiffuseMap",
+							"path": "machines/aircraft/diffus_aircraft_body_02.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/aircraft/normal_aircraft_body_inverted.png",
+							"stage": 2
+						}
+					],
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.18642300367355347,
+								0.18642300367355347,
+								0.18642300367355347,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.36542168259620667,
+								0.36542168259620667,
+								0.36542168259620667,
+								0.05821078270673752
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.44999998807907104,
+								0.44999998807907104,
+								0.44999998807907104,
+								0.23284313082695007
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/aircraft/diffus_aircraft_mobil_parts.png",
+							"stage": 0
+						},
+						{
+							"name": "uDiffuseMap",
+							"path": "machines/aircraft/diffus_aircraft_mobil_parts.png",
+							"stage": 0
+						},
+						{
+							"name": "uLightMap",
+							"path": "machines/aircraft/occ_aircraft_mobil_parts.png",
+							"stage": 3
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/aircraft/normal_aircraft_mobil_parts_inverted.png",
+							"stage": 2
+						},
+						{
+							"name": "uOpacityMap",
+							"path": "machines/aircraft/occ_aircraft_mobil_parts.png",
+							"stage": 5
+						},
+						{
+							"name": "uSelfMap",
+							"stage": 4
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								1.0,
+								1.0,
+								1.0,
+								1.0
+							]
+						},
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								1.0,
+								0.5,
+								1.0,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.35999998450279236,
+								0.35999998450279236,
+								0.35999998450279236,
+								0.05821078270673752
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/aircraft_configurable_wing_r.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.47040000557899475,
+								0.47040000557899475,
+								0.47040000557899475,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.030637254938483238
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/dummy_aircraft_aileron_r.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				},
+				{
+					"name": ""
+				},
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"textures": [
+						{
+							"name": "uDiffuseMap",
+							"path": "machines/aircraft/diffus_aircraft_body_02.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/aircraft/normal_aircraft_body_inverted.png",
+							"stage": 2
+						}
+					],
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.18642300367355347,
+								0.18642300367355347,
+								0.18642300367355347,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.36542168259620667,
+								0.36542168259620667,
+								0.36542168259620667,
+								0.05821078270673752
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.44999998807907104,
+								0.44999998807907104,
+								0.44999998807907104,
+								0.23284313082695007
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/aircraft/diffus_aircraft_mobil_parts.png",
+							"stage": 0
+						},
+						{
+							"name": "uDiffuseMap",
+							"path": "machines/aircraft/diffus_aircraft_mobil_parts.png",
+							"stage": 0
+						},
+						{
+							"name": "uLightMap",
+							"path": "machines/aircraft/occ_aircraft_mobil_parts.png",
+							"stage": 3
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/aircraft/normal_aircraft_mobil_parts_inverted.png",
+							"stage": 2
+						},
+						{
+							"name": "uOpacityMap",
+							"path": "machines/aircraft/occ_aircraft_mobil_parts.png",
+							"stage": 5
+						},
+						{
+							"name": "uSelfMap",
+							"stage": 4
+						}
+					],
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								1.0,
+								0.5,
+								1.0,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.35999998450279236,
+								0.35999998450279236,
+								0.35999998450279236,
+								0.05821078270673752
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/aircraft_aileron_r.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.47040000557899475,
+								0.47040000557899475,
+								0.47040000557899475,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.030637254938483238
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/dummy_aircraft_configurable_wing_l.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				},
+				{
+					"name": ""
+				},
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"textures": [
+						{
+							"name": "uDiffuseMap",
+							"path": "machines/aircraft/diffus_aircraft_body_02.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/aircraft/normal_aircraft_body_inverted.png",
+							"stage": 2
+						}
+					],
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.18642300367355347,
+								0.18642300367355347,
+								0.18642300367355347,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.36542168259620667,
+								0.36542168259620667,
+								0.36542168259620667,
+								0.05821078270673752
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.44999998807907104,
+								0.44999998807907104,
+								0.44999998807907104,
+								0.23284313082695007
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/aircraft/diffus_aircraft_mobil_parts.png",
+							"stage": 0
+						},
+						{
+							"name": "uDiffuseMap",
+							"path": "machines/aircraft/diffus_aircraft_mobil_parts.png",
+							"stage": 0
+						},
+						{
+							"name": "uLightMap",
+							"path": "machines/aircraft/occ_aircraft_mobil_parts.png",
+							"stage": 3
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/aircraft/normal_aircraft_mobil_parts_inverted.png",
+							"stage": 2
+						},
+						{
+							"name": "uOpacityMap",
+							"path": "machines/aircraft/occ_aircraft_mobil_parts.png",
+							"stage": 5
+						},
+						{
+							"name": "uSelfMap",
+							"stage": 4
+						}
+					],
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								1.0,
+								0.5,
+								1.0,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.35999998450279236,
+								0.35999998450279236,
+								0.35999998450279236,
+								0.05821078270673752
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/aircraft_configurable_wing_l.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.47040000557899475,
+								0.47040000557899475,
+								0.47040000557899475,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.030637254938483238
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/dummy_aircraft_aileron_l.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				},
+				{
+					"name": ""
+				},
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"textures": [
+						{
+							"name": "uDiffuseMap",
+							"path": "machines/aircraft/diffus_aircraft_body_02.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/aircraft/normal_aircraft_body_inverted.png",
+							"stage": 2
+						}
+					],
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.18642300367355347,
+								0.18642300367355347,
+								0.18642300367355347,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.36542168259620667,
+								0.36542168259620667,
+								0.36542168259620667,
+								0.05821078270673752
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.44999998807907104,
+								0.44999998807907104,
+								0.44999998807907104,
+								0.23284313082695007
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/aircraft/diffus_aircraft_mobil_parts.png",
+							"stage": 0
+						},
+						{
+							"name": "uDiffuseMap",
+							"path": "machines/aircraft/diffus_aircraft_mobil_parts.png",
+							"stage": 0
+						},
+						{
+							"name": "uLightMap",
+							"path": "machines/aircraft/occ_aircraft_mobil_parts.png",
+							"stage": 3
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/aircraft/normal_aircraft_mobil_parts_inverted.png",
+							"stage": 2
+						},
+						{
+							"name": "uOpacityMap",
+							"path": "machines/aircraft/occ_aircraft_mobil_parts.png",
+							"stage": 5
+						},
+						{
+							"name": "uSelfMap",
+							"stage": 4
+						}
+					],
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								1.0,
+								0.5,
+								1.0,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.35999998450279236,
+								0.35999998450279236,
+								0.35999998450279236,
+								0.05821078270673752
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/aircraft_aileron_l.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.64000004529953,
+								0.0,
+								0.0018471839139238,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.25,
+								0.25,
+								0.25,
+								0.15012255311012268
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/aircraft_col_shape_wing_l.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.47040000557899475,
+								0.47040000557899475,
+								0.47040000557899475,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.030637254938483238
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/dummy_aircraft_elevator_changepitch_r.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				},
+				{
+					"name": ""
+				},
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"textures": [
+						{
+							"name": "uDiffuseMap",
+							"path": "machines/aircraft/diffus_aircraft_body_02.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/aircraft/normal_aircraft_body_inverted.png",
+							"stage": 2
+						}
+					],
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.18642300367355347,
+								0.18642300367355347,
+								0.18642300367355347,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.36542168259620667,
+								0.36542168259620667,
+								0.36542168259620667,
+								0.05821078270673752
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.44999998807907104,
+								0.44999998807907104,
+								0.44999998807907104,
+								0.23284313082695007
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/aircraft/diffus_aircraft_mobil_parts.png",
+							"stage": 0
+						},
+						{
+							"name": "uDiffuseMap",
+							"path": "machines/aircraft/diffus_aircraft_mobil_parts.png",
+							"stage": 0
+						},
+						{
+							"name": "uLightMap",
+							"path": "machines/aircraft/occ_aircraft_mobil_parts.png",
+							"stage": 3
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/aircraft/normal_aircraft_mobil_parts_inverted.png",
+							"stage": 2
+						},
+						{
+							"name": "uOpacityMap",
+							"path": "machines/aircraft/occ_aircraft_mobil_parts.png",
+							"stage": 5
+						},
+						{
+							"name": "uSelfMap",
+							"stage": 4
+						}
+					],
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								1.0,
+								0.5,
+								1.0,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.35999998450279236,
+								0.35999998450279236,
+								0.35999998450279236,
+								0.05821078270673752
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/aircraft_elevator_changepitch_r.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.47040000557899475,
+								0.47040000557899475,
+								0.47040000557899475,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.030637254938483238
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/dummy_aircraft_elevator_changepitch_l.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				},
+				{
+					"name": ""
+				},
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"textures": [
+						{
+							"name": "uDiffuseMap",
+							"path": "machines/aircraft/diffus_aircraft_body_02.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/aircraft/normal_aircraft_body_inverted.png",
+							"stage": 2
+						}
+					],
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.18642300367355347,
+								0.18642300367355347,
+								0.18642300367355347,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.36542168259620667,
+								0.36542168259620667,
+								0.36542168259620667,
+								0.05821078270673752
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.44999998807907104,
+								0.44999998807907104,
+								0.44999998807907104,
+								0.23284313082695007
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/aircraft/diffus_aircraft_mobil_parts.png",
+							"stage": 0
+						},
+						{
+							"name": "uDiffuseMap",
+							"path": "machines/aircraft/diffus_aircraft_mobil_parts.png",
+							"stage": 0
+						},
+						{
+							"name": "uLightMap",
+							"path": "machines/aircraft/occ_aircraft_mobil_parts.png",
+							"stage": 3
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/aircraft/normal_aircraft_mobil_parts_inverted.png",
+							"stage": 2
+						},
+						{
+							"name": "uOpacityMap",
+							"path": "machines/aircraft/occ_aircraft_mobil_parts.png",
+							"stage": 5
+						},
+						{
+							"name": "uSelfMap",
+							"stage": 4
+						}
+					],
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								1.0,
+								0.5,
+								1.0,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.35999998450279236,
+								0.35999998450279236,
+								0.35999998450279236,
+								0.05821078270673752
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/aircraft_elevator_changepitch_l.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.47040000557899475,
+								0.47040000557899475,
+								0.47040000557899475,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.030637254938483238
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/dummy_aircraft_rudder_changeyaw_r.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				},
+				{
+					"name": ""
+				},
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"textures": [
+						{
+							"name": "uDiffuseMap",
+							"path": "machines/aircraft/diffus_aircraft_body_02.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/aircraft/normal_aircraft_body_inverted.png",
+							"stage": 2
+						}
+					],
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.18642300367355347,
+								0.18642300367355347,
+								0.18642300367355347,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.36542168259620667,
+								0.36542168259620667,
+								0.36542168259620667,
+								0.05821078270673752
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.44999998807907104,
+								0.44999998807907104,
+								0.44999998807907104,
+								0.23284313082695007
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/aircraft/diffus_aircraft_mobil_parts.png",
+							"stage": 0
+						},
+						{
+							"name": "uDiffuseMap",
+							"path": "machines/aircraft/diffus_aircraft_mobil_parts.png",
+							"stage": 0
+						},
+						{
+							"name": "uLightMap",
+							"path": "machines/aircraft/occ_aircraft_mobil_parts.png",
+							"stage": 3
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/aircraft/normal_aircraft_mobil_parts_inverted.png",
+							"stage": 2
+						},
+						{
+							"name": "uOpacityMap",
+							"path": "machines/aircraft/occ_aircraft_mobil_parts.png",
+							"stage": 5
+						},
+						{
+							"name": "uSelfMap",
+							"stage": 4
+						}
+					],
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								1.0,
+								0.5,
+								1.0,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.35999998450279236,
+								0.35999998450279236,
+								0.35999998450279236,
+								0.05821078270673752
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/aircraft_rudder_changeyaw_r.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.47040000557899475,
+								0.47040000557899475,
+								0.47040000557899475,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.030637254938483238
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/dummy_aircraft_rudder_changeyaw_l.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				},
+				{
+					"name": ""
+				},
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"textures": [
+						{
+							"name": "uDiffuseMap",
+							"path": "machines/aircraft/diffus_aircraft_body_02.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/aircraft/normal_aircraft_body_inverted.png",
+							"stage": 2
+						}
+					],
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.18642300367355347,
+								0.18642300367355347,
+								0.18642300367355347,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.36542168259620667,
+								0.36542168259620667,
+								0.36542168259620667,
+								0.05821078270673752
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.44999998807907104,
+								0.44999998807907104,
+								0.44999998807907104,
+								0.23284313082695007
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/aircraft/diffus_aircraft_mobil_parts.png",
+							"stage": 0
+						},
+						{
+							"name": "uDiffuseMap",
+							"path": "machines/aircraft/diffus_aircraft_mobil_parts.png",
+							"stage": 0
+						},
+						{
+							"name": "uLightMap",
+							"path": "machines/aircraft/occ_aircraft_mobil_parts.png",
+							"stage": 3
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/aircraft/normal_aircraft_mobil_parts_inverted.png",
+							"stage": 2
+						},
+						{
+							"name": "uOpacityMap",
+							"path": "machines/aircraft/occ_aircraft_mobil_parts.png",
+							"stage": 5
+						},
+						{
+							"name": "uSelfMap",
+							"stage": 4
+						}
+					],
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								1.0,
+								0.5,
+								1.0,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.35999998450279236,
+								0.35999998450279236,
+								0.35999998450279236,
+								0.05821078270673752
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/aircraft_rudder_changeyaw_l.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"textures": [
+						{
+							"name": "uDiffuseMap",
+							"path": "machines/aircraft/diffus_pilote.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.030637254938483238
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/pilote_low.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"textures": [
+						{
+							"name": "uDiffuseMap",
+							"path": "machines/aircraft/diffus_pilote.png",
+							"stage": 0
+						}
+					],
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.4705882668495178,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.030637254938483238
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/pilote_low001.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.64000004529953,
+								0.0,
+								0.0018471839139238,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.25,
+								0.25,
+								0.25,
+								0.15012255311012268
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/aircraft_col_shape.001.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.64000004529953,
+								0.0,
+								0.0018471839139238,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.25,
+								0.25,
+								0.25,
+								0.15012255311012268
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/aircraft_col_shape.004.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.64000004529953,
+								0.0,
+								0.0018471839139238,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.25,
+								0.25,
+								0.25,
+								0.15012255311012268
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/aircraft_col_shape.003.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": ""
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.64000004529953,
+								0.0,
+								0.0018471839139238,
+								0.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.0,
+								0.0,
+								0.0,
+								0.0,
+								0.25,
+								0.25,
+								0.25,
+								0.15012255311012268
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/aircraft/aircraft_col_shape.002.geo"
+		}
+	],
+	"transforms": [
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				9.334663445770275e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-3.6193244457244873,
+				-0.10774758458137512,
+				-0.6696608662605286
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				3.049269914627075,
+				-0.5815446376800537,
+				-0.44060665369033813
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-3.0492653846740723,
+				-0.5815446376800537,
+				-0.44060665369033813
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				3.6193199157714844,
+				-0.10774758458137512,
+				-0.6696608662605286
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				0.0001087188720703125,
+				0.7053432464599609,
+				2.0427639484405518
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 5,
+			"pos": [
+				3.356588840484619,
+				-0.271939754486084,
+				-0.9791696071624756
+			],
+			"rot": [
+				-1.254685062045996e-21,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.000000238418579,
+				0.9999998807907104
+			]
+		},
+		{
+			"parent": 6,
+			"pos": [
+				2.8490662574768066,
+				0.0007464885711669922,
+				-2.3311400413513184
+			],
+			"rot": [
+				-2.4541993752791313e-06,
+				11.499995231628418,
+				-4.993124775864999e-07
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 6,
+			"pos": [
+				2.809426784515381,
+				0.014547139406204224,
+				-1.860044240951538
+			],
+			"rot": [
+				8.364567585177619e-22,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				0.9999998807907104,
+				1.0000001192092896
+			]
+		},
+		{
+			"parent": 8,
+			"pos": [
+				-0.18722057342529297,
+				-0.01380068063735962,
+				-1.0356571674346924
+			],
+			"rot": [
+				-1.1091448575624202e-15,
+				7.899987697601318,
+				1.60629634051411e-14
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 9,
+			"pos": [
+				-0.07989358901977539,
+				0.02145242691040039,
+				-0.15747690200805664
+			],
+			"rot": [
+				7.471958696214642e-08,
+				-7.899984359741211,
+				4.227212286878057e-07
+			],
+			"scl": [
+				1.0,
+				1.0,
+				0.9999998807907104
+			]
+		},
+		{
+			"parent": 5,
+			"pos": [
+				-3.355890989303589,
+				-0.271939754486084,
+				-0.9791696071624756
+			],
+			"rot": [
+				-1.254685062045996e-21,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.000000238418579,
+				0.9999998807907104
+			]
+		},
+		{
+			"parent": 11,
+			"pos": [
+				-2.8101091384887695,
+				0.014547258615493774,
+				-1.860044002532959
+			],
+			"rot": [
+				8.364567585177619e-22,
+				0.0,
+				0.0
+			],
+			"scl": [
+				0.9999998807907104,
+				0.9999998807907104,
+				1.0000001192092896
+			]
+		},
+		{
+			"parent": 12,
+			"pos": [
+				0.18711090087890625,
+				-0.013800829648971558,
+				-1.0356566905975342
+			],
+			"rot": [
+				8.651421921967994e-06,
+				172.09996032714844,
+				-180.0
+			],
+			"scl": [
+				1.0000001192092896,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 13,
+			"pos": [
+				0.08000373840332031,
+				-0.02145323157310486,
+				0.15749210119247437
+			],
+			"rot": [
+				8.651421921967994e-06,
+				172.09996032714844,
+				-180.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 11,
+			"pos": [
+				-2.8440351486206055,
+				0.0007465779781341553,
+				-2.3311400413513184
+			],
+			"rot": [
+				-2.4541998300264822e-06,
+				-11.500003814697266,
+				4.993124775864999e-07
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 5,
+			"pos": [
+				2.32590389251709,
+				-0.7528448104858398,
+				-5.51280403137207
+			],
+			"rot": [
+				-1.254685062045996e-21,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.000000238418579,
+				0.9999998807907104
+			]
+		},
+		{
+			"parent": 16,
+			"pos": [
+				1.4959979057312012,
+				0.0034679286181926727,
+				-1.4447340965270996
+			],
+			"rot": [
+				8.364567585177619e-22,
+				0.0,
+				0.0
+			],
+			"scl": [
+				0.9999998807907104,
+				0.9999998807907104,
+				1.0000001192092896
+			]
+		},
+		{
+			"parent": 5,
+			"pos": [
+				-2.3258912563323975,
+				-0.7528448104858398,
+				-5.51280403137207
+			],
+			"rot": [
+				-1.254685062045996e-21,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.000000238418579,
+				0.9999998807907104
+			]
+		},
+		{
+			"parent": 18,
+			"pos": [
+				-1.495995044708252,
+				0.0034674443304538727,
+				-1.444735050201416
+			],
+			"rot": [
+				8.364567585177619e-22,
+				0.0,
+				0.0
+			],
+			"scl": [
+				0.9999998807907104,
+				0.9999998807907104,
+				1.0000001192092896
+			]
+		},
+		{
+			"parent": 5,
+			"pos": [
+				1.6581188440322876,
+				0.9360737204551697,
+				-8.939088821411133
+			],
+			"rot": [
+				-29.452573776245117,
+				1.752492904663086,
+				-3.5606508255004883
+			],
+			"scl": [
+				0.9999998807907104,
+				1.0000001192092896,
+				0.9999999403953552
+			]
+		},
+		{
+			"parent": 20,
+			"pos": [
+				-0.016936421394348145,
+				0.11867237091064453,
+				-0.15420246124267578
+			],
+			"rot": [
+				29.49999237060547,
+				2.9290436941664666e-05,
+				3.1000330448150635
+			],
+			"scl": [
+				0.9999999403953552,
+				0.9999998807907104,
+				1.0
+			]
+		},
+		{
+			"parent": 5,
+			"pos": [
+				-1.6581122875213623,
+				0.9360737204551697,
+				-8.939088821411133
+			],
+			"rot": [
+				29.4525089263916,
+				178.24749755859375,
+				176.43931579589844
+			],
+			"scl": [
+				1.0,
+				1.0,
+				0.9999999403953552
+			]
+		},
+		{
+			"parent": 22,
+			"pos": [
+				0.01694643497467041,
+				-0.11867141723632813,
+				0.15420866012573242
+			],
+			"rot": [
+				-29.500043869018555,
+				-179.99989318847656,
+				176.89990234375
+			],
+			"scl": [
+				1.000000238418579,
+				0.9999998807907104,
+				1.000000238418579
+			]
+		},
+		{
+			"parent": 5,
+			"pos": [
+				-0.03236287832260132,
+				0.5843577980995178,
+				4.871471405029297
+			],
+			"rot": [
+				-1.254685062045996e-21,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.000000238418579,
+				0.9999998807907104
+			]
+		},
+		{
+			"parent": 5,
+			"pos": [
+				-0.02006906270980835,
+				0.5604329705238342,
+				3.2937698364257813
+			],
+			"rot": [
+				-1.254685062045996e-21,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.000000238418579,
+				0.9999998807907104
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				0.0,
+				-0.5292523503303528,
+				6.3933892250061035
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-1.4998912811279297,
+				-2.0360708236694336,
+				-1.7134259939193726
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				1.5001087188720703,
+				-2.0360708236694336,
+				-1.7134259939193726
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				0.0,
+				-0.3106591999530792,
+				-2.6350350379943848
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				7.180965423583984,
+				0.0
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		}
+	]
+}

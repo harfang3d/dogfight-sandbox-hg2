@@ -1,0 +1,17 @@
+{
+	"features": ["OptionalDiffuseMap", "OptionalSpecularMap"],
+	"uniforms": [
+					{"name": "sea_scale", "type": "Vec4"},
+					{"name": "zenith_color", "type": "Color"},
+					{"name": "zenith_falloff", "type": "Vec4"},
+					{"name": "horizonH_color", "type": "Color"},
+					{"name": "horizonL_color", "type": "Color"},
+					{"name": "horizon_line_color", "type": "Color"},
+					{"name": "horizon_line_size", "type": "Vec4"},
+					{"name": "sea_color", "type": "Color"},
+					{"name": "reflect_color", "type": "Color"},
+					{"name": "sea_reflection", "type": "Vec4"},
+					{"name": "stream_scale", "type": "Vec4"},
+					{"name": "reflect_offset", "type": "Vec4"}
+				]
+}

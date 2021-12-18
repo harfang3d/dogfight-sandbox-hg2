@@ -1,0 +1,11 @@
+   
+{
+    "aircrafts_allies": [
+    "TFX","F16"
+    ],
+    "aircrafts_ennemies": [
+    "Eurofighter","Rafale"
+    ],
+    "aircraft_carriers_allies_count": 1,
+    "aircraft_carriers_enemies_count": 1
+}

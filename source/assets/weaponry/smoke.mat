@@ -1,0 +1,30 @@
+{
+	"blend_mode": "alpha",
+	"depth_test": "less",
+	"face_culling": "disabled",
+	"program": "shaders/smoke.hps",
+	"textures": [
+		{
+			"name": "uColorMap",
+			"path": "weaponry/smoke_diff.png",
+			"stage": 0
+		}
+	],
+	"values": [
+		{
+			"name": "uColor",
+			"type": "vec4",
+			"value": [
+				1.0,
+				1.0,
+				1.0,
+				1.0
+			]
+		}
+	],
+	"write_a": true,
+	"write_b": true,
+	"write_g": true,
+	"write_r": true,
+	"write_z": false
+}

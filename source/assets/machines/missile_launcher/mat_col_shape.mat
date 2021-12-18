@@ -1,0 +1,44 @@
+{
+	"blend_mode": "alpha",
+	"depth_test": "less",
+	"face_culling": "cw",
+	"flags": [],
+	"program": "core/shader/pbr.hps",
+	"values": [
+		{
+			"name": "uBaseOpacityColor",
+			"type": "vec4",
+			"value": [
+				0.8000000715255737,
+				0.0,
+				0.00657991599291563,
+				0.47524750232696533
+			]
+		},
+		{
+			"name": "uOcclusionRoughnessMetalnessColor",
+			"type": "vec4",
+			"value": [
+				1.0,
+				0.0,
+				0.0016449789982289076,
+				0.390625
+			]
+		},
+		{
+			"name": "uSelfColor",
+			"type": "vec4",
+			"value": [
+				0.0,
+				0.0,
+				0.0,
+				-1.0
+			]
+		}
+	],
+	"write_a": true,
+	"write_b": true,
+	"write_g": true,
+	"write_r": true,
+	"write_z": true
+}

@@ -1,0 +1,6847 @@
+{
+	"anims": [
+		{
+			"anim": {
+				"flags": [],
+				"t_end": 0,
+				"t_start": 0,
+				"vec3": [
+					{
+						"keys": [
+							{
+								"bias": 0.0,
+								"t": 0,
+								"tension": 0.0,
+								"v": [
+									-0.0,
+									0.0,
+									0.0
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 2000000000,
+								"tension": 0.0,
+								"v": [
+									1.7453292608261108,
+									0.0,
+									0.0
+								]
+							}
+						],
+						"target": "Rotation"
+					}
+				]
+			},
+			"idx": 0
+		},
+		{
+			"anim": {
+				"flags": [],
+				"t_end": 0,
+				"t_start": 0,
+				"vec3": [
+					{
+						"keys": [
+							{
+								"bias": -1.0,
+								"t": 0,
+								"tension": 1.0,
+								"v": [
+									-0.0,
+									0.0,
+									0.0
+								]
+							},
+							{
+								"bias": -1.0,
+								"t": 0,
+								"tension": 1.0,
+								"v": [
+									0.0,
+									0.0,
+									0.0
+								]
+							},
+							{
+								"bias": -1.0,
+								"t": 1000000000,
+								"tension": 1.0,
+								"v": [
+									-0.0,
+									0.0,
+									0.0
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 2500000000,
+								"tension": 0.0,
+								"v": [
+									-0.0,
+									0.0,
+									1.672025442123413
+								]
+							}
+						],
+						"target": "Rotation"
+					}
+				]
+			},
+			"idx": 1
+		},
+		{
+			"anim": {
+				"flags": [],
+				"t_end": 0,
+				"t_start": 0,
+				"vec3": [
+					{
+						"keys": [
+							{
+								"bias": 0.0,
+								"t": 0,
+								"tension": 0.0,
+								"v": [
+									-0.0,
+									0.0,
+									0.0
+								]
+							},
+							{
+								"bias": -1.0,
+								"t": 1000000000,
+								"tension": 1.0,
+								"v": [
+									-0.0,
+									0.0,
+									1.483529806137085
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 2099999872,
+								"tension": 0.0,
+								"v": [
+									-0.0,
+									0.0,
+									1.483529806137085
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 3250000000,
+								"tension": 0.0,
+								"v": [
+									-0.0,
+									0.0,
+									0.0
+								]
+							}
+						],
+						"target": "Rotation"
+					}
+				]
+			},
+			"idx": 2
+		},
+		{
+			"anim": {
+				"bool": [
+					{
+						"target": "Enable"
+					}
+				],
+				"flags": [],
+				"t_end": 0,
+				"t_start": 0,
+				"vec3": [
+					{
+						"keys": [
+							{
+								"bias": -1.0,
+								"t": 0,
+								"tension": 1.0,
+								"v": [
+									-0.0,
+									0.0,
+									0.0
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 500000000,
+								"tension": 0.0,
+								"v": [
+									-0.0,
+									0.0,
+									0.0
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 2500000000,
+								"tension": 0.0,
+								"v": [
+									-0.0,
+									0.0,
+									1.5707963705062866
+								]
+							}
+						],
+						"target": "Rotation"
+					},
+					{
+						"keys": [
+							{
+								"bias": -1.0,
+								"t": 0,
+								"tension": 1.0,
+								"v": [
+									-1.7548391819000244,
+									-0.3715943396091461,
+									0.7543099522590637
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 500000000,
+								"tension": 0.0,
+								"v": [
+									-1.7548391819000244,
+									-0.3715943396091461,
+									0.7543099522590637
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 2500000000,
+								"tension": 0.0,
+								"v": [
+									-2.0163981914520264,
+									-0.40069830417633057,
+									0.7543098330497742
+								]
+							}
+						],
+						"target": "Position"
+					}
+				]
+			},
+			"idx": 3
+		},
+		{
+			"anim": {
+				"flags": [],
+				"t_end": 0,
+				"t_start": 0,
+				"vec3": [
+					{
+						"keys": [
+							{
+								"bias": 0.0,
+								"t": 0,
+								"tension": 0.0,
+								"v": [
+									-0.0,
+									0.0,
+									0.0
+								]
+							},
+							{
+								"bias": -1.0,
+								"t": 1100000000,
+								"tension": 1.0,
+								"v": [
+									-0.0,
+									0.0,
+									-1.483529806137085
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 2250000000,
+								"tension": 0.0,
+								"v": [
+									-0.0,
+									0.0,
+									-1.483529806137085
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 3250000000,
+								"tension": 0.0,
+								"v": [
+									-0.0,
+									0.0,
+									0.0
+								]
+							}
+						],
+						"target": "Rotation"
+					}
+				]
+			},
+			"idx": 4
+		},
+		{
+			"anim": {
+				"flags": [],
+				"t_end": 0,
+				"t_start": 0,
+				"vec3": [
+					{
+						"keys": [
+							{
+								"bias": -1.0,
+								"t": 0,
+								"tension": 1.0,
+								"v": [
+									-0.0,
+									0.0,
+									0.0
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 500000000,
+								"tension": 0.0,
+								"v": [
+									-0.0,
+									0.0,
+									0.0
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 2500000000,
+								"tension": 0.0,
+								"v": [
+									-0.0,
+									0.0,
+									-1.5707963705062866
+								]
+							}
+						],
+						"target": "Rotation"
+					},
+					{
+						"keys": [
+							{
+								"bias": -1.0,
+								"t": 0,
+								"tension": 1.0,
+								"v": [
+									1.6979542970657349,
+									-0.3715944290161133,
+									0.7543103694915771
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 500000000,
+								"tension": 0.0,
+								"v": [
+									1.6979542970657349,
+									-0.3715944290161133,
+									0.7543103694915771
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 2500000000,
+								"tension": 0.0,
+								"v": [
+									1.9548789262771606,
+									-0.4299948513507843,
+									0.7543098330497742
+								]
+							}
+						],
+						"target": "Position"
+					}
+				]
+			},
+			"idx": 5
+		},
+		{
+			"anim": {
+				"flags": [],
+				"t_end": 0,
+				"t_start": 0,
+				"vec3": [
+					{
+						"keys": [
+							{
+								"bias": -1.0,
+								"t": 0,
+								"tension": 1.0,
+								"v": [
+									7.186523324292533e-17,
+									6.030207546004656e-17,
+									-1.7453292608261108
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 500000000,
+								"tension": 0.0,
+								"v": [
+									7.186523324292533e-17,
+									6.030207546004656e-17,
+									-1.7453292608261108
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 2500000000,
+								"tension": 0.0,
+								"v": [
+									7.186523324292533e-17,
+									6.030206884260166e-17,
+									0.0
+								]
+							}
+						],
+						"target": "Rotation"
+					}
+				]
+			},
+			"idx": 6
+		},
+		{
+			"anim": {
+				"flags": [],
+				"t_end": 0,
+				"t_start": 0,
+				"vec3": [
+					{
+						"keys": [
+							{
+								"bias": -1.0,
+								"t": 0,
+								"tension": 1.0,
+								"v": [
+									7.186523324292533e-17,
+									-6.030207546004656e-17,
+									1.7453292608261108
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 500000000,
+								"tension": 0.0,
+								"v": [
+									7.186523324292533e-17,
+									-6.030207546004656e-17,
+									1.7453292608261108
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 2500000000,
+								"tension": 0.0,
+								"v": [
+									7.186523324292533e-17,
+									-6.030206884260166e-17,
+									0.0
+								]
+							}
+						],
+						"target": "Rotation"
+					}
+				]
+			},
+			"idx": 7
+		},
+		{
+			"anim": {
+				"bool": [
+					{
+						"keys": [
+							{
+								"t": 0,
+								"v": true
+							},
+							{
+								"t": 3250000000,
+								"v": false
+							}
+						],
+						"target": "Enable"
+					}
+				],
+				"flags": [],
+				"t_end": 0,
+				"t_start": 0
+			},
+			"idx": 8
+		},
+		{
+			"anim": {
+				"bool": [
+					{
+						"keys": [
+							{
+								"t": 0,
+								"v": true
+							},
+							{
+								"t": 3250000000,
+								"v": false
+							}
+						],
+						"target": "Enable"
+					}
+				],
+				"flags": [],
+				"t_end": 0,
+				"t_start": 0
+			},
+			"idx": 9
+		},
+		{
+			"anim": {
+				"bool": [
+					{
+						"keys": [
+							{
+								"t": 0,
+								"v": true
+							},
+							{
+								"t": 2500000000,
+								"v": false
+							}
+						],
+						"target": "Enable"
+					}
+				],
+				"flags": [],
+				"t_end": 0,
+				"t_start": 0
+			},
+			"idx": 10
+		},
+		{
+			"anim": {
+				"flags": [],
+				"t_end": 0,
+				"t_start": 0,
+				"vec3": [
+					{
+						"keys": [
+							{
+								"bias": -1.0,
+								"t": 0,
+								"tension": 1.0,
+								"v": [
+									7.186523324292533e-17,
+									6.030206884260166e-17,
+									0.0
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 1000000000,
+								"tension": 0.0,
+								"v": [
+									7.186523324292533e-17,
+									6.030206884260166e-17,
+									0.0
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 2500000000,
+								"tension": 0.0,
+								"v": [
+									7.186523324292533e-17,
+									6.030206884260166e-17,
+									-1.7453292608261108
+								]
+							}
+						],
+						"target": "Rotation"
+					}
+				]
+			},
+			"idx": 11
+		},
+		{
+			"anim": {
+				"flags": [],
+				"t_end": 0,
+				"t_start": 0,
+				"vec3": [
+					{
+						"keys": [
+							{
+								"bias": -1.0,
+								"t": 0,
+								"tension": 1.0,
+								"v": [
+									1.675516128540039,
+									0.0,
+									0.0
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 500000000,
+								"tension": 0.0,
+								"v": [
+									1.675516128540039,
+									0.0,
+									0.0
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 2000000000,
+								"tension": 0.0,
+								"v": [
+									0.0,
+									0.0,
+									0.0
+								]
+							}
+						],
+						"target": "Rotation"
+					}
+				]
+			},
+			"idx": 12
+		},
+		{
+			"anim": {
+				"flags": [],
+				"t_end": 0,
+				"t_start": 0,
+				"vec3": [
+					{
+						"keys": [
+							{
+								"bias": 0.0,
+								"t": 0,
+								"tension": 0.0,
+								"v": [
+									0.0,
+									0.0,
+									1.675516128540039
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 1100000000,
+								"tension": 0.0,
+								"v": [
+									0.0,
+									0.0,
+									0.0
+								]
+							}
+						],
+						"target": "Rotation"
+					}
+				]
+			},
+			"idx": 13
+		},
+		{
+			"anim": {
+				"bool": [
+					{
+						"keys": [
+							{
+								"t": 0,
+								"v": true
+							}
+						],
+						"target": "Enable"
+					}
+				],
+				"flags": [],
+				"t_end": 0,
+				"t_start": 0
+			},
+			"idx": 14
+		},
+		{
+			"anim": {
+				"flags": [],
+				"t_end": 0,
+				"t_start": 0,
+				"vec3": [
+					{
+						"keys": [
+							{
+								"bias": 0.0,
+								"t": 0,
+								"tension": 0.0,
+								"v": [
+									0.0,
+									0.0,
+									0.0
+								]
+							},
+							{
+								"bias": -1.0,
+								"t": 1000000000,
+								"tension": 1.0,
+								"v": [
+									0.0,
+									0.0,
+									-1.483529806137085
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 2000000000,
+								"tension": 0.0,
+								"v": [
+									0.0,
+									0.0,
+									-1.483529806137085
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 3250000000,
+								"tension": 0.0,
+								"v": [
+									0.0,
+									0.0,
+									0.0
+								]
+							}
+						],
+						"target": "Rotation"
+					}
+				]
+			},
+			"idx": 15
+		},
+		{
+			"anim": {
+				"flags": [],
+				"t_end": 0,
+				"t_start": 0,
+				"vec3": [
+					{
+						"keys": [
+							{
+								"bias": -1.0,
+								"t": 0,
+								"tension": 1.0,
+								"v": [
+									0.0,
+									0.0,
+									-1.5707963705062866
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 1000000000,
+								"tension": 0.0,
+								"v": [
+									0.0,
+									0.0,
+									-1.5707963705062866
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 2500000000,
+								"tension": 0.0,
+								"v": [
+									0.0,
+									0.0,
+									0.0
+								]
+							}
+						],
+						"target": "Rotation"
+					},
+					{
+						"keys": [
+							{
+								"bias": -1.0,
+								"t": 0,
+								"tension": 1.0,
+								"v": [
+									1.9200388193130493,
+									-0.44155216217041016,
+									0.7543103694915771
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 1000000000,
+								"tension": 0.0,
+								"v": [
+									1.9200388193130493,
+									-0.44155216217041016,
+									0.7543103694915771
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 2500000000,
+								"tension": 0.0,
+								"v": [
+									1.6979542970657349,
+									-0.3715944290161133,
+									0.7543103694915771
+								]
+							}
+						],
+						"target": "Position"
+					}
+				]
+			},
+			"idx": 16
+		},
+		{
+			"anim": {
+				"flags": [],
+				"t_end": 0,
+				"t_start": 0,
+				"vec3": [
+					{
+						"keys": [
+							{
+								"bias": -1.0,
+								"t": 0,
+								"tension": 1.0,
+								"v": [
+									7.186523324292533e-17,
+									-6.030206884260166e-17,
+									0.0
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 1000000000,
+								"tension": 0.0,
+								"v": [
+									7.186523324292533e-17,
+									-6.030206884260166e-17,
+									0.0
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 2500000000,
+								"tension": 0.0,
+								"v": [
+									7.186523324292533e-17,
+									-6.030207546004656e-17,
+									1.7453292608261108
+								]
+							}
+						],
+						"target": "Rotation"
+					}
+				]
+			},
+			"idx": 17
+		},
+		{
+			"anim": {
+				"flags": [],
+				"t_end": 0,
+				"t_start": 0,
+				"vec3": [
+					{
+						"keys": [
+							{
+								"bias": -1.0,
+								"t": 0,
+								"tension": 1.0,
+								"v": [
+									0.0,
+									0.0,
+									1.5707963705062866
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 1000000000,
+								"tension": 0.0,
+								"v": [
+									0.0,
+									0.0,
+									1.5707963705062866
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 2500000000,
+								"tension": 0.0,
+								"v": [
+									0.0,
+									0.0,
+									0.0
+								]
+							}
+						],
+						"target": "Rotation"
+					},
+					{
+						"keys": [
+							{
+								"bias": -1.0,
+								"t": 0,
+								"tension": 1.0,
+								"v": [
+									-2.0003247261047363,
+									-0.4353037476539612,
+									0.7543099522590637
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 1000000000,
+								"tension": 0.0,
+								"v": [
+									-2.0003247261047363,
+									-0.4353037476539612,
+									0.7543099522590637
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 2500000000,
+								"tension": 0.0,
+								"v": [
+									-1.7548391819000244,
+									-0.3715943396091461,
+									0.7543099522590637
+								]
+							}
+						],
+						"target": "Position"
+					}
+				]
+			},
+			"idx": 18
+		},
+		{
+			"anim": {
+				"flags": [],
+				"t_end": 0,
+				"t_start": 0,
+				"vec3": [
+					{
+						"keys": [
+							{
+								"bias": 0.0,
+								"t": 0,
+								"tension": 0.0,
+								"v": [
+									0.0,
+									0.0,
+									0.0
+								]
+							},
+							{
+								"bias": -1.0,
+								"t": 1000000000,
+								"tension": 1.0,
+								"v": [
+									0.0,
+									0.0,
+									1.483529806137085
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 2000000000,
+								"tension": 0.0,
+								"v": [
+									0.0,
+									0.0,
+									1.483529806137085
+								]
+							},
+							{
+								"bias": 0.0,
+								"t": 3250000000,
+								"tension": 0.0,
+								"v": [
+									0.0,
+									0.0,
+									0.0
+								]
+							}
+						],
+						"target": "Rotation"
+					}
+				]
+			},
+			"idx": 19
+		},
+		{
+			"anim": {
+				"bool": [
+					{
+						"keys": [
+							{
+								"t": 0,
+								"v": true
+							}
+						],
+						"target": "Enable"
+					}
+				],
+				"flags": [],
+				"t_end": 0,
+				"t_start": 0
+			},
+			"idx": 20
+		},
+		{
+			"anim": {
+				"bool": [
+					{
+						"keys": [
+							{
+								"t": 0,
+								"v": true
+							}
+						],
+						"target": "Enable"
+					}
+				],
+				"flags": [],
+				"t_end": 0,
+				"t_start": 0
+			},
+			"idx": 21
+		}
+	],
+	"canvas": {
+		"clear_color": true,
+		"clear_z": true,
+		"color": [
+			0,
+			0,
+			0,
+			255
+		]
+	},
+	"environment": {
+		"ambient": [
+			0,
+			0,
+			0,
+			255
+		],
+		"brdf_map": "core/pbr/brdf.dds",
+		"current_camera": null,
+		"fog_color": [
+			255,
+			255,
+			255,
+			255
+		],
+		"fog_far": 0.0,
+		"fog_near": 0.0,
+		"irradiance_map": "core/pbr/probe.hdr.irradiance",
+		"radiance_map": "core/pbr/probe.hdr.radiance"
+	},
+	"key_values": null,
+	"nodes": [
+		{
+			"components": [
+				0,
+				4294967295,
+				0,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 0,
+			"name": "dummy_eurofighter"
+		},
+		{
+			"components": [
+				1,
+				4294967295,
+				1,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 1,
+			"name": "EurofighterHull"
+		},
+		{
+			"components": [
+				2,
+				4294967295,
+				2,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 2,
+			"name": "CockpitScreen"
+		},
+		{
+			"components": [
+				3,
+				4294967295,
+				3,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 3,
+			"name": "Cockpit"
+		},
+		{
+			"components": [
+				4,
+				4294967295,
+				4,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 4,
+			"name": "wing_flap2_l"
+		},
+		{
+			"components": [
+				5,
+				4294967295,
+				5,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 5,
+			"name": "wing_flap2_r"
+		},
+		{
+			"components": [
+				6,
+				4294967295,
+				6,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 6,
+			"name": "dummy_brake_flap"
+		},
+		{
+			"components": [
+				7,
+				4294967295,
+				7,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 7,
+			"name": "brake_flap"
+		},
+		{
+			"components": [
+				8,
+				4294967295,
+				8,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 8,
+			"name": "dummy_brake_handle"
+		},
+		{
+			"components": [
+				9,
+				4294967295,
+				9,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 9,
+			"name": "brake_handle"
+		},
+		{
+			"components": [
+				10,
+				4294967295,
+				10,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 10,
+			"name": "dummy_rudder"
+		},
+		{
+			"components": [
+				11,
+				4294967295,
+				11,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 11,
+			"name": "rudder"
+		},
+		{
+			"components": [
+				12,
+				4294967295,
+				12,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 12,
+			"name": "dummy_gear_flap2_l"
+		},
+		{
+			"components": [
+				13,
+				4294967295,
+				13,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 13,
+			"name": "gear_flap2_l"
+		},
+		{
+			"components": [
+				14,
+				4294967295,
+				14,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 14,
+			"name": "dummy_gear_flap1_l"
+		},
+		{
+			"components": [
+				15,
+				4294967295,
+				15,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 15,
+			"name": "gear_flap1_l"
+		},
+		{
+			"components": [
+				16,
+				4294967295,
+				16,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 16,
+			"name": "dummy_gear_flap1_r"
+		},
+		{
+			"components": [
+				17,
+				4294967295,
+				17,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 17,
+			"name": "gear_flap1_r"
+		},
+		{
+			"components": [
+				18,
+				4294967295,
+				18,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 18,
+			"name": "dummy_gear_flap2_r"
+		},
+		{
+			"components": [
+				19,
+				4294967295,
+				19,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 19,
+			"name": "gear_flap2_r"
+		},
+		{
+			"components": [
+				20,
+				4294967295,
+				20,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 20,
+			"name": "dummy_gear_flap_fr"
+		},
+		{
+			"components": [
+				21,
+				4294967295,
+				21,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 21,
+			"name": "gear_flap_fr"
+		},
+		{
+			"components": [
+				22,
+				4294967295,
+				22,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 22,
+			"name": "dummy_gear_bk_l"
+		},
+		{
+			"components": [
+				23,
+				4294967295,
+				23,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 23,
+			"name": "gear_bk_l"
+		},
+		{
+			"components": [
+				24,
+				4294967295,
+				24,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 24,
+			"name": "dummy_gear_bk_r"
+		},
+		{
+			"components": [
+				25,
+				4294967295,
+				25,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 25,
+			"name": "gear_bk_r"
+		},
+		{
+			"components": [
+				26,
+				4294967295,
+				26,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 26,
+			"name": "dummy_gear_fr"
+		},
+		{
+			"components": [
+				27,
+				4294967295,
+				27,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 27,
+			"name": "gear_fr"
+		},
+		{
+			"components": [
+				28,
+				4294967295,
+				28,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 28,
+			"name": "dummy_elevator"
+		},
+		{
+			"components": [
+				29,
+				4294967295,
+				29,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 29,
+			"name": "elevator"
+		},
+		{
+			"components": [
+				30,
+				4294967295,
+				30,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 30,
+			"name": "dummy_wing_flap_r"
+		},
+		{
+			"components": [
+				31,
+				4294967295,
+				31,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 31,
+			"name": "wing_flap_r"
+		},
+		{
+			"components": [
+				32,
+				4294967295,
+				32,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 32,
+			"name": "dummy_wing_flap_l"
+		},
+		{
+			"components": [
+				33,
+				4294967295,
+				33,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 33,
+			"name": "wing_flap_l"
+		},
+		{
+			"components": [
+				34,
+				4294967295,
+				34,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 34,
+			"name": "missile_slot.001"
+		},
+		{
+			"components": [
+				35,
+				4294967295,
+				35,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 35,
+			"name": "missile_slot.002"
+		},
+		{
+			"components": [
+				36,
+				4294967295,
+				36,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 36,
+			"name": "missile_slot.003"
+		},
+		{
+			"components": [
+				37,
+				4294967295,
+				37,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 37,
+			"name": "missile_slot.004"
+		},
+		{
+			"components": [
+				38,
+				4294967295,
+				38,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 38,
+			"name": "missile_slot.005"
+		},
+		{
+			"components": [
+				39,
+				4294967295,
+				39,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 39,
+			"name": "missile_slot.006"
+		},
+		{
+			"components": [
+				40,
+				4294967295,
+				40,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 40,
+			"name": "engine_slot.001"
+		},
+		{
+			"components": [
+				41,
+				4294967295,
+				41,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 41,
+			"name": "engine_slot.002"
+		},
+		{
+			"components": [
+				42,
+				4294967295,
+				42,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 42,
+			"name": "machine_gun_slot.007"
+		},
+		{
+			"components": [
+				43,
+				4294967295,
+				43,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 43,
+			"name": "col_shape.001"
+		},
+		{
+			"components": [
+				44,
+				4294967295,
+				44,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 44,
+			"name": "col_shape.002"
+		},
+		{
+			"components": [
+				45,
+				4294967295,
+				45,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 45,
+			"name": "col_shape.003"
+		},
+		{
+			"components": [
+				46,
+				4294967295,
+				46,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 46,
+			"name": "col_shape.004"
+		},
+		{
+			"components": [
+				47,
+				4294967295,
+				47,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 47,
+			"name": "col_shape.005"
+		},
+		{
+			"components": [
+				48,
+				4294967295,
+				48,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 48,
+			"name": "col_shape.006"
+		},
+		{
+			"components": [
+				49,
+				4294967295,
+				4294967295,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 49,
+			"name": "pilote_body.01"
+		},
+		{
+			"components": [
+				50,
+				4294967295,
+				4294967295,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 50,
+			"name": "pilote_head.01"
+		}
+	],
+	"objects": [
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_dummy"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.2025315761566162,
+								1.0,
+								0.0,
+								0.5040000081062317
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.2635795772075653,
+								0.594936728477478,
+								0.3049992024898529,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/dummy_eurofighter.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "EurofighterShader"
+				},
+				{
+					"name": "GlassShader"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/eurofighter/Eurofighter_diff.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/eurofighter/Eurofighter_Normal.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/eurofighter/Eurofighter4k_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.75,
+								0.75,
+								0.75,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								9.999999974752427e-07,
+								9.999899930335232e-07,
+								9.999899930335232e-07,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.9999899864196777,
+								0.9999899864196777,
+								0.3959999978542328
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.035999998450279236,
+								1.0,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								9.999999974752427e-07,
+								9.999899930335232e-07,
+								9.999899930335232e-07,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/EurofighterHull.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "EurofighterShader"
+				},
+				{
+					"name": "GlassShader"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/eurofighter/Eurofighter_diff.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/eurofighter/Eurofighter_Normal.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/eurofighter/Eurofighter4k_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.75,
+								0.75,
+								0.75,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								9.999999974752427e-07,
+								9.999899930335232e-07,
+								9.999899930335232e-07,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.9999899864196777,
+								0.9999899864196777,
+								0.3959999978542328
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.035999998450279236,
+								1.0,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								9.999999974752427e-07,
+								9.999899930335232e-07,
+								9.999899930335232e-07,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/CockpitScreen.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "BlackMetalShader"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								9.999999974752427e-07,
+								9.999899930335232e-07,
+								9.999899930335232e-07,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								0.9380000233650208,
+								0.6740000247955322,
+								0.3100000023841858,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								9.999999974752427e-07,
+								9.999899930335232e-07,
+								9.999899930335232e-07,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/Cockpit.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "EurofighterShader"
+				},
+				{
+					"name": "GlassShader"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/eurofighter/Eurofighter_diff.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/eurofighter/Eurofighter_Normal.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/eurofighter/Eurofighter4k_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.75,
+								0.75,
+								0.75,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								9.999999974752427e-07,
+								9.999899930335232e-07,
+								9.999899930335232e-07,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.2393224984407425,
+								0.2393224984407425,
+								0.2393224984407425,
+								0.19175612926483154
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.11966124922037125,
+								0.11966124922037125,
+								0.11966124922037125,
+								0.5
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/wing_flap2_l.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "EurofighterShader"
+				},
+				{
+					"name": "GlassShader"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/eurofighter/Eurofighter_diff.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/eurofighter/Eurofighter_Normal.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/eurofighter/Eurofighter4k_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.75,
+								0.75,
+								0.75,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								9.999999974752427e-07,
+								9.999899930335232e-07,
+								9.999899930335232e-07,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.2393224984407425,
+								0.2393224984407425,
+								0.2393224984407425,
+								0.19175612926483154
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.11966124922037125,
+								0.11966124922037125,
+								0.11966124922037125,
+								0.5
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/wing_flap2_r.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_dummy"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.2025315761566162,
+								1.0,
+								0.0,
+								0.5040000081062317
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.2635795772075653,
+								0.594936728477478,
+								0.3049992024898529,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/dummy_brake_flap.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "EurofighterShader"
+				},
+				{
+					"name": "GlassShader"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/eurofighter/Eurofighter_diff.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/eurofighter/Eurofighter_Normal.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/eurofighter/Eurofighter4k_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.75,
+								0.75,
+								0.75,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								9.999999974752427e-07,
+								9.999899930335232e-07,
+								9.999899930335232e-07,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.2393224984407425,
+								0.2393224984407425,
+								0.2393224984407425,
+								0.19175612926483154
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.11966124922037125,
+								0.11966124922037125,
+								0.11966124922037125,
+								0.5
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/brake_flap.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_dummy"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.2025315761566162,
+								1.0,
+								0.0,
+								0.5040000081062317
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.2635795772075653,
+								0.594936728477478,
+								0.3049992024898529,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/dummy_brake_handle.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "EurofighterShader"
+				},
+				{
+					"name": "GlassShader"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/eurofighter/Eurofighter_diff.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/eurofighter/Eurofighter_Normal.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/eurofighter/Eurofighter4k_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.75,
+								0.75,
+								0.75,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								9.999999974752427e-07,
+								9.999899930335232e-07,
+								9.999899930335232e-07,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.2393224984407425,
+								0.2393224984407425,
+								0.2393224984407425,
+								0.19175612926483154
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.11966124922037125,
+								0.11966124922037125,
+								0.11966124922037125,
+								0.5
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/brake_handle.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_dummy"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.2025315761566162,
+								1.0,
+								0.0,
+								0.5040000081062317
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.2635795772075653,
+								0.594936728477478,
+								0.3049992024898529,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/dummy_rudder.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "EurofighterShader"
+				},
+				{
+					"name": "GlassShader"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/eurofighter/Eurofighter_diff.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/eurofighter/Eurofighter_Normal.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/eurofighter/Eurofighter4k_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.75,
+								0.75,
+								0.75,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								9.999999974752427e-07,
+								9.999899930335232e-07,
+								9.999899930335232e-07,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.2393224984407425,
+								0.2393224984407425,
+								0.2393224984407425,
+								0.19175612926483154
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.11966124922037125,
+								0.11966124922037125,
+								0.11966124922037125,
+								0.5
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/rudder.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_dummy"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.2025315761566162,
+								1.0,
+								0.0,
+								0.5040000081062317
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.2635795772075653,
+								0.594936728477478,
+								0.3049992024898529,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/dummy_gear_flap2_l.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "EurofighterShader"
+				},
+				{
+					"name": "GlassShader"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/eurofighter/Eurofighter_diff.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/eurofighter/Eurofighter_Normal.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/eurofighter/Eurofighter4k_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.75,
+								0.75,
+								0.75,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								9.999999974752427e-07,
+								9.999899930335232e-07,
+								9.999899930335232e-07,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.2393224984407425,
+								0.2393224984407425,
+								0.2393224984407425,
+								0.19175612926483154
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.11966124922037125,
+								0.11966124922037125,
+								0.11966124922037125,
+								0.5
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/gear_flap2_l.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_dummy"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.2025315761566162,
+								1.0,
+								0.0,
+								0.5040000081062317
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.2635795772075653,
+								0.594936728477478,
+								0.3049992024898529,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/dummy_gear_flap1_l.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "EurofighterShader"
+				},
+				{
+					"name": "GlassShader"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/eurofighter/Eurofighter_diff.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/eurofighter/Eurofighter_Normal.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/eurofighter/Eurofighter4k_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.75,
+								0.75,
+								0.75,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								9.999999974752427e-07,
+								9.999899930335232e-07,
+								9.999899930335232e-07,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.2393224984407425,
+								0.2393224984407425,
+								0.2393224984407425,
+								0.19175612926483154
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.11966124922037125,
+								0.11966124922037125,
+								0.11966124922037125,
+								0.5
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/gear_flap1_l.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_dummy"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.2025315761566162,
+								1.0,
+								0.0,
+								0.5040000081062317
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.2635795772075653,
+								0.594936728477478,
+								0.3049992024898529,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/dummy_gear_flap1_r.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "EurofighterShader"
+				},
+				{
+					"name": "GlassShader"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/eurofighter/Eurofighter_diff.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/eurofighter/Eurofighter_Normal.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/eurofighter/Eurofighter4k_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.75,
+								0.75,
+								0.75,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								9.999999974752427e-07,
+								9.999899930335232e-07,
+								9.999899930335232e-07,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.2393224984407425,
+								0.2393224984407425,
+								0.2393224984407425,
+								0.19175612926483154
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.11966124922037125,
+								0.11966124922037125,
+								0.11966124922037125,
+								0.5
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/gear_flap1_r.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_dummy"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.2025315761566162,
+								1.0,
+								0.0,
+								0.5040000081062317
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.2635795772075653,
+								0.594936728477478,
+								0.3049992024898529,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/dummy_gear_flap2_r.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "EurofighterShader"
+				},
+				{
+					"name": "GlassShader"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/eurofighter/Eurofighter_diff.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/eurofighter/Eurofighter_Normal.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/eurofighter/Eurofighter4k_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.75,
+								0.75,
+								0.75,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								9.999999974752427e-07,
+								9.999899930335232e-07,
+								9.999899930335232e-07,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.2393224984407425,
+								0.2393224984407425,
+								0.2393224984407425,
+								0.19175612926483154
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.11966124922037125,
+								0.11966124922037125,
+								0.11966124922037125,
+								0.5
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/gear_flap2_r.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_dummy"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.2025315761566162,
+								1.0,
+								0.0,
+								0.5040000081062317
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.2635795772075653,
+								0.594936728477478,
+								0.3049992024898529,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/dummy_gear_flap_fr.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "EurofighterShader"
+				},
+				{
+					"name": "GlassShader"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/eurofighter/Eurofighter_diff.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/eurofighter/Eurofighter_Normal.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/eurofighter/Eurofighter4k_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.75,
+								0.75,
+								0.75,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								9.999999974752427e-07,
+								9.999899930335232e-07,
+								9.999899930335232e-07,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.2393224984407425,
+								0.2393224984407425,
+								0.2393224984407425,
+								0.19175612926483154
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.11966124922037125,
+								0.11966124922037125,
+								0.11966124922037125,
+								0.5
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/gear_flap_fr.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_dummy"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.2025315761566162,
+								1.0,
+								0.0,
+								0.5040000081062317
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.2635795772075653,
+								0.594936728477478,
+								0.3049992024898529,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/dummy_gear_bk_l.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "EurofighterShader"
+				},
+				{
+					"name": "GlassShader"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/eurofighter/Eurofighter_diff.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/eurofighter/Eurofighter_Normal.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/eurofighter/Eurofighter4k_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.75,
+								0.75,
+								0.75,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								9.999999974752427e-07,
+								9.999899930335232e-07,
+								9.999899930335232e-07,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.2393224984407425,
+								0.2393224984407425,
+								0.2393224984407425,
+								0.19175612926483154
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.11966124922037125,
+								0.11966124922037125,
+								0.11966124922037125,
+								0.5
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/gear_bk_l.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_dummy"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.2025315761566162,
+								1.0,
+								0.0,
+								0.5040000081062317
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.2635795772075653,
+								0.594936728477478,
+								0.3049992024898529,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/dummy_gear_bk_r.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "EurofighterShader"
+				},
+				{
+					"name": "GlassShader"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/eurofighter/Eurofighter_diff.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/eurofighter/Eurofighter_Normal.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/eurofighter/Eurofighter4k_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.75,
+								0.75,
+								0.75,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								9.999999974752427e-07,
+								9.999899930335232e-07,
+								9.999899930335232e-07,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.2393224984407425,
+								0.2393224984407425,
+								0.2393224984407425,
+								0.19175612926483154
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.11966124922037125,
+								0.11966124922037125,
+								0.11966124922037125,
+								0.5
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/gear_bk_r.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_dummy"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.2025315761566162,
+								1.0,
+								0.0,
+								0.5040000081062317
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.2635795772075653,
+								0.594936728477478,
+								0.3049992024898529,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/dummy_gear_fr.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "EurofighterShader"
+				},
+				{
+					"name": "GlassShader"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/eurofighter/Eurofighter_diff.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/eurofighter/Eurofighter_Normal.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/eurofighter/Eurofighter4k_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.75,
+								0.75,
+								0.75,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								9.999999974752427e-07,
+								9.999899930335232e-07,
+								9.999899930335232e-07,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.2393224984407425,
+								0.2393224984407425,
+								0.2393224984407425,
+								0.19175612926483154
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.11966124922037125,
+								0.11966124922037125,
+								0.11966124922037125,
+								0.5
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/gear_fr.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_dummy"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.2025315761566162,
+								1.0,
+								0.0,
+								0.5040000081062317
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.2635795772075653,
+								0.594936728477478,
+								0.3049992024898529,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/dummy_elevator.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "EurofighterShader"
+				},
+				{
+					"name": "GlassShader"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/eurofighter/Eurofighter_diff.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/eurofighter/Eurofighter_Normal.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/eurofighter/Eurofighter4k_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.75,
+								0.75,
+								0.75,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								9.999999974752427e-07,
+								9.999899930335232e-07,
+								9.999899930335232e-07,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.2393224984407425,
+								0.2393224984407425,
+								0.2393224984407425,
+								0.19175612926483154
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.11966124922037125,
+								0.11966124922037125,
+								0.11966124922037125,
+								0.5
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/elevator.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_dummy"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.2025315761566162,
+								1.0,
+								0.0,
+								0.5040000081062317
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.2635795772075653,
+								0.594936728477478,
+								0.3049992024898529,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/dummy_wing_flap_r.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "EurofighterShader"
+				},
+				{
+					"name": "GlassShader"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/eurofighter/Eurofighter_diff.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/eurofighter/Eurofighter_Normal.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/eurofighter/Eurofighter4k_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.75,
+								0.75,
+								0.75,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								9.999999974752427e-07,
+								9.999899930335232e-07,
+								9.999899930335232e-07,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.2393224984407425,
+								0.2393224984407425,
+								0.2393224984407425,
+								0.19175612926483154
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.11966124922037125,
+								0.11966124922037125,
+								0.11966124922037125,
+								0.5
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/wing_flap_r.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_dummy"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.2025315761566162,
+								1.0,
+								0.0,
+								0.5040000081062317
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.2635795772075653,
+								0.594936728477478,
+								0.3049992024898529,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/dummy_wing_flap_l.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "EurofighterShader"
+				},
+				{
+					"name": "GlassShader"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "opaque",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"textures": [
+						{
+							"name": "uBaseOpacityMap",
+							"path": "machines/eurofighter/Eurofighter_diff.png",
+							"stage": 0
+						},
+						{
+							"name": "uNormalMap",
+							"path": "machines/eurofighter/Eurofighter_Normal.png",
+							"stage": 2
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessMap",
+							"path": "machines/eurofighter/Eurofighter4k_ORM.png",
+							"stage": 1
+						}
+					],
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.75,
+								0.75,
+								0.75,
+								1.0
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								9.999999974752427e-07,
+								9.999899930335232e-07,
+								9.999899930335232e-07,
+								-1.0
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				},
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/default.hps",
+					"values": [
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.2393224984407425,
+								0.2393224984407425,
+								0.2393224984407425,
+								0.19175612926483154
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								1.0,
+								1.0,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.11966124922037125,
+								0.11966124922037125,
+								0.11966124922037125,
+								0.5
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/wing_flap_l.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_slot"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.984126091003418,
+								1.0,
+								0.0,
+								0.5640000104904175
+							]
+						},
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.8000000715255737,
+								0.6575765013694763,
+								0.0,
+								0.2514285445213318
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.29009032249450684,
+								0.29535865783691406,
+								0.21809184551239014,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.20000001788139343,
+								0.16439412534236908,
+								0.0,
+								0.390625
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/missile_slot.001.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_slot"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.984126091003418,
+								1.0,
+								0.0,
+								0.5640000104904175
+							]
+						},
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.8000000715255737,
+								0.6575765013694763,
+								0.0,
+								0.2514285445213318
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.29009032249450684,
+								0.29535865783691406,
+								0.21809184551239014,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.20000001788139343,
+								0.16439412534236908,
+								0.0,
+								0.390625
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/missile_slot.002.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_slot"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.984126091003418,
+								1.0,
+								0.0,
+								0.5640000104904175
+							]
+						},
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.8000000715255737,
+								0.6575765013694763,
+								0.0,
+								0.2514285445213318
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.29009032249450684,
+								0.29535865783691406,
+								0.21809184551239014,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.20000001788139343,
+								0.16439412534236908,
+								0.0,
+								0.390625
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/missile_slot.003.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_slot"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.984126091003418,
+								1.0,
+								0.0,
+								0.5640000104904175
+							]
+						},
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.8000000715255737,
+								0.6575765013694763,
+								0.0,
+								0.2514285445213318
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.29009032249450684,
+								0.29535865783691406,
+								0.21809184551239014,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.20000001788139343,
+								0.16439412534236908,
+								0.0,
+								0.390625
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/missile_slot.004.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_slot"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.984126091003418,
+								1.0,
+								0.0,
+								0.5640000104904175
+							]
+						},
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.8000000715255737,
+								0.6575765013694763,
+								0.0,
+								0.2514285445213318
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.29009032249450684,
+								0.29535865783691406,
+								0.21809184551239014,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.20000001788139343,
+								0.16439412534236908,
+								0.0,
+								0.390625
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/missile_slot.005.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_slot"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.984126091003418,
+								1.0,
+								0.0,
+								0.5640000104904175
+							]
+						},
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.8000000715255737,
+								0.6575765013694763,
+								0.0,
+								0.2514285445213318
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.29009032249450684,
+								0.29535865783691406,
+								0.21809184551239014,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.20000001788139343,
+								0.16439412534236908,
+								0.0,
+								0.390625
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/missile_slot.006.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_slot"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.984126091003418,
+								1.0,
+								0.0,
+								0.5640000104904175
+							]
+						},
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.8000000715255737,
+								0.6575765013694763,
+								0.0,
+								0.2514285445213318
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.29009032249450684,
+								0.29535865783691406,
+								0.21809184551239014,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.20000001788139343,
+								0.16439412534236908,
+								0.0,
+								0.390625
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/engine_slot.001.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_slot"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.984126091003418,
+								1.0,
+								0.0,
+								0.5640000104904175
+							]
+						},
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.8000000715255737,
+								0.6575765013694763,
+								0.0,
+								0.2514285445213318
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.29009032249450684,
+								0.29535865783691406,
+								0.21809184551239014,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.20000001788139343,
+								0.16439412534236908,
+								0.0,
+								0.390625
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/engine_slot.002.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "mat_slot"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								0.984126091003418,
+								1.0,
+								0.0,
+								0.5640000104904175
+							]
+						},
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.8000000715255737,
+								0.6575765013694763,
+								0.0,
+								0.2514285445213318
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.29009032249450684,
+								0.29535865783691406,
+								0.21809184551239014,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.20000001788139343,
+								0.16439412534236908,
+								0.0,
+								0.390625
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/machine_gun_slot.007.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "col_shape"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.0,
+								0.0,
+								0.28600001335144043
+							]
+						},
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.8000000715255737,
+								0.6575765013694763,
+								0.0,
+								0.2514285445213318
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.29009032249450684,
+								0.29535865783691406,
+								0.21809184551239014,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.20000001788139343,
+								0.16439412534236908,
+								0.0,
+								0.390625
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/col_shape.001.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "col_shape"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.0,
+								0.0,
+								0.2800000011920929
+							]
+						},
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.8000000715255737,
+								0.6575765013694763,
+								0.0,
+								0.2514285445213318
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.29009032249450684,
+								0.29535865783691406,
+								0.21809184551239014,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.20000001788139343,
+								0.16439412534236908,
+								0.0,
+								0.390625
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/col_shape.002.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "col_shape"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.0,
+								0.0,
+								0.24400000274181366
+							]
+						},
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.8000000715255737,
+								0.6575765013694763,
+								0.0,
+								0.2514285445213318
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.29009032249450684,
+								0.29535865783691406,
+								0.21809184551239014,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.20000001788139343,
+								0.16439412534236908,
+								0.0,
+								0.390625
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/col_shape.003.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "col_shape"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.0,
+								0.0,
+								0.33799999952316284
+							]
+						},
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.8000000715255737,
+								0.6575765013694763,
+								0.0,
+								0.2514285445213318
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.29009032249450684,
+								0.29535865783691406,
+								0.21809184551239014,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.20000001788139343,
+								0.16439412534236908,
+								0.0,
+								0.390625
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/col_shape.004.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "col_shape"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.0,
+								0.0,
+								0.20800000429153442
+							]
+						},
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.8000000715255737,
+								0.6575765013694763,
+								0.0,
+								0.2514285445213318
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.29009032249450684,
+								0.29535865783691406,
+								0.21809184551239014,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.20000001788139343,
+								0.16439412534236908,
+								0.0,
+								0.390625
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/col_shape.005.geo"
+		},
+		{
+			"bones": [],
+			"material_infos": [
+				{
+					"name": "col_shape"
+				}
+			],
+			"materials": [
+				{
+					"blend_mode": "alpha",
+					"depth_test": "less",
+					"face_culling": "cw",
+					"flags": [],
+					"program": "core/shader/pbr.hps",
+					"values": [
+						{
+							"name": "uBaseOpacityColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.0,
+								0.0,
+								0.2639999985694885
+							]
+						},
+						{
+							"name": "uDiffuseColor",
+							"type": "vec4",
+							"value": [
+								0.8000000715255737,
+								0.6575765013694763,
+								0.0,
+								0.2514285445213318
+							]
+						},
+						{
+							"name": "uOcclusionRoughnessMetalnessColor",
+							"type": "vec4",
+							"value": [
+								1.0,
+								0.5,
+								0.10000000149011612,
+								1.0
+							]
+						},
+						{
+							"name": "uSelfColor",
+							"type": "vec4",
+							"value": [
+								0.29009032249450684,
+								0.29535865783691406,
+								0.21809184551239014,
+								-1.0
+							]
+						},
+						{
+							"name": "uSpecularColor",
+							"type": "vec4",
+							"value": [
+								0.20000001788139343,
+								0.16439412534236908,
+								0.0,
+								0.390625
+							]
+						}
+					],
+					"write_a": true,
+					"write_b": true,
+					"write_g": true,
+					"write_r": true,
+					"write_z": true
+				}
+			],
+			"name": "machines/eurofighter/col_shape.006.geo"
+		}
+	],
+	"scene_anims": [
+		{
+			"anim": null,
+			"frame_duration": 50000000,
+			"name": "gear_close",
+			"node_anims": [
+				{
+					"anim": 0,
+					"node": 26
+				},
+				{
+					"anim": 1,
+					"node": 20
+				},
+				{
+					"anim": 2,
+					"node": 14
+				},
+				{
+					"anim": 3,
+					"node": 22
+				},
+				{
+					"anim": 4,
+					"node": 16
+				},
+				{
+					"anim": 5,
+					"node": 24
+				},
+				{
+					"anim": 6,
+					"node": 12
+				},
+				{
+					"anim": 7,
+					"node": 18
+				},
+				{
+					"anim": 8,
+					"node": 23
+				},
+				{
+					"anim": 9,
+					"node": 25
+				},
+				{
+					"anim": 10,
+					"node": 27
+				}
+			],
+			"t_end": 3549999872,
+			"t_start": 0
+		},
+		{
+			"anim": null,
+			"frame_duration": 50000000,
+			"name": "gear_open",
+			"node_anims": [
+				{
+					"anim": 11,
+					"node": 12
+				},
+				{
+					"anim": 12,
+					"node": 26
+				},
+				{
+					"anim": 13,
+					"node": 20
+				},
+				{
+					"anim": 14,
+					"node": 27
+				},
+				{
+					"anim": 15,
+					"node": 16
+				},
+				{
+					"anim": 16,
+					"node": 24
+				},
+				{
+					"anim": 17,
+					"node": 18
+				},
+				{
+					"anim": 18,
+					"node": 22
+				},
+				{
+					"anim": 19,
+					"node": 14
+				},
+				{
+					"anim": 20,
+					"node": 25
+				},
+				{
+					"anim": 21,
+					"node": 23
+				}
+			],
+			"t_end": 3549999872,
+			"t_start": 0
+		}
+	],
+	"transforms": [
+		{
+			"parent": null,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				9.334663445770275e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-0.02844151109457016,
+				0.9647278785705566,
+				4.037134647369385
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-0.02764081209897995,
+				0.3586740493774414,
+				6.258327484130859
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-4.283943176269531,
+				-0.3678191006183624,
+				-1.9409784078598022
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				4.227058410644531,
+				-0.3695361316204071,
+				-1.9386875629425049
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-0.028442783281207085,
+				0.7730138301849365,
+				3.8921942710876465
+			],
+			"rot": [
+				33.09999465942383,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 6,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-0.10206243395805359,
+				0.7300945520401001,
+				2.359523296356201
+			],
+			"rot": [
+				-47.452205657958984,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 8,
+			"pos": [
+				0.0,
+				0.0,
+				4.76837158203125e-07
+			],
+			"rot": [
+				-1.7075461755666765e-06,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-0.05499303713440895,
+				1.8872544765472412,
+				-4.1525702476501465
+			],
+			"rot": [
+				33.09999465942383,
+				180.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 10,
+			"pos": [
+				0.0,
+				-3.5762786865234375e-07,
+				-2.384185791015625e-07
+			],
+			"rot": [
+				-33.09999465942383,
+				0.0,
+				3.575833748027668e-13
+			],
+			"scl": [
+				1.0,
+				0.9999998807907104,
+				0.9999998807907104
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-2.0018415451049805,
+				-0.5507115125656128,
+				0.6847020983695984
+			],
+			"rot": [
+				4.117574540335976e-15,
+				3.4550539563556323e-15,
+				-99.99998474121094
+			],
+			"scl": [
+				0.9999998807907104,
+				0.9999998807907104,
+				1.0
+			]
+		},
+		{
+			"parent": 12,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				-1.0455712384480155e-21,
+				0.0,
+				0.0
+			],
+			"scl": [
+				0.9999999403953552,
+				1.0000001192092896,
+				0.9999998211860657
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-0.2865157723426819,
+				-0.885859489440918,
+				0.7571659088134766
+			],
+			"rot": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				0.9999999403953552,
+				0.9999999403953552,
+				1.0
+			]
+		},
+		{
+			"parent": 14,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				0.9999999403953552,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				0.22537249326705933,
+				-0.8873234987258911,
+				0.7571659088134766
+			],
+			"rot": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 16,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				2.0911418962944047e-22,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				0.9999999403953552,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				1.9449564218521118,
+				-0.5511031150817871,
+				0.6847026944160461
+			],
+			"rot": [
+				4.117574540335976e-15,
+				-3.4550539563556323e-15,
+				99.99998474121094
+			],
+			"scl": [
+				0.9999998807907104,
+				0.9999998807907104,
+				1.0
+			]
+		},
+		{
+			"parent": 18,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				-6.27342531022998e-22,
+				0.0,
+				0.0
+			],
+			"scl": [
+				0.9999998211860657,
+				1.0000001192092896,
+				0.9999999403953552
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-0.27491581439971924,
+				-0.9618873596191406,
+				3.4420504570007324
+			],
+			"rot": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 20,
+			"pos": [
+				0.0,
+				0.0,
+				-8.170717080702161e-08
+			],
+			"rot": [
+				-0.0,
+				3.4914240688030743e-15,
+				-95.6309585571289
+			],
+			"scl": [
+				0.9999999403953552,
+				1.0,
+				0.9999999403953552
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-1.7548391819000244,
+				-0.3715943396091461,
+				0.7543099522590637
+			],
+			"rot": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				0.9999997615814209,
+				0.9999997615814209,
+				1.0
+			]
+		},
+		{
+			"parent": 22,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				1.6979542970657349,
+				-0.3715944290161133,
+				0.7543103694915771
+			],
+			"rot": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				0.9999997615814209,
+				0.9999997615814209,
+				1.0
+			]
+		},
+		{
+			"parent": 24,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-0.05856965482234955,
+				-0.6805515289306641,
+				4.087213516235352
+			],
+			"rot": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				0.9999999403953552,
+				0.9999999403953552
+			]
+		},
+		{
+			"parent": 26,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-0.02844303287565708,
+				-0.03311678022146225,
+				7.089078903198242
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 28,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				2.2597339153289795,
+				-0.3927428126335144,
+				-1.8857535123825073
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 30,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-2.3166182041168213,
+				-0.39348727464675903,
+				-1.8969498872756958
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 32,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				4.574888229370117,
+				-0.8908509612083435,
+				-0.6564604043960571
+			],
+			"rot": [
+				4.006571292877197,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				0.9999998807907104,
+				0.9999998807907104
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				3.754587411880493,
+				-0.6483237147331238,
+				-0.3019510507583618
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				2.137868881225586,
+				-0.7090027928352356,
+				-0.020128605887293816
+			],
+			"rot": [
+				0.941225528717041,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				0.9999998807907104,
+				0.9999998807907104
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-2.1993744373321533,
+				-0.7090027928352356,
+				-0.020128605887293816
+			],
+			"rot": [
+				0.941225528717041,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				0.9999998807907104,
+				0.9999998807907104
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-3.793030261993408,
+				-0.6483237147331238,
+				-0.3019510507583618
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-4.626143932342529,
+				-0.8908509612083435,
+				-0.6564604043960571
+			],
+			"rot": [
+				4.006571292877197,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				0.9999998807907104,
+				0.9999998807907104
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-0.5667552947998047,
+				-0.09703314304351807,
+				-4.146931171417236
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				0.5098716020584106,
+				-0.09703312814235687,
+				-4.146931171417236
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-0.009383201599121094,
+				-0.15768718719482422,
+				10.078165054321289
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				0.0,
+				-0.15967440605163574,
+				2.630000352859497
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				1.8539700508117676,
+				-0.34383800625801086,
+				0.43338900804519653
+			],
+			"rot": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-1.8539700508117676,
+				-0.34383800625801086,
+				0.43338900804519653
+			],
+			"rot": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				3.891619920730591,
+				-0.34383800625801086,
+				-0.7140499949455261
+			],
+			"rot": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				-3.891619920730591,
+				-0.34383800625801086,
+				-0.7140499949455261
+			],
+			"rot": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 0,
+			"pos": [
+				0.0,
+				1.7305200099945068,
+				-3.5432000160217285
+			],
+			"rot": [
+				-31.499998092651367,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 3,
+			"pos": [
+				0.0,
+				0.5970133543014526,
+				-0.15308204293251038
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		},
+		{
+			"parent": 49,
+			"pos": [
+				0.0,
+				0.07096874713897705,
+				0.04775888845324516
+			],
+			"rot": [
+				-0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			]
+		}
+	]
+}
