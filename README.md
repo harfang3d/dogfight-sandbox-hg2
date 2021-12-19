@@ -6,7 +6,7 @@ The game features :
 * Ocean / terrain shader
 * Skydome shader
 * Clouds
-* AI (Take-off, landing, fight)
+* Autopilot (Take-off, landing, fight)
 * Network mode
 
 The source code and the graphics assets are made available for studying purpose. However, you are free to fork this repository, extend the game or release anything that is based on it.
