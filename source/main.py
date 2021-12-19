@@ -29,7 +29,7 @@ for i in range(len(sys.argv)):
 
 # --------------- Compile assets:
 print("Compiling assets...")
-dc.run_command("bin\\assetc.exe assets -quiet -progress")
+dc.run_command("..\\bin\\assetc\\assetc.exe assets -quiet -progress")
 
 
 # --------------- Init system
