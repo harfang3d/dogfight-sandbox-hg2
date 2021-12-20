@@ -1,7 +1,7 @@
 {
 	"profiles": {
 		"default": {
-			"compression": "BC5",
+			"compression": "ETC2",
 			"type": "NormalMap"
 		}
 	}
