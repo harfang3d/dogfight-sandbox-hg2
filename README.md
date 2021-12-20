@@ -39,10 +39,13 @@ The "Network" mode allows you to control the planes from a third party machine.
 * Code & design:
   * Eric Kernin
 * 3D graphics: 
-  * Jean-Marie Lamarche & 
+  * Jean-Marie Lamarche
   * Bruno Lequitte
 * Technology & design advisory: 
+  * Muhammet Aksoy
+  * Pr. Emre Koyuncu
   * Michel Nault
+  * Muhammed Murat Özbek
   * Thomas Simonnet
 
 ## Screenshots
