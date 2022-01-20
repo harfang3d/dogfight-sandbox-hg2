@@ -7,7 +7,6 @@ from Machines import *
 class MissileLauncherS400(LandVehicle):
 	model_name = "Missile_Launcher"
 	instance_scene_name = "machines/missile_launcher/missile_launcher_exp.scn"
-	cockpit_instance_scene_name = "machines/missile_launcher/missile_launcher_exp.scn"
 
 	def __init__(self, name, scene, scene_physics, pipeline_ressource: hg.PipelineResources, nationality, start_position, start_rotation):
 		LandVehicle.__init__(self, name, MissileLauncherS400.model_name, scene, scene_physics, pipeline_ressource, MissileLauncherS400.instance_scene_name, nationality, start_position, start_rotation)

@@ -8,7 +8,6 @@ class TFX_Parameters:
 
     model_name = "TFX"
     instance_scene_name = "machines/tfx/TFX.scn"
-    cockpit_instance_scene_name = "machines/tfx/TFX.scn"
 
     def __init__(self):
         # Aircraft constants:
@@ -71,25 +70,3 @@ class TFX(Aircraft, TFX_Parameters):
 
         Aircraft.update_mobile_parts(self, dts)
 
-
-# Only animated aircraft, used for cockpit view
-
-
-class TFX_Cockpit(AnimatedModel, TFX_Parameters):
-
-    def __init__(self, name, scene, pipeline_ressource: hg.PipelineResources):
-        self.main_aircraft = None
-        AnimatedModel.__init__(self, name, TFX_Parameters.model_name, scene, pipeline_ressource, TFX_Parameters.cockpit_instance_scene_name)
-        TFX_Parameters.__init__(self)
-        self.define_mobile_parts(self.mobile_parts_definitions)
-
-    def destroy(self):
-        AnimatedModel.destroy_nodes(self)
-
-    def set_main_aircraft(self, aircraft: TFX):
-        self.main_aircraft = aircraft
-
-    def update_mobile_parts(self, dts):
-        if self.main_aircraft is not None:
-            self.copy_mobile_parts_levels(self.main_aircraft.get_mobile_parts())
-        AnimatedModel.update_mobile_parts(self, dts)

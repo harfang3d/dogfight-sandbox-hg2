@@ -60,7 +60,10 @@ class WaterReflection():
 		cam.SetZFar(cam_org.GetZFar())
 		scene.SetCurrentCamera(self.camera_reflect)
 
-	def compute_vr_reflect(self, camera, vr_resolution, eye_left: hg.Mat4, eye_right: hg.Mat4, vs_left: hg.ViewState, vs_right: hg.ViewState):
+	def compute_vr_reflect(self, camera, vr_state: hg.OpenVRState, vs_left: hg.ViewState, vs_right: hg.ViewState):
+
+		eye_left = vr_state.head * vr_state.left.offset
+		eye_right = vr_state.head * vr_state.right.offset
 
 		mat_left_reflect = self.compute_reflect_matrix(eye_left)
 		mat_right_reflect = self.compute_reflect_matrix(eye_right)
@@ -71,7 +74,7 @@ class WaterReflection():
 		znear = camera.GetCamera().GetZNear()
 		zfar = camera.GetCamera().GetZFar()
 
-		ratio = hg.Vec2(vr_resolution.x / vr_resolution.y, 1)
+		ratio = hg.Vec2(vr_state.width / vr_state.height, 1)
 
 		vs_left_reflect = hg.ComputePerspectiveViewState(mat_left_reflect, fov_left, znear, zfar, ratio)
 		vs_right_reflect = hg.ComputePerspectiveViewState(mat_right_reflect, fov_right, znear, zfar, ratio)

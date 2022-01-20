@@ -197,6 +197,8 @@ class Main:
 
     # Cockpit view:
     flag_cockpit_view = False
+    
+    
     scene_cockpit = None
     scene_cockpit_frameBuffer = None
     scene_cockpit_frameBuffer_left = None
@@ -354,41 +356,6 @@ class Main:
         Physics.init_physics(cls.scene, cls.scene_physics, "pictures/height.png", hg.Vec3(cls.sea_render.terrain_position.x, -292, cls.sea_render.terrain_position.z), hg.Vec3(cls.sea_render.terrain_scale.x, 1000, cls.sea_render.terrain_scale.z), hg.Vec2(0, 255))
 
         cls.scene.Update(0)
-
-        # ---------------- Scene cockpit:
-
-        cls.scene_cockpit = hg.Scene()
-        cls.scene_cockpit_camera = hg.CreateCamera(cls.scene_cockpit, hg.TransformationMat4(hg.Vec3(0, 0, 0), hg.Vec3(0, 0, 0)), 0.01, 50, cls.camera_cokpit.GetCamera().GetFov())
-        cls.scene_cockpit.SetCurrentCamera(cls.scene_cockpit_camera)
-        cls.duplicate_scene_lighting(cls.scene, cls.scene_cockpit)
-
-        if cls.flag_vr:
-            cls.smart_camera.disable_mouse_controls_fix_rotation()
-            fb_aa = 4
-            cls.scene_cockpit_frameBuffer_left = hg.CreateFrameBuffer(int(cls.vr_resolution.x), int(cls.vr_resolution.y), hg.TF_RGBA8, hg.TF_D32F, fb_aa, "frameBuffer_cockpit_left")  #hg.OpenVRCreateEyeFrameBuffer(hg.OVRAA_MSAA4x)
-            cls.scene_cockpit_frameBuffer_right = hg.CreateFrameBuffer(int(cls.vr_resolution.x), int(cls.vr_resolution.y), hg.TF_RGBA8, hg.TF_D32F, fb_aa, "frameBuffer_cockpit_right")  #hg.OpenVRCreateEyeFrameBuffer(hg.OVRAA_MSAA4x)
-        else:
-            cls.smart_camera.enable_mouse_controls_fix_rotation()
-            cls.scene_cockpit_frameBuffer = hg.CreateFrameBuffer(int(cls.resolution.x), int(cls.resolution.y), hg.TF_RGBA8, hg.TF_D32F, 0, "frameBuffer_cockpit_display")
-
-        quad_mdl = hg.VertexLayout()
-        quad_mdl.Begin()
-        quad_mdl.Add(hg.A_Position, 3, hg.AT_Float)
-        quad_mdl.Add(hg.A_TexCoord0, 3, hg.AT_Float)
-        quad_mdl.End()
-
-        quad_size = hg.Vec2(framebuffers_resolution.x / framebuffers_resolution.y * 2, 2)
-
-        cls.cockpit_scene_quad_model = hg.CreatePlaneModel(quad_mdl, quad_size.x, quad_size.y, 1, 1)
-        cls.cockpit_scene_quad_uniform_set_value_list = hg.UniformSetValueList()
-        cls.cockpit_scene_quad_uniform_set_texture_list = hg.UniformSetTextureList()
-        write_z = False
-        cls.cockpit_scene_quad_render_state = hg.ComputeRenderState(hg.BM_Opaque, hg.DT_Disabled, hg.FC_Disabled, write_z)
-        cls.cockpit_scene_quad_matrix = hg.TransformationMat4(hg.Vec3(0, 0, 0), hg.Vec3(hg.Deg(90), hg.Deg(0), hg.Deg(0)), hg.Vec3(1, 1, 1))
-        cls.cockpit_scene_display_prg = hg.LoadProgramFromAssets("shaders/scenedisplay")
-        cls.cockpit_scene_quad_uniform_set_value_list.clear()
-        cls.cockpit_scene_quad_uniform_set_value_list.push_back(hg.MakeUniformSetValue("color", hg.Vec4(1, 1, 1, 1)))
-        cls.cockpit_scene_quad_uniform_set_value_list.push_back(hg.MakeUniformSetValue("quad_size", hg.Vec4(quad_size.x, quad_size.y, 1, 1)))
 
     @classmethod
     def update_user_control_mode(cls):
@@ -575,13 +542,8 @@ class Main:
         cls.players_sfx = []
         cls.missiles_sfx = []
 
-        cls.scene_cockpit_aircrafts = []
-        scene_cockpit_aircraft_types = []
 
         for i, a_type in enumerate(allies_types):
-
-            if a_type not in scene_cockpit_aircraft_types:
-                scene_cockpit_aircraft_types.append(a_type)
 
             if a_type == F14_Parameters.model_name:
                 aircraft = F14("ally_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 1, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
@@ -609,9 +571,6 @@ class Main:
 
         for i, a_type in enumerate(ennemies_types):
 
-            if a_type not in scene_cockpit_aircraft_types:
-                scene_cockpit_aircraft_types.append(a_type)
-
             if a_type == F14_Parameters.model_name:
                 aircraft = F14("ennemy_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 2, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
             elif a_type == F14_2_Parameters.model_name:
@@ -634,28 +593,6 @@ class Main:
             if missiles is not None:
                 cls.missiles_ennemies.append(missiles)
                 cls.destroyables_list += missiles
-
-
-        # Setup Cockpits models:
-
-        for a_type in scene_cockpit_aircraft_types:
-            if a_type == F14_Parameters.model_name:
-                cls.scene_cockpit_aircrafts.append(F14_Cockpit("Cockpit_" + a_type, cls.scene_cockpit, cls.pl_resources))
-            if a_type == F14_2_Parameters.model_name:
-                cls.scene_cockpit_aircrafts.append(F14_2_Cockpit("Cockpit_" + a_type, cls.scene_cockpit, cls.pl_resources))
-            if a_type == F16_Parameters.model_name:
-                cls.scene_cockpit_aircrafts.append(F16_Cockpit("Cockpit_" + a_type, cls.scene_cockpit, cls.pl_resources))
-            if a_type == Rafale_Parameters.model_name:
-                cls.scene_cockpit_aircrafts.append(Rafale_Cockpit("Cockpit_" + a_type, cls.scene_cockpit, cls.pl_resources))
-            if a_type == Eurofighter_Parameters.model_name:
-                cls.scene_cockpit_aircrafts.append(Eurofighter_Cockpit("Cockpit_" + a_type, cls.scene_cockpit, cls.pl_resources))
-            if a_type == TFX_Parameters.model_name:
-                cls.scene_cockpit_aircrafts.append(TFX_Cockpit("Cockpit_" + a_type, cls.scene_cockpit, cls.pl_resources))
-
-        for aircraft_cockpit in cls.scene_cockpit_aircrafts:
-            aircraft_cockpit.remove_collision_boxes_objects()
-            aircraft_cockpit.disable_nodes()
-
 
         if cls.flag_sfx:
             cls.setup_sfx()
@@ -731,10 +668,11 @@ class Main:
     # ----------------- Views -------------------------------------------------------------------
     @classmethod
     def update_initial_head_matrix(cls, vr_state: hg.OpenVRState):
-        rot = hg.GetR(vr_state.head)
+        mat_head = hg.InverseFast(vr_state.body) * vr_state.head
+        rot = hg.GetR(mat_head)
         rot.x = 0
         rot.z = 0
-        cls.initial_head_matrix = hg.TransformationMat4(hg.GetT(vr_state.head), rot)
+        cls.initial_head_matrix = hg.TransformationMat4(hg.GetT(mat_head), rot)
 
     @classmethod
     def setup_views_carousel(cls, flag_include_enemies=False):
@@ -828,25 +766,7 @@ class Main:
             cls.satellite_view = False
             cls.update_main_view_from_carousel()
         cls.smart_camera.set_track_view(view_name)
-
-
-    @classmethod
-    def setup_cockpit_aircraft(cls, main_aircraft: Aircraft):
-        flag_found = False
-        main_aircraft.hide_objects()
-        for cockpit_aircraft in cls.scene_cockpit_aircrafts:
-            if cockpit_aircraft.model_name == main_aircraft.model_name:
-                cls.user_cockpit_aircraft = cockpit_aircraft
-                cls.user_cockpit_aircraft.main_aircraft = main_aircraft
-                flag_found = True
-                cls.user_cockpit_aircraft.enable_nodes()
-                head = cls.user_cockpit_aircraft.get_current_pilot_head()
-                cls.scene_cockpit_camera.GetTransform().SetParent(head)
-                cls.clear_views()
-                break
-        if not flag_found:
-            print("!!! ERROR - Cockpit model not found !!!")
-            cls.user_cockpit_aircraft = None
+        
 
     @classmethod
     def activate_cockpit_view(cls):
@@ -855,21 +775,13 @@ class Main:
                 if cls.user_aircraft.get_current_pilot_head() is not None:
                     cls.flag_cockpit_view = True
                     cls.player_view_mode = SmartCamera.TYPE_FIX
-                    cls.setup_cockpit_aircraft(cls.user_aircraft)
 
     @classmethod
     def deactivate_cockpit_view(cls):
         if cls.flag_cockpit_view:
-            if cls.user_cockpit_aircraft is not None:
-                cls.user_cockpit_aircraft.disable_nodes()
-                cls.user_cockpit_aircraft.main_aircraft = None
-                cls.user_cockpit_aircraft = None
-            if cls.user_aircraft is not None:
-                cls.user_aircraft.show_objects()
             cls.player_view_mode = SmartCamera.TYPE_TRACKING
             cls.set_track_view("back")
             cls.flag_cockpit_view = False
-            cls.clear_views()
 
 
     @classmethod
@@ -877,15 +789,6 @@ class Main:
         if cls.flag_cockpit_view:
             if new_user_aircraft.get_current_pilot_head() is None:
                 cls.deactivate_cockpit_view()
-            else:
-                if cls.user_aircraft is not None:
-                    cls.user_aircraft.show_objects()
-                if cls.user_cockpit_aircraft is not None:
-                    cls.user_cockpit_aircraft.disable_nodes()
-                    cls.user_cockpit_aircraft.main_aircraft = None
-
-                else:
-                    cls.setup_cockpit_aircraft(new_user_aircraft)
 
 
     @classmethod
@@ -967,7 +870,6 @@ class Main:
         elif keyboard.Pressed(hg.K_Numpad3):
             quit_sv = True
             cls.activate_cockpit_view()
-
             cls.update_main_view_from_carousel()
 
         elif keyboard.Pressed(hg.K_Numpad9):
@@ -1059,7 +961,8 @@ class Main:
         if cls.flag_vr:
             cam = cls.scene.GetCurrentCamera()
             fov = atan(cls.vr_hud.y / (2 * cls.vr_hud.z)) * 2
-            vs = hg.ComputePerspectiveViewState(cls.initial_head_matrix, fov, cam.GetCamera().GetZNear(), cam.GetCamera().GetZFar(), hg.Vec2(cls.vr_hud.x / cls.vr_hud.y, 1))
+            main_camera_matrix = cam.GetTransform().GetWorld()
+            vs = hg.ComputePerspectiveViewState(main_camera_matrix, fov, cam.GetCamera().GetZNear(), cam.GetCamera().GetZFar(), hg.Vec2(cls.vr_hud.x / cls.vr_hud.y, 1))
             pos_view = vs.view * point3d
         else:
             vs = cls.scene.ComputeCurrentCameraViewState(hg.Vec2(cls.resolution.x / cls.resolution.y, 1))
@@ -1204,8 +1107,6 @@ class Main:
 
         vid = 0
         views = hg.SceneForwardPipelinePassViewId()
-        #cls.vr_state.update()
-        #cls.vr_viewstate.update(cls.scene.GetCurrentCamera(), cls.vr_state)
 
         camera = cls.scene.GetCurrentCamera()
         main_camera_matrix = camera.GetTransform().GetWorld()
@@ -1235,15 +1136,10 @@ class Main:
         vid, passId = hg.PrepareSceneForwardPipelineViewDependentRenderData(vid, right_reflect, cls.scene, cls.render_data, cls.pipeline, cls.pl_resources, views)
         vid, passId = hg.SubmitSceneToForwardPipeline(vid, cls.scene, vr_eye_rect, right_reflect, cls.pipeline, cls.render_data, cls.pl_resources, cls.water_reflexion.quad_frameBuffer_right.handle)
 
-        # ========== Cockpit output:
-        if cls.flag_cockpit_view:
-            output_fb_left = cls.scene_cockpit_frameBuffer_left
-            output_fb_right = cls.scene_cockpit_frameBuffer_right
-        else:
-            output_fb_left = cls.post_process.quad_frameBuffer_left
-            output_fb_right = cls.post_process.quad_frameBuffer_right
-
+    
         # ========== Display raymarch scene ===================
+        output_fb_left = cls.post_process.quad_frameBuffer_left
+        output_fb_right = cls.post_process.quad_frameBuffer_right
         cls.scene.canvas.clear_z = False
         cls.scene.canvas.clear_color = False
 
@@ -1251,7 +1147,7 @@ class Main:
         tex_reflect_left_depth = hg.GetDepthTexture(cls.water_reflexion.quad_frameBuffer_left)
         tex_reflect_right_color = hg.GetColorTexture(cls.water_reflexion.quad_frameBuffer_right)
         tex_reflect_right_depth = hg.GetDepthTexture(cls.water_reflexion.quad_frameBuffer_right)
-        vid = cls.sea_render.render_vr(vid, camera, cls.vr_state, vs_left, vs_right, output_fb_left, output_fb_right, tex_reflect_left_color, tex_reflect_left_depth, tex_reflect_right_color, tex_reflect_right_depth)
+        vid = cls.sea_render.render_vr(vid, cls.vr_state, vs_left, vs_right, output_fb_left, output_fb_right, tex_reflect_left_color, tex_reflect_left_depth, tex_reflect_right_color, tex_reflect_right_depth)
 
 
         # ========== Display models scene =======================
@@ -1266,70 +1162,6 @@ class Main:
         # Prepare the right eye render data then draw to its framebuffer
         vid, passId = hg.PrepareSceneForwardPipelineViewDependentRenderData(vid, vs_right, cls.scene, cls.render_data, cls.pipeline, cls.pl_resources, views)
         vid, passId = hg.SubmitSceneToForwardPipeline(vid, cls.scene, vr_eye_rect, vs_right, cls.pipeline, cls.render_data, cls.pl_resources, output_fb_right.handle)
-
-
-        # =========== Display Cockpit scene:
-        if cls.flag_cockpit_view:
-            # Update cocpit camera:
-            main_camera = cls.scene.GetCurrentCamera()
-            camera = cls.scene_cockpit.GetCurrentCamera()
-            rot = main_camera.GetTransform().GetRot()
-            camera.GetTransform().SetRot(rot)
-            #camera.GetCamera().SetFov(main_camera.GetCamera().GetFov())
-
-            # Update Cocpit aircraft orientation:
-            mat = cls.user_aircraft.get_parent_node().GetTransform().GetWorld()
-            cls.user_cockpit_aircraft.get_parent_node().GetTransform().SetRot(hg.GetR(mat))
-            cls.user_cockpit_aircraft.update_mobile_parts(dts)
-            cls.scene_cockpit.Update(hg.time_from_sec_f(dts))
-
-            #cls.vr_viewstate_cockpit.update(cls.scene_cockpit.GetCurrentCamera(), cls.vr_state)
-
-            focal_distance_left = hg.ExtractZoomFactorFromProjectionMatrix(vs_left.proj)
-            focal_distance_right = hg.ExtractZoomFactorFromProjectionMatrix(vs_right.proj)
-            z_near = camera.GetCamera().GetZNear()
-            z_far = camera.GetCamera().GetZFar()
-
-
-            # z_near, z_far = hg.ExtractZRangeFromProjectionMatrix(vs_left_2.proj)
-            z_ratio = (z_near + 0.01) / focal_distance_left
-            hg.SetViewFrameBuffer(vid, cls.post_process.quad_frameBuffer_left.handle)
-            hg.SetViewRect(vid, 0, 0, int(cls.vr_state.width), int(cls.vr_state.height))
-            hg.SetViewClear(vid, hg.CF_Color | hg.CF_Depth, 0x0, 1.0, 0)
-            hg.SetViewTransform(vid, hg.InverseFast(cls.vr_state.left.offset), vs_left.proj)
-            matrx = cls.vr_state.left.offset * hg.TransformationMat4(hg.Vec3(0, 0, focal_distance_left * z_ratio), hg.Vec3(hg.Deg(90), hg.Deg(0), hg.Deg(0)), hg.Vec3(1, 1, 1) * z_ratio)
-            cls.cockpit_scene_quad_uniform_set_texture_list.clear()
-            cls.cockpit_scene_quad_uniform_set_texture_list.push_back(hg.MakeUniformSetTexture("s_tex", hg.GetColorTexture(cls.scene_cockpit_frameBuffer_left), 0))
-            hg.DrawModel(vid, cls.cockpit_scene_quad_model, cls.cockpit_scene_display_prg, cls.cockpit_scene_quad_uniform_set_value_list, cls.cockpit_scene_quad_uniform_set_texture_list, matrx, cls.cockpit_scene_quad_render_state)
-            vid += 1
-
-            # z_near, z_far = hg.ExtractZRangeFromProjectionMatrix(vs_right_2.proj)
-            z_ratio = (z_near + 0.01) / focal_distance_right
-            hg.SetViewFrameBuffer(vid, cls.post_process.quad_frameBuffer_right.handle)
-            hg.SetViewRect(vid, 0, 0, int(cls.vr_state.width), int(cls.vr_state.height))
-            hg.SetViewClear(vid, hg.CF_Color | hg.CF_Depth, 0x0, 1.0, 0)
-            hg.SetViewTransform(vid, hg.InverseFast(cls.vr_state.right.offset), vs_right.proj)
-            matrx = cls.vr_state.right.offset * hg.TransformationMat4(hg.Vec3(0, 0, focal_distance_right * z_ratio), hg.Vec3(hg.Deg(90), hg.Deg(0), hg.Deg(0)), hg.Vec3(1, 1, 1) * z_ratio)
-            cls.cockpit_scene_quad_uniform_set_texture_list.clear()
-            cls.cockpit_scene_quad_uniform_set_texture_list.push_back(hg.MakeUniformSetTexture("s_tex", hg.GetColorTexture(cls.scene_cockpit_frameBuffer_right), 0))
-            hg.DrawModel(vid, cls.cockpit_scene_quad_model, cls.cockpit_scene_display_prg, cls.cockpit_scene_quad_uniform_set_value_list, cls.cockpit_scene_quad_uniform_set_texture_list, matrx, cls.cockpit_scene_quad_render_state)
-            vid += 1
-
-            cls.scene_cockpit.canvas.clear_z = True
-            cls.scene_cockpit.canvas.clear_color = False
-
-            vid, passId = hg.PrepareSceneForwardPipelineCommonRenderData(vid, cls.scene_cockpit, cls.render_data, cls.pipeline, cls.pl_resources, views)
-            vr_eye_rect = hg.IntRect(0, 0, int(cls.vr_state.width), int(cls.vr_state.height))
-
-            # Recalculer vs_left et vs_right en local dans le cockpit
-
-            # Prepare the left eye render data then draw to its framebuffer
-            vid, passId = hg.PrepareSceneForwardPipelineViewDependentRenderData(vid, vs_left, cls.scene_cockpit, cls.render_data, cls.pipeline, cls.pl_resources, views)
-            vid, passId = hg.SubmitSceneToForwardPipeline(vid, cls.scene_cockpit, vr_eye_rect, vs_left, cls.pipeline, cls.render_data, cls.pl_resources, cls.post_process.quad_frameBuffer_left.handle)
-
-            # Prepare the right eye render data then draw to its framebuffer
-            vid, passId = hg.PrepareSceneForwardPipelineViewDependentRenderData(vid, vs_right, cls.scene_cockpit, cls.render_data, cls.pipeline, cls.pl_resources, views)
-            vid, passId = hg.SubmitSceneToForwardPipeline(vid, cls.scene_cockpit, vr_eye_rect, vs_right, cls.pipeline, cls.render_data, cls.pl_resources, cls.post_process.quad_frameBuffer_right.handle)
 
         # ==================== Display 3D Overlays ===========
 
@@ -1358,15 +1190,7 @@ class Main:
 
         # ==================== Display 2D sprites ===========
 
-
-        if cls.flag_cockpit_view:
-            scene = cls.scene_cockpit
-            #vr_viewstate = cls.vr_viewstate_cockpit
-        else:
-            scene = cls.scene
-            #vr_viewstate = cls.vr_viewstate
-
-        cam_mat = scene.GetCurrentCamera().GetTransform().GetWorld()
+        cam_mat = cls.scene.GetCurrentCamera().GetTransform().GetWorld()
         mat_spr = cam_mat  # * vr_state.initial_head_offset
 
         hg.SetViewFrameBuffer(vid, cls.post_process.quad_frameBuffer_left.handle)
@@ -1457,18 +1281,12 @@ class Main:
 
         cls.water_reflexion.restore_camera(cls.scene)
 
-        # ========== Cockpit output:
-        if cls.flag_cockpit_view:
-            output_fb = cls.scene_cockpit_frameBuffer
-        else:
-            output_fb = cls.post_process.quad_frameBuffer
-
         # ========== Display raymarch scene ===================
 
         cls.scene.canvas.clear_z = True
         cls.scene.canvas.clear_color = True
         c = cls.scene.GetCurrentCamera()
-        vid = cls.sea_render.render(vid, c, hg.Vec2(res_x, res_y), hg.GetColorTexture(cls.water_reflexion.quad_frameBuffer), hg.GetDepthTexture(cls.water_reflexion.quad_frameBuffer), output_fb)
+        vid = cls.sea_render.render(vid, c, hg.Vec2(res_x, res_y), hg.GetColorTexture(cls.water_reflexion.quad_frameBuffer), hg.GetDepthTexture(cls.water_reflexion.quad_frameBuffer), cls.post_process.quad_frameBuffer)
 
         # ========== Display models scene ===================
 
@@ -1481,48 +1299,7 @@ class Main:
         vid, passId = hg.PrepareSceneForwardPipelineViewDependentRenderData(vid, vs, cls.scene, cls.render_data, cls.pipeline, cls.pl_resources, views)
 
         # Get quad_frameBuffer.handle to define output frameBuffer
-        vid, passId = hg.SubmitSceneToForwardPipeline(vid, cls.scene, hg.IntRect(0, 0, res_x, res_y), vs, cls.pipeline, cls.render_data, cls.pl_resources, output_fb.handle)
-
-        #=========== Cockpit scene rendering
-        if cls.flag_cockpit_view:
-            hg.SetViewFrameBuffer(vid, cls.post_process.quad_frameBuffer.handle)
-            hg.SetViewRect(vid, 0, 0, res_x, res_y)
-            hg.SetViewClear(vid, 0, 0, 0, 0)
-
-            #Update cocpit camera:
-            main_camera = cls.scene.GetCurrentCamera()
-            camera = cls.scene_cockpit.GetCurrentCamera()
-            rot = main_camera.GetTransform().GetRot()
-            camera.GetTransform().SetRot(rot)
-            camera.GetCamera().SetFov(main_camera.GetCamera().GetFov())
-
-            #Update Cocpit aircraft orientation:
-            mat = cls.user_aircraft.get_parent_node().GetTransform().GetWorld()
-            cls.user_cockpit_aircraft.get_parent_node().GetTransform().SetRot(hg.GetR(mat))
-            cls.user_cockpit_aircraft.update_mobile_parts(dts)
-            cls.scene_cockpit.Update(hg.time_from_sec_f(dts))
-
-            cam = camera.GetCamera()
-            focal_distance = hg.FovToZoomFactor(cam.GetFov())
-            cam_mat = hg.TransformationMat4(hg.Vec3(0, 0, -focal_distance), hg.Vec3(0, 0, 0))
-            view = hg.InverseFast(cam_mat)
-            proj = hg.ComputePerspectiveProjectionMatrix(0.1, 100, focal_distance, hg.Vec2(res_x / res_y, 1))
-            hg.SetViewTransform(vid, view, proj)
-
-            cls.cockpit_scene_quad_uniform_set_texture_list.clear()
-            cls.cockpit_scene_quad_uniform_set_texture_list.push_back(hg.MakeUniformSetTexture("s_tex", hg.GetColorTexture(cls.scene_cockpit_frameBuffer), 0))
-            hg.DrawModel(vid, cls.cockpit_scene_quad_model, cls.cockpit_scene_display_prg, cls.cockpit_scene_quad_uniform_set_value_list, cls.cockpit_scene_quad_uniform_set_texture_list, cls.cockpit_scene_quad_matrix, cls.cockpit_scene_quad_render_state)
-            vid += 1
-
-            cls.scene_cockpit.canvas.clear_z = True
-            cls.scene_cockpit.canvas.clear_color = False
-            vs = cls.scene_cockpit.ComputeCurrentCameraViewState(hg.ComputeAspectRatioX(res_x, res_y))
-            vid, passId = hg.PrepareSceneForwardPipelineCommonRenderData(vid, cls.scene_cockpit, cls.render_data, cls.pipeline, cls.pl_resources, views)
-            vid, passId = hg.PrepareSceneForwardPipelineViewDependentRenderData(vid, vs, cls.scene_cockpit, cls.render_data, cls.pipeline, cls.pl_resources, views)
-
-            # Get quad_frameBuffer.handle to define output frameBuffer
-            vid, passId = hg.SubmitSceneToForwardPipeline(vid, cls.scene_cockpit, hg.IntRect(0, 0, res_x, res_y), vs, cls.pipeline, cls.render_data, cls.pl_resources, cls.post_process.quad_frameBuffer.handle)
-
+        vid, passId = hg.SubmitSceneToForwardPipeline(vid, cls.scene, hg.IntRect(0, 0, res_x, res_y), vs, cls.pipeline, cls.render_data, cls.pl_resources, cls.post_process.quad_frameBuffer.handle)
 
         # ==================== Display 3D Overlays ===========
         hg.SetViewFrameBuffer(vid, cls.post_process.quad_frameBuffer.handle)

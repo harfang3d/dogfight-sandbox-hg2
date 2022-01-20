@@ -8,7 +8,6 @@ from Machines import *
 class F14_Parameters():
     model_name = "F14"
     instance_scene_name = "machines/aircraft/aircraft_blend.scn"
-    cockpit_instance_scene_name = "machines/aircraft/aircraft_blend.scn"
 
     def __init__(self):
         # Aircraft constants:
@@ -83,23 +82,3 @@ class F14(Aircraft, F14_Parameters):
     def compute_z_drag(self):
         return Aircraft.compute_z_drag(self) + self.wings_geometry_gain_friction * self.wings_level
 
-# Only animated aircraft, used for cockpit view
-
-class F14_Cockpit(AnimatedModel, F14_Parameters):
-
-    def __init__(self, name, scene, pipeline_ressource: hg.PipelineResources):
-        self.main_aircraft = None
-        AnimatedModel.__init__(self, name, F14_Parameters.model_name, scene, pipeline_ressource, F14_Parameters.cockpit_instance_scene_name)
-        F14_Parameters.__init__(self)
-        self.define_mobile_parts(self.mobile_parts_definitions)
-
-    def destroy(self):
-        AnimatedModel.destroy_nodes(self)
-
-    def set_main_aircraft(self, aircraft:F14):
-        self.main_aircraft = aircraft
-
-    def update_mobile_parts(self, dts):
-        if self.main_aircraft is not None:
-            self.copy_mobile_parts_levels(self.main_aircraft.get_mobile_parts())
-        AnimatedModel.update_mobile_parts(self, dts)

@@ -7,7 +7,6 @@ class Eurofighter_Parameters:
 
     model_name = "Eurofighter"
     instance_scene_name = "machines/eurofighter/eurofighter_anim.scn"
-    cockpit_instance_scene_name = "machines/eurofighter/eurofighter_anim.scn"
 
     def __init__(self):
         # Aircraft constants:
@@ -93,25 +92,3 @@ class Eurofighter(Aircraft, Eurofighter_Parameters):
         self.parts["brake_handle"]["level"] = -self.current_brake_flap_level
 
         Aircraft.update_mobile_parts(self, dts)
-
-
-# Only animated aircraft, used for cockpit view
-
-class Eurofighter_Cockpit(AnimatedModel, Eurofighter_Parameters):
-
-    def __init__(self, name, scene, pipeline_ressource: hg.PipelineResources):
-        self.main_aircraft = None
-        AnimatedModel.__init__(self, name, Eurofighter_Parameters.model_name, scene, pipeline_ressource, Eurofighter_Parameters.cockpit_instance_scene_name)
-        Eurofighter_Parameters.__init__(self)
-        self.define_mobile_parts(self.mobile_parts_definitions)
-
-    def destroy(self):
-        AnimatedModel.destroy_nodes(self)
-
-    def set_main_aircraft(self, aircraft: Eurofighter):
-        self.main_aircraft = aircraft
-
-    def update_mobile_parts(self, dts):
-        if self.main_aircraft is not None:
-            self.copy_mobile_parts_levels(self.main_aircraft.get_mobile_parts())
-        AnimatedModel.update_mobile_parts(self, dts)

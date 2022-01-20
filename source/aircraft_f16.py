@@ -9,7 +9,6 @@ class F16_Parameters:
 
     model_name = "F16"
     instance_scene_name = "machines/f16/F16_rigged.scn"
-    cockpit_instance_scene_name = "machines/f16/F16_rigged.scn"
 
     def __init__(self):
         # Aircraft constants:
@@ -67,25 +66,3 @@ class F16(Aircraft, F16_Parameters):
         self.parts["elevator_right"]["level"] = self.angular_levels.x
         self.parts["rudder"]["level"] = self.angular_levels.y
         Aircraft.update_mobile_parts(self, dts)
-
-
-# Only animated aircraft, used for cockpit view
-
-class F16_Cockpit(AnimatedModel, F16_Parameters):
-
-    def __init__(self, name, scene, pipeline_ressource: hg.PipelineResources):
-        self.main_aircraft = None
-        AnimatedModel.__init__(self, name, F16_Parameters.model_name, scene, pipeline_ressource, F16_Parameters.cockpit_instance_scene_name)
-        F16_Parameters.__init__(self)
-        self.define_mobile_parts(self.mobile_parts_definitions)
-
-    def destroy(self):
-        AnimatedModel.destroy_nodes(self)
-
-    def set_main_aircraft(self, aircraft: F16):
-        self.main_aircraft = aircraft
-
-    def update_mobile_parts(self, dts):
-        if self.main_aircraft is not None:
-            self.copy_mobile_parts_levels(self.main_aircraft.get_mobile_parts())
-        AnimatedModel.update_mobile_parts(self, dts)
