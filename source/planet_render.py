@@ -358,7 +358,11 @@ class PlanetRender:
 	def get_atmosphere_size(self,altitude, size):
 		return size * exp(-pow(altitude/self.atmosphere_thickness * 0.888, 2))
 
-	def render_vr(self, view_id, camera, vr_state: hg.OpenVRState, vr_resolution, eye_left, eye_right, vs_left: hg.ViewState, vs_right: hg.ViewState, vr_left_fb, vr_right_fb, reflect_texture_left: hg.Texture = None, reflect_depth_texture_left: hg.Texture = None, reflect_texture_right: hg.Texture = None, reflect_depth_texture_right: hg.Texture = None):
+	def render_vr(self, view_id, vr_state: hg.OpenVRState, vs_left: hg.ViewState, vs_right: hg.ViewState, vr_left_fb, vr_right_fb, reflect_texture_left: hg.Texture = None, reflect_depth_texture_left: hg.Texture = None, reflect_texture_right: hg.Texture = None, reflect_depth_texture_right: hg.Texture = None):
+
+		vr_resolution = hg.Vec2(vr_state.width, vr_state.height)
+		eye_left = vr_state.head * vr_state.left.offset
+		eye_right = vr_state.head * vr_state.right.offset
 
 		focal_distance_left = hg.ExtractZoomFactorFromProjectionMatrix(vs_left.proj)
 		focal_distance_right = hg.ExtractZoomFactorFromProjectionMatrix(vs_right.proj)
@@ -367,10 +371,6 @@ class PlanetRender:
 		cam_normal_right = hg.GetRotationMatrix(eye_right)
 		cam_pos_left = hg.GetT(eye_left)
 		cam_pos_right = hg.GetT(eye_right)
-
-		#z_near = camera.GetCamera().GetZNear()
-		#z_far = camera.GetCamera().GetZFar()
-
 
 		# Left:
 		z_near, z_far = hg.ExtractZRangeFromProjectionMatrix(vs_left.proj)
