@@ -1,7 +1,9 @@
 {
 	"editor": {
-		"camera_plugin": {
-			"show_cameras": true
+		"animeditor_plugin": {
+			"show_trajectories": 0,
+			"trajectories_tick_seconds": 1.0,
+			"trajectories_tick_size": 0.10000000149011612
 		},
 		"explorer": {
 			"node_custom_order": {
@@ -24,9 +26,6 @@
 			"node_sort_method": "custom",
 			"show_node_uid": false
 		},
-		"light_plugin": {
-			"show_lights": true
-		},
 		"navigation_plugin": {
 			"orbit_distance": 3235.62841796875,
 			"speed": 0.10000000149011612,
@@ -34,9 +33,18 @@
 		},
 		"transform_gizmo_plugin": {
 			"mode": "local",
+			"snap": "none",
+			"snap_rotation": 5.0,
+			"snap_rotation_fine": 1.0,
+			"snap_scale": 10.0,
+			"snap_scale_fine": 1.0,
+			"snap_translation": 1.0,
+			"snap_translation_fine": 0.10000000149011612,
 			"tool": "move"
 		},
 		"view_plugin": {
+			"show_cameras": true,
+			"show_lights": true,
 			"show_node_origin": true
 		},
 		"views": {
