@@ -73,7 +73,7 @@ if Main.win is None:
     Main.win = hg.NewWindow(res_x, res_y)
 
 hg.RenderInit(Main.win)
-hg.RenderReset(res_x, res_y, hg.RF_None) # hg.RF_VSync | hg.RF_MSAA4X | hg.RF_MaxAnisotropy)
+hg.RenderReset(res_x, res_y, hg.RF_VSync | hg.RF_MSAA4X | hg.RF_MaxAnisotropy)
 
 
 # -------------------- OpenVR initialization
