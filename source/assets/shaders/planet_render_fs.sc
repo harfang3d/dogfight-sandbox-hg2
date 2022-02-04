@@ -142,12 +142,12 @@ vec4 get_clouds_color(vec3 sun_c, vec3 pos, vec3 dir)
 			n_cloud.y *= -1.0;
 
 		float light_cloud = dot(sun_dir.xyz, -n_cloud);
-		vec3 dark_color = mix(sun_c.rgb, ambient_color.rgb, clouds_absorption.x);
+		vec3 dark_color = mix(sun_c.xyz, ambient_color.xyz, clouds_absorption.x);
 
 		if (light_cloud < 0.0)
-			c_cloud.rgb = mix(dark_color, sun_c.rgb, (1.0 - c_cloud.a) * -1.0 * light_cloud);
+			c_cloud.xyz = mix(dark_color, sun_c.xyz, (1.0 - c_cloud.a) * -1.0 * light_cloud);
 		else
-			c_cloud.rgb = mix(dark_color, sun_c.rgb, light_cloud);
+			c_cloud.xyz = mix(dark_color, sun_c.xyz, light_cloud);
 	}
 	return c_cloud;
 }
@@ -215,9 +215,9 @@ float linear_smoothstep(float vmin,float vmax,float v)
 vec3 get_atmosphere_color(float angle_a, float alt_f)
 {
 	float t = pow( angle_a / atmosphere_params.w, atmosphere_params.y);
-	vec3 space_c = mix(high_atmosphere_color.rgb, space_color.rgb, alt_f);
-	vec3 atm_c = mix(low_atmosphere_color.rgb, high_atmosphere_color.rgb, linear_smoothstep(low_atmosphere_pos.x, high_atmosphere_pos.x, t));
-	atm_c = mix(atm_c, space_c.rgb, linear_smoothstep(high_atmosphere_pos.x, 1.0, t));	
+	vec3 space_c = mix(high_atmosphere_color.xyz, space_color.xyz, alt_f);
+	vec3 atm_c = mix(low_atmosphere_color.xyz, high_atmosphere_color.xyz, linear_smoothstep(low_atmosphere_pos.x, high_atmosphere_pos.x, t));
+	atm_c = mix(atm_c, space_c.xyz, linear_smoothstep(high_atmosphere_pos.x, 1.0, t));	
 	return atm_c;
 }
 
@@ -288,14 +288,14 @@ vec3 get_sky_color(vec3 dir, vec3 sun_c, float angle_a)
 	float atm_f = clamp(cam_position.w, 0.0, 1.0);
 	vec3 c_atmosphere = get_atmosphere_color(angle_a, atm_f);
 	float sky_lum = c_atmosphere.r * LUM_R + c_atmosphere.g * LUM_G + c_atmosphere.b * LUM_B;
-	vec3 sky_col = get_sky_texel(dir, angle_a, atm_f).rgb;
+	vec3 sky_col = get_sky_texel(dir, angle_a, atm_f).xyz;
 	float sun_lum = get_sun_intensity(dir, sun_dir.xyz, atm_f);
 	c_atmosphere = mix(c_atmosphere + sky_col * (1 - sky_lum), sun_c, sun_lum);
 
 	vec4 clouds_color = get_clouds_color(sun_c, cam_position.xyz, dir) * (1.0 - step(clouds_altitude.x, cam_position.y));
-	c_atmosphere = mix(c_atmosphere, clouds_color.rgb, clouds_color.a * (1.0 - atm_f));
+	c_atmosphere = mix(c_atmosphere, clouds_color.xyz, clouds_color.a * (1.0 - atm_f));
 
-	c_atmosphere = mix(horizon_line_color.rgb, c_atmosphere, linear_smoothstep(0.0, horizon_line_params.x, pow( angle_a / atmosphere_params.w, horizon_line_params.y)));
+	c_atmosphere = mix(horizon_line_color.xyz, c_atmosphere, linear_smoothstep(0.0, horizon_line_params.x, pow( angle_a / atmosphere_params.w, horizon_line_params.y)));
 	return c_atmosphere;
 }
 
@@ -313,7 +313,7 @@ vec3 get_sea_color(vec3 sun_c, vec2 screen_coords, vec3 pos, vec3 dir, vec3 scre
 	float angle_r = acos(dot(dir_r, -n0));
 	float angle_a = angle_r - horizon_angle.x;
 
-	vec3 c_sea = mix(sea_color.rgb, underwater_color.rgb, pow(min(1.0, angle_f), 1.0)); // Underwater color
+	vec3 c_sea = mix(sea_color.xyz, underwater_color.xyz, pow(min(1.0, angle_f), 1.0)); // Underwater color
 	float sun_lum = get_sun_intensity(dir_r, sun_dir.xyz, 0.0);
 
 	if (scene_reflect.x > 0.5)
@@ -322,24 +322,24 @@ vec3 get_sea_color(vec3 sun_c, vec2 screen_coords, vec3 pos, vec3 dir, vec3 scre
 		float zDepth = texture2D(reflect_map_depth, coordsTexReflect).r; //z_Frustum.y*0.98;
 		float z = get_zFromDepth(screen_dir.z, zDepth);
 		float d = z / length(screen_dir.xz);
-		c_sky = texture2D(reflect_map, coordsTexReflect).rgb;
+		c_sky = texture2D(reflect_map, coordsTexReflect).xyz;
 		//if (z > z_Frustum.y * 0.99 || d < distance_plane)
 		if (c_sky.r > 0.98 && c_sky.g < 0.1 && c_sky.b < 0.1)
 		{
 			c_sky = get_atmosphere_color(pow( angle_a / atmosphere_params.w, atmosphere_params.y), 0.0);
-			c_sky = mix(c_sky, sun_c.rgb, sun_lum);
-			//c_sky = texture2D(reflect_map, coordsTexReflect) * reflect_color.rgb;
+			c_sky = mix(c_sky, sun_c.xyz, sun_lum);
+			//c_sky = texture2D(reflect_map, coordsTexReflect) * reflect_color.xyz;
 		}
 		else
 		{
-			//c_sky = texture2D(reflect_map, coordsTexReflect) * reflect_color.rgb;
-			c_sky = c_sky * reflect_color.rgb;
+			//c_sky = texture2D(reflect_map, coordsTexReflect) * reflect_color.xyz;
+			c_sky = c_sky * reflect_color.xyz;
 		}
 	}
 	else
 	{
 		c_sky = get_atmosphere_color(pow( angle_a / atmosphere_params.w, atmosphere_params.y), 0.0);
-		c_sky = mix(c_sky, sun_c.rgb, sun_lum);
+		c_sky = mix(c_sky, sun_c.xyz, sun_lum);
 	}
 
 	float fresnel = (0.04 + (1.0 - 0.04) * (pow(1.0 - max(0.0, dot(dir, -n)), 5.0)));
@@ -350,18 +350,18 @@ vec3 get_sea_color(vec3 sun_c, vec2 screen_coords, vec3 pos, vec3 dir, vec3 scre
 	vec2 terrain_uv = (p_surface - terrain_position.xz) / terrain_scale.xz;
 	vec4 c_terrain = texture2D(terrain_map, terrain_uv);
 	float terrain_coast_height = smoothstep(terrain_edges.x, terrain_edges.y, c_terrain.a);
-	vec3 c_terrain_intensity = c_terrain.rgb * terrain_scale.w;
-	c_terrain.rgb = mix(c_terrain_intensity, c_terrain.rgb, terrain_coast_height);
+	vec3 c_terrain_intensity = c_terrain.xyz * terrain_scale.w;
+	c_terrain.xyz = mix(c_terrain_intensity, c_terrain.xyz, terrain_coast_height);
 	float terrain_clamp = smoothstep(0.0, terrain_edges.z, c_terrain.a) * step(0.0, terrain_uv.x) * (1.0 - step(1.0, terrain_uv.x)) * step(0.0, terrain_uv.y) * (1.0 - step(1., terrain_uv.y));
 	float terrain_luminosity = mix(c_terrain.r * LUM_R + c_terrain.g * LUM_G + c_terrain.b * LUM_B, 1., terrain_coast_height);
-	c_terrain.rgb = DistanceFog(screen_dir * distance_mix, c_terrain.rgb);
+	c_terrain.xyz = DistanceFog(screen_dir * distance_mix, c_terrain.xyz);
 	//
 
 	c_sea = min(c_sea + c_stream, vec3(1.0, 1.0, 1.0));
-	c_sea = mix(c_sea, sun_c.rgb, sun_lum);
-	c_sea = mix(c_sea, c_terrain, terrain_luminosity * terrain_clamp);
+	c_sea = mix(c_sea, sun_c.xyz, sun_lum);
+	c_sea = mix(c_sea, c_terrain.xyz, terrain_luminosity * terrain_clamp);
 
-	c_sea = mix(horizon_line_color.rgb, c_sea, pow(smoothstep(0.0, horizon_low_line_params.x, 1.0 - angle_f),horizon_low_line_params.y));
+	c_sea = mix(horizon_line_color.xyz, c_sea, pow(smoothstep(0.0, horizon_low_line_params.x, 1.0 - angle_f),horizon_low_line_params.y));
 
 	return c_sea;
 }
@@ -382,7 +382,7 @@ void main()
 	float plane_end = 1.0 - smoothstep(1e-3, 1e-2, ratio);
 	float plane_smooth_size = 1.0 - smoothstep(1e-2, 5e-2, ratio);
 
-	vec3 normalized_sun_color = normalize_color(sun_color.rgb);
+	vec3 normalized_sun_color = normalize_color(sun_color.xyz);
 	vec3 color;
 	vec4 clouds_color;
 	float distance;
@@ -406,9 +406,9 @@ void main()
 		float distance_sphere = get_distance(planet_radius.x, ray_angle, cam_position.y);
 		distance = mix(distance_sphere, distance_plane, plane_f);
 		float gd = get_geodesic_distance(ray_angle, distance_sphere);
-		color = get_sea_color(normalized_sun_color, uv, cam_position, dir, screen_ray_dir, distance_plane, distance_sphere, distance, angle_f, plane_f, gd);
+		color = get_sea_color(normalized_sun_color, uv, cam_position.xyz, dir, screen_ray_dir, distance_plane, distance_sphere, distance, angle_f, plane_f, gd);
 		clouds_color = get_clouds_color(normalized_sun_color, cam_position.xyz, dir);
-		color = mix(color, clouds_color.rgb, clouds_color.a * (1.0-alt_f));
+		color = mix(color, clouds_color.xyz, clouds_color.a * (1.0-alt_f));
 
 	}
 	
@@ -424,7 +424,7 @@ void main()
 	}
 	else
 	{
-		color = low_atmosphere_color.rgb;
+		color = low_atmosphere_color.xyz;
 	}
 	*/
 	//vec3 vp = screen_ray_dir * distance;

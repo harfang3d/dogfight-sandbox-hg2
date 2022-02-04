@@ -8,6 +8,7 @@ from Particles import *
 import network_server as netws
 import time
 import sys
+from os import path, getcwd
 
 # --------------- Inline arguments handler
 
@@ -29,8 +30,11 @@ for i in range(len(sys.argv)):
 
 # --------------- Compile assets:
 print("Compiling assets...")
-dc.run_command("..\\bin\\assetc\\assetc assets -quiet -progress")
-
+if sys.platform == "linux" or sys.platform == "linux2":
+    assetc_cmd = [path.join(getcwd(), "../", "bin", "assetc", "assetc"), "assets", "-quiet", "-progress"]
+    dc.run_command(assetc_cmd)
+else:
+    dc.run_command("../bin/assetc/assetc assets -quiet -progress")
 
 # --------------- Init system
 
@@ -69,7 +73,7 @@ if Main.win is None:
     Main.win = hg.NewWindow(res_x, res_y)
 
 hg.RenderInit(Main.win)
-hg.RenderReset(res_x, res_y, hg.RF_VSync | hg.RF_MSAA4X | hg.RF_MaxAnisotropy)
+hg.RenderReset(res_x, res_y, hg.RF_None) # hg.RF_VSync | hg.RF_MSAA4X | hg.RF_MaxAnisotropy)
 
 
 # -------------------- OpenVR initialization

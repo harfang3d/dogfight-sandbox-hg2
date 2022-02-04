@@ -21,11 +21,11 @@ vec3 DistanceFog(vec3 pos, vec3 color) {
 
 // Entry point of the forward pipeline default uber shader (Phong and PBR)
 void main() {
-	const vec4 self = texture2D(uColorMap, vTexCoord0)*uColor;
+	vec4 self = texture2D(uColorMap, vTexCoord0) * uColor;
 
-	vec3 color = self.rgb;
+	vec3 color = self.xyz;
 	
 	color = DistanceFog(vWorldPos, color);
 
-	gl_FragColor = vec4(color, self.a * front_face.x);
+	gl_FragColor = vec4(color, self.w * front_face.x);
 }
