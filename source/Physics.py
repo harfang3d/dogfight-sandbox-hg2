@@ -13,6 +13,7 @@ scene = None
 scene_physics = None
 water_level = 0
 
+
 terrain_heightmap = None
 terrain_position = hg.Vec3(-24896, -296.87, 9443)
 terrain_scale = hg.Vec3(41480, 1000, 19587)
@@ -52,9 +53,34 @@ def get_terrain_normale(pos2d):
 	return hg.Normalize(hg.Vec3(get_map_altitude(pos2d - xd) - get_map_altitude(pos2d + xd), 2 * f, get_map_altitude(pos2d - zd) - get_map_altitude(pos2d + zd)))
 
 
-def compute_atmosphere_density(altitude, temperature_K=288.15):
+def _compute_atmosphere_temp(altitude):
+	"""
+	Internal function to compute atmospheric temperature according to altitude. Different layers have
+	different temperature gradients, therefore the calculation is branched.
+	Model is taken from ICAO DOC 7488: Manual of ICAO Standard Atmosphere.
+
+	:param altitude: altitude in meters.
+	:return: temperature in Kelvin.
+	"""
+
+	#Gradients are Kelvin/km.
+	if altitude < 11e3:
+		temperature_gradient = -6.5 #Kelvin per km.
+		reference_temp = 288.15 #Temperature at sea level.
+		altitude_diff = altitude - 0
+	else:
+		temperature_gradient = 0
+		reference_temp = 216.65 #Temperature at 11km altitude.
+		altitude_diff = altitude - 11e3
+
+	return reference_temp + temperature_gradient*(altitude_diff / 1000)
+
+
+
+def compute_atmosphere_density(altitude):
 	# Barometric formula
-	# temperature_K : default value: sea level standard temperature, 288.15 K
+	# temperature_K : based on ICAO Standard Atmosphere
+	temperature_K = _compute_atmosphere_temp(altitude)
 	R = 8.3144621  # ideal (universal) gas constant, 8.31446 J/(mol·K)
 	M = 0.0289652  # molar mass of dry air, 0.0289652 kg/mol
 	g = 9.80665  # earth-surface gravitational acceleration, 9.80665 m/s2
