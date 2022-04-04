@@ -1,0 +1,7 @@
+{
+	"profiles": {
+		"default": {
+			"compression": "ETC2"
+		}
+	}
+}

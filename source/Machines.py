@@ -986,7 +986,6 @@ class Missile(Destroyable_Machine):
         self.smoke_color = color
         for node in self.smoke:
             node.GetTransform().SetPos(hg.Vec3(0, 0, 0))
-
             hg.SetMaterialValue(node.GetObject().GetMaterial(0), self.smoke_color_label, hg.Vec4(self.smoke_color.r, self.smoke_color.g, self.smoke_color.b, self.smoke_color.a))
 
     def get_target_id(self):

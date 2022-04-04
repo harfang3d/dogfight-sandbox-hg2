@@ -4,7 +4,7 @@ import harfang as hg
 
 
 class PostProcess:
-	def __init__(self, resources, resolution, flag_vr=False):
+	def __init__(self, resources, resolution, antialiasing = 4, flag_vr=False):
 		# Setup frame buffers
 
 		self.render_program = hg.LoadProgramFromAssets("shaders/copy")
@@ -12,12 +12,11 @@ class PostProcess:
 		self.flag_vr = flag_vr
 
 		# Render frame buffer
-		fb_aa = 4
 		if flag_vr:
-			self.quad_frameBuffer_left = hg.CreateFrameBuffer(int(resolution.x), int(resolution.y), hg.TF_RGBA8, hg.TF_D32F, fb_aa, "frameBuffer_postprocess_left")  # hg.OpenVRCreateEyeFrameBuffer(hg.OVRAA_MSAA4x)
-			self.quad_frameBuffer_right = hg.CreateFrameBuffer(int(resolution.x), int(resolution.y), hg.TF_RGBA8, hg.TF_D32F, fb_aa, "frameBuffer_postprocess_right")  # hg.OpenVRCreateEyeFrameBuffer(hg.OVRAA_MSAA4x)
+			self.quad_frameBuffer_left = hg.CreateFrameBuffer(int(resolution.x), int(resolution.y), hg.TF_RGBA8, hg.TF_D32F, antialiasing, "frameBuffer_postprocess_left")  # hg.OpenVRCreateEyeFrameBuffer(hg.OVRAA_MSAA4x)
+			self.quad_frameBuffer_right = hg.CreateFrameBuffer(int(resolution.x), int(resolution.y), hg.TF_RGBA8, hg.TF_D32F, antialiasing, "frameBuffer_postprocess_right")  # hg.OpenVRCreateEyeFrameBuffer(hg.OVRAA_MSAA4x)
 		else:
-			self.quad_frameBuffer = hg.CreateFrameBuffer(int(resolution.x), int(resolution.y), hg.TF_RGBA8, hg.TF_D32F, fb_aa, "frameBuffer_postprocess")
+			self.quad_frameBuffer = hg.CreateFrameBuffer(int(resolution.x), int(resolution.y), hg.TF_RGBA8, hg.TF_D32F, antialiasing, "frameBuffer_postprocess")
 
 		# Setup 2D rendering
 		self.quad_mdl = hg.VertexLayout()

@@ -382,7 +382,7 @@ class Missions:
 		cls.aircrafts_starts_in_sky(main.players_ennemies[0:n // 2], hg.Vec3(-8000, 1000, 0), hg.Vec3(2000, 500, 2000), hg.Vec2(-180, -175), hg.Vec2(800 / 3.6, 600 / 3.6))
 
 		cls.setup_aircrafts_on_carrier(main.players_ennemies[n//2:n], main.aircraft_carrier_ennemies, 60)
-
+		
 		main.init_playground()
 
 		for i, ac in enumerate(main.players_allies):
@@ -416,7 +416,7 @@ class Missions:
 	@classmethod
 	def mission_war_end_test(cls, main):
 		mission = cls.get_current_mission()
-		if main.keyboard.Pressed(hg.K_F5):
+		if main.keyboard.Pressed(hg.K_F6):
 			for pl in main.players_allies:
 				pl.flag_IA_start_liftoff = True
 			for pl in main.players_ennemies:
@@ -580,6 +580,6 @@ class Missions:
 		cls.missions.append(Mission("Fight against 4 ennemies", ["Rafale"] * 2 + ["F16"] * 2, ["TFX", "Eurofighter"], 1, 1, Missions.mission_setup_players, Missions.mission_one_against_x_end_test, Missions.mission_one_against_x_end_phase_update))
 		cls.missions.append(Mission("Fight against 5 ennemies", ["Rafale"] * 5, ["TFX", "Eurofighter", "F16"], 1, 1, Missions.mission_setup_players, Missions.mission_one_against_x_end_test, Missions.mission_one_against_x_end_phase_update))
 
-		cls.missions.append(Mission("War: 5 allies against 5 ennemies", ["Rafale"] * 3 + ["Eurofighter"] * 2, ["TFX"] * 2 + ["F16"] * 2 + ["Eurofighter"] * 1, 1, 1, Missions.mission_setup_players, Missions.mission_war_end_test, Missions.mission_war_end_phase_update))
+		cls.missions.append(Mission("War: 5 allies against 5 ennemies", ["Rafale"] * 3 + ["Eurofighter"] * 2, ["TFX"] * 2 + ["F16"] * 2 + ["Eurofighter"] * 1, 1, 1, Missions.mission_total_war_setup_players, Missions.mission_war_end_test, Missions.mission_war_end_phase_update))
 		#cls.missions.append(Mission("Total War: 12 allies against 12 ennemies", ["Rafale"] * 12, ["TFX"] * 4 + ["Eurofighter"] * 4 + ["F16"] * 4 + ["Eurofighter"] * 4, 2, 2, Missions.mission_total_war_setup_players, Missions.mission_war_end_test, Missions.mission_war_end_phase_update))
 		#cls.missions.append(Mission("Crash test: 60 allies against 60 ennemies", ["Rafale"] * 30 + ["Eurofighter"] * 30, ["TFX"] * 30 + ["Eurofighter"] * 20 + ["F16"] * 10, 5, 5, Missions.mission_total_war_setup_players, Missions.mission_war_end_test, Missions.mission_war_end_phase_update))

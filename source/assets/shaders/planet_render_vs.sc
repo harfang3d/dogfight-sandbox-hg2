@@ -7,9 +7,13 @@ uniform vec4 resolution;
 uniform vec4 focal_distance;
 
 void main() {
-	uv=vec2(clamp(a_position.x,0.,1.),1.-clamp(a_position.z,0.,1.));
+#if BGFX_SHADER_LANGUAGE_GLSL
+	uv = vec2(clamp(a_position.x ,0.0, 1.0), 1.0 - clamp(a_position.z, 0.0, 1.0));
+#else
+	uv = vec2(clamp(a_position.x, 0.0, 1.0), clamp(a_position.z, 0.0, 1.0));
+#endif
 	pos_test = a_position;
-	position = uv*2.0 - 1.0;
+	position = uv * 2.0 - 1.0;
 	position.y *= -1.0;
 	float ratio = resolution.x / resolution.y;
 	screen_ray = vec3(a_position.x , a_position.z, focal_distance.x);

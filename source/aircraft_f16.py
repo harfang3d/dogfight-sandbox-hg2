@@ -37,8 +37,8 @@ class F16_Parameters:
 
         self.max_safe_altitude = 15700
         self.max_altitude = 25700
-        self.gear_height = 2.504 * 0.8
-        self.bottom_height = 1.3 * 0.8
+        self.gear_height = 2.504 * 0.9
+        self.bottom_height = 1.3 * 0.9
 
         # Weapons configuration:
         self.missiles_config = ["AIM_SL", "AIM_SL", "Karaoke", "Karaoke", "Karaoke", "Karaoke", "CFT", "CFT", "Karaoke", "Karaoke", "Karaoke", "Karaoke"]

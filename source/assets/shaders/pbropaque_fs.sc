@@ -18,17 +18,6 @@ SAMPLER2D(uNormalMap, 2);
 SAMPLER2D(uSelfMap, 4);
 
 //
-
-float linear2sRGB(float x) {
-	return x <= 0.0031308 ? 12.92 * x : 1.055 * pow(x, 0.41666) - 0.055;
-}
-
-vec3 linear2sRGB(vec3 c) {
-	return vec3(linear2sRGB(c.x), linear2sRGB(c.y), linear2sRGB(c.z));
-}
-
-
-//
 float LightAttenuation(vec3 L, vec3 D, float dist, float attn, float inner_rim, float outer_rim) {
 	float k = 1.0;
 	if (attn > 0.0)
@@ -106,7 +95,7 @@ vec3 FresnelSchlickRoughness(float cosTheta, vec3 F0, float roughness) {
 	return F0 + (max(vec3_splat(1.0 - roughness), F0) - F0) * pow(max(1.0 - cosTheta, 0.0), 5.0);
 }
 
-vec3 GGX(vec3 V, vec3 N, float NdotV, vec3 L, vec3 albedo, float roughness, float metalness, vec3 F0) {
+vec3 GGX(vec3 V, vec3 N, float NdotV, vec3 L, vec3 albedo, float roughness, float metalness, vec3 F0, vec3 diffuse_color, vec3 specular_color) {
 	vec3 H = normalize(V - L);
 
 	float NdotH = max(dot(N, H), 0.0);
@@ -122,7 +111,7 @@ vec3 GGX(vec3 V, vec3 N, float NdotV, vec3 L, vec3 albedo, float roughness, floa
 	vec3 kD = (vec3_splat(1.0) - F) * (1.0 - metalness); // metallic materials have no diffuse (NOTE: mimics mental ray and 3DX Max ART renderers behavior)
 	vec3 diffuseBRDF = kD * albedo;
 
-	return (diffuseBRDF + specularBRDF) * NdotL;
+	return (diffuse_color * diffuseBRDF + specular_color * specularBRDF) * NdotL;
 }
 
 //
@@ -175,11 +164,10 @@ void main() {
 	vec3 T = normalize(vTangent);
 	vec3 B = normalize(vBinormal);
 
-	mat3 TBN = MakeMat3(T, B, N);
+	mat3 TBN = mtxFromRows(T, B, N);
 
 	N.xy = ORMN_scale.w * texture2D(uNormalMap, vTexCoord0).xy * 2.0 - 1.0;
 	N.z = sqrt(1.0 - dot(N.xy, N.xy));
-
 	N = normalize(mul(N, TBN));
 #endif
 
@@ -199,11 +187,11 @@ void main() {
 		float k_fade_split = 1.0 - jitter.z * 0.3;
 
 		if(view.z < uLinearShadowSlice.x * k_fade_split) {
-			k_shadow *= SampleShadowPCF(uLinearShadowMap, vLinearShadowCoord0, uShadowState.y * 0.5, uShadowState.z, jitter);
+			k_shadow *= SampleShadowPCF(uLinearShadowMap, vLinearShadowCoord0, uShadowState.y * 0.5, uShadowState.z * 0.15, jitter);
 		} else if(view.z < uLinearShadowSlice.y * k_fade_split) {
-			k_shadow *= SampleShadowPCF(uLinearShadowMap, vLinearShadowCoord1, uShadowState.y * 0.5, uShadowState.z, jitter);
+			k_shadow *= SampleShadowPCF(uLinearShadowMap, vLinearShadowCoord1, uShadowState.y * 0.5, uShadowState.z * 0.4, jitter);
 		} else if(view.z < uLinearShadowSlice.z * k_fade_split) {
-			k_shadow *= SampleShadowPCF(uLinearShadowMap, vLinearShadowCoord2, uShadowState.y * 0.5, uShadowState.z, jitter);
+			k_shadow *= SampleShadowPCF(uLinearShadowMap, vLinearShadowCoord2, uShadowState.y * 0.5, uShadowState.z * 0.8, jitter);
 		} else if(view.z < uLinearShadowSlice.w * k_fade_split) {
 # if FORWARD_PIPELINE_AAA
 			k_shadow *= SampleShadowPCF(uLinearShadowMap, vLinearShadowCoord3, uShadowState.y * 0.5, uShadowState.z, jitter);
@@ -215,7 +203,7 @@ void main() {
 # endif
 		}
 #endif
-		color += GGX(V, N, NdotV, uLightDir[0].xyz, base_opacity.xyz, occ_rough_metal.g, occ_rough_metal.b, F0) * uLightDiffuse[0].xyz * k_shadow;
+		color += GGX(V, N, NdotV, uLightDir[0].xyz, base_opacity.xyz, occ_rough_metal.g, occ_rough_metal.b, F0, uLightDiffuse[0].xyz * k_shadow, uLightSpecular[0].xyz * k_shadow);
 	}
 	// SLOT 1: point/spot light (with optional shadows)
 	{
@@ -223,12 +211,11 @@ void main() {
 		float distance = length(L);
 		L /= max(distance, 1e-8);
 		float attenuation = LightAttenuation(L, uLightDir[1].xyz, distance, uLightPos[1].w, uLightDir[1].w, uLightDiffuse[1].w);
-		vec3 radiance = uLightDiffuse[1].xyz * attenuation;
 
 #if SLOT1_SHADOWS
-		radiance *=SampleShadowPCF(uSpotShadowMap, vSpotShadowCoord, uShadowState.y, uShadowState.w, jitter);
+		attenuation *=SampleShadowPCF(uSpotShadowMap, vSpotShadowCoord, uShadowState.y, uShadowState.w, jitter);
 #endif
-		color += GGX(V, N, NdotV, L, base_opacity.xyz, occ_rough_metal.g, occ_rough_metal.b, F0) * radiance;
+		color += GGX(V, N, NdotV, L, base_opacity.xyz, occ_rough_metal.g, occ_rough_metal.b, F0, uLightDiffuse[1].xyz * attenuation, uLightSpecular[1].xyz * attenuation);
 	}
 	// SLOT 2-N: point/spot light (no shadows) [todo]
 	{
@@ -237,9 +224,8 @@ void main() {
 			float distance = length(L);
 			L /= max(distance, 1e-8);
 			float attenuation = LightAttenuation(L, uLightDir[i].xyz, distance, uLightPos[i].w, uLightDir[i].w, uLightDiffuse[i].w);
-			vec3 radiance = uLightDiffuse[i].xyz * attenuation;
 
-			color += GGX(V, N, NdotV, L, base_opacity.xyz, occ_rough_metal.g, occ_rough_metal.b, F0) * radiance;
+			color += GGX(V, N, NdotV, L, base_opacity.xyz, occ_rough_metal.g, occ_rough_metal.b, F0, uLightDiffuse[i].xyz * attenuation, uLightSpecular[i].xyz * attenuation);
 		}
 	}
 
@@ -279,16 +265,14 @@ void main() {
 	color *= occ_rough_metal.x;
 	color += self.xyz;
 
-	//
+    //
 	float height_level=smoothstep(base_texel_range.x, base_texel_range.y, P.y);
 	color = mix( base_opacity.rgb, color.xyz, height_level);
-	///
+	//
 
-	color = linear2sRGB(color);
 	color = DistanceFog(view, color);
-	color = sRGB2linear(color);
 
-	float opacity = 1.0 ; //base_opacity.w;
+	float opacity = base_opacity.w;
 
 #if FORWARD_PIPELINE_AAA_PREPASS
 	vec3 N_view = mul(u_view, vec4(N, 0)).xyz;

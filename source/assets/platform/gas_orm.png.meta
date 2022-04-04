@@ -1,8 +1,0 @@
-{
-	"profiles": {
-		"default": {
-			"compression": "BC3",
-			"type": "Standard"
-		}
-	}
-}

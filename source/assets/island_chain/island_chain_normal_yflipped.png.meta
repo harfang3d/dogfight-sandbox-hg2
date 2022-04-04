@@ -1,8 +1,7 @@
 {
 	"profiles": {
 		"default": {
-			"compression": "ETC2",
-			"type": "NormalMap"
+			"compression": "ETC2"
 		}
 	}
 }
