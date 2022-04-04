@@ -7,7 +7,7 @@ from vr_tools import *
 
 
 class WaterReflection():
-	def __init__(self, scene, resolution: hg.Vec2, resources: hg.PipelineResources, flag_vr=False):
+	def __init__(self, scene, resolution: hg.Vec2, resources: hg.PipelineResources, antialiasing = 4, flag_vr=False):
 		self.flag_vr = flag_vr
 		# Parameters:
 		self.color = hg.Color(1, 0, 0, 1)
@@ -18,12 +18,11 @@ class WaterReflection():
 
 		self.render_program = hg.LoadProgramFromAssets("shaders/copy")
 
-		fb_aa = 4
 		if not flag_vr:
-			self.quad_frameBuffer = hg.CreateFrameBuffer(int(resolution.x), int(resolution.y), hg.TF_RGBA8, hg.TF_D32F, fb_aa, "frameBuffer_reflect")
+			self.quad_frameBuffer = hg.CreateFrameBuffer(int(resolution.x), int(resolution.y), hg.TF_RGBA8, hg.TF_D32F, antialiasing, "frameBuffer_reflect")
 		else:
-			self.quad_frameBuffer_left = hg.CreateFrameBuffer(int(resolution.x), int(resolution.y), hg.TF_RGBA8, hg.TF_D32F, fb_aa, "frameBuffer_reflect_left")
-			self.quad_frameBuffer_right = hg.CreateFrameBuffer(int(resolution.x), int(resolution.y), hg.TF_RGBA8, hg.TF_D32F, fb_aa, "frameBuffer_reflect_right")
+			self.quad_frameBuffer_left = hg.CreateFrameBuffer(int(resolution.x), int(resolution.y), hg.TF_RGBA8, hg.TF_D32F, antialiasing, "frameBuffer_reflect_left")
+			self.quad_frameBuffer_right = hg.CreateFrameBuffer(int(resolution.x), int(resolution.y), hg.TF_RGBA8, hg.TF_D32F, antialiasing, "frameBuffer_reflect_right")
 
 	@staticmethod
 	def get_plane_projection_factor(p: hg.Vec3, plane_origine: hg.Vec3, plane_normal: hg.Vec3):

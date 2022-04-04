@@ -9,6 +9,8 @@ import network_server as netws
 import time
 import sys
 from os import path, getcwd
+import json
+from math import log, floor
 
 # --------------- Inline arguments handler
 
@@ -27,6 +29,21 @@ for i in range(len(sys.argv)):
     elif cmd == "vr_mode":
         Main.flag_vr = True
 
+# ---------------- Read config file:
+
+file_name="../config.json"
+
+file = open(file_name, "r")
+json_script = file.read()
+file.close()
+if json_script != "":
+    script_parameters = json.loads(json_script)
+    Main.flag_OpenGL = script_parameters["OpenGL"]
+    Main.flag_fullscreen = script_parameters["FullScreen"]
+    Main.resolution.x = script_parameters["Resolution"][0]
+    Main.resolution.y = script_parameters["Resolution"][1]
+    Main.antialiasing = script_parameters["AntiAliasing"]
+    Main.flag_shadowmap = script_parameters["ShadowMap"]
 
 # --------------- Compile assets:
 print("Compiling assets...")
@@ -34,7 +51,10 @@ if sys.platform == "linux" or sys.platform == "linux2":
     assetc_cmd = [path.join(getcwd(), "../", "bin", "assetc", "assetc"), "assets", "-quiet", "-progress"]
     dc.run_command(assetc_cmd)
 else:
-    dc.run_command("../bin/assetc/assetc assets -quiet -progress")
+    if Main.flag_OpenGL:
+        dc.run_command("../bin/assetc/assetc assets -api GL -quiet -progress")
+    else:
+        dc.run_command("../bin/assetc/assetc assets -quiet -progress")
 
 # --------------- Init system
 
@@ -64,7 +84,7 @@ def get_monitor_mode(width, height):
 
 
 Main.win = None
-if Main.fullscreen:
+if Main.flag_fullscreen:
     monitor, mode_id = get_monitor_mode(res_x, res_y)
     if monitor is not None:
         Main.win = hg.NewFullscreenWindow(monitor, mode_id)
@@ -72,9 +92,14 @@ if Main.fullscreen:
 if Main.win is None:
     Main.win = hg.NewWindow(res_x, res_y)
 
-hg.RenderInit(Main.win)
-hg.RenderReset(res_x, res_y, hg.RF_VSync | hg.RF_MSAA4X | hg.RF_MaxAnisotropy)
+if Main.flag_OpenGL:
+    hg.RenderInit(Main.win, hg.RT_OpenGL)
+else:
+    hg.RenderInit(Main.win)
 
+alias_modes = [hg.RF_MSAA2X, hg.RF_MSAA4X, hg.RF_MSAA8X, hg.RF_MSAA16X]
+aa = alias_modes[min(3, floor(log(Main.antialiasing) / log(2)) - 1)]
+hg.RenderReset(res_x, res_y, hg.RF_VSync | aa | hg.RF_MaxAnisotropy)
 
 # -------------------- OpenVR initialization
 

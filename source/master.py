@@ -33,9 +33,14 @@ from math import atan
 
 class Main:
 
+    # Main display configuration (user-defined in "config.json" file)
 
-    fullscreen = False
+    flag_fullscreen = False
     resolution = hg.Vec2(1920, 1080)
+    flag_shadowmap = True
+    flag_OpenGL = True
+    antialiasing = 4
+    flag_display_HUD = True
 
     # Control devices
 
@@ -297,6 +302,13 @@ class Main:
         #  Camera used in start phase :
         cls.camera_intro = cls.scene.GetNode("Camera_intro")
 
+        # Shadows setup
+        sun = cls.scene.GetNode("Sun")
+        if cls.flag_shadowmap:
+            sun.GetLight().SetShadowType(hg.LST_Map)
+        else:
+            sun.GetLight().SetShadowType(hg.LST_None)
+
         if cls.flag_vr:
             framebuffers_resolution = cls.vr_resolution
         else:
@@ -304,7 +316,7 @@ class Main:
 
         # ---------- Post process setup
 
-        cls.post_process = PostProcess(cls.pl_resources, framebuffers_resolution, cls.flag_vr)
+        cls.post_process = PostProcess(cls.pl_resources, framebuffers_resolution, cls.antialiasing, cls.flag_vr)
 
         # ---------- Destroyable machines original nodes lists:
 
@@ -342,7 +354,7 @@ class Main:
         cls.sea_render = PlanetRender(cls.scene, framebuffers_resolution, cls.scene.GetNode("island_clipped").GetTransform().GetPos(), hg.Vec3(-20740.2158, 0, 9793.1535))
         cls.sea_render.load_json_script()
 
-        cls.water_reflexion = WaterReflection(cls.scene, framebuffers_resolution, cls.pl_resources, cls.flag_vr)
+        cls.water_reflexion = WaterReflection(cls.scene, framebuffers_resolution, cls.pl_resources, cls.antialiasing, cls.flag_vr)
 
         # ---------------- Musics:
         cls.main_music_ref = [hg.LoadWAVSoundAsset("sfx/main_left.wav"), hg.LoadWAVSoundAsset("sfx/main_right.wav")]
@@ -516,7 +528,7 @@ class Main:
 
             missiles = cls.create_missiles(launcher, cls.allies_missiles_smoke_color)
             if missiles is not None:
-                cls.missiles_allies.append(missiles)
+                cls.missiles_allies.append([] + missiles)
                 cls.destroyables_list += missiles
 
 
@@ -528,7 +540,7 @@ class Main:
 
             missiles = cls.create_missiles(launcher, cls.ennemies_missiles_smoke_color)
             if missiles is not None:
-                cls.missiles_ennemies.append(missiles)
+                cls.missiles_ennemies.append([] + missiles)
                 cls.destroyables_list += missiles
 
     @classmethod
@@ -565,7 +577,7 @@ class Main:
 
             missiles = cls.create_missiles(aircraft, cls.allies_missiles_smoke_color)
             if missiles is not None:
-                cls.missiles_allies.append(missiles)
+                cls.missiles_allies.append([] + missiles)
                 cls.destroyables_list += missiles
 
 
@@ -591,7 +603,7 @@ class Main:
 
             missiles = cls.create_missiles(aircraft, cls.ennemies_missiles_smoke_color)
             if missiles is not None:
-                cls.missiles_ennemies.append(missiles)
+                cls.missiles_ennemies.append([] + missiles)
                 cls.destroyables_list += missiles
 
         if cls.flag_sfx:
@@ -619,6 +631,8 @@ class Main:
 
     @classmethod
     def init_playground(cls):
+
+        cls.scene.Update(0)
 
         lt_allies = []
         for carrier in cls.aircraft_carrier_allies:
@@ -892,6 +906,8 @@ class Main:
                 camera = cls.camera
             elif cls.player_view_mode == SmartCamera.TYPE_FIX:
                 camera = cls.camera_cokpit
+            elif cls.player_view_mode == SmartCamera.TYPE_TACTICAL:
+                camera = cls.camera
             cls.scene.SetCurrentCamera(camera)
 
         if cls.satellite_view:
@@ -904,8 +920,6 @@ class Main:
                 cls.scene.GetCurrentCamera().GetCamera().SetFov(cls.scene.GetCurrentCamera().GetCamera().GetFov() * 0.99)
             elif keyboard.Down(hg.K_PageUp):
                 cls.scene.GetCurrentCamera().GetCamera().SetFov(cls.scene.GetCurrentCamera().GetCamera().GetFov() * 1.01)
-
-        #################################################### ICI ######################################
 
 
     # =============================== Scene datas
@@ -1003,6 +1017,9 @@ class Main:
 
             d, f = hg.ImGuiCheckbox("Display FPS", cls.flag_display_fps)
             if d: cls.flag_display_fps = f
+            d, f = hg.ImGuiCheckbox("Display HUD", cls.flag_display_HUD)
+            if d: cls.flag_display_HUD = f
+
             d, f = hg.ImGuiCheckbox("Renderless", cls.flag_renderless)
             if d: cls.set_renderless_mode(f)
             d, f = hg.ImGuiCheckbox("Display radar in renderless mode", cls.flag_display_radar_in_renderless)
@@ -1119,7 +1136,7 @@ class Main:
 
         # ========== Display Reflect scene ===================
 
-        #cls.scene.canvas.color = cls.sea_render.high_atmosphere_color
+        """
         cls.scene.canvas.color = hg.Color(1, 0, 0, 1)  # En attendant de fixer le pb de la depth texture du framebuffer.
 
         cls.scene.canvas.clear_z = True
@@ -1135,19 +1152,19 @@ class Main:
         # Prepare the right eye render data then draw to its framebuffer
         vid, passId = hg.PrepareSceneForwardPipelineViewDependentRenderData(vid, right_reflect, cls.scene, cls.render_data, cls.pipeline, cls.pl_resources, views)
         vid, passId = hg.SubmitSceneToForwardPipeline(vid, cls.scene, vr_eye_rect, right_reflect, cls.pipeline, cls.render_data, cls.pl_resources, cls.water_reflexion.quad_frameBuffer_right.handle)
-
+        """
     
         # ========== Display raymarch scene ===================
         output_fb_left = cls.post_process.quad_frameBuffer_left
         output_fb_right = cls.post_process.quad_frameBuffer_right
-        cls.scene.canvas.clear_z = False
-        cls.scene.canvas.clear_color = False
+        cls.scene.canvas.clear_z = True
+        cls.scene.canvas.clear_color = True
 
-        tex_reflect_left_color = hg.GetColorTexture(cls.water_reflexion.quad_frameBuffer_left)
-        tex_reflect_left_depth = hg.GetDepthTexture(cls.water_reflexion.quad_frameBuffer_left)
-        tex_reflect_right_color = hg.GetColorTexture(cls.water_reflexion.quad_frameBuffer_right)
-        tex_reflect_right_depth = hg.GetDepthTexture(cls.water_reflexion.quad_frameBuffer_right)
-        vid = cls.sea_render.render_vr(vid, cls.vr_state, vs_left, vs_right, output_fb_left, output_fb_right, tex_reflect_left_color, tex_reflect_left_depth, tex_reflect_right_color, tex_reflect_right_depth)
+        #tex_reflect_left_color = hg.GetColorTexture(cls.water_reflexion.quad_frameBuffer_left)
+        #tex_reflect_left_depth = hg.GetDepthTexture(cls.water_reflexion.quad_frameBuffer_left)
+        #tex_reflect_right_color = hg.GetColorTexture(cls.water_reflexion.quad_frameBuffer_right)
+        #tex_reflect_right_depth = hg.GetDepthTexture(cls.water_reflexion.quad_frameBuffer_right)
+        vid = cls.sea_render.render_vr(vid, cls.vr_state, vs_left, vs_right, output_fb_left, output_fb_right) #, tex_reflect_left_color, tex_reflect_left_depth, tex_reflect_right_color, tex_reflect_right_depth)
 
 
         # ========== Display models scene =======================
@@ -1430,6 +1447,9 @@ class Main:
 
             if cls.keyboard.Pressed(hg.K_F12):
                 cls.flag_gui = not cls.flag_gui
+            
+            if cls.keyboard.Pressed(hg.K_F10):
+                cls.flag_display_HUD = not cls.flag_display_HUD
 
             if cls.flag_gui:
                 hg.ImGuiBeginFrame(int(cls.resolution.x), int(cls.resolution.y), real_dt, hg.ReadMouse(), hg.ReadKeyboard())

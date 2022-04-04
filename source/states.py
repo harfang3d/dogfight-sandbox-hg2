@@ -180,6 +180,7 @@ def update_menu_phase(dts):
         Overlays.add_text2D("Aircraft selection (multi allies missions)", hg.Vec2(x, (y - 280) / 900), s, c, Main.hud_font)
         Overlays.add_text2D("Activate IA", hg.Vec2(x, (y - 300) / 900), s, c, Main.hud_font)
         Overlays.add_text2D("Activate User control", hg.Vec2(x, (y - 320) / 900), s, c, Main.hud_font)
+        Overlays.add_text2D("HUD ON / OFF", hg.Vec2(x, (y - 340) / 900), s, c, Main.hud_font)
 
         # Keyboard:
         x = 815 / 1600
@@ -203,6 +204,7 @@ def update_menu_phase(dts):
         Overlays.add_text2D("Numeric pad : 1", hg.Vec2(x, (y - 280) / 900), s, c, Main.hud_font)
         Overlays.add_text2D("I", hg.Vec2(x, (y - 300) / 900), s, c, Main.hud_font)
         Overlays.add_text2D("U", hg.Vec2(x, (y - 320) / 900), s, c, Main.hud_font)
+        Overlays.add_text2D("F10", hg.Vec2(x, (y - 340) / 900), s, c, Main.hud_font)
 
         # Paddle
         if Main.flag_paddle:
@@ -287,14 +289,15 @@ def update_main_phase(dts):
         if Main.flag_control_views:
             Main.control_views(Main.keyboard)
 
-        if Main.user_aircraft is not None:
-            if Main.user_aircraft.type == Destroyable_Machine.TYPE_AIRCRAFT:
-                HUD_Aircraft.update(Main, Main.user_aircraft, Main.destroyables_list)
-            elif Main.user_aircraft.type == Destroyable_Machine.TYPE_MISSILE_LAUNCHER:
-                HUD_MissileLauncher.update(Main, Main.user_aircraft, Main.destroyables_list)
+        if Main.flag_display_HUD:
+            if Main.user_aircraft is not None:
+                if Main.user_aircraft.type == Destroyable_Machine.TYPE_AIRCRAFT:
+                    HUD_Aircraft.update(Main, Main.user_aircraft, Main.destroyables_list)
+                elif Main.user_aircraft.type == Destroyable_Machine.TYPE_MISSILE_LAUNCHER:
+                    HUD_MissileLauncher.update(Main, Main.user_aircraft, Main.destroyables_list)
 
-        if Main.flag_display_selected_aircraft and Main.selected_aircraft is not None:
-            HUD_MissileTarget.display_selected_target(Main, Main.selected_aircraft)
+            if Main.flag_display_selected_aircraft and Main.selected_aircraft is not None:
+                HUD_MissileTarget.display_selected_target(Main, Main.selected_aircraft)
 
         if Main.flag_display_landing_trajectories:
             if Main.user_aircraft is not None:

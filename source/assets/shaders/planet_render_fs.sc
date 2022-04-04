@@ -84,22 +84,31 @@ vec3 DistanceFog(vec3 pos, vec3 color)
 	return mix(color, uFogColor.xyz, k);
 }
 
+#if BGFX_SHADER_LANGUAGE_GLSL
+#define ZBUFMIN 0.0
+#define ZBUFMAX 1.0
+#else
+#define ZBUFMIN -1.0
+#define ZBUFMAX 1.0
+#endif
 
 float get_zDepth(float near, float far)
 {
 	float a, b, z;
 	z = far * near;
-	a = z_Frustum.y / (z_Frustum.y - z_Frustum.x * 2.0);
-	b = z_Frustum.y * z_Frustum.x * 2.0 / (z_Frustum.x * 2.0 - z_Frustum.y);
-	return ((a + b / z) + 1.0) / 2.0;
+	const float zb_amplitude = ZBUFMAX - ZBUFMIN;
+	a = z_Frustum.y / (z_Frustum.y - z_Frustum.x * zb_amplitude);
+	b = z_Frustum.y * z_Frustum.x * zb_amplitude / (z_Frustum.x * zb_amplitude - z_Frustum.y);
+	return ((a + b / z) - ZBUFMIN) / zb_amplitude;
 }
 
 float get_zFromDepth(float near, float zDepth)
 {
 	float a, b;
-	a = z_Frustum.y / (z_Frustum.y - z_Frustum.x * 2.0);
-	b = z_Frustum.y * z_Frustum.x * 2.0 / (z_Frustum.x * 2.0 - z_Frustum.y);
-	return b / ((zDepth * 2.0 - 1.0 - a) * near);
+	const float zb_amplitude = ZBUFMAX - ZBUFMIN;
+	a = z_Frustum.y / (z_Frustum.y - z_Frustum.x * zb_amplitude);
+	b = z_Frustum.y * z_Frustum.x * zb_amplitude / (z_Frustum.x * zb_amplitude - z_Frustum.y);
+	return b / ((zDepth * zb_amplitude + ZBUFMIN - a) * near);
 }
 
 vec3 normalize_color(vec3 in_color)
@@ -318,7 +327,7 @@ vec3 get_sea_color(vec3 sun_c, vec2 screen_coords, vec3 pos, vec3 dir, vec3 scre
 
 	if (scene_reflect.x > 0.5)
 	{
-		vec2 coordsTexReflect = clamp(vec2(screen_coords.x + n.x * reflect_offset.x / distance_plane, (1.0 - screen_coords.y) + n.z * reflect_offset.x / distance_plane), vec2(0.0, 0.0), vec2(1.0, 1.0));
+		vec2 coordsTexReflect = clamp(vec2(screen_coords.x + n.x * reflect_offset.x / distance_plane, screen_coords.y + n.z * reflect_offset.x / distance_plane), vec2(0.0, 0.0), vec2(1.0, 1.0));
 		float zDepth = texture2D(reflect_map_depth, coordsTexReflect).r; //z_Frustum.y*0.98;
 		float z = get_zFromDepth(screen_dir.z, zDepth);
 		float d = z / length(screen_dir.xz);
@@ -378,9 +387,7 @@ void main()
 
 	//--- Render Sea / Sky - Raymarch
 
-	float ratio = cam_position.y / planet_radius.x;
-	float plane_end = 1.0 - smoothstep(1e-3, 1e-2, ratio);
-	float plane_smooth_size = 1.0 - smoothstep(1e-2, 5e-2, ratio);
+	
 
 	vec3 normalized_sun_color = normalize_color(sun_color.xyz);
 	vec3 color;
@@ -401,10 +408,19 @@ void main()
 	{
 		float angle_f = ray_angle / horizon_angle.x;
 		float dist_f = clamp(cam_position.y / planet_radius.x, 0.0,1.0);
+		
+		// Compute planar / spherical fading
+		float ratio = cam_position.y / planet_radius.x;
+		float plane_end = 1.0 - smoothstep(1e-3, 1e-2, ratio);
+		float plane_smooth_size = 1.0 - smoothstep(1e-2, 5e-2, ratio);
 		float plane_f = 1.0 - smoothstep(plane_end,plane_end + plane_smooth_size,angle_f);
-		float distance_plane = cam_position.y / dot(vec3(0.0, -1.0, 0.0), dir);
+		
+		// Compute distance
+		float distance_plane = cam_position.y / abs(dir.y);
 		float distance_sphere = get_distance(planet_radius.x, ray_angle, cam_position.y);
 		distance = mix(distance_sphere, distance_plane, plane_f);
+		
+		// Compute geodesic distance
 		float gd = get_geodesic_distance(ray_angle, distance_sphere);
 		color = get_sea_color(normalized_sun_color, uv, cam_position.xyz, dir, screen_ray_dir, distance_plane, distance_sphere, distance, angle_f, plane_f, gd);
 		clouds_color = get_clouds_color(normalized_sun_color, cam_position.xyz, dir);
