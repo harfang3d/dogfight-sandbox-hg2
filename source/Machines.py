@@ -905,7 +905,7 @@ class Missile(Destroyable_Machine):
     def setup_particles(self):
         for i in range(Missile.num_smoke_parts):
             node = tools.duplicate_node_object(self.scene, self.scene.GetNode("enemymissile_smoke" + "." + str(i)), self.name + ".smoke_" + str(i))
-            self.smoke.append(node)
+            self.smoke.append({"node":node, "alpha": 0})
         self.set_smoke_color(self.smoke_color)
 
         if self.explode is not None:
@@ -926,8 +926,8 @@ class Missile(Destroyable_Machine):
         if self.explode is not None:
             self.explode.destroy()
             self.explode = None
-        for nd in self.smoke:
-            self.scene.DestroyNode(nd)
+        for p in self.smoke:
+            self.scene.DestroyNode(p["node"])
             self.scene.GarbageCollect()
         self.smoke = []
 
@@ -935,7 +935,7 @@ class Missile(Destroyable_Machine):
         if self.explode is not None:
             self.explode.activate()
         for p in self.smoke:
-            p.Enable()
+            p["node"].Enable()
         self.enable_nodes()
         Destroyable_Machine.activate(self)
 
@@ -944,7 +944,7 @@ class Missile(Destroyable_Machine):
         Destroyable_Machine.deactivate(self)
         self.disable_nodes()
         for p in self.smoke:
-            p.Disable()
+            p["node"].Disable()
         if self.explode is not None:
             self.explode.deactivate()
         self.remove_from_update_list()
@@ -971,9 +971,9 @@ class Missile(Destroyable_Machine):
 
         self.remove_from_update_list()
         self.deactivate()
-        for node in self.smoke:
-            node.GetTransform().SetPos(hg.Vec3(0, 0, 0))
-            node.Enable()
+        for p in self.smoke:
+            p["node"].GetTransform().SetPos(hg.Vec3(0, 0, 0))
+            p["node"].Enable()
         if self.explode is not None:
             self.explode.reset()
             self.explode.flow = 0
@@ -984,9 +984,9 @@ class Missile(Destroyable_Machine):
 
     def set_smoke_color(self, color: hg.Color):
         self.smoke_color = color
-        for node in self.smoke:
-            node.GetTransform().SetPos(hg.Vec3(0, 0, 0))
-            hg.SetMaterialValue(node.GetObject().GetMaterial(0), self.smoke_color_label, hg.Vec4(self.smoke_color.r, self.smoke_color.g, self.smoke_color.b, self.smoke_color.a))
+        for p in self.smoke:
+            p["node"].GetTransform().SetPos(hg.Vec3(0, 0, 0))
+            hg.SetMaterialValue(p["node"].GetObject().GetMaterial(0), self.smoke_color_label, hg.Vec4(self.smoke_color.r, self.smoke_color.g, self.smoke_color.b, self.smoke_color.a))
 
     def get_target_id(self):
         if self.target is not None:
@@ -1018,9 +1018,9 @@ class Missile(Destroyable_Machine):
             self.activated = True
             self.add_to_update_list()
             pos = self.parent_node.GetTransform().GetPos()
-            for node in self.smoke:
-                node.Enable()
-                node.GetTransform().SetPos(pos)
+            for p in self.smoke:
+                p["node"].Enable()
+                p["node"].GetTransform().SetPos(pos)
 
     def update_smoke(self, target_point: hg.Vec3, dts):
         spd = self.get_linear_speed() * 0.033
@@ -1029,7 +1029,7 @@ class Missile(Destroyable_Machine):
         if self.smoke_time < 0 and new_t >= 0:
             # pos0=hg.Vec3(0,-1000,0)
             for i in range(len(self.smoke)):
-                node = self.smoke[i]
+                node = self.smoke[i]["node"]
                 node.Disable()  # GetTransform().SetPos(pos0)
             self.smoke_time = new_t
         else:
@@ -1037,42 +1037,44 @@ class Missile(Destroyable_Machine):
             n = len(self.smoke)
             color_end = self.smoke_color * t + hg.Color(1., 1., 1., 0.) * (1 - t)
             for i in range(n):
-                node = self.smoke[i]
-                ts = t * n
-                ti = int(ts)
-                if ti == i:
-                    ts -= ti
-                    alpha = ts * color_end.a
-                elif ti > i:
-                    alpha = color_end.a
+                node = self.smoke[i]["node"]
+
+                if self.wreck:
+                     alpha = self.smoke[i]["alpha"] * (1 - i / n) * t
                 else:
-                    alpha = 0
-                alpha *= (1 - i / n)
+                    mat = node.GetTransform().GetWorld()
+                    hg.SetScale(mat, hg.Vec3(1, 1, 1))
+                    pos = hg.GetT(mat)
+                    v = target_point - pos
+                    smoke_part_spd = hg.Len(v)
+                    dir = hg.Normalize(v)
+                    # Position:
+                    if smoke_part_spd > self.smoke_parts_distance * spd:
+                        pos = target_point - dir * self.smoke_parts_distance * spd
+                        node.GetTransform().SetPos(hg.Vec3(pos))
+                        alpha = color_end.a * (1 - i / n)
+                    else:
+                        alpha = 0
+                    
+                    self.smoke[i]["alpha"] = alpha
+                    # node.Enable()
+                    # else:
+                    # node.Disable()
+                    # Orientation:
+                    aZ = hg.Normalize(hg.GetZ(mat))
+                    axis_rot = hg.Cross(aZ, dir)
+                    angle = hg.Len(axis_rot)
+                    if angle > 0.001:
+                        # Rotation matrix:
+                        ay = hg.Normalize(axis_rot)
+                        rot_mat = hg.Mat3(hg.Cross(ay, dir), ay, dir)
+                        node.GetTransform().SetRot(hg.ToEuler(rot_mat))
+                    node.GetTransform().SetScale(hg.Vec3(1, 1, spd))
+                    target_point = pos
+
                 hg.SetMaterialValue(node.GetObject().GetMaterial(0), self.smoke_color_label, hg.Vec4(color_end.r, color_end.g, color_end.b, alpha))
 
-                mat = node.GetTransform().GetWorld()
-                hg.SetScale(mat, hg.Vec3(1, 1, 1))
-                pos = hg.GetT(mat)
-                v = target_point - pos
-                dir = hg.Normalize(v)
-                # Position:
-                if hg.Len(v) > self.smoke_parts_distance * spd:
-                    pos = target_point - dir * self.smoke_parts_distance * spd * t
-                    node.GetTransform().SetPos(hg.Vec3(pos))
-                # node.Enable()
-                # else:
-                # node.Disable()
-                # Orientation:
-                aZ = hg.Normalize(hg.GetZ(mat))
-                axis_rot = hg.Cross(aZ, dir)
-                angle = hg.Len(axis_rot)
-                if angle > 0.001:
-                    # Rotation matrix:
-                    ay = hg.Normalize(axis_rot)
-                    rot_mat = hg.Mat3(hg.Cross(ay, dir), ay, dir)
-                    node.GetTransform().SetRot(hg.ToEuler(rot_mat))
-                node.GetTransform().SetScale(hg.Vec3(1, 1, spd * t))
-                target_point = pos
+               
 
     def get_hit_damages(self):
         raise NotImplementedError
