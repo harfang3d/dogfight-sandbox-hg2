@@ -38,6 +38,68 @@ The "Network" mode allows you to control the planes from a third party machine.
     
     * Start the file `client_sample.py`
 
+## Aircraft keyboard Commands  
+
+| Command | Key |
+| ------- | :-: |
+| Increase thrust level | Home |
+| Decrease thrust level | End |
+| Increase brake level | B |
+| Decrease brake level | N |
+| Increase flaps level | C |
+| Decrease flaps level | V |
+| Roll left | Left |
+| Roll right| Right |
+| Pitch up| Up |
+| Pitch down| Down |
+| Yaw left| Suppr |
+| Yaw right| PageDown |
+| Switch post combustion| Space |
+| Next target | T |
+| Switch gear | G |
+| Activate IA | I |
+| Activate Autopilot | A |
+| Switch easy steering mode | E |
+| Fire machine gun | Enter |
+| Fire missile | F1 |
+| Increase health level | P |
+| Decrease health level | M |
+| Rearm | F5 |
+
+## Commons Views commands
+
+| Command | Key |
+| ------- | :-: |
+| Roll cameras carousel (aircrafts, FPS) | 1 |
+| Increase FoV angle | PageUp |
+| Decrease FoV angle | Insert |
+
+## Aircrafts views commands
+
+| Command | Key |
+| ------- | :-: |
+| Back view | 2 |
+| Front view | 2 |
+| Left view | 4 |
+| Right view | 6 |
+| Satellite view | 5 |
+| Tactical view | 7 |
+| Pursuit view | 9 |
+| Cockpit view | 3 |
+
+## FPS camera views commands
+
+| Command | Key |
+| ------- | :-: |
+| Head orientation | LMB + mouse move |
+| Move forward | Up, Z |
+| Move backward | Down, S |
+| Move left | left, Q |
+| Move right | right, D |
+| Fast speed 1 | Left Shift + move |
+| Fast speed 2 | Left Ctrl + move |
+| Fast speed 3 | Right Ctrl + move |
+
 ## Contributors
 * Code & design:
   * Eric Kernin
