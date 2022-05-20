@@ -91,6 +91,7 @@ The "Network" mode allows you to control the planes from a third party machine.
 
 | Command | Key |
 | ------- | :-: |
+| Head orientation | LMB + mouse move |
 | Move forward | Up, Z |
 | Move backward | Down, S |
 | Move left | left, Q |
@@ -98,7 +99,6 @@ The "Network" mode allows you to control the planes from a third party machine.
 | Fast speed 1 | Left Shift + move |
 | Fast speed 2 | Left Ctrl + move |
 | Fast speed 3 | Right Ctrl + move |
-
 
 ## Contributors
 * Code & design:
