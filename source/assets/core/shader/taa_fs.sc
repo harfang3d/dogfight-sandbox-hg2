@@ -10,6 +10,7 @@ SAMPLER2D(u_attr1, 3);
 #define AABB_CLAMPING 0
 #define AABB_CLAMPING_FAST 1
 #define VARIANCE_CLIPPING_GAMMA 0 // https://community.arm.com/developer/tools-software/graphics/b/blog/posts/temporal-anti-aliasing
+#define LUMINANCE_AJDUST 1
 
 void main() {
 	vec2 uv = gl_FragCoord.xy / uResolution.xy;
@@ -81,7 +82,20 @@ void main() {
 	prv_color = clamp(prv_color, box_min, box_max);
 #endif
 
+#if LUMINANCE_AJDUST
+	const vec3 luminance = vec3(0.2127, 0.7152, 0.0722);
+
+	float l0 = dot(luminance, prv_color);
+	float l1 = dot(luminance, color);
+
+	float w1 = (uAAAParams[0].z) / (1.0 + l1);
+	float w0 = (1.0 - uAAAParams[0].z) / (1.0 + l0);
+
+	vec3 taa_out = (w1 * color + w0 * prv_color) / max(w0 + w1, 0.00001);
+	gl_FragColor = vec4(taa_out, 1.);
+#else
 	// TAA
 	vec3 taa_out = color * uAAAParams[0].z + prv_color * (1. - uAAAParams[0].z);
 	gl_FragColor = vec4(taa_out, 1.);
+#endif
 }

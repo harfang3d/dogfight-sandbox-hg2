@@ -9,7 +9,7 @@ float gaussian(float v, float sigma) {
 }
 
 void main() {
-    vec2 ratio = floor(textureSize(u_attr_hi, 0).xy / textureSize(u_attr_lo, 0).xy);
+    vec2 ratio = round(textureSize(u_attr_hi, 0).xy / textureSize(u_attr_lo, 0).xy);
 	vec2 pixel = gl_FragCoord.xy / ratio;
     vec2 tmp = floor(pixel-vec2_splat(0.5)) + vec2_splat(0.5);
     ivec2 coord = ivec2(tmp);

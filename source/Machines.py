@@ -543,7 +543,7 @@ class Destroyable_Machine(AnimatedModel):
                                 hg.Vec3(-size.x, -size.y, size.z), hg.Vec3(-size.x, size.y, size.z), hg.Vec3(size.x, size.y, size.z), hg.Vec3(size.x, -size.y, size.z)]
 
                 for pt in bounding_box:
-                    pt *= mat
+                    pt = mat * pt
                     if bounds is None:
                         bounds = [pt.x, pt.x, pt.y, pt.y, pt.z, pt.z]
                     else:
@@ -587,7 +587,7 @@ class Destroyable_Machine(AnimatedModel):
                                 hg.Vec3(mm.mn.x, mm.mn.y, mm.mx.z), hg.Vec3(mm.mn.x, mm.mx.y, mm.mx.z), hg.Vec3(mm.mx.x, mm.mx.y, mm.mx.z), hg.Vec3(mm.mx.x, mm.mn.y, mm.mx.z)]
 
                 for pt in bounding_box:
-                    pt *= mat
+                    pt = mat * pt
                     if bounds is None:
                         bounds = [pt.x, pt.x, pt.y, pt.y, pt.z, pt.z]
                     else:
@@ -619,7 +619,7 @@ class Destroyable_Machine(AnimatedModel):
             matrix = self.parent_node.GetTransform().GetWorld()
             bb = []
             for p in self.bounding_boxe:
-                bb.append(p * matrix)
+                bb.append(matrix * p)
             return bb
         return None
 

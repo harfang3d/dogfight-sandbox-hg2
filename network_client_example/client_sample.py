@@ -23,7 +23,7 @@ def print_fps():
 		print(str(1 / dt))
 
 # Enter the IP and port displayed in top-left corner of DogFight screen
-df.connect("192.168.1.19", 50888)
+df.connect("192.168.1.22", 50888)
 
 time.sleep(2)
 
