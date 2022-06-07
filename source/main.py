@@ -14,6 +14,7 @@ from math import log, floor
 
 # --------------- Inline arguments handler
 
+
 main_name = sys.argv.pop(0)
 
 for i in range(len(sys.argv)):

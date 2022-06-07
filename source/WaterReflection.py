@@ -7,7 +7,7 @@ from vr_tools import *
 
 
 class WaterReflection():
-	def __init__(self, scene, resolution: hg.Vec2, resources: hg.PipelineResources, antialiasing = 4, flag_vr=False):
+	def __init__(self, scene, resolution: hg.Vec2, antialiasing = 4, flag_vr=False):
 		self.flag_vr = flag_vr
 		# Parameters:
 		self.color = hg.Color(1, 0, 0, 1)

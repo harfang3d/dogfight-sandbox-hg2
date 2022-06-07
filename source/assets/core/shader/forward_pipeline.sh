@@ -29,19 +29,21 @@ uniform mat4 uMainInvProjection; // inverse projection for the main render (used
 uniform mat4 uPreviousViewProjection;
 uniform mat4 uPreviousModel[BGFX_CONFIG_MAX_BONES];
 uniform mat4 uViewProjUnjittered;
-uniform vec4 uAAAParams[2]; // [0].x: ssgi ratio, [0].y: ssr ratio, [0].z: temporal AA weight, [0].w: motion blur strength, [1].x: exposure, [1].y: 1/gamma, [1].z: sample count, [1].w: max radius
+uniform vec4 uAAAParams[3]; // [0].x: ssgi ratio, [0].y: ssr ratio, [0].z: temporal AA weight, [0].w: motion blur strength,
+							// [1].x: exposure, [1].y: 1/gamma, [1].z: sample count, [1].w: screenspace ray max length
+							// [2].x: specular weight, [2].y: sharpen
 
 uniform mat4 uMainInvView; // inversion view matrix
+uniform mat4 uProbeMatrix;
+uniform mat4 uInvProbeMatrix;
+uniform vec4 uProbeData;
 
-#if FORWARD_PIPELINE_AAA
-SAMPLER2D(uIrradianceMap, 8);
-SAMPLER2D(uRadianceMap, 9);
-#else
-SAMPLERCUBE(uIrradianceMap, 8);
-SAMPLERCUBE(uRadianceMap, 9);
-#endif
-SAMPLER2D(uBrdfMap, 10);
-SAMPLER2D(uNoiseMap, 11);
+SAMPLERCUBE(uIrradianceMap, 7);
+SAMPLERCUBE(uRadianceMap, 8);
+SAMPLER2D(uSSIrradianceMap, 9);
+SAMPLER2D(uSSRadianceMap, 10);
+SAMPLER2D(uBrdfMap, 11);
+SAMPLER2D(uNoiseMap, 12);
 SAMPLER2D(uAmbientOcclusion, 13);
 SAMPLER2DSHADOW(uLinearShadowMap, 14);
 SAMPLER2DSHADOW(uSpotShadowMap, 15);
@@ -79,8 +81,7 @@ vec3 Unproject(vec3 frag_coord) {
 	return ndc.xyz / ndc.w;
 }
 
-vec3 ComputeFragCoordViewRay(vec2 frag_coord)
-{
+vec3 ComputeFragCoordViewRay(vec2 frag_coord) {
 	vec2 sp = ((frag_coord - u_viewRect.xy) / u_viewRect.zw) * 2. - 1.;
 	sp.y *= -1.;
 
@@ -92,3 +93,65 @@ vec3 ComputeFragCoordViewRay(vec2 frag_coord)
 }
 
 bool isNan(float val) { return (val <= 0.0 || 0.0 <= val) ? false : true; }
+
+//
+vec2 RaySphere(vec3 r0, vec3 rd, vec3 s0, float sr) {
+	float a = dot(rd, rd);
+	vec3 s0_r0 = r0 - s0;
+
+	float b = 2.0 * dot(rd, s0_r0);
+	float c = dot(s0_r0, s0_r0) - (sr * sr);
+	float disc = b * b - 4.0 * a* c;
+
+	if (disc < 0.0)
+		return vec2(-1.0, -1.0);
+
+	return vec2(-b - sqrt(disc), -b + sqrt(disc)) / (2.0 * a);
+}
+
+vec3 RayBox(vec3 ray_origin, vec3 ray_dir, vec3 minpos, vec3 maxpos) {
+	vec3 inverse_dir = 1.0 / ray_dir;
+	vec3 tbot = inverse_dir * (minpos - ray_origin);
+	vec3 ttop = inverse_dir * (maxpos - ray_origin);
+	vec3 tmin = min(ttop, tbot);
+	vec3 tmax = max(ttop, tbot);
+	vec2 traverse = max(tmin.xx, tmin.yz);
+	float traverselow = max(traverse.x, traverse.y);
+	traverse = min(tmax.xx, tmax.yz);
+	float traversehi = min(traverse.x, traverse.y);
+	return vec3(float(traversehi > max(traverselow, 0.0)), traversehi, traverselow);
+}
+
+vec3 ReprojectProbe(vec3 O, vec3 V) {
+	vec3 W;
+
+	if (uProbeData.x == 0.0) {
+		vec3 local_O = mul(uInvProbeMatrix, vec4(O, 1.0)).xyz; // move ray to probe volume space
+		vec3 local_V = mul(uInvProbeMatrix, vec4(V, 0.0)).xyz;
+		local_V = normalize(local_V);
+
+		vec2 T = RaySphere(local_O, local_V, vec3(0.0, 0.0, 0.0), 0.5);
+
+		if (T.y > -1.0) {
+			vec3 local_I = local_O + local_V * T.y;
+			W = normalize(mul(uProbeMatrix, vec4(local_I, 0.0)).xyz);
+		} else {
+			return V;
+		}
+	} else if (uProbeData.x == 1.0) {
+		vec3 local_O = mul(uInvProbeMatrix, vec4(O, 1.0)).xyz; // move ray to probe volume space
+		vec3 local_V = mul(uInvProbeMatrix, vec4(V, 0.0)).xyz;
+		local_V = normalize(local_V);
+
+		vec3 T = RayBox(local_O, local_V, vec3(-0.5, -0.5, -0.5), vec3(0.5, 0.5, 0.5)); // intersect with volume
+
+		if (T.x == 0.0) {
+			return V;
+		} else {
+			vec3 local_I = local_O + local_V * T.y;
+			W = normalize(mul(uProbeMatrix, vec4(local_I, 0.0)).xyz); // move intersection back to world space
+		}
+	}
+
+	return normalize(mix(V, W, uProbeData.y));
+}

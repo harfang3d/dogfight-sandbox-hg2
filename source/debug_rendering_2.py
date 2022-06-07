@@ -67,11 +67,11 @@ if flag_vr:
 else:
 	r = resolution
 
-post_process = PostProcess(pl_resources, r, flag_vr)
+post_process = PostProcess(r, 4, flag_vr)
 sea_render = PlanetRender(scene, r, scene.GetNode("island_clipped").GetTransform().GetPos(), hg.Vec3(-20740.2158, 0, 9793.1535))
 sea_render.load_json_script()
 sea_render.reflect_offset = 1
-water_reflexion = WaterReflection(scene, r, pl_resources, flag_vr)
+water_reflexion = WaterReflection(scene, r, 4, flag_vr)
 
 camera_fps = scene.GetNode("Camera_fps")
 scene.SetCurrentCamera(camera_fps)

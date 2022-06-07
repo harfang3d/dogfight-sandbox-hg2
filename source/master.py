@@ -316,7 +316,7 @@ class Main:
 
         # ---------- Post process setup
 
-        cls.post_process = PostProcess(cls.pl_resources, framebuffers_resolution, cls.antialiasing, cls.flag_vr)
+        cls.post_process = PostProcess(framebuffers_resolution, cls.antialiasing, cls.flag_vr)
 
         # ---------- Destroyable machines original nodes lists:
 
@@ -354,7 +354,7 @@ class Main:
         cls.sea_render = PlanetRender(cls.scene, framebuffers_resolution, cls.scene.GetNode("island_clipped").GetTransform().GetPos(), hg.Vec3(-20740.2158, 0, 9793.1535))
         cls.sea_render.load_json_script()
 
-        cls.water_reflexion = WaterReflection(cls.scene, framebuffers_resolution, cls.pl_resources, cls.antialiasing, cls.flag_vr)
+        cls.water_reflexion = WaterReflection(cls.scene, framebuffers_resolution, cls.antialiasing, cls.flag_vr)
 
         # ---------------- Musics:
         cls.main_music_ref = [hg.LoadWAVSoundAsset("sfx/main_left.wav"), hg.LoadWAVSoundAsset("sfx/main_right.wav")]
@@ -1434,7 +1434,7 @@ class Main:
         if cls.flag_running:
 
             #cls.update_inputs()
-
+            
             real_dt = hg.TickClock()
             forced_dt = hg.time_from_sec_f(cls.timestep)
 
@@ -1464,11 +1464,8 @@ class Main:
                 Overlays.add_text2D("FPS %d" % (cls.num_fps), hg.Vec2(0.001, 0.999), 0.018, hg.Color.Yellow, cls.hud_font)
 
             # =========== State update:
-
             cls.current_state = cls.current_state(cls.timestep)
-
             hg.SceneUpdateSystems(cls.scene, cls.clocks, forced_dt, cls.scene_physics, forced_dt, 1000)  # ,10,1000)
-
 
             # =========== Render scene visuals:
             if not cls.flag_renderless:
@@ -1490,6 +1487,7 @@ class Main:
                 cls.update_renderless(real_dt)
 
             cls.clear_display_lists()
+
         cls.flag_client_ask_update_scene = False
 
     @classmethod

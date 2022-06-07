@@ -4,7 +4,7 @@ import harfang as hg
 
 
 class PostProcess:
-	def __init__(self, resources, resolution, antialiasing = 4, flag_vr=False):
+	def __init__(self, resolution, antialiasing = 4, flag_vr=False):
 		# Setup frame buffers
 
 		self.render_program = hg.LoadProgramFromAssets("shaders/copy")

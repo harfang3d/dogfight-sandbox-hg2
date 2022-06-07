@@ -93,8 +93,8 @@ def update_collisions(matrix: hg.Mat4, collisions_object, collisions_raycasts):
 
 	for collision_ray in collisions_raycasts:
 		ray_hits = {"name": collision_ray["name"], "hits": []}
-		c_pos = collision_ray["position"] * matrix
-		c_dir = (collision_ray["position"] + collision_ray["direction"]) * matrix
+		c_pos = matrix * collision_ray["position"]
+		c_dir = matrix * (collision_ray["position"] + collision_ray["direction"])
 		rc_len = hg.Len(collision_ray["direction"])
 
 		hit = scene_physics.RaycastFirstHit(scene, c_pos, c_dir)

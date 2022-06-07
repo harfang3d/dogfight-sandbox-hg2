@@ -16,15 +16,17 @@ SAMPLER2D(u_depthTex, 5); // input: minimum depth pyramid
 #include <aaa_utils.sh>
 #include <hiz_trace.sh>
 
-
 void main() {
+	vec4 color = vec4(0.0, 0.0, 0.0, 0.0);
 	vec4 jitter = texture2D(u_noise, mod(gl_FragCoord.xy, vec2(64, 64)) / vec2(64, 64));
 
 	// sample normal/depth
 	vec2 uv = GetAttributeTexCoord(vTexCoord0, textureSize(u_attr0, 0).xy);
 	vec4 attr0 = texture2D(u_attr0, uv);
 
-	vec3 n = attr0.xyz;
+	vec3 n = normalize(attr0.xyz);
+	if (isNan(n.x) || isNan(n.y)  |isNan(n.z))
+		n = vec3(0, 1, 0);
 
 	// compute ray origin & direction
 	vec3 ray_o = GetRayOrigin(uMainProjection, v_viewRay, attr0.w);
@@ -34,7 +36,6 @@ void main() {
 	vec3 up = cross(n, right);
 
 	//
-	vec4 color = vec4_splat(0.);
 	const float z_min = 0.1;
 
 	for (int i = 0; i < int(sample_count); ++i) {
@@ -49,30 +50,33 @@ void main() {
 
 			vec2 hit_pixel;
 			vec3 hit_point;
-			if (TraceScreenRay(ray_o - v_viewRay * 0.05, ray_d_spread, uMainProjection, z_min, /*jitter.z,*/ 64, hit_pixel, hit_point)) {
+			float k = TraceScreenRay(ray_o - v_viewRay * 0.05, ray_d_spread, uMainProjection, z_min, 192, hit_pixel, hit_point);
+
+			if (k > 0.0) {
 				// use hit pixel velocity to compensate the fact that we are sampling the previous frame
-				vec2 uv = hit_pixel * uv_ratio / uResolution.xy;
+				uv = hit_pixel * uv_ratio / uResolution.xy;
 				vec2 vel = GetVelocityVector(uv);
 
-				vec4 attr0 = texelFetch(u_attr0, ivec2(hit_pixel), 0);
+				attr0 = texelFetch(u_attr0, ivec2(hit_pixel), 0);
 
-				if (dot(attr0.xyz, ray_d_spread) < 0.0) { // ray facing the collision
+				float log_depth = ComputeRayLogDepth(uMainProjection, hit_point);
+
+				if ((dot(attr0.xyz, ray_d_spread) < 0.0) && (hit_point.z <= log_depth)) { // ray facing the collision
 					vec3 irradiance = texture2D(u_color, uv - vel * uv_ratio).xyz;
-					color += vec4(irradiance * 1.0, 0.0);
+					color += vec4(irradiance, 1.0);
 				} else {
 					color += vec4(0.0, 0.0, 0.0, 0.0); // backface hit
 				}
 			} else {
 				vec3 world_ray_d_spread = mul(uMainInvView, vec4(ray_d_spread, 0.0)).xyz;
-				color += vec4(textureCubeLod(u_probe, world_ray_d_spread, 0).xyz, 1.);
+				vec3 world_ray_o = mul(uMainInvView, vec4(ray_o, 1.0)).xyz;
+				color += vec4(textureCubeLod(u_probe, ReprojectProbe(world_ray_o, world_ray_d_spread), 0).xyz, 0.);
 			}
 		}
 	}
 
-#if 1
-	if (isNan(color.x) || isNan(color.y) || isNan(color.z))
-		color = vec4(1., 0., 0., 1.);
-#endif
+	color /= sample_count * sample_count;
+	color = (saturate(color) / 32.0) * 32.0;
 
-	gl_FragColor = color / (sample_count * sample_count);
+	gl_FragColor = color;
 }

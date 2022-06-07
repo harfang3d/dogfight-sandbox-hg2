@@ -70,41 +70,54 @@ float SampleShadowPCF(sampler2DShadow map, vec4 coord, float inv_pixel_size, flo
 	return k / 4.0;
 }
 
-// Entry point of the forward pipeline default uber shader (Phong and PBR)
+// Entry point of the forward pipeline default shader
 void main() {
+#if DEPTH_ONLY != 1
 #if USE_DIFFUSE_MAP
+#if DIFFUSE_UV_CHANNEL == 1
+	vec3 diff = texture2D(uDiffuseMap, vTexCoord1).xyz;
+#else // DIFFUSE_UV_CHANNEL == 1
 	vec3 diff = texture2D(uDiffuseMap, vTexCoord0).xyz;
-#else
+#endif // DIFFUSE_UV_CHANNEL == 1
+#else // USE_DIFFUSE_MAP
 	vec3 diff = uDiffuseColor.xyz;
-#endif
+#endif // USE_DIFFUSE_MAP
 
 #if USE_SPECULAR_MAP
+#if SPECULAR_UV_CHANNEL == 1
+	vec3 spec = texture2D(uSpecularMap, vTexCoord1).xyz;
+#else // SPECULAR_UV_CHANNEL == 1
 	vec3 spec = texture2D(uSpecularMap, vTexCoord0).xyz;
-#else
+#endif // SPECULAR_UV_CHANNEL == 1
+#else // USE_SPECULAR_MAP
 	vec3 spec = uSpecularColor.xyz;
-#endif
+#endif // USE_SPECULAR_MAP
 
 #if USE_SELF_MAP
 	vec3 self = texture2D(uSelfMap, vTexCoord0).xyz;
-#else
+#else // USE_SELF_MAP
 	vec3 self = uSelfColor.xyz;
-#endif
+#endif // USE_SELF_MAP
 
 #if USE_AMBIENT_MAP
+#if AMBIENT_UV_CHANNEL == 1
 	vec3 ao = texture2D(uAmbientMap, vTexCoord1).xyz;
-#else
+#else // AMBIENT_UV_CHANNEL == 1
+	vec3 ao = texture2D(uAmbientMap, vTexCoord0).xyz;
+#endif // AMBIENT_UV_CHANNEL == 1
+#else // USE_AMBIENT_MAP
 	vec3 ao = vec3_splat(1.0);
-#endif
+#endif // USE_AMBIENT_MAP
 
 #if USE_ADVANCED_BUFFERS
 	ao *= texture2D(uAmbientOcclusion, gl_FragCoord.xy / uResolution.xy).x;
-#endif
+#endif // USE_ADVANCED_BUFFERS
 
 #if USE_LIGHT_MAP
 	vec3 light = texture2D(uLightMap, vTexCoord1).xyz;
-#else
+#else // USE_LIGHT_MAP
 	vec3 light = vec3_splat(0.0);
-#endif
+#endif // USE_LIGHT_MAP
 
 	//
 	vec3 view = mul(u_view, vec4(vWorldPos,1.0)).xyz; // fragment view space pos
@@ -121,7 +134,7 @@ void main() {
 	N.xy = texture2D(uNormalMap, vTexCoord0).xy * 2.0 - 1.0;
 	N.z = sqrt(1.0 - dot(N.xy, N.xy));
 	N = normalize(mul(N, TBN));
-#endif
+#endif // USE_NORMAL_MAP
 
 	vec3 R = reflect(-V, N); // view reflection vector around normal
 
@@ -150,7 +163,7 @@ void main() {
 			float ramp_k = clamp((view.z - (uLinearShadowSlice.w - ramp_len)) / ramp_len, 0.0, 1.0);
 			k *= pcf * (1.0 - ramp_k) + ramp_k; 
 		}
-#endif
+#endif // SLOT0_SHADOWS
 		c_diff = uLightDiffuse[0].xyz * m.i_diff * k;
 		c_spec = uLightSpecular[0].xyz * m.i_spec * k;
 	}
@@ -167,7 +180,7 @@ void main() {
 
 #if SLOT1_SHADOWS
 		k *= SampleShadowPCF(uSpotShadowMap, vSpotShadowCoord, uShadowState.y, uShadowState.w);
-#endif
+#endif // SLOT1_SHADOWS
 
 		c_diff += uLightDiffuse[1].xyz * m.i_diff * k;
 		c_spec += uLightSpecular[1].xyz * m.i_spec * k;
@@ -194,28 +207,38 @@ void main() {
 #if USE_REFLECTION_MAP
 	vec4 reflection = texture2D(uReflectionMap, R.xy);
 	color += reflection.xyz;
-#endif
+#endif // USE_REFLECTION_MAP
 
 	color = DistanceFog(view, color);
+#endif // DEPTH_ONLY != 1
 
 #if USE_OPACITY_MAP
 	float opacity = texture2D(uOpacityMap, vTexCoord0).x;
-#else
-	float opacity = 1.0;
-#endif
 
+#if ENABLE_ALPHA_CUT
+	if (opacity < 0.8)
+		discard;
+#endif // ENABLE_ALPHA_CUT
+#else // USE_OPACITY_MAP
+	float opacity = 1.0;
+#endif // USE_OPACITY_MAP
+
+#if DEPTH_ONLY
+	;
+#else // DEPTH_ONLY
 #if FORWARD_PIPELINE_AAA_PREPASS
 	vec3 N_view = mul(u_view, vec4(N, 0)).xyz;
 	vec2 velocity = vec2(vProjPos.xy / vProjPos.w - vPrevProjPos.xy / vPrevProjPos.w);
 	gl_FragData[0] = vec4(N_view.xyz, vProjPos.z);
 	gl_FragData[1] = vec4(velocity.xy, gloss, 0.); //
-#else
+#else // FORWARD_PIPELINE_AAA_PREPASS
 	// incorrectly apply gamma correction at fragment shader level in the non-AAA pipeline
-# if FORWARD_PIPELINE_AAA == 0
+#if FORWARD_PIPELINE_AAA != 1
 	float gamma = 2.2;
 	color = pow(color, vec3_splat(1. / gamma));
-# endif
+#endif // FORWARD_PIPELINE_AAA != 1
 
 	gl_FragColor = vec4(color, opacity);
-#endif
+#endif // FORWARD_PIPELINE_AAA_PREPASS
+#endif // DEPTH_ONLY
 }

@@ -65,6 +65,7 @@ The "Network" mode allows you to control the planes from a third party machine.
 | Increase health level | P |
 | Decrease health level | M |
 | Rearm | F5 |
+| HUD on /off | H |
 
 ## Commons Views commands
 

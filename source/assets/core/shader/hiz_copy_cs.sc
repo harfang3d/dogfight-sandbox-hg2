@@ -6,6 +6,7 @@ SAMPLER2D(u_depth, 0);
 IMAGE2D_WR(u_depthTexOut, rg32f, 1);    // output: level 0 of the min/max depth pyramid
 
 uniform mat4 u_projection;
+uniform vec4 u_zThickness;
 
 NUM_THREADS(16, 16, 1)
 void main() {
@@ -13,13 +14,13 @@ void main() {
 	ivec2 coord = ivec2(gl_GlobalInvocationID.xy) + ivec2(u_viewRect.xy);
 
 #if BGFX_SHADER_LANGUAGE_GLSL
-		ivec2 tex_coord = ivec2(coord.x, textureSize(u_depth, 0).y - 1 - coord.y);
+	ivec2 tex_coord = ivec2(coord.x, textureSize(u_depth, 0).y - 1 - coord.y);
 #else
-		ivec2 tex_coord = coord;
+	ivec2 tex_coord = coord;
 #endif
 
 	vec2 z;
-	if(all(bvec4(greaterThanEqual(coord, viewport.xy), lessThan(coord, viewport.xy + viewport.zw)))) {
+	if (all(bvec4(greaterThanEqual(coord, viewport.xy), lessThan(coord, viewport.xy + viewport.zw)))) {
 		z = texelFetch(u_depth, tex_coord, 0).ww;
 
 #if BGFX_SHADER_LANGUAGE_GLSL
@@ -27,7 +28,7 @@ void main() {
 #else
 		vec2 q = u_projection[2].zw;
 #endif
-		z.y += 0.1 * q.x;
+		z.y += u_zThickness.x * q.x;
 
 		// Store logarithmic depth
 		z.xy = q.x * z.xy / (z.xy - q.yy);
