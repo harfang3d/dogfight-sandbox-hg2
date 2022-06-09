@@ -102,7 +102,7 @@ The "Network" mode allows you to control the planes from a third party machine.
 | Fast speed 3 | Right Ctrl + move |
 
 ## Contributors
-* Code & design:
+* Code, design, music / sfx:
   * Eric Kernin
 * 3D graphics: 
   * Jean-Marie Lamarche
