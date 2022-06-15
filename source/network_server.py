@@ -45,7 +45,7 @@ def init_server(main_):
 		"DISPLAY_2DTEXT": display_2DText,
 
 		# Machines
-		"GET_MACHINE_MISSILES_LIST": get_machine_missiles_liste,
+		"GET_MACHINE_MISSILES_LIST": get_machine_missiles_list,
 		"GET_TARGETS_LIST": get_targets_list,
 		"GET_HEALTH": get_health,
 		"SET_HEALTH": set_health,
@@ -186,7 +186,7 @@ def enable_log(args):
 
 def update_scene(args):
 	if main.flag_client_update_mode:
-		main.update()
+		main.flag_client_ask_update_scene = True
 	elif flag_print_log:
 		print("Update_scene ERROR - Client update mode is FALSE")
 
@@ -264,7 +264,8 @@ def update_machine_kinetics(args):
 	if flag_print_log:
 		print(args["machine_id"])
 	machine = main.destroyables_items[args["machine_id"]]
-	mat = hg.Mat4()
+	print("c0")
+	mat = hg.TranslationMat4(hg.Vec3(0, 0, 0))
 	for n in args["matrix"]:
 		if math.isnan(n):
 			args["matrix"] = [1, 0, 0,
@@ -276,11 +277,13 @@ def update_machine_kinetics(args):
 		if math.isnan(n):
 			args["v_move"] = [0, 0, 0]
 			break
-	hg.SetRow(mat, 0, hg.Vec3(args["matrix"][0], args["matrix"][1], args["matrix"][2]))
-	hg.SetRow(mat, 1, hg.Vec3(args["matrix"][3], args["matrix"][4], args["matrix"][5]))
-	hg.SetRow(mat, 2, hg.Vec3(args["matrix"][6], args["matrix"][7], args["matrix"][8]))
-	hg.SetRow(mat, 3, hg.Vec3(args["matrix"][9], args["matrix"][10], args["matrix"][11]))
-	machine.set_custom_kinetics(mat, hg.Vec3(args["v_move"][0], args["v_move"][1], args["v_move"][2]))
+	print("c1")
+	print(str(args["matrix"]))
+	hg.SetRow(mat, 0, hg.Vec4(args["matrix"][0], args["matrix"][3], args["matrix"][6], args["matrix"][9]))
+	hg.SetRow(mat, 1, hg.Vec4(args["matrix"][1], args["matrix"][4], args["matrix"][7], args["matrix"][10]))
+	hg.SetRow(mat, 2, hg.Vec4(args["matrix"][2], args["matrix"][5], args["matrix"][8], args["matrix"][11]))
+	print("c2")
+	#machine.set_custom_kinetics(mat, hg.Vec3(args["v_move"][0], args["v_move"][1], args["v_move"][2]))
 
 
 def reset_machine(args):
@@ -297,7 +300,7 @@ def reset_machine_matrix(args):
 		machine.flag_landed = False
 
 
-def get_machine_missiles_liste(args):
+def get_machine_missiles_list(args):
 	machine = main.destroyables_items[args["machine_id"]]
 	missiles = []
 	md = machine.get_device("MissilesDevice")
@@ -682,8 +685,8 @@ def get_planes_list(args):
 	planes = []
 	print("Get planes list")
 	for dm in main.destroyables_list:
-		print(dm.name)
 		if dm.type == Destroyable_Machine.TYPE_AIRCRAFT:
+			print(dm.name)
 			planes.append(dm.name)
 	socket_lib.send_message(str.encode(json.dumps(planes)))
 
@@ -897,9 +900,11 @@ def get_missile_launcher_state(args):
 # Missiles
 
 def get_missiles_list(args):
+	print("Get missiles list")
 	missiles = []
 	for dm in main.destroyables_list:
 		if dm.type == Destroyable_Machine.TYPE_MISSILE:
+			print(dm.name)
 			missiles.append(dm.name)
 	socket_lib.send_message(str.encode(json.dumps(missiles)))
 

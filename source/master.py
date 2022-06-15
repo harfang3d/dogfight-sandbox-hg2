@@ -1430,11 +1430,15 @@ class Main:
                 cls.flag_generic_controller = False
 
     @classmethod
+    def client_update(cls):
+        cls.flag_client_ask_update_scene = True
+
+    @classmethod
     def update(cls):
         if cls.flag_running:
 
             #cls.update_inputs()
-            
+
             real_dt = hg.TickClock()
             forced_dt = hg.time_from_sec_f(cls.timestep)
 
@@ -1447,7 +1451,7 @@ class Main:
 
             if cls.keyboard.Pressed(hg.K_F12):
                 cls.flag_gui = not cls.flag_gui
-            
+
             if cls.keyboard.Pressed(hg.K_F10):
                 cls.flag_display_HUD = not cls.flag_display_HUD
 
@@ -1492,6 +1496,7 @@ class Main:
 
     @classmethod
     def update_window(cls):
+        #if not cls.flag_renderless_mode:
         hg.UpdateWindow(cls.win)
 
     # ================================ Network ============================================

@@ -134,7 +134,7 @@ Main.current_state = states.init_menu_phase()
 while not Main.flag_exit:
 
     Main.update_inputs()
-    if not Main.flag_client_update_mode:
+    if (not Main.flag_client_update_mode) or Main.flag_client_ask_update_scene:
         Main.update()
     else:
         time.sleep(1 / 60)
