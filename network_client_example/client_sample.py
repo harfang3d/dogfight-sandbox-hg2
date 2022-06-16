@@ -2,7 +2,6 @@
 # Dogfight Sandbox client example
 # This script show how to use the network mode to controls aircrafts.
 # Before starts this script, Dogfight Sandbox must be running in "Network mode"
-3
 # dogfight_client.py is the library needed to communicate with DogFight sandbox
 
 import dogfight_client as df
@@ -124,9 +123,6 @@ df.activate_autopilot(plane_id)
 
 # Renderless mode OFF
 df.set_renderless_mode(False)
-
-
-df.set_machine_custom_physics_mode(plane_id, False)
 
 # Wait while Renderless mode setting up
 f = False

@@ -95,7 +95,7 @@ class Main:
 
     flag_sfx = True
     flag_control_views = True
-    flag_display_fps = False
+    flag_display_fps = True
     flag_display_landing_trajectories = False
     flag_display_selected_aircraft = False
     flag_display_machines_bounding_boxes = False

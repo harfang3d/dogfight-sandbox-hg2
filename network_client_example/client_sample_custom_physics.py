@@ -39,7 +39,7 @@ plane_state = df.get_plane_state(plane_id)
 x, y, z = plane_state["position"][0], plane_state["position"][1], plane_state["position"][2]
 
 # Put aircraft at altitude 25 m
-y = 25
+y = 45
 
 # Model matrix 3 * 4
 plane_matrix = [1, 0, 0,
@@ -54,15 +54,16 @@ frame_time_step = 1/60
 
 # Custom missile movements
 t = 0
-while not plane_state["wreck"]:
-	#plane_state = df.get_plane_state(plane_id)
+while (not plane_state["wreck"]) and t < 500 * frame_time_step:
+	time.sleep(1/60)
+	plane_state = df.get_plane_state(plane_id)
 	plane_matrix[9] = x
 	plane_matrix[10] = y
 	plane_matrix[11] = z
 	df.update_machine_kinetics(plane_id, plane_matrix, plane_speed_vector)
 	df.update_scene()
 	x = 5 * sin(t*5)
-	y = 25 + (sin(t)) * 5
+	y = 45 + (sin(t)) * 5
 	z = 60 + cos(t*1.256) * 50
 
 	# Compute speed vector
@@ -70,6 +71,9 @@ while not plane_state["wreck"]:
 
 	t += frame_time_step
 
+
+df.update_machine_kinetics(plane_id, plane_matrix, [0, 0, 0])
+df.update_scene()
 
 # Custom physics off
 df.set_machine_custom_physics_mode(plane_id, False)

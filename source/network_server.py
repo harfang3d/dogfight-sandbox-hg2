@@ -186,7 +186,10 @@ def enable_log(args):
 
 def update_scene(args):
 	if main.flag_client_update_mode:
-		main.flag_client_ask_update_scene = True
+		if main.flag_renderless:
+			main.update() # No display, but fast simulation
+		else:
+			main.flag_client_ask_update_scene = True # display simulation at 60 fps
 	elif flag_print_log:
 		print("Update_scene ERROR - Client update mode is FALSE")
 
@@ -277,13 +280,10 @@ def update_machine_kinetics(args):
 		if math.isnan(n):
 			args["v_move"] = [0, 0, 0]
 			break
-	print("c1")
-	print(str(args["matrix"]))
 	hg.SetRow(mat, 0, hg.Vec4(args["matrix"][0], args["matrix"][3], args["matrix"][6], args["matrix"][9]))
 	hg.SetRow(mat, 1, hg.Vec4(args["matrix"][1], args["matrix"][4], args["matrix"][7], args["matrix"][10]))
 	hg.SetRow(mat, 2, hg.Vec4(args["matrix"][2], args["matrix"][5], args["matrix"][8], args["matrix"][11]))
-	print("c2")
-	#machine.set_custom_kinetics(mat, hg.Vec3(args["v_move"][0], args["v_move"][1], args["v_move"][2]))
+	machine.set_custom_kinetics(mat, hg.Vec3(args["v_move"][0], args["v_move"][1], args["v_move"][2]))
 
 
 def reset_machine(args):
