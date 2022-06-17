@@ -43,16 +43,17 @@ float SampleShadowPCF(sampler2DShadow map, vec4 coord, float inv_pixel_size, flo
 #if FORWARD_PIPELINE_AAA
 	#define PCF_SAMPLE_COUNT 2.0 // 3x3
 
+//	float weights[9] = {0.024879, 0.107973, 0.024879, 0.107973, 0.468592, 0.107973, 0.024879, 0.107973, 0.024879};
+	float weights[9] = {0.011147, 0.083286, 0.011147, 0.083286, 0.622269, 0.083286, 0.011147, 0.083286, 0.011147};
+
 	for (float j = 0.0; j <= PCF_SAMPLE_COUNT; ++j) {
-		float v = (j + jitter.y) / PCF_SAMPLE_COUNT * 2.0 - 1.0;
+		float v = 6.0 * (j + jitter.y) / PCF_SAMPLE_COUNT - 1.0;
 		for (float i = 0.0; i <= PCF_SAMPLE_COUNT; ++i) {
-			float u = (i + jitter.x) / PCF_SAMPLE_COUNT * 2.0 - 1.0;
-			k += SampleHardShadow(map, coord + vec4(vec2(u, v) * k_pixel_size, 0.0, 0.0), bias);
+			float u = 6.0 * (i + jitter.x) / PCF_SAMPLE_COUNT - 1.0;
+			k += SampleHardShadow(map, coord + vec4(vec2(u, v) * k_pixel_size, 0.0, 0.0), bias) * weights[j * 3 + i];
 		}
 	}
-
-	k /= (PCF_SAMPLE_COUNT + 1) * (PCF_SAMPLE_COUNT + 1);
-#else
+#else // FORWARD_PIPELINE_AAA
 	// 2x2
 	k += SampleHardShadow(map, coord + vec4(vec2(-0.5, -0.5) * k_pixel_size, 0.0, 0.0), bias);
 	k += SampleHardShadow(map, coord + vec4(vec2( 0.5, -0.5) * k_pixel_size, 0.0, 0.0), bias);
@@ -60,7 +61,7 @@ float SampleShadowPCF(sampler2DShadow map, vec4 coord, float inv_pixel_size, flo
 	k += SampleHardShadow(map, coord + vec4(vec2( 0.5,  0.5) * k_pixel_size, 0.0, 0.0), bias);
 
 	k /= 4.0;
-#endif
+#endif // FORWARD_PIPELINE_AAA
 
 	return k;
 }
@@ -125,40 +126,34 @@ vec3 DistanceFog(vec3 pos, vec3 color) {
 
 // Entry point of the forward pipeline default uber shader (Phong and PBR)
 void main() {
-#if FORWARD_PIPELINE_AAA
-	vec4 jitter = texture2D(uNoiseMap, mod(gl_FragCoord.xy, vec2(64, 64)) / vec2(64, 64));
-#else
-	vec4 jitter = vec4_splat(0.);
-#endif
-
 	//
 #if USE_BASE_COLOR_OPACITY_MAP
 	vec4 base_opacity = texture2D(uBaseOpacityMap, vTexCoord0);
 	base_opacity.xyz = sRGB2linear(base_opacity.xyz);
-#else
+#else // USE_BASE_COLOR_OPACITY_MAP
 	vec4 base_opacity = uBaseOpacityColor;
-#endif
+#endif // USE_BASE_COLOR_OPACITY_MAP
 
-	//
+#if DEPTH_ONLY != 1
 #if USE_OCCLUSION_ROUGHNESS_METALNESS_MAP
 	vec4 occ_rough_metal = texture2D(uOcclusionRoughnessMetalnessMap, vTexCoord0);
-	occ_rough_metal.rgb = occ_rough_metal.rgb * ORMN_scale.rgb + ORMN_offset.rgb;
-#else
+    occ_rough_metal.rgb = occ_rough_metal.rgb * ORMN_scale.rgb + ORMN_offset.rgb;
+#else // USE_OCCLUSION_ROUGHNESS_METALNESS_MAP
 	vec4 occ_rough_metal = uOcclusionRoughnessMetalnessColor;
-#endif
+#endif // USE_OCCLUSION_ROUGHNESS_METALNESS_MAP
 
 	//
 #if USE_SELF_MAP
 	vec4 self = texture2D(uSelfMap, vTexCoord0);
-#else
+#else // USE_SELF_MAP
 	vec4 self = uSelfColor;
-#endif
+#endif // USE_SELF_MAP
 
 	//
 	vec3 view = mul(u_view, vec4(vWorldPos, 1.0)).xyz;
 	vec3 P = vWorldPos; // fragment world pos
-	vec3 V = normalize(GetT(u_invView) - P); // view vector
-	vec3 N = normalize(vNormal); // geometry normal
+	vec3 V = normalize(GetT(u_invView) - P); // world space view vector
+	vec3 N = sign(dot(V, vNormal)) * normalize(vNormal); // geometry normal
 
 #if USE_NORMAL_MAP
 	vec3 T = normalize(vTangent);
@@ -169,7 +164,7 @@ void main() {
 	N.xy = ORMN_scale.w * texture2D(uNormalMap, vTexCoord0).xy * 2.0 - 1.0;
 	N.z = sqrt(1.0 - dot(N.xy, N.xy));
 	N = normalize(mul(N, TBN));
-#endif
+#endif // USE_NORMAL_MAP
 
 	vec3 R = reflect(-V, N); // view reflection vector around normal
 
@@ -180,6 +175,13 @@ void main() {
 
 	vec3 color = vec3(0.0, 0.0, 0.0);
 
+	// jitter
+#if FORWARD_PIPELINE_AAA
+	vec4 jitter = texture2D(uNoiseMap, mod(gl_FragCoord.xy, vec2(64, 64)) / vec2(64, 64));
+#else // FORWARD_PIPELINE_AAA
+	vec4 jitter = vec4_splat(0.);
+#endif // FORWARD_PIPELINE_AAA
+
 	// SLOT 0: linear light
 	{
 		float k_shadow = 1.0;
@@ -187,22 +189,22 @@ void main() {
 		float k_fade_split = 1.0 - jitter.z * 0.3;
 
 		if(view.z < uLinearShadowSlice.x * k_fade_split) {
-			k_shadow *= SampleShadowPCF(uLinearShadowMap, vLinearShadowCoord0, uShadowState.y * 0.5, uShadowState.z * 0.15, jitter);
+			k_shadow *= SampleShadowPCF(uLinearShadowMap, vLinearShadowCoord0, uShadowState.y * 0.5, uShadowState.z, jitter);
 		} else if(view.z < uLinearShadowSlice.y * k_fade_split) {
-			k_shadow *= SampleShadowPCF(uLinearShadowMap, vLinearShadowCoord1, uShadowState.y * 0.5, uShadowState.z * 0.4, jitter);
+			k_shadow *= SampleShadowPCF(uLinearShadowMap, vLinearShadowCoord1, uShadowState.y * 0.5, uShadowState.z, jitter);
 		} else if(view.z < uLinearShadowSlice.z * k_fade_split) {
-			k_shadow *= SampleShadowPCF(uLinearShadowMap, vLinearShadowCoord2, uShadowState.y * 0.5, uShadowState.z * 0.8, jitter);
+			k_shadow *= SampleShadowPCF(uLinearShadowMap, vLinearShadowCoord2, uShadowState.y * 0.5, uShadowState.z, jitter);
 		} else if(view.z < uLinearShadowSlice.w * k_fade_split) {
-# if FORWARD_PIPELINE_AAA
+#if FORWARD_PIPELINE_AAA
 			k_shadow *= SampleShadowPCF(uLinearShadowMap, vLinearShadowCoord3, uShadowState.y * 0.5, uShadowState.z, jitter);
-# else
+#else // FORWARD_PIPELINE_AAA
 			float pcf = SampleShadowPCF(uLinearShadowMap, vLinearShadowCoord3, uShadowState.y * 0.5, uShadowState.z, jitter);
 			float ramp_len = (uLinearShadowSlice.w - uLinearShadowSlice.z) * 0.25;
 			float ramp_k = clamp((view.z - (uLinearShadowSlice.w - ramp_len)) / max(ramp_len, 1e-8), 0.0, 1.0);
 			k_shadow *= pcf * (1.0 - ramp_k) + ramp_k; 
-# endif
+#endif // FORWARD_PIPELINE_AAA
 		}
-#endif
+#endif // SLOT0_SHADOWS
 		color += GGX(V, N, NdotV, uLightDir[0].xyz, base_opacity.xyz, occ_rough_metal.g, occ_rough_metal.b, F0, uLightDiffuse[0].xyz * k_shadow, uLightSpecular[0].xyz * k_shadow);
 	}
 	// SLOT 1: point/spot light (with optional shadows)
@@ -214,7 +216,7 @@ void main() {
 
 #if SLOT1_SHADOWS
 		attenuation *=SampleShadowPCF(uSpotShadowMap, vSpotShadowCoord, uShadowState.y, uShadowState.w, jitter);
-#endif
+#endif // SLOT1_SHADOWS
 		color += GGX(V, N, NdotV, L, base_opacity.xyz, occ_rough_metal.g, occ_rough_metal.b, F0, uLightDiffuse[1].xyz * attenuation, uLightSpecular[1].xyz * attenuation);
 	}
 	// SLOT 2-N: point/spot light (no shadows) [todo]
@@ -230,13 +232,7 @@ void main() {
 	}
 
 	// IBL
-#if FORWARD_PIPELINE_AAA
-	vec4 irradiance_occlusion = texture2D(uIrradianceMap, gl_FragCoord.xy / uResolution.xy);
-
-	vec3 irradiance = irradiance_occlusion.xyz;
-	vec3 radiance = texture2D(uRadianceMap, gl_FragCoord.xy / uResolution.xy).xyz;
-#else
-	float MAX_REFLECTION_LOD = 6.;
+	float MAX_REFLECTION_LOD = 10.;
 #if 0 // LOD selection
 	vec3 Ndx = normalize(N + ddx(N));
 	float dx = length(Ndx.xy / Ndx.z - N.xy / N.z) * 256.0;
@@ -246,14 +242,25 @@ void main() {
 	float dd = max(dx, dy);
 	float lod_level = log2(dd);
 #endif
-	vec3 irradiance = textureCube(uIrradianceMap, N).xyz;
-	vec3 radiance = textureCubeLod(uRadianceMap, R, occ_rough_metal.y * MAX_REFLECTION_LOD).xyz;
+
+	vec3 irradiance = textureCube(uIrradianceMap, ReprojectProbe(P, N)).xyz;
+	vec3 radiance = textureCubeLod(uRadianceMap, ReprojectProbe(P, R), occ_rough_metal.y * MAX_REFLECTION_LOD).xyz;
+
+#if FORWARD_PIPELINE_AAA
+	vec4 ss_irradiance = texture2D(uSSIrradianceMap, gl_FragCoord.xy / uResolution.xy);
+	vec4 ss_radiance = texture2D(uSSRadianceMap, gl_FragCoord.xy / uResolution.xy);
+
+	irradiance = ss_irradiance.xyz; // mix(irradiance, ss_irradiance, ss_irradiance.w);
+	radiance = mix(radiance, ss_radiance, ss_radiance.w);
 #endif
 
 	vec3 diffuse = irradiance * base_opacity.xyz;
 	vec3 F = FresnelSchlickRoughness(NdotV, F0, occ_rough_metal.y);
 	vec2 brdf = texture2D(uBrdfMap, vec2(NdotV, occ_rough_metal.y)).xy;
 	vec3 specular = radiance * (F * brdf.x + brdf.y);
+#if FORWARD_PIPELINE_AAA
+	specular *= uAAAParams[2].x; // * specular weight
+#endif
 
 	vec3 kS = specular;
 	vec3 kD = vec3_splat(1.) - kS;
@@ -272,20 +279,29 @@ void main() {
 
 	color = DistanceFog(view, color);
 
+#endif // DEPTH_ONLY != 1
+
 	float opacity = base_opacity.w;
 
+#if ENABLE_ALPHA_CUT
+	if (opacity < 0.8)
+		discard;
+#endif // ENABLE_ALPHA_CUT
+
+#if DEPTH_ONLY != 1
 #if FORWARD_PIPELINE_AAA_PREPASS
 	vec3 N_view = mul(u_view, vec4(N, 0)).xyz;
 	vec2 velocity = vec2(vProjPos.xy / vProjPos.w - vPrevProjPos.xy / vPrevProjPos.w);
 	gl_FragData[0] = vec4(N_view.xyz, vProjPos.z);
 	gl_FragData[1] = vec4(velocity.xy, occ_rough_metal.y, 0.);
-#else
+#else // FORWARD_PIPELINE_AAA_PREPASS
 	// incorrectly apply gamma correction at fragment shader level in the non-AAA pipeline
-# if FORWARD_PIPELINE_AAA == 0
+#if FORWARD_PIPELINE_AAA != 1
 	float gamma = 2.2;
 	color = pow(color, vec3_splat(1. / gamma));
-# endif
+#endif // FORWARD_PIPELINE_AAA != 1
 
 	gl_FragColor = vec4(color, opacity);
-#endif
+#endif // FORWARD_PIPELINE_AAA_PREPASS
+#endif // DEPTH_ONLY
 }

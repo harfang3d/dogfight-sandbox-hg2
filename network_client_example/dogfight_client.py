@@ -23,7 +23,7 @@ def enable_log():
 def get_running():
 	socket_lib.send_message(str.encode(json.dumps({"command": "GET_RUNNING", "args": {}})))
 	return json.loads((socket_lib.get_answer()).decode())
-
+	
 
 def set_timestep(t):
 	socket_lib.send_message(str.encode(json.dumps({"command": "SET_TIMESTEP", "args": {"timestep": t}})))

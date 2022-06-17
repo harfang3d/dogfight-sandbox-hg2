@@ -1155,7 +1155,7 @@ class Missile(Destroyable_Machine):
 
         if self.activated:
 
-            self.update_devices(dts)  # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            self.update_devices(dts)
 
             self.life_cptr += dts
 

@@ -112,7 +112,7 @@ def update_menu_phase(dts):
     Main.post_process.update_fading(dts)
     if Main.flag_sfx:
         if Main.post_process.fade_running:
-            Main.master_sfx_volume = Main.post_process.fade_f
+            Main.master_sfx_volume = Main.post_process.fade_f * 0.2
         tools.set_stereo_volume(Main.main_music_source, Main.master_sfx_volume)
 
     if Main.intro_anim_id == 1:

@@ -68,8 +68,8 @@ frame_time_step = 1/60
 # Custom missile movements
 t = 0
 while not missile_state["wreck"]:
+	time.sleep(1/60)
 	missile_state = df.get_missile_state(missile_id)
-	print(str(y))
 	missile_matrix[9] = x
 	missile_matrix[10] = y
 	missile_matrix[11] = z
