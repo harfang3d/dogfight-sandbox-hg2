@@ -71,10 +71,6 @@ while (not plane_state["wreck"]) and t < 500 * frame_time_step:
 
 	t += frame_time_step
 
-
-df.update_machine_kinetics(plane_id, plane_matrix, [0, 0, 0])
-df.update_scene()
-
 # Custom physics off
 df.set_machine_custom_physics_mode(plane_id, False)
 
