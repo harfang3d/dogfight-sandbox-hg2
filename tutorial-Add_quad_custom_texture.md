@@ -3,7 +3,7 @@
 
 ### 1.Importer la texture  
 
-Importer votre texture texture dans le dossier `source/assets/textures/`  
+Importer votre texture dans le dossier `source/assets/textures/`  
 
 ### 2.Installation Harfang Studio:  
 
@@ -42,7 +42,7 @@ Dans le panneau Inspector, déployer le materiau:
 
 ![screenshot](screenshots/hs_07.jpg)  
 
-Cliquer sur le browser pour sélectionenr la texture d'Albedo:  
+Cliquer sur le browser pour sélectionner la texture d'Albedo:  
 
 ![screenshot](screenshots/hs_08.jpg)  
 
@@ -84,11 +84,12 @@ Une fois placé votre plan, sauvegarder:
 
 ![screenshot](screenshots/hs_17.jpg)  
 
-### 7.Démarrer le Dogfight !
+### 7.Démarrer le Dogfight !  
 
-Démarrer le Dogfight en cliquant sur le batch:
+Démarrer le Dogfight en cliquant sur le batch:  
+
 ![screenshot](screenshots/hs_18.jpg)  
 
-Votre texture est bien dans la scène !
+Votre texture est bien dans la scène !  
 
 ![screenshot](screenshots/hs_19.jpg)  
