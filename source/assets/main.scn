@@ -82,8 +82,27 @@
 		],
 		"fog_far": 40000.0,
 		"fog_near": 1000.0,
-		"irradiance_map": "core/pbr/sea_sky_light3.hdr.irradiance",
-		"radiance_map": "core/pbr/sea_sky_light3.hdr.radiance"
+		"probe": {
+			"irradiance_map": "core/pbr/sea_sky_light3.hdr.irradiance",
+			"parallax": 0.0,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"radiance_map": "core/pbr/sea_sky_light3.hdr.radiance",
+			"rot": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			],
+			"type": "sphere"
+		}
 	},
 	"instances": [
 		{
@@ -97,6 +116,9 @@
 		},
 		{
 			"name": "platform/platform.scn"
+		},
+		{
+			"name": "primitives/my_plane.scn"
 		}
 	],
 	"key_values": null,
@@ -279,6 +301,19 @@
 			"idx": 11,
 			"instance": 3,
 			"name": "platform.S400"
+		},
+		{
+			"components": [
+				12,
+				4294967295,
+				4294967295,
+				4294967295,
+				4294967295
+			],
+			"disabled": false,
+			"idx": 12,
+			"instance": 4,
+			"name": "my_plane"
 		}
 	],
 	"transforms": [
@@ -291,12 +326,12 @@
 			],
 			"rot": [
 				14.041982650756836,
-				14.482307434082031,
-				0.0
+				14.482305526733398,
+				2.2715174452514475e-07
 			],
 			"scl": [
-				0.9998615980148315,
-				0.9997687935829163,
+				0.999861478805542,
+				0.999768853187561,
 				0.999729335308075
 			]
 		},
@@ -489,13 +524,31 @@
 			],
 			"rot": [
 				-0.0,
-				106.47329711914063,
+				106.4732894897461,
 				0.0
 			],
 			"scl": [
 				0.9999997019767761,
 				1.0,
 				0.9999997019767761
+			]
+		},
+		{
+			"parent": null,
+			"pos": [
+				710.0,
+				31.0,
+				-1815.0
+			],
+			"rot": [
+				-64.99999237060547,
+				99.99998474121094,
+				3.3081012134061893e-06
+			],
+			"scl": [
+				49.999996185302734,
+				49.999996185302734,
+				49.999996185302734
 			]
 		}
 	]
