@@ -78,11 +78,11 @@ Press Left-Shift + A to focus on the plane:
 
 ![screenshot](screenshots/hs_15.jpg)  
 
-Use the different types of gizmos to move / orient / scale your shot in the scene:  
+Use the different types of gizmos to move / orient / scale your plane in the scene:  
 
 ![screenshot](screenshots/hs_16.jpg)  
 
-Once you have placed your plan, save it:  
+Once you have placed your plane, save it:  
 
 ![screenshot](screenshots/hs_17.jpg)  
 
