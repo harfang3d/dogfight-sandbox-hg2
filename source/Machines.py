@@ -120,6 +120,8 @@ class AnimatedModel(Collisions_Object):
             nm = nd.GetName()
             if slots_name in nm:
                 slots_names.append(nm)
+        if len(slots_name) == 0:
+            return None
         slots_names.sort()
         slots = []
         for nm in slots_names:
@@ -1297,7 +1299,8 @@ class Aircraft(Destroyable_Machine):
 
         # Missiles:
         self.missiles_slots = self.get_missiles_slots()
-        self.add_device(MissilesDevice("MissilesDevice", self, self.missiles_slots))
+        if self.missiles_slots is not None:
+            self.add_device(MissilesDevice("MissilesDevice", self, self.missiles_slots))
 
         """
         self.missiles_slots = self.get_missiles_slots()
