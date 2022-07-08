@@ -232,6 +232,7 @@ class Missions:
 		main.user_aircraft = main.get_player_from_caroursel_id(main.views_carousel[main.views_carousel_ptr])
 		main.user_aircraft.set_focus()
 
+		"""
 		ia = main.user_aircraft.get_device("IAControlDevice")
 		if ia is not None:
 			ia.set_IA_landing_target(main.aircraft_carrier_allies[0].landing_targets[1])
@@ -239,6 +240,18 @@ class Missions:
 		uctrl = main.user_aircraft.get_device("UserControlDevice")
 		if uctrl is not None:
 			uctrl.activate()
+		"""
+		# Deactivate IA:
+		for i, ac in enumerate(main.players_allies):
+			ia = ac.get_device("IAControlDevice")
+			if ia is not None:
+				ia.deactivate()
+
+		for i, ac in enumerate(main.players_ennemies):
+			ia = ac.get_device("IAControlDevice")
+			if ia is not None:
+				ia.deactivate()
+
 
 		main.init_playground()
 
@@ -571,6 +584,7 @@ class Missions:
 		cls.missions.append(Mission("Training with Eurofighter", [], ["Eurofighter"], 0, 1, Missions.mission_setup_training, Missions.mission_training_end_test, Missions.mission_training_end_phase_update))
 		cls.missions.append(Mission("Training with TFX", [], ["TFX"], 0, 1, Missions.mission_setup_training, Missions.mission_training_end_test, Missions.mission_training_end_phase_update))
 		cls.missions.append(Mission("Training with F16", [], ["F16"], 0, 1, Missions.mission_setup_training, Missions.mission_training_end_test, Missions.mission_training_end_phase_update))
+		cls.missions.append(Mission("Training with Miuss", [], ["Miuss"], 0, 1, Missions.mission_setup_training, Missions.mission_training_end_test, Missions.mission_training_end_phase_update))
 		#cls.missions.append(Mission("Training with F14", [], ["F14"], 0, 1, Missions.mission_setup_training, Missions.mission_training_end_test, Missions.mission_training_end_phase_update))
 		#cls.missions.append(Mission("Training with F14 2", [], ["F14_2"], 0, 1, Missions.mission_setup_training, Missions.mission_training_end_test, Missions.mission_training_end_phase_update))
 

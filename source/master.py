@@ -3,6 +3,7 @@
 import harfang as hg
 from Machines import *
 from MachineDevice import *
+from aircraft_miuss import *
 from aircraft_tfx import *
 from aircraft_f16 import *
 from aircraft_f14 import *
@@ -95,7 +96,7 @@ class Main:
 
     flag_sfx = True
     flag_control_views = True
-    flag_display_fps = True
+    flag_display_fps = False
     flag_display_landing_trajectories = False
     flag_display_selected_aircraft = False
     flag_display_machines_bounding_boxes = False
@@ -569,6 +570,8 @@ class Main:
                 aircraft = F16("ally_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 1, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
             elif a_type == TFX_Parameters.model_name:
                 aircraft = TFX("ally_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 1, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
+            elif a_type == Miuss_Parameters.model_name:
+                aircraft = Miuss("ally_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 1, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
 
             cls.destroyables_list.append(aircraft)
             aircraft.add_to_update_list()
@@ -595,6 +598,8 @@ class Main:
                 aircraft = F16("ennemy_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 2, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
             elif a_type == TFX_Parameters.model_name:
                 aircraft = TFX("ennemy_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 2, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
+            elif a_type == Miuss_Parameters.model_name:
+                aircraft = Miuss("ennemy_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 2, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
 
             aircraft.add_to_update_list()
             cls.destroyables_list.append(aircraft)
