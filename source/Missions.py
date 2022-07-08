@@ -252,6 +252,9 @@ class Missions:
 			if ia is not None:
 				ia.deactivate()
 
+		uctrl = main.user_aircraft.get_device("UserControlDevice")
+		if uctrl is not None:
+			uctrl.activate()
 
 		main.init_playground()
 
