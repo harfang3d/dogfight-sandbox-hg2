@@ -1,7 +1,10 @@
 {
 	"editor": {
-		"camera_plugin": {
-			"show_cameras": true
+		"animeditor_plugin": {
+			"quantize_time": true,
+			"show_trajectories": null,
+			"trajectories_tick_seconds": 1.0,
+			"trajectories_tick_size": 0.10000000149011612
 		},
 		"explorer": {
 			"node_custom_order": {
@@ -28,22 +31,54 @@
 			"node_sort_method": "custom",
 			"show_node_uid": false
 		},
-		"light_plugin": {
-			"show_lights": true
+		"grid_plugin": {
+			"enabled": true,
+			"grid_color_b": 1.0,
+			"grid_color_g": 1.0,
+			"grid_color_r": 1.0,
+			"n_subdivs": 10,
+			"offset": 0.0,
+			"opacity": 0.5,
+			"subdiv_size": 1.0
 		},
 		"navigation_plugin": {
-			"orbit_distance": 107.07293701171875,
+			"orbit_distance": 163.19607543945313,
 			"speed": 0.10000000149011612,
 			"turbo": 1.0
 		},
 		"transform_gizmo_plugin": {
 			"mode": "local",
+			"snap": "none",
+			"snap_rotation": 5.0,
+			"snap_rotation_fine": 1.0,
+			"snap_scale": 10.0,
+			"snap_scale_fine": 1.0,
+			"snap_translation": 1.0,
+			"snap_translation_fine": 0.10000000149011612,
 			"tool": "move"
 		},
 		"view_plugin": {
-			"show_node_origin": true
+			"show_cameras": true,
+			"show_collisions": false,
+			"show_lights": true,
+			"show_nodes": true,
+			"show_probe": true
 		},
 		"views": {
+			"back": [
+				-0.9999999403953552,
+				0.0,
+				-8.742277657347586e-08,
+				0.0,
+				0.0,
+				1.0,
+				-0.0,
+				0.0,
+				8.742277657347586e-08,
+				-0.0,
+				-0.9999999403953552,
+				0.0
+			],
 			"bottom": [
 				1.0,
 				-0.0,
@@ -63,6 +98,20 @@
 				"znear": -1000.0
 			},
 			"current_camera": 0,
+			"front": [
+				1.0,
+				0.0,
+				0.0,
+				0.0,
+				0.0,
+				1.0,
+				-0.0,
+				0.0,
+				0.0,
+				0.0,
+				1.0,
+				0.0
+			],
 			"left": [
 				-8.742277657347586e-08,
 				0.0,
@@ -83,18 +132,18 @@
 			},
 			"orthographic_size": 157.1668701171875,
 			"perspective": [
-				-0.9396935105323792,
-				0.05955386161804199,
-				0.33682626485824585,
-				-26.06496810913086,
+				0.4204943776130676,
+				-0.34074947237968445,
+				-0.8409048318862915,
+				32.71013259887695,
 				0.0,
-				0.9847412109375,
-				-0.17411109805107117,
-				38.14256286621094,
-				-0.3420470058917999,
-				-0.1636086255311966,
-				-0.9253509044647217,
-				139.08009338378906
+				0.9268149137496948,
+				-0.37556883692741394,
+				31.217527389526367,
+				0.9073114395141602,
+				0.15792012214660645,
+				0.38971906900405884,
+				-115.892578125
 			],
 			"perspective_fov": 0.7068583369255066,
 			"perspective_zrange": {
