@@ -24,14 +24,16 @@ class Miuss_Parameters:
         self.angular_levels_inertias = hg.Vec3(3, 3, 3)
         self.max_safe_altitude = 60000
         self.max_altitude = 50000
-        self.gear_height = 1.3
-        self.bottom_height = 0.70
+        self.gear_height = 1.75
+        self.bottom_height = 0.85
 
         # Weapons configuration:
-        self.missiles_config = []
+        self.missiles_config = ["Mica", "Meteor", "AIM_SL", "AIM_SL", "Meteor", "Mica"]
 
         # Mobile parts:
         self.mobile_parts_definitions = [
+            ["aileron_left", 45, -45, 0, "dummy_flap_left", "X"],
+            ["aileron_right", 45, -45, 0, "dummy_flap_right", "X"],
             ["elevator", -20, 20, 0, "dummy_elevator", "X"]
         ]
 
@@ -54,11 +56,13 @@ class Miuss(Aircraft, Miuss_Parameters):
         self.add_device(gear)
         md = self.get_device("MissilesDevice")
         if md is not None:
-            md.flag_hide_fitted_missiles = True
+            md.flag_hide_fitted_missiles = False
         self.setup_bounds_positions()
 
     def update_mobile_parts(self, dts):
         self.parts["elevator"]["level"] = -self.angular_levels.x
+        self.parts["aileron_left"]["level"] = self.angular_levels.z
+        self.parts["aileron_right"]["level"] = -self.angular_levels.z
 
         Aircraft.update_mobile_parts(self, dts)
 

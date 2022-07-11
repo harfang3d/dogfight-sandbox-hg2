@@ -26,8 +26,27 @@
 		],
 		"fog_far": 0.0,
 		"fog_near": 0.0,
-		"irradiance_map": "core/pbr/probe.hdr.irradiance",
-		"radiance_map": "core/pbr/probe.hdr.radiance"
+		"probe": {
+			"irradiance_map": "core/pbr/probe.hdr.irradiance",
+			"parallax": 0.0,
+			"pos": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"radiance_map": "core/pbr/probe.hdr.radiance",
+			"rot": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scl": [
+				1.0,
+				1.0,
+				1.0
+			],
+			"type": "sphere"
+		}
 	},
 	"key_values": null,
 	"nodes": [
