@@ -41,8 +41,8 @@ df.fire_missile(plane_id, missile_slot)
 # Take control of missile physics:
 df.set_machine_custom_physics_mode(missile_id, True)
 
-# Turn off missile life delay
-df.set_missile_life_delay(missile_id, 0)
+# Set missile life delay in s (set to 0 to turn off life delay)
+df.set_missile_life_delay(missile_id, 10)
 
 # Update scene
 df.update_scene()

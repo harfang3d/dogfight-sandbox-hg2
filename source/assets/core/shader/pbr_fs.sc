@@ -1,5 +1,6 @@
 $input vWorldPos, vNormal, vTangent, vBinormal, vTexCoord0, vTexCoord1, vLinearShadowCoord0, vLinearShadowCoord1, vLinearShadowCoord2, vLinearShadowCoord3, vSpotShadowCoord, vProjPos, vPrevProjPos
 
+// HARFANG(R) Copyright (C) 2022 Emmanuel Julien, NWNC HARFANG. Released under GPL/LGPL/Commercial Licence, see licence.txt for details.
 #include <forward_pipeline.sh>
 
 // Surface attributes
@@ -292,5 +293,7 @@ void main() {
 
 	gl_FragColor = vec4(color, opacity);
 #endif // FORWARD_PIPELINE_AAA_PREPASS
+#else
+	gl_FragColor = vec4_splat(0.0); // note: fix required to stop glsl-optimizer from removing the whole function body
 #endif // DEPTH_ONLY
 }
