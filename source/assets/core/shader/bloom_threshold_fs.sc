@@ -1,5 +1,6 @@
 $input v_texcoord0
 
+// HARFANG(R) Copyright (C) 2022 Emmanuel Julien, NWNC HARFANG. Released under GPL/LGPL/Commercial Licence, see licence.txt for details.
 #include <forward_pipeline.sh>
 
 uniform vec4 u_params;
