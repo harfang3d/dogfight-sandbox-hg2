@@ -376,7 +376,7 @@ class PlanetRender:
 		z_near, z_far = hg.ExtractZRangeFromProjectionMatrix(vs_left.proj)
 		z_ratio = (z_near + 0.01) / focal_distance_left
 		self.update_shader(cam_pos_left, cam_normal_left, focal_distance_left, z_near, z_far, vr_resolution, reflect_texture_left, reflect_depth_texture_left)
-		hg.SetViewFrameBuffer(view_id, vr_left_fb.handle)
+		hg.SetViewFrameBuffer(view_id, vr_left_fb.GetHandle())
 		hg.SetViewRect(view_id, 0, 0, int(vr_resolution.x), int(vr_resolution.y))
 		hg.SetViewClear(view_id, hg.CF_Color | hg.CF_Depth, 0x0, 1.0, 0)
 		hg.SetViewTransform(view_id, hg.InverseFast(vr_state.left.offset), vs_left.proj)
@@ -388,7 +388,7 @@ class PlanetRender:
 		z_near, z_far = hg.ExtractZRangeFromProjectionMatrix(vs_right.proj)
 		z_ratio = (z_near + 0.01) / focal_distance_right
 		self.update_shader(cam_pos_right, cam_normal_right, focal_distance_right, z_near, z_far, vr_resolution, reflect_texture_right, reflect_depth_texture_right)
-		hg.SetViewFrameBuffer(view_id, vr_right_fb.handle)
+		hg.SetViewFrameBuffer(view_id, vr_right_fb.GetHandle())
 		hg.SetViewRect(view_id, 0, 0, int(vr_resolution.x), int(vr_resolution.y))
 		hg.SetViewClear(view_id, hg.CF_Color | hg.CF_Depth, 0x0, 1.0, 0)
 		hg.SetViewTransform(view_id, hg.InverseFast(vr_state.right.offset), vs_right.proj)

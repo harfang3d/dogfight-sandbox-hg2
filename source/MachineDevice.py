@@ -1374,7 +1374,11 @@ class AircraftUserControlDevice(ControlDevice):
         pass
 
     def activate_ia_gp(self, value):
-        pass
+        if ControlDevice.gamepad.Pressed(value):
+            ia_device = self.machine.get_device("IAControlDevice")
+            if ia_device is not None:
+                self.deactivate()
+                ia_device.activate()
 
     def switch_easy_steering_gp(self, value):
         pass
@@ -2127,7 +2131,7 @@ class AircraftIAControlDevice(ControlDevice):
     # =============================== Gamepad commands ====================================
 
     def activate_user_control_gp(self, value):
-        if ControlDevice.gampad.Pressed(value):
+        if ControlDevice.gamepad.Pressed(value):
             uctrl = self.machine.get_device("UserControlDevice")
             if uctrl is not None:
                 self.deactivate()

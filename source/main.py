@@ -14,7 +14,6 @@ from math import log, floor
 
 # --------------- Inline arguments handler
 
-
 main_name = sys.argv.pop(0)
 
 for i in range(len(sys.argv)):
@@ -57,6 +56,11 @@ else:
     else:
         dc.run_command("../bin/assetc/assetc assets -quiet -progress")
 
+# --------------- VR mode only under DirectX
+if Main.flag_OpenGL:
+    if Main.flag_vr:
+        print("WARNING - VR mode only available under DirectX (OpenGL : False in Config.json) - VR is turned to OFF")
+        Main.flag_vr = False
 # --------------- Init system
 
 hg.InputInit()
@@ -136,6 +140,8 @@ while not Main.flag_exit:
         Main.update_inputs()
         
         if (not Main.flag_client_update_mode) or ((not Main.flag_renderless) and Main.flag_client_ask_update_scene):
+            if Main.flag_client_ask_update_scene:
+                print("Frame")
             Main.update()
         else:
             time.sleep(1 / 120)
