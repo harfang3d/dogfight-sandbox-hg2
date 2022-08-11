@@ -26,8 +26,6 @@ for i in range(len(sys.argv)):
         except:
             print("ERROR !!! Bad port format - network port must be a valid number !!!")
         i += 1
-    elif cmd == "vr_mode":
-        Main.flag_vr = True
 
 # ---------------- Read config file:
 
@@ -39,11 +37,18 @@ file.close()
 if json_script != "":
     script_parameters = json.loads(json_script)
     Main.flag_OpenGL = script_parameters["OpenGL"]
+    Main.flag_vr = script_parameters["VR"]
     Main.flag_fullscreen = script_parameters["FullScreen"]
     Main.resolution.x = script_parameters["Resolution"][0]
     Main.resolution.y = script_parameters["Resolution"][1]
     Main.antialiasing = script_parameters["AntiAliasing"]
     Main.flag_shadowmap = script_parameters["ShadowMap"]
+
+# --------------- VR mode only under DirectX
+if Main.flag_OpenGL:
+    if Main.flag_vr:
+        print("WARNING - VR mode only available under DirectX (OpenGL : False in Config.json) - VR is turned to OFF")
+        Main.flag_vr = False
 
 # --------------- Compile assets:
 print("Compiling assets...")
@@ -56,11 +61,7 @@ else:
     else:
         dc.run_command("../bin/assetc/assetc assets -quiet -progress")
 
-# --------------- VR mode only under DirectX
-if Main.flag_OpenGL:
-    if Main.flag_vr:
-        print("WARNING - VR mode only available under DirectX (OpenGL : False in Config.json) - VR is turned to OFF")
-        Main.flag_vr = False
+
 # --------------- Init system
 
 hg.InputInit()
