@@ -155,7 +155,7 @@ def update_menu_phase(dts):
 
         Missions.display_mission_title(Main, f, dts, yof7)
 
-        Overlays.add_text2D("Hit space or Start", hg.Vec2(0.5, 591 / 900 + yof7), 0.025, hg.Color(1, 1, 1, (0.7 + sin(tps * 5) * 0.3)) * f, Main.title_font, hg.DTHA_Center)
+        Overlays.add_text2D("Hit space or Start", hg.Vec2(0.5, 611 / 900 + yof7), 0.025, hg.Color(1, 1, 1, (0.7 + sin(tps * 5) * 0.3)) * f, Main.title_font, hg.DTHA_Center)
 
         s = 0.015
         x = 470 / 1600
@@ -182,9 +182,13 @@ def update_menu_phase(dts):
         Overlays.add_text2D("Activate User control", hg.Vec2(x, (y - 320) / 900), s, c, Main.hud_font)
         Overlays.add_text2D("HUD ON / OFF", hg.Vec2(x, (y - 340) / 900), s, c, Main.hud_font)
 
+
+        c2 = hg.Color.Grey * f
+
         # Keyboard:
         x = 815 / 1600
         c = hg.Color.White * f
+        Overlays.add_text2D("Keyboard commands", hg.Vec2(x, (y+40) / 900), s, c2, Main.hud_font)
         if Main.flag_vr:
             Overlays.add_text2D("F11", hg.Vec2(x, (y+20) / 900), s, c, Main.hud_font)
         Overlays.add_text2D("Home / End", hg.Vec2(x, (y) / 900), s, c, Main.hud_font)
@@ -209,6 +213,7 @@ def update_menu_phase(dts):
         # Paddle
         if Main.flag_paddle:
             x = 990 / 1600
+            Overlays.add_text2D("Gamepad commands", hg.Vec2(x, (y+40) / 900), s, c2, Main.hud_font)
             Overlays.add_text2D("Right pad vertical",  hg.Vec2(x, (y) / 900), s, c, Main.hud_font)
             Overlays.add_text2D("Left pad vertical", hg.Vec2(x, (y - 20) / 900), s, c, Main.hud_font)
             Overlays.add_text2D("Left pad horizontal", hg.Vec2(x, (y - 40) / 900), s, c, Main.hud_font)
@@ -220,6 +225,8 @@ def update_menu_phase(dts):
             Overlays.add_text2D("Cross Right / Left", hg.Vec2(x, (y - 160) / 900), s, c, Main.hud_font)
             Overlays.add_text2D("B",  hg.Vec2(x, (y - 180) / 900), s, c, Main.hud_font)
             Overlays.add_text2D("Back", hg.Vec2(x, (y - 200) / 900), s, c, Main.hud_font)
+            Overlays.add_text2D("Left Thumb", hg.Vec2(x, (y - 300) / 900), s, c, Main.hud_font)
+            Overlays.add_text2D("Right Thumb", hg.Vec2(x, (y - 320) / 900), s, c, Main.hud_font)
 
     if not Main.fading_to_next_state:
         f_start = False

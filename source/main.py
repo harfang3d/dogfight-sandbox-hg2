@@ -14,7 +14,6 @@ from math import log, floor
 
 # --------------- Inline arguments handler
 
-
 main_name = sys.argv.pop(0)
 
 for i in range(len(sys.argv)):
@@ -27,8 +26,6 @@ for i in range(len(sys.argv)):
         except:
             print("ERROR !!! Bad port format - network port must be a valid number !!!")
         i += 1
-    elif cmd == "vr_mode":
-        Main.flag_vr = True
 
 # ---------------- Read config file:
 
@@ -40,11 +37,18 @@ file.close()
 if json_script != "":
     script_parameters = json.loads(json_script)
     Main.flag_OpenGL = script_parameters["OpenGL"]
+    Main.flag_vr = script_parameters["VR"]
     Main.flag_fullscreen = script_parameters["FullScreen"]
     Main.resolution.x = script_parameters["Resolution"][0]
     Main.resolution.y = script_parameters["Resolution"][1]
     Main.antialiasing = script_parameters["AntiAliasing"]
     Main.flag_shadowmap = script_parameters["ShadowMap"]
+
+# --------------- VR mode only under DirectX
+if Main.flag_OpenGL:
+    if Main.flag_vr:
+        print("WARNING - VR mode only available under DirectX (OpenGL : False in Config.json) - VR is turned to OFF")
+        Main.flag_vr = False
 
 # --------------- Compile assets:
 print("Compiling assets...")
@@ -56,6 +60,7 @@ else:
         dc.run_command("../bin/assetc/assetc assets -api GL -quiet -progress")
     else:
         dc.run_command("../bin/assetc/assetc assets -quiet -progress")
+
 
 # --------------- Init system
 
@@ -136,6 +141,8 @@ while not Main.flag_exit:
         Main.update_inputs()
         
         if (not Main.flag_client_update_mode) or ((not Main.flag_renderless) and Main.flag_client_ask_update_scene):
+            if Main.flag_client_ask_update_scene:
+                print("Frame")
             Main.update()
         else:
             time.sleep(1 / 120)

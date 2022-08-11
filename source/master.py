@@ -374,8 +374,11 @@ class Main:
     def update_user_control_mode(cls):
         for machine in cls.destroyables_list:
             user_control_device = machine.get_device("UserControlDevice")
+            ia_control_device = machine.get_device("IAControlDevice")
             if user_control_device is not None:
                 user_control_device.set_control_mode(cls.control_mode)
+            if ia_control_device is not None:
+                ia_control_device.set_control_mode(cls.control_mode)
 
     @classmethod
     def duplicate_scene_lighting(cls, scene_src, scene_dst):
@@ -1141,7 +1144,7 @@ class Main:
 
         # ========== Display Reflect scene ===================
 
-        """
+
         cls.scene.canvas.color = hg.Color(1, 0, 0, 1)  # En attendant de fixer le pb de la depth texture du framebuffer.
 
         cls.scene.canvas.clear_z = True
@@ -1157,19 +1160,19 @@ class Main:
         # Prepare the right eye render data then draw to its framebuffer
         vid, passId = hg.PrepareSceneForwardPipelineViewDependentRenderData(vid, right_reflect, cls.scene, cls.render_data, cls.pipeline, cls.pl_resources, views)
         vid, passId = hg.SubmitSceneToForwardPipeline(vid, cls.scene, vr_eye_rect, right_reflect, cls.pipeline, cls.render_data, cls.pl_resources, cls.water_reflexion.quad_frameBuffer_right.handle)
-        """
+
     
         # ========== Display raymarch scene ===================
-        output_fb_left = cls.post_process.quad_frameBuffer_left
-        output_fb_right = cls.post_process.quad_frameBuffer_right
+        output_fb_left = cls.vr_left_fb #cls.post_process.quad_frameBuffer_left
+        output_fb_right = cls.vr_right_fb #cls.post_process.quad_frameBuffer_right
         cls.scene.canvas.clear_z = True
         cls.scene.canvas.clear_color = True
 
-        #tex_reflect_left_color = hg.GetColorTexture(cls.water_reflexion.quad_frameBuffer_left)
-        #tex_reflect_left_depth = hg.GetDepthTexture(cls.water_reflexion.quad_frameBuffer_left)
-        #tex_reflect_right_color = hg.GetColorTexture(cls.water_reflexion.quad_frameBuffer_right)
-        #tex_reflect_right_depth = hg.GetDepthTexture(cls.water_reflexion.quad_frameBuffer_right)
-        vid = cls.sea_render.render_vr(vid, cls.vr_state, vs_left, vs_right, output_fb_left, output_fb_right) #, tex_reflect_left_color, tex_reflect_left_depth, tex_reflect_right_color, tex_reflect_right_depth)
+        tex_reflect_left_color = hg.GetColorTexture(cls.water_reflexion.quad_frameBuffer_left)
+        tex_reflect_left_depth = hg.GetDepthTexture(cls.water_reflexion.quad_frameBuffer_left)
+        tex_reflect_right_color = hg.GetColorTexture(cls.water_reflexion.quad_frameBuffer_right)
+        tex_reflect_right_depth = hg.GetDepthTexture(cls.water_reflexion.quad_frameBuffer_right)
+        vid = cls.sea_render.render_vr(vid, cls.vr_state, vs_left, vs_right, output_fb_left, output_fb_right, tex_reflect_left_color, tex_reflect_left_depth, tex_reflect_right_color, tex_reflect_right_depth)
 
 
         # ========== Display models scene =======================
@@ -1179,11 +1182,11 @@ class Main:
 
         # Prepare the left eye render data then draw to its framebuffer
         vid, passId = hg.PrepareSceneForwardPipelineViewDependentRenderData(vid, vs_left, cls.scene, cls.render_data, cls.pipeline, cls.pl_resources, views)
-        vid, passId = hg.SubmitSceneToForwardPipeline(vid, cls.scene, vr_eye_rect, vs_left, cls.pipeline, cls.render_data, cls.pl_resources, output_fb_left.handle)
+        vid, passId = hg.SubmitSceneToForwardPipeline(vid, cls.scene, vr_eye_rect, vs_left, cls.pipeline, cls.render_data, cls.pl_resources, output_fb_left.GetHandle())
 
         # Prepare the right eye render data then draw to its framebuffer
         vid, passId = hg.PrepareSceneForwardPipelineViewDependentRenderData(vid, vs_right, cls.scene, cls.render_data, cls.pipeline, cls.pl_resources, views)
-        vid, passId = hg.SubmitSceneToForwardPipeline(vid, cls.scene, vr_eye_rect, vs_right, cls.pipeline, cls.render_data, cls.pl_resources, output_fb_right.handle)
+        vid, passId = hg.SubmitSceneToForwardPipeline(vid, cls.scene, vr_eye_rect, vs_right, cls.pipeline, cls.render_data, cls.pl_resources, output_fb_right.GetHandle())
 
         # ==================== Display 3D Overlays ===========
 
@@ -1191,7 +1194,8 @@ class Main:
 
         if len(Overlays.texts3D_display_list) > 0 or len(Overlays.lines) > 0:
 
-            hg.SetViewFrameBuffer(vid, cls.post_process.quad_frameBuffer_left.handle)
+            #hg.SetViewFrameBuffer(vid, cls.post_process.quad_frameBuffer_left.handle)
+            hg.SetViewFrameBuffer(vid, output_fb_left.GetHandle())
             hg.SetViewRect(vid, 0, 0, int(cls.vr_state.width), int(cls.vr_state.height))
             hg.SetViewClear(vid, hg.CF_Depth, 0, 1.0, 0)
             hg.SetViewTransform(vid, vs_left.view, vs_left.proj)
@@ -1200,7 +1204,8 @@ class Main:
             Overlays.draw_lines(vid)
             vid += 1
 
-            hg.SetViewFrameBuffer(vid, cls.post_process.quad_frameBuffer_right.handle)
+            #hg.SetViewFrameBuffer(vid, cls.post_process.quad_frameBuffer_right.handle)
+            hg.SetViewFrameBuffer(vid, output_fb_right.GetHandle())
             hg.SetViewRect(vid, 0, 0, int(cls.vr_state.width), int(cls.vr_state.height))
             hg.SetViewClear(vid, hg.CF_Depth, 0, 1.0, 0)
             hg.SetViewTransform(vid, cls.vr_viewstate.vs_right.view, cls.vr_viewstate.vs_right.proj)
@@ -1215,7 +1220,8 @@ class Main:
         cam_mat = cls.scene.GetCurrentCamera().GetTransform().GetWorld()
         mat_spr = cam_mat  # * vr_state.initial_head_offset
 
-        hg.SetViewFrameBuffer(vid, cls.post_process.quad_frameBuffer_left.handle)
+        #hg.SetViewFrameBuffer(vid, cls.post_process.quad_frameBuffer_left.handle)
+        hg.SetViewFrameBuffer(vid, output_fb_left.GetHandle())
         hg.SetViewRect(vid, 0, 0, int(cls.vr_state.width), int(cls.vr_state.height))
         hg.SetViewClear(vid, hg.CF_Depth, 0, 1.0, 0)
         hg.SetViewTransform(vid, vs_left.view, vs_left.proj)
@@ -1236,7 +1242,8 @@ class Main:
             spr.draw_vr(vid, mat_spr, cls.resolution, cls.vr_hud)
         vid += 1
 
-        hg.SetViewFrameBuffer(vid, cls.post_process.quad_frameBuffer_right.handle)
+        #hg.SetViewFrameBuffer(vid, cls.post_process.quad_frameBuffer_right.handle)
+        hg.SetViewFrameBuffer(vid, output_fb_right.GetHandle())
         hg.SetViewRect(vid, 0, 0, int(cls.vr_state.width), int(cls.vr_state.height))
         hg.SetViewClear(vid, hg.CF_Depth, 0, 1.0, 0)
         hg.SetViewTransform(vid, vs_right.view, vs_right.proj)
@@ -1257,7 +1264,7 @@ class Main:
 
         # ============= Post-process
 
-        vid = cls.post_process.display_vr(vid, cls.vr_state, vs_left, vs_right, cls.vr_left_fb, cls.vr_right_fb, cls.pl_resources)
+        #vid = cls.post_process.display_vr(vid, cls.vr_state, vs_left, vs_right, cls.vr_left_fb, cls.vr_right_fb, cls.pl_resources)
 
         # ============= Display the VR eyes texture to the backbuffer =============
         hg.SetViewRect(vid, 0, 0, int(cls.resolution.x), int(cls.resolution.y))

@@ -86,7 +86,7 @@
 			"SWITCH_POST_COMBUSTION": "GB_ButtonB",
 			"NEXT_TARGET": "GB_ButtonY",
 			"SWITCH_GEAR": "GB_Back",
-			"ACTIVATE_IA": "",
+			"ACTIVATE_IA": "GB_LeftThumb",
 			"ACTIVATE_AUTOPILOT": "",
 			"SWITCH_EASY_STEERING": "",
 			"FIRE_MACHINE_GUN": "GB_ButtonA",

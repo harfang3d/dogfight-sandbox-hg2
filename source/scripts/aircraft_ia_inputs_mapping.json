@@ -5,7 +5,7 @@
 			"ACTIVATE_USER_CONTROL": "K_U"
 		},
 		"GamePad":{
-			"ACTIVATE_USER_CONTROL": ""
+			"ACTIVATE_USER_CONTROL": "GB_RightThumb"
 		},
 		"Mouse":{
 		}
