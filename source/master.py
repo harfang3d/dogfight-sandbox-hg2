@@ -1128,7 +1128,7 @@ class Main:
         Overlays.lines = []
 
     @classmethod
-    def render_frame_vr(cls, dts):
+    def render_frame_vr(cls):
 
         vid = 0
         views = hg.SceneForwardPipelinePassViewId()
@@ -1144,7 +1144,8 @@ class Main:
 
         # ========== Display Reflect scene ===================
 
-
+        # Deactivated because assymetric VR FOV not resolved.
+        """
         cls.scene.canvas.color = hg.Color(1, 0, 0, 1)  # En attendant de fixer le pb de la depth texture du framebuffer.
 
         cls.scene.canvas.clear_z = True
@@ -1160,7 +1161,7 @@ class Main:
         # Prepare the right eye render data then draw to its framebuffer
         vid, passId = hg.PrepareSceneForwardPipelineViewDependentRenderData(vid, right_reflect, cls.scene, cls.render_data, cls.pipeline, cls.pl_resources, views)
         vid, passId = hg.SubmitSceneToForwardPipeline(vid, cls.scene, vr_eye_rect, right_reflect, cls.pipeline, cls.render_data, cls.pl_resources, cls.water_reflexion.quad_frameBuffer_right.handle)
-
+        """
     
         # ========== Display raymarch scene ===================
         output_fb_left = cls.vr_left_fb #cls.post_process.quad_frameBuffer_left
@@ -1168,11 +1169,11 @@ class Main:
         cls.scene.canvas.clear_z = True
         cls.scene.canvas.clear_color = True
 
-        tex_reflect_left_color = hg.GetColorTexture(cls.water_reflexion.quad_frameBuffer_left)
-        tex_reflect_left_depth = hg.GetDepthTexture(cls.water_reflexion.quad_frameBuffer_left)
-        tex_reflect_right_color = hg.GetColorTexture(cls.water_reflexion.quad_frameBuffer_right)
-        tex_reflect_right_depth = hg.GetDepthTexture(cls.water_reflexion.quad_frameBuffer_right)
-        vid = cls.sea_render.render_vr(vid, cls.vr_state, vs_left, vs_right, output_fb_left, output_fb_right, tex_reflect_left_color, tex_reflect_left_depth, tex_reflect_right_color, tex_reflect_right_depth)
+        #tex_reflect_left_color = hg.GetColorTexture(cls.water_reflexion.quad_frameBuffer_left)
+        #tex_reflect_left_depth = hg.GetDepthTexture(cls.water_reflexion.quad_frameBuffer_left)
+        #tex_reflect_right_color = hg.GetColorTexture(cls.water_reflexion.quad_frameBuffer_right)
+        #tex_reflect_right_depth = hg.GetDepthTexture(cls.water_reflexion.quad_frameBuffer_right)
+        vid = cls.sea_render.render_vr(vid, cls.vr_state, vs_left, vs_right, output_fb_left, output_fb_right) #, tex_reflect_left_color, tex_reflect_left_depth, tex_reflect_right_color, tex_reflect_right_depth)
 
 
         # ========== Display models scene =======================
@@ -1286,7 +1287,7 @@ class Main:
 
 
     @classmethod
-    def render_frame(cls, dts):
+    def render_frame(cls):
         vid = 0
         views = hg.SceneForwardPipelinePassViewId()
         res_x = int(cls.resolution.x)
@@ -1448,7 +1449,7 @@ class Main:
     @classmethod
     def update(cls):
         if cls.flag_running:
-
+            #cls.t = hg.time_to_sec_f(hg.GetClock())
             #cls.update_inputs()
 
             real_dt = hg.TickClock()
@@ -1480,16 +1481,17 @@ class Main:
                 Overlays.add_text2D("FPS %d" % (cls.num_fps), hg.Vec2(0.001, 0.999), 0.018, hg.Color.Yellow, cls.hud_font)
 
             # =========== State update:
-            cls.current_state = cls.current_state(cls.timestep)
-            hg.SceneUpdateSystems(cls.scene, cls.clocks, forced_dt, cls.scene_physics, forced_dt, 1000)  # ,10,1000)
+            used_dt = min(forced_dt * 2, real_dt)
+            cls.current_state = cls.current_state(hg.time_to_sec_f(used_dt)) # Minimum frame rate security
+            hg.SceneUpdateSystems(cls.scene, cls.clocks, used_dt, cls.scene_physics, used_dt, 1000)  # ,10,1000)
 
             # =========== Render scene visuals:
             if not cls.flag_renderless:
 
                 if cls.flag_vr:
-                    cls.render_frame_vr(cls.timestep)
+                    cls.render_frame_vr()
                 else:
-                    cls.render_frame(cls.timestep)
+                    cls.render_frame()
 
                 if cls.flag_gui:
                     hg.ImGuiEndFrame(255)

@@ -105,7 +105,7 @@ else:
 
 alias_modes = [hg.RF_MSAA2X, hg.RF_MSAA4X, hg.RF_MSAA8X, hg.RF_MSAA16X]
 aa = alias_modes[min(3, floor(log(Main.antialiasing) / log(2)) - 1)]
-hg.RenderReset(res_x, res_y, hg.RF_VSync | aa | hg.RF_MaxAnisotropy)
+hg.RenderReset(res_x, res_y, aa | hg.RF_MaxAnisotropy)
 
 # -------------------- OpenVR initialization
 
