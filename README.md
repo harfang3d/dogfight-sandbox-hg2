@@ -18,8 +18,9 @@ The source code and the graphics assets are made available for studying purpose.
 
 (If you want to run the sandbox _from the cloned repository_, you will need to copy the Python and HARFANG binaries as well as the other modules in the [bin folder](https://github.com/harfang3d/dogfight-sandbox-hg2/tree/main/bin)). Follow the instructions detailled in the readme files found in each folder.
 
-## About VR mode  
-For the moment, VR only works with DirectX ("OpenGL": false in config.json file)  
+## About VR mode
+* VR works on Windows machines only, using the DirectX backend (set `"OpenGL": false` in the **config.json** file)
+* All the views are available in VR (exterior, interior). When using the cockpit view (`3` on the numpad), press `F11` to calibrate the position of the head
 
 ## Network mode overview
 
