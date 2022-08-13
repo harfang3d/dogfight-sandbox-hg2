@@ -21,6 +21,11 @@ The source code and the graphics assets are made available for studying purpose.
 ## About VR mode
 * VR works on Windows machines only, using the DirectX backend (set `"OpenGL": false` in the **config.json** file)
 * All the views are available in VR (exterior, interior). When using the cockpit view (`3` on the numpad), press `F11` to calibrate the position of the head
+* Requires SteamVR (1.22.x) at least
+* Tested on the following headsets with success:
+  * LENOVO VR Explorer
+  * HTC Vive Pro
+  * Meta Quest 2 (in Oculus Link mode)
 
 ## Network mode overview
 
