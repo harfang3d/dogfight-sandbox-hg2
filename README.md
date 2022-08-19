@@ -11,10 +11,14 @@ The game features :
 
 The source code and the graphics assets are made available for studying purpose. However, you are free to fork this repository, extend the game or release anything that is based on it.
 
-## How to run Dogfight
+## How to run the Dogfight Sandbox
 1. Download the [most recent release](https://github.com/harfang3d/dogfight-sandbox-hg2/releases) (dogfight-sandbox-hg2-win64.7z)
 1. Unzip it
 1. run *start.bat*
+1. Select a scenario using the `right` and `left` keys
+   * Press `space` if you want to control the aircraft using the keyboard
+   * Press the `start` button of the gamepad or the joystick depending on the device you want to use
+   * If you press the `start/fire` button on the gamepad, the Sandbox will automatically define this controler as the input device of the aircraft (see **Aircraft keyboard Commands** below for the details of the keyboard inputs) 
 
 (If you want to run the sandbox _from the cloned repository_, you will need to copy the Python and HARFANG binaries as well as the other modules in the [bin folder](https://github.com/harfang3d/dogfight-sandbox-hg2/tree/main/bin)). Follow the instructions detailled in the readme files found in each folder.
 
@@ -109,6 +113,12 @@ The "Network" mode allows you to control the planes from a third party machine.
 | Fast speed 1 | Left Shift + move |
 | Fast speed 2 | Left Ctrl + move |
 | Fast speed 3 | Right Ctrl + move |
+
+## Supported control devices
+
+* Keyboard
+* XBox gamepad or any compatible model
+* Logitech "Attack 3" Joystick
 
 ## Contributors
 * Code, design, music / sfx:
