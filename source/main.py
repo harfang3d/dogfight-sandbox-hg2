@@ -44,6 +44,12 @@ if json_script != "":
     Main.antialiasing = script_parameters["AntiAliasing"]
     Main.flag_shadowmap = script_parameters["ShadowMap"]
 
+# If the VR is enabled the main window becomes useless
+# so we downsize it.
+if Main.flag_vr:
+    Main.resolution.x = 256
+    Main.resolution.y = 256
+
 # --------------- VR mode only under DirectX
 if Main.flag_OpenGL:
     if Main.flag_vr:
