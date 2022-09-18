@@ -2,6 +2,8 @@
 
 Air to air combat sandbox, created in Python 3 using the [HARFANG 3D 2 framework](https://www.harfang3d.com).
 
+[![](screenshots/dogfight-sandbox-python-vr-yt.png)](https://www.youtube.com/watch?v=4Q2f0dKh8vE)
+
 The game features : 
 * Ocean / terrain shader
 * Skydome shader
