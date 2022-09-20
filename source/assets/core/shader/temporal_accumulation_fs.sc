@@ -25,7 +25,7 @@ void main() {
 	vec2 uv = gl_FragCoord.xy / input_size;
 	vec2 dt = GetVelocityVector(uv, uResolution.xy / input_size.xy);
 
-	vec2 uv_curr = GetAttributeTexCoord(vTexCoord0, textureSize(u_current, 0).xy);
+	vec2 uv_curr = GetAttributeTexCoord(vTexCoord0, vec2(textureSize(u_current, 0).xy));
 	vec4 current = texture2D(u_current, uv_curr);
 	 
     vec4 c0 = texture2DLodOffset(u_current, uv_curr, 0, ivec2(0, 1));
