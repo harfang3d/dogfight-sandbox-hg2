@@ -107,6 +107,9 @@ def init_server(main_):
 		"SET_MISSILE_LIFE_DELAY": set_missile_life_delay,
 		"GET_MISSILE_TARGETS_LIST": get_missile_targets_list,
 		"SET_MISSILE_TARGET": set_missile_target,
+		"SET_MISSILE_THRUST_FORCE": set_missile_thrust_force,
+		"SET_MISSILE_ANGULAR_FRICTIONS": set_missile_angular_frictions,
+		"SET_MISSILE_DRAG_COEFFICIENTS": set_missile_drag_coefficients,
 
 		# Missile launchers
 		"GET_MISSILE_LAUNCHERS_LIST": get_missile_launchers_list,
@@ -936,7 +939,10 @@ def get_missile_state(args):
 		"linear_speed": machine.get_linear_speed(),
 		"target_id": machine.get_target_id(),
 		"life_delay": machine.life_delay,
-		"life_time": machine.life_cptr
+		"life_time": machine.life_cptr,
+		"thrust_force": machine.f_thrust,
+		"angular_frictions": [machine.angular_frictions.x, machine.angular_frictions.y, machine.angular_frictions.z],
+		"drag_coefficients": [machine.drag_coeff.x, machine.drag_coeff.y, machine.drag_coeff.z]
 		}
 	if flag_print_log:
 		print(args["missile_id"])
@@ -961,3 +967,15 @@ def get_missile_targets_list(args):
 	for t in targets:
 		targets_ids.append(t.name)
 	socket_lib.send_message(str.encode(json.dumps(targets_ids)))
+
+def set_missile_thrust_force(args):
+	missile = main.destroyables_items[args["missile_id"]]
+	missile.set_thrust_force(args["thrust_force"])
+
+def set_missile_angular_frictions(args):
+	missile = main.destroyables_items[args["missile_id"]]
+	missile.set_angular_friction(args["angular_frictions"][0], args["angular_frictions"][1], args["angular_frictions"][2] )
+
+def set_missile_drag_coefficients(args):
+	missile = main.destroyables_items[args["missile_id"]]
+	missile.set_drag_coefficients(args["drag_coeff"][0], args["drag_coeff"][1], args["drag_coeff"][2] )

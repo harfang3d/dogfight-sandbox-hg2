@@ -9,7 +9,7 @@ import time
 from math import sin, cos
 
 # Enter the IP and port displayed in top-left corner of DogFight screen
-df.connect("192.168.1.22", 50888)
+df.connect("192.168.42.86", 50888)
 
 time.sleep(2)
 
@@ -28,9 +28,16 @@ df.reset_machine(plane_id)
 # Get the plane missiles list
 missiles = df.get_machine_missiles_list(plane_id)
 
+
+
 # Get the missile id at slot 0
 missile_slot = 0
 missile_id = missiles[missile_slot]
+
+#Change missile settings
+df.set_missile_thrust_force(missile_id, 50)
+df.set_missile_angular_frictions(missile_id, 0.11,0.22,0.33)
+df.set_missile_drag_coefficients(missile_id, 1.1,2.2,3.2)
 
 # Set client update mode ON: the scene update must be done by client network, calling "update_scene()"
 df.set_client_update_mode(True)
