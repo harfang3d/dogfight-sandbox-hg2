@@ -338,4 +338,13 @@ def get_missile_targets_list(missile_id):
 	state = json.loads((socket_lib.get_answer()).decode())
 	return state
 
+def set_missile_thrust_force(missile_id, thrust_force):
+	socket_lib.send_message(str.encode(json.dumps({"command": "SET_MISSILE_THRUST_FORCE", "args": {"missile_id": missile_id, "thrust_force": thrust_force}})))
+
+def set_missile_angular_frictions(missile_id, x, y, z):
+	socket_lib.send_message(str.encode(json.dumps({"command": "SET_MISSILE_ANGULAR_FRICTIONS", "args": {"missile_id": missile_id, "angular_frictions": [x, y, z]}})))
+
+def set_missile_drag_coefficients(missile_id, x, y, z):
+	socket_lib.send_message(str.encode(json.dumps({"command": "SET_MISSILE_DRAG_COEFFICIENTS", "args": {"missile_id": missile_id, "drag_coeff": [x, y, z]}})))
+
 

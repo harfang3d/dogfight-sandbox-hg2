@@ -1247,6 +1247,15 @@ class Missile(Destroyable_Machine):
             return ""
         else:
             return self.target.name
+    
+    def set_thrust_force(self, value:float):
+        self.f_thrust = value
+    
+    def set_angular_friction(self, x, y, z):
+        self.angular_frictions.x, self.angular_frictions.y, self.angular_frictions.z = x, y, z
+    
+    def set_drag_coefficients(self, x, y, z):
+        self.drag_coeff.x, self.drag_coeff.y, self.drag_coeff.z = x, y, z
 
 # =====================================================================================================
 #                                  Aircraft
