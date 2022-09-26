@@ -1481,7 +1481,10 @@ class Main:
                 Overlays.add_text2D("FPS %d" % (cls.num_fps), hg.Vec2(0.001, 0.999), 0.018, hg.Color.Yellow, cls.hud_font)
 
             # =========== State update:
-            used_dt = min(forced_dt * 2, real_dt)
+            if cls.flag_renderless:
+                used_dt = forced_dt
+            else:
+                used_dt = min(forced_dt * 2, real_dt)
             cls.current_state = cls.current_state(hg.time_to_sec_f(used_dt)) # Minimum frame rate security
             hg.SceneUpdateSystems(cls.scene, cls.clocks, used_dt, cls.scene_physics, used_dt, 1000)  # ,10,1000)
 
@@ -1502,7 +1505,7 @@ class Main:
 
             # =========== Renderless mode:
             else:
-                cls.update_renderless(real_dt)
+                cls.update_renderless(forced_dt)
 
             cls.clear_display_lists()
 
