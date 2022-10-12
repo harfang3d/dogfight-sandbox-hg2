@@ -8,7 +8,7 @@ import socket_lib
 from Machines import *
 from overlays import *
 import math
-#import Physics
+import Physics
 
 main = None
 dogfight_network_port = 50888
@@ -76,6 +76,7 @@ def init_server(main_):
 		"IS_USER_CONTROL_ACTIVATED": is_user_control_activated,
 		"ACTIVATE_USER_CONTROL": activate_user_control,
 		"DEACTIVATE_USER_CONTROL": deactivate_user_control,
+		"COMPUTE_NEXT_TIMESTEP_PHYSICS": compute_next_timestep_physics,
 
 		# Aircrafts
 		"GET_PLANESLIST": get_planes_list,
@@ -596,6 +597,26 @@ def deactivate_user_control(args):
 	uctrl = machine.get_device("UserControlDevice")
 	if uctrl is not None:
 		uctrl.deactivate()
+
+
+def compute_next_timestep_physics(args):
+	machine = main.destroyables_items[args["machine_id"]]
+	physics_parameters = machine.get_physics_parameters()
+	mat, physics_parameters = Physics.update_physics(machine.parent_node.GetTransform().GetWorld(), machine, physics_parameters, args["timestep"])
+	v = physics_parameters["v_move"]
+	physics_parameters["v_move"] = [v.x, v.y, v.z]
+	mat_r0 = hg.GetRow(mat, 0)
+	mat_r1 = hg.GetRow(mat, 1)
+	mat_r2 = hg.GetRow(mat, 2)
+	physics_parameters["matrix"] = [mat_r0.x, mat_r1.x, mat_r2.x,
+									mat_r0.y, mat_r1.y, mat_r2.y, 
+									mat_r0.z, mat_r1.z, mat_r2.z, 
+									mat_r0.w, mat_r1.w, mat_r2.w]
+	
+	if flag_print_log:
+		print(args["machine_id"])
+		print(str(physics_parameters))
+	socket_lib.send_message(str.encode(json.dumps(physics_parameters)))
 
 # Aircraft
 

@@ -776,6 +776,18 @@ class Destroyable_Machine(AnimatedModel):
                     self.scene_physics.NodeWake(nd)
 
 
+    def get_physics_parameters(self):
+        return {"v_move": self.v_move,
+                "thrust_level": 0,
+                "thrust_force": 0,
+                "lift_force": 0,
+                "drag_coefficients": hg.Vec3(0, 0, 0),
+                "health_wreck_factor": 1,
+                "angular_levels": hg.Vec3(0, 0, 0),
+                "angular_frictions": hg.Vec3(0, 0, 0),
+                "speed_ceiling": 0,
+                "flag_easy_steering": False
+                }
 
     def update_kinetics(self, dts):
         if self.activated:
@@ -809,7 +821,7 @@ class Destroyable_Machine(AnimatedModel):
             self.rec_linear_speed()
             self.update_linear_acceleration()
 
-            self.update_devices(dts)  # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            self.update_devices(dts)
 
             self.update_mobile_parts(dts)
             self.update_feedbacks(dts)
@@ -846,7 +858,7 @@ class Missile(Destroyable_Machine):
         self.target_collision_test_distance_max = 100
 
         # Missile constantes:
-        self.f_thrust = 100
+        self.thrust_force = 100
         self.smoke_parts_distance = 1.44374
         self.drag_coeff = hg.Vec3(0.37, 0.37, 0.0003)
         self.angular_frictions = hg.Vec3(0.0001, 0.0001, 0.0001)  # pitch, yaw, roll
@@ -1153,6 +1165,19 @@ class Missile(Destroyable_Machine):
         smoke_start_pos += self.v_move * dts
         self.update_smoke(smoke_start_pos, dts)
 
+    def get_physics_parameters(self):
+        return {"v_move": self.v_move,
+                "thrust_level": 1,
+                "thrust_force": self.thrust_force,
+                "lift_force": 0,
+                "drag_coefficients": self.drag_coeff,
+                "health_wreck_factor": 1,
+                "angular_levels": self.angular_levels,
+                "angular_frictions": self.angular_frictions,
+                "speed_ceiling": self.speed_ceiling,
+                "flag_easy_steering": False
+                }
+
     def update_kinetics(self, dts):
 
         if self.activated:
@@ -1179,17 +1204,7 @@ class Missile(Destroyable_Machine):
                             self.angular_levels.y = hg.Dot(aY, moment)
                             self.angular_levels.z = hg.Dot(aZ, moment)
 
-                    physics_parameters = {"v_move": self.v_move,
-                                          "thrust_level": 1,
-                                          "thrust_force": self.f_thrust,
-                                          "lift_force": 0,
-                                          "drag_coefficients": self.drag_coeff,
-                                          "health_wreck_factor": 1,
-                                          "angular_levels": self.angular_levels,
-                                          "angular_frictions": self.angular_frictions,
-                                          "speed_ceiling": self.speed_ceiling,
-                                          "flag_easy_steering": False
-                                          }
+                    physics_parameters = self.get_physics_parameters()
 
                     mat, physics_parameters = Physics.update_physics(self.parent_node.GetTransform().GetWorld(), self, physics_parameters, dts)
                     self.v_move = physics_parameters["v_move"]
@@ -1249,7 +1264,7 @@ class Missile(Destroyable_Machine):
             return self.target.name
     
     def set_thrust_force(self, value:float):
-        self.f_thrust = value
+        self.thrust_force = value
     
     def set_angular_friction(self, x, y, z):
         self.angular_frictions.x, self.angular_frictions.y, self.angular_frictions.z = x, y, z
@@ -1900,6 +1915,27 @@ class Aircraft(Destroyable_Machine):
 
     # ==================================================================
 
+    def get_physics_parameters(self):
+        # ============================ Compute Thrust impulse
+        tf = self.thrust_force
+        if self.post_combustion and self.thrust_level == 1:
+            tf += self.post_combustion_force
+        # ================================ Compute Z drag impulse
+        dc = hg.Vec3(self.drag_coeff)
+        dc.z = self.compute_z_drag()
+
+        return {"v_move": self.v_move,
+                "thrust_level": self.thrust_level,
+                "thrust_force": tf,
+                "lift_force": self.wings_lift + self.flaps_level * self.flaps_lift,
+                "drag_coefficients": dc,
+                "health_wreck_factor": pow(self.health_level, 0.2),
+                "angular_levels": self.angular_levels,
+                "angular_frictions": self.angular_frictions,
+                "speed_ceiling": self.speed_ceiling,
+                "flag_easy_steering": self.flag_easy_steering
+                }
+
     def update_kinetics(self, dts):
 
         # Custom physics (but keep inner collisions system)
@@ -1928,28 +1964,9 @@ class Aircraft(Destroyable_Machine):
 
                     self.update_mobile_parts(dts)  # Animate mobile parts
 
-                    # ============================ Compute Thrust impulse
-                    tf = self.thrust_force
-                    if self.post_combustion and self.thrust_level == 1:
-                        tf += self.post_combustion_force
-
-                    # ================================ Compute Z drag impulse
-                    dc = hg.Vec3(self.drag_coeff)
-                    dc.z = self.compute_z_drag()
-
                     # # ========================= Update physics
 
-                    physics_parameters = {"v_move": self.v_move,
-                                          "thrust_level": self.thrust_level,
-                                          "thrust_force": tf,
-                                          "lift_force": self.wings_lift + self.flaps_level * self.flaps_lift,
-                                          "drag_coefficients": dc,
-                                          "health_wreck_factor": pow(self.health_level, 0.2),
-                                          "angular_levels": self.angular_levels,
-                                          "angular_frictions": self.angular_frictions,
-                                          "speed_ceiling": self.speed_ceiling,
-                                          "flag_easy_steering": self.flag_easy_steering
-                                          }
+                    physics_parameters = self.get_physics_parameters()
 
                     mat, physics_parameters = Physics.update_physics(self.parent_node.GetTransform().GetWorld(), self, physics_parameters, dts)
 

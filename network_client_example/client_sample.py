@@ -55,7 +55,7 @@ while t < 1:
 	df.display_vector(plane_state["position"], plane_state["move_vector"], "Linear speed: " + str(plane_state["linear_speed"]), [0, 0.02], [0, 1, 0, 1], 0.02)
 	# Update frame:
 	df.update_scene()
-	print_fps()
+	#print_fps()
 	t = plane_state["thrust_level"]
 
 
@@ -90,6 +90,9 @@ while s < 500 / 3.6: # Linear speed is given in m/s. To translate in km/h, just 
 	df.display_2DText([0.25, 0.75], "Plane speed: " + str(plane_state["linear_speed"]), 0.04, [1, 0.5, 0, 1])
 	df.display_vector(plane_state["position"], plane_state["move_vector"], "Linear speed: " + str(plane_state["linear_speed"]), [0, 0.02], [0, 1, 0, 1], 0.02)
 	df.update_scene()
+	# Get next physics parameters for the plane:
+	next_physics = df.compute_next_timestep_physics(plane_id, 1/60)
+	print(str(next_physics))
 	s = plane_state["linear_speed"]
 
 # When speed is around 500 km/h, post-combustion booster is turned off
