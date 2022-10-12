@@ -204,6 +204,10 @@ def activate_user_control(machine_id):
 def deactivate_user_control(machine_id):
 	socket_lib.send_message(str.encode(json.dumps({"command": "DEACTIVATE_USER_CONTROL", "args": {"machine_id": machine_id}})))
 
+def compute_next_timestep_physics(machine_id, timestep):
+	socket_lib.send_message(str.encode(json.dumps({"command": "COMPUTE_NEXT_TIMESTEP_PHYSICS", "args": {"machine_id": machine_id, "timestep": timestep}})))
+	state = json.loads((socket_lib.get_answer()).decode())
+	return state
 
 # Aircrafts
 
