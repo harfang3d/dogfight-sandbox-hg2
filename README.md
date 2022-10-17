@@ -169,6 +169,7 @@ The "Network" mode allows you to control the planes from a third party machine.
 
 [Harfang3D Dog-Fight Sandbox: A Reinforcement Learning Research Platform on arxiv.org](https://arxiv.org/abs/2210.07282)
  
+```
 @misc{2210.07282,
   Author = {Muhammed Murat Özbek,  Süleyman Yıldırım,  Muhammet Aksoy, Eric Kernin and Emre Koyuncu},
   Title = {Harfang3D Dog-Fight Sandbox: A Reinforcement Learning Research Platform for the Customized Control Tasks of Fighter Aircrafts},
@@ -177,3 +178,4 @@ The "Network" mode allows you to control the planes from a third party machine.
   Year = {2022},
   Eprint = {arXiv:2210.07282},
 }
+```
