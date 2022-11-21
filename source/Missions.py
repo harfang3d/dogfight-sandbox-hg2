@@ -1,4 +1,4 @@
-# Copyright (C) 2018-2021 Eric Kernin, NWNC HARFANG.
+# Copyright (C) 2018-2022 Eric Kernin, NWNC HARFANG.
 
 import harfang as hg
 from Animations import *
@@ -12,10 +12,10 @@ from MachineDevice import *
 
 class Mission:
 
-	def __init__(self, title, num_ennemies, num_allies, num_carriers_ennemies, num_carriers_allies, setup_players, end_test, end_phase_update):
+	def __init__(self, title, ennemies:list, allies:list, num_carriers_ennemies:int, num_carriers_allies:int, setup_players, end_test, end_phase_update):
 		self.title = title
-		self.ennemies = num_ennemies
-		self.allies = num_allies
+		self.ennemies = ennemies
+		self.allies = allies
 		self.allies_carriers = num_carriers_allies
 		self.ennemies_carriers = num_carriers_ennemies
 		self.setup_players_f = setup_players
@@ -572,6 +572,7 @@ class Missions:
 		Overlays.add_text2D(msg_debriefing, hg.Vec2(0.5, 701 / 900 - 0.15), 0.02, hg.Color(1, 0.9, 0.8, 1), main.hud_font, hg.DTHA_Center)
 
 	@classmethod
+	# Aircrafts currently available: "F14", "F14_2", "Rafale", "Eurofighter", "F16", "TFX", "Miuss"
 	def init(cls):
 		cls.beep_ref = hg.LoadWAVSoundAsset("sfx/blip.wav")
 		cls.beep_state = tools.create_stereo_sound_state(hg.SR_Once)

@@ -6,7 +6,18 @@ import json
 import subprocess
 import re
 from tqdm import tqdm
+import re
+import os
 
+def get_local_file_path(f):
+	return os.path.join(os.path.dirname(os.path.realpath(__file__)), f)
+
+def conform_string(s):
+	# Remove all non-word characters (everything except numbers and letters)
+	s = re.sub(r"[^\w\s]", '', s)
+	# Replace all runs of whitespace with a single dash
+	s = re.sub(r"\s+", '_', s)
+	return s
 
 def list_to_color(c: list):
 	return hg.Color(c[0], c[1], c[2], c[3])
@@ -35,6 +46,13 @@ def list_to_vec3_radians(v: list):
 	v.z = radians(v.z)
 	return v
 
+def list_to_mat4(v: list):
+	return hg.TransformationMat4(hg.Vec3(v[0], v[1], v[2]), hg.Vec3(v[3], v[4], v[5]), hg.Vec3(v[6], v[7], v[8]))
+
+
+def mat4_to_list(v: hg.Mat4):
+	p, r, s = hg.Decompose(v)
+	return [p.x, p.y, p.z, r.x, r.y, r.z, s.x, s.y, s.z]
 
 def vec3_to_list(v: hg.Vec3):
 	return [v.x, v.y, v.z]
