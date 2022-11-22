@@ -582,7 +582,7 @@ class Missions:
 		cls.validation_state = tools.create_stereo_sound_state(hg.SR_Once)
 		cls.validation_state.volume = 0.5
 
-		cls.missions.append(Mission("Network mode", ["Eurofighter"], ["Rafale"], 1, 1, Missions.network_mode_setup, Missions.network_mode_end_test, Missions.network_mode_end_phase_update))
+		cls.missions.append(Mission("Network mode", ["Eurofighter"]*4, ["Rafale"]*4, 1, 1, Missions.network_mode_setup, Missions.network_mode_end_test, Missions.network_mode_end_phase_update))
 
 		cls.missions.append(Mission("Training with Rafale", [], ["Rafale"], 0, 1, Missions.mission_setup_training, Missions.mission_training_end_test, Missions.mission_training_end_phase_update))
 		cls.missions.append(Mission("Training with Eurofighter", [], ["Eurofighter"], 0, 1, Missions.mission_setup_training, Missions.mission_training_end_test, Missions.mission_training_end_phase_update))

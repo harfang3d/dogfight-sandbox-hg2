@@ -30,6 +30,7 @@ from planet_render import *
 from WaterReflection import *
 from overlays import *
 from math import atan
+import vcr
 
 
 class Main:
@@ -42,6 +43,7 @@ class Main:
     flag_OpenGL = True
     antialiasing = 4
     flag_display_HUD = True
+    flag_display_recorder = False
 
     # Control devices
 
@@ -1467,6 +1469,9 @@ class Main:
 
             if cls.keyboard.Pressed(hg.K_F10):
                 cls.flag_display_HUD = not cls.flag_display_HUD
+            
+            if cls.keyboard.Pressed(hg.K_F9):
+                cls.flag_display_recorder = not cls.flag_display_recorder
 
             if cls.flag_gui:
                 hg.ImGuiBeginFrame(int(cls.resolution.x), int(cls.resolution.y), real_dt, hg.ReadMouse(), hg.ReadKeyboard())
@@ -1483,9 +1488,16 @@ class Main:
             # =========== State update:
             if cls.flag_renderless:
                 used_dt = forced_dt
+                simulation_dt = used_dt
             else:
+                simulation_dt = used_dt
                 used_dt = min(forced_dt * 2, real_dt)
-            cls.current_state = cls.current_state(hg.time_to_sec_f(used_dt)) # Minimum frame rate security
+            
+            # Simulation_dt is timestep for dogfight kinetics:
+           
+            cls.current_state = cls.current_state(hg.time_to_sec_f(simulation_dt)) # Minimum frame rate security
+            
+            # Used_dt is timestep used for Harfang 3D:
             hg.SceneUpdateSystems(cls.scene, cls.clocks, used_dt, cls.scene_physics, used_dt, 1000)  # ,10,1000)
 
             # =========== Render scene visuals:

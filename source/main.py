@@ -153,7 +153,6 @@ while not Main.flag_exit:
             
         Main.update_window()
 
-        
 
 # ----------------- Exit:
 
