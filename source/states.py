@@ -2,14 +2,18 @@
 
 import harfang as hg
 from master import Main
+import vcr
 from Missions import *
 from SmartCamera import *
 from HUD import *
 from overlays import *
+import Machines
 
-
-def init_menu_phase():
+def init_menu_state():
     Main.flag_running = False
+    
+    vcr.request_new_state("disable")
+    
     Main.set_renderless_mode(False)
     Main.flag_network_mode = False
     Main.fading_to_next_state = False
@@ -104,10 +108,14 @@ def init_menu_phase():
 
     Main.post_process.setup_fading(3, 1)
     Main.flag_running = True
-    return update_menu_phase
+    vcr.validate_requested_state()
+    return menu_state
 
 
-def update_menu_phase(dts):
+def menu_state(dts):
+
+    
+
     Main.t += dts
     Main.post_process.update_fading(dts)
     if Main.flag_sfx:
@@ -233,28 +241,41 @@ def update_menu_phase(dts):
         if Main.keyboard.Pressed(hg.K_Space):
             Main.control_mode = AircraftUserControlDevice.CM_KEYBOARD
             f_start = True
+            Main.next_state = "main"
+        elif vcr.request_state == "replay":
+            Main.control_mode = AircraftUserControlDevice.CM_NONE
+            f_start = True
+            Main.next_state = "replay"
         elif Main.flag_paddle:
             if Main.gamepad.Pressed(hg.GB_Start):
                 Main.control_mode = AircraftUserControlDevice.CM_GAMEPAD
                 f_start = True
+                Main.next_state = "main"
         elif Main.flag_generic_controller:
             if Main.generic_controller.Down(1):
                 Main.control_mode = AircraftUserControlDevice.CM_LOGITECH_ATTACK_3
                 f_start = True                
+                Main.next_state = "main"
+        
         if f_start:
             Main.post_process.setup_fading(1, -1)
             Main.fading_to_next_state = True
     else:
         if not Main.post_process.fade_running:
             Main.destroy_players()
-            init_main_phase()
-            return update_main_phase
-    return update_menu_phase
+            if Main.next_state == "replay":
+                init_replay_state()
+                return replay_state
+            else:
+                init_main_state()
+                return main_state
+    return menu_state
 
 
 # =================================== IN GAME =============================================
 
-def init_main_phase():
+def init_main_state():
+    vcr.request_new_state("record")
     Main.flag_running = False
     Main.fading_to_next_state = False
     Main.post_process.setup_fading(1, 1)
@@ -276,16 +297,22 @@ def init_main_phase():
 
     HUD_Radar.setup_plots(Main.resolution, n_aircrafts, n_missiles, mission.allies_carriers + mission.ennemies_carriers, n_missile_launchers)
 
-    #Main.setup_weaponery()
+    # Setup recorder
+    vcr.clear_items
+    for dm in Main.destroyables_list:
+        if dm.type == Machines.Destroyable_Machine.TYPE_AIRCRAFT \
+            or dm.type == Machines.Destroyable_Machine.TYPE_MISSILE:
+            vcr.AddItem(dm, ["machine_state"])
 
     Main.num_start_frames = 10
     Main.timestamp = 0
     Main.flag_running = True
-    return update_main_phase
+    vcr.validate_requested_state()
+    return main_state
 
 
-def update_main_phase(dts):
-
+def main_state(dts):
+    
     Main.timestamp += 1
     if not Main.flag_renderless:
         Main.post_process.update_fading(dts)
@@ -317,12 +344,12 @@ def update_main_phase(dts):
                 if machine.is_activated:
                     if machine.bounding_boxe is not None:
                         matrix = machine.get_parent_node().GetTransform().GetWorld()
-                        Overlays.add_line(machine.bound_front * matrix, (machine.bound_front + hg.Vec3(0, 0, 1)) * matrix, hg.Color.Blue, hg.Color.Blue)
-                        Overlays.add_line(machine.bound_back * matrix, (machine.bound_back + hg.Vec3(0, 0, -1)) * matrix, hg.Color.Blue, hg.Color.Blue)
-                        Overlays.add_line(machine.bound_up * matrix, (machine.bound_up + hg.Vec3(0, 1, 0)) * matrix, hg.Color.Green, hg.Color.Green)
-                        Overlays.add_line(machine.bound_down * matrix, (machine.bound_down + hg.Vec3(0, -1, 0)) * matrix, hg.Color.Green, hg.Color.Green)
-                        Overlays.add_line(machine.bound_right * matrix, (machine.bound_right + hg.Vec3(1, 0, 0)) * matrix, hg.Color.Red, hg.Color.Red)
-                        Overlays.add_line(machine.bound_left * matrix, (machine.bound_left + hg.Vec3(-1, 0, 0)) * matrix, hg.Color.Red, hg.Color.Red)
+                        Overlays.add_line(matrix * machine.bound_front, matrix * (machine.bound_front + hg.Vec3(0, 0, 1)), hg.Color.Blue, hg.Color.Blue)
+                        Overlays.add_line(matrix * machine.bound_back, matrix * (machine.bound_back + hg.Vec3(0, 0, -1)), hg.Color.Blue, hg.Color.Blue)
+                        Overlays.add_line(matrix * machine.bound_up, matrix * (machine.bound_up + hg.Vec3(0, 1, 0)), hg.Color.Green, hg.Color.Green)
+                        Overlays.add_line(matrix * machine.bound_down, matrix * (machine.bound_down + hg.Vec3(0, -1, 0)), hg.Color.Green, hg.Color.Green)
+                        Overlays.add_line(matrix * machine.bound_right, matrix * (machine.bound_right + hg.Vec3(1, 0, 0)), hg.Color.Red, hg.Color.Red)
+                        Overlays.add_line(matrix * machine.bound_left, matrix * (machine.bound_left + hg.Vec3(-1, 0, 0)), hg.Color.Red, hg.Color.Red)
                         Overlays.display_boxe(machine.get_world_bounding_boxe(), hg.Color.Yellow)
     else:
         if Main.user_aircraft is not None and Main.flag_display_radar_in_renderless:
@@ -363,6 +390,9 @@ def update_main_phase(dts):
 
     Main.smart_camera.update(cam, dts, camera_noise_level)
 
+    if vcr.is_init():
+        vcr.update(Main.scene, Main.simulation_dt)
+
     mission = Missions.get_current_mission()
 
     if Main.keyboard.Pressed(hg.K_L):
@@ -374,18 +404,117 @@ def update_main_phase(dts):
     if Main.keyboard.Pressed(hg.K_Tab):
         Main.set_renderless_mode(False)
         mission.aborted = True
-        init_end_phase()
-        return update_end_phase
+        init_end_state()
+        return end_state
     elif mission.end_test(Main):
-        init_end_phase()
-        return update_end_phase
+        init_end_state()
+        return end_state
+    elif vcr.request_state == "replay":
+        Main.destroy_players()
+        init_replay_state()
+        return replay_state
 
-    return update_main_phase
+    return main_state
 
+
+# =================================== REPLAY MODE =============================================
+
+def init_replay_state():
+    Main.set_renderless_mode(False)
+    Main.flag_running = False
+    Main.fading_to_next_state = False
+    Main.post_process.setup_fading(1, 1)
+    Main.destroy_sfx()
+    ParticlesEngine.reset_engines()
+    Destroyable_Machine.reset_machines()
+    
+    Main.flag_network_mode = False
+    
+    fps_start_matrix = hg.TranslationMat4(hg.Vec3(0, 20, 0))
+    Main.camera_fps.GetTransform().SetWorld(fps_start_matrix)
+
+    Main.user_aircraft = None
+    Main.setup_views_carousel(True)
+    Main.set_view_carousel("fps")
+
+    Main.timestamp = 0
+    Main.flag_running = True
+    vcr.validate_requested_state()
+
+
+def replay_state(dts):
+    Main.timestamp += 1
+    Main.post_process.update_fading(dts)
+    
+    if Main.flag_control_views:
+            Main.control_views(Main.keyboard)
+    if Main.flag_display_HUD:
+        if Main.user_aircraft is not None:
+            if Main.user_aircraft.type == Destroyable_Machine.TYPE_AIRCRAFT:
+                HUD_Aircraft.update(Main, Main.user_aircraft, Main.destroyables_list)
+            elif Main.user_aircraft.type == Destroyable_Machine.TYPE_MISSILE_LAUNCHER:
+                HUD_MissileLauncher.update(Main, Main.user_aircraft, Main.destroyables_list)
+
+        if Main.flag_display_selected_aircraft and Main.selected_aircraft is not None:
+            HUD_MissileTarget.display_selected_target(Main, Main.selected_aircraft)
+    if Main.flag_display_machines_bounding_boxes:
+        for machine in Destroyable_Machine.machines_list:
+            if machine.is_activated:
+                if machine.bounding_boxe is not None:
+                    matrix = machine.get_parent_node().GetTransform().GetWorld()
+                    Overlays.add_line(matrix * machine.bound_front, matrix * (machine.bound_front + hg.Vec3(0, 0, 1)), hg.Color.Blue, hg.Color.Blue)
+                    Overlays.add_line(matrix * machine.bound_back, matrix * (machine.bound_back + hg.Vec3(0, 0, -1)), hg.Color.Blue, hg.Color.Blue)
+                    Overlays.add_line(matrix * machine.bound_up, matrix * (machine.bound_up + hg.Vec3(0, 1, 0)), hg.Color.Green, hg.Color.Green)
+                    Overlays.add_line(matrix * machine.bound_down, matrix * (machine.bound_down + hg.Vec3(0, -1, 0)), hg.Color.Green, hg.Color.Green)
+                    Overlays.add_line(matrix * machine.bound_right, matrix * (machine.bound_right + hg.Vec3(1, 0, 0)), hg.Color.Red, hg.Color.Red)
+                    Overlays.add_line(matrix * machine.bound_left, matrix * (machine.bound_left + hg.Vec3(-1, 0, 0)), hg.Color.Red, hg.Color.Red)
+                    Overlays.display_boxe(machine.get_world_bounding_boxe(), hg.Color.Yellow)
+
+    camera_noise_level = 0
+    if Main.user_aircraft is not None:
+
+        #if Main.user_aircraft.type == Destroyable_Machine.TYPE_AIRCRAFT:
+        #    acc = Main.user_aircraft.get_linear_acceleration()
+        #    camera_noise_level = max(0, Main.user_aircraft.get_linear_speed() * 3.6 / 2500 * 0.1 + pow(min(1, abs(acc / 7)), 2) * 1)
+        #    if Main.user_aircraft.post_combustion:
+        #        camera_noise_level += 0.1
+
+        if Main.player_view_mode == SmartCamera.TYPE_FIX:
+            cam = Main.camera_cokpit
+        else:
+            cam = Main.camera
+
+    else:
+        cam = Main.camera_fps
+
+    if Main.satellite_view:
+        cam = Main.satellite_camera
+
+    Main.smart_camera.update(cam, dts, camera_noise_level)
+
+    vcr.update(Main.scene, Main.simulation_dt)
+
+    if not Main.fading_to_next_state:
+        
+        if Main.keyboard.Pressed(hg.K_Tab) or vcr.request_state == "disable":
+            vcr.request_new_state("disable")
+            Main.post_process.setup_fading(1, -1)
+            Main.fading_to_next_state = True
+    else:
+        Main.post_process.update_fading(dts)
+        if Main.flag_sfx:
+            Main.master_sfx_volume = Main.post_process.fade_f
+        if not Main.post_process.fade_running:
+            Main.destroy_players()
+            init_menu_state()
+            return menu_state
+
+    return replay_state
 
 # =================================== END GAME =============================================
 
-def init_end_phase():
+def init_end_state():
+    vcr.request_new_state("disable")
     Main.set_renderless_mode(False)
     Main.flag_running = False
     Main.deactivate_cockpit_view()
@@ -422,15 +551,16 @@ def init_end_phase():
         if aircraft is None:
             aircraft = Main.players_allies[0]
 
-    Main.end_phase_following_aircraft = aircraft
+    Main.end_state_following_aircraft = aircraft
     Main.smart_camera.setup(SmartCamera.TYPE_FOLLOW, Main.camera, aircraft.get_parent_node())
     Main.scene.SetCurrentCamera(Main.camera)
     Main.flag_running = True
-    return update_end_phase
+    vcr.validate_requested_state()
+    return end_state
 
 
-def update_end_phase(dts):
-
+def end_state(dts):
+    
     Main.smart_camera.update(Main.camera, dts)
 
     Main.update_kinetics(dts)
@@ -443,12 +573,12 @@ def update_end_phase(dts):
         HUD_MissileTarget.display_selected_target(Main, Main.selected_aircraft)
 
     mission = Missions.get_current_mission()
-    mission.update_end_phase(Main, dts)
+    mission.end_state(Main, dts)
 
     if not Main.fading_to_next_state:
-        if Main.end_phase_following_aircraft.flag_destroyed or Main.end_phase_following_aircraft.wreck:
+        if Main.end_state_following_aircraft.flag_destroyed or Main.end_state_following_aircraft.wreck:
             Main.end_state_timer -= dts
-        if Main.keyboard.Pressed(hg.K_Tab) or Main.end_state_timer < 0 or Main.end_phase_following_aircraft.flag_landed:
+        if Main.keyboard.Pressed(hg.K_Tab) or Main.end_state_timer < 0 or Main.end_state_following_aircraft.flag_landed:
             Main.post_process.setup_fading(1, -1)
             Main.fading_to_next_state = True
     else:
@@ -458,7 +588,7 @@ def update_end_phase(dts):
         if not Main.post_process.fade_running:
             mission.reset()
             Main.destroy_players()
-            init_menu_phase()
-            return update_menu_phase
+            init_menu_state()
+            return menu_state
 
-    return update_end_phase
+    return end_state

@@ -564,6 +564,7 @@ class ControlDevice(MachineDevice):
     CM_MOUSE = "Mouse"
     CM_LOGITECH_EXTREME_3DPRO = "Logitech extreme 3DPro"
     CM_LOGITECH_ATTACK_3 = "Logitech Attack 3"
+    CM_NONE = "None"
 
     keyboard = None
     mouse = None

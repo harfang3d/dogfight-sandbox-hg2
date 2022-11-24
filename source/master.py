@@ -74,6 +74,7 @@ class Main:
 
     timestamp = 0  # Frame count.
     timestep = 1 / 60  # Frame dt
+    simulation_dt = 0 # dt in ns used by simulation (kinetics & renderer) 
 
     flag_network_mode = False
     flag_client_update_mode = False
@@ -128,8 +129,9 @@ class Main:
     current_state = None
     t = 0
     fading_to_next_state = False
+    next_state = "main" #Used to switch to replay state
     end_state_timer = 0
-    end_phase_following_aircraft = None
+    end_state_following_aircraft = None
 
     current_view = None
     camera = None
@@ -302,7 +304,7 @@ class Main:
         cls.camera_fps = cls.scene.GetNode("Camera_fps")
         cls.satellite_camera = cls.scene.GetNode("Camera_satellite")
         cls.smart_camera = SmartCamera(SmartCamera.TYPE_FOLLOW, cls.keyboard, cls.mouse)
-        #  Camera used in start phase :
+        #  Camera used in start state :
         cls.camera_intro = cls.scene.GetNode("Camera_intro")
 
         # Shadows setup
@@ -500,19 +502,19 @@ class Main:
             for j in range(md.num_slots):
                 missile_type = md.missiles_config[j]
                 if missile_type == Sidewinder.model_name:
-                    missile = Sidewinder(missile_type + machine.name + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
+                    missile = Sidewinder(machine.name + "." + missile_type + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
                 if missile_type == Meteor.model_name:
-                    missile = Meteor(missile_type + machine.name + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
+                    missile = Meteor(machine.name + "." + missile_type + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
                 if missile_type == Mica.model_name:
-                    missile = Mica(missile_type + machine.name + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
+                    missile = Mica(machine.name + "." + missile_type + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
                 if missile_type == AIM_SL.model_name:
-                    missile = AIM_SL(missile_type + machine.name + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
+                    missile = AIM_SL(machine.name + "." + missile_type + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
                 if missile_type == Karaoke.model_name:
-                    missile = Karaoke(missile_type + machine.name + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
+                    missile = Karaoke(machine.name + "." + missile_type + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
                 if missile_type == CFT.model_name:
-                    missile = CFT(missile_type + machine.name + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
+                    missile = CFT(machine.name + "." + missile_type + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
                 if missile_type == S400.model_name:
-                    missile = S400(missile_type + machine.name + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
+                    missile = S400(machine.name + "." + missile_type + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
 
                 md.fit_missile(missile, j)
                 missile.set_smoke_color(smoke_color)
@@ -1422,10 +1424,11 @@ class Main:
 
     @classmethod
     def update_inputs(cls):
-        if cls.flag_running:
-            cls.keyboard.Update()
-            cls.mouse.Update()
+        
+        cls.keyboard.Update()
+        cls.mouse.Update()
 
+        if cls.flag_running:
             if cls.gamepad is not None:
                 cls.gamepad.Update()
                 if cls.gamepad.IsConnected():
@@ -1473,52 +1476,67 @@ class Main:
             if cls.keyboard.Pressed(hg.K_F9):
                 cls.flag_display_recorder = not cls.flag_display_recorder
 
-            if cls.flag_gui:
-                hg.ImGuiBeginFrame(int(cls.resolution.x), int(cls.resolution.y), real_dt, hg.ReadMouse(), hg.ReadKeyboard())
-                cls.smart_camera.update_hovering_ImGui()
-                cls.gui()
-                cls.sea_render.gui(cls.scene.GetCurrentCamera().GetTransform().GetPos())
-                ParticlesEngine.gui()
+            if not cls.flag_renderless:
+                if cls.flag_gui or cls.flag_display_recorder:
+                    hg.ImGuiBeginFrame(int(cls.resolution.x), int(cls.resolution.y), real_dt, hg.ReadMouse(), hg.ReadKeyboard())
+                    cls.smart_camera.update_hovering_ImGui()
+                if cls.flag_gui:
+                    cls.gui()
+                    cls.sea_render.gui(cls.scene.GetCurrentCamera().GetTransform().GetPos())
+                    ParticlesEngine.gui()
+            else:
+                if cls.flag_display_recorder:
+                    hg.ImGuiBeginFrame(int(cls.resolution.x), int(cls.resolution.y), real_dt, hg.ReadMouse(), hg.ReadKeyboard())
 
             if cls.flag_display_fps:
                 cls.update_num_fps(hg.time_to_sec_f(real_dt))
                 #cls.texts_display_list.append({"text": "FPS %d" % (cls.num_fps), "font": cls.hud_font, "pos": hg.Vec2(0.001, 0.999), "size": 0.018, "color": hg.Color.Yellow})
                 Overlays.add_text2D("FPS %d" % (cls.num_fps), hg.Vec2(0.001, 0.999), 0.018, hg.Color.Yellow, cls.hud_font)
 
+            if cls.flag_display_recorder: # and cls.current_state.__name__ == "main_state":
+                if not vcr.is_init():
+                    vcr.init()
+                else:
+                    vcr.update_gui(cls.scene,cls.keyboard)
+                    
             # =========== State update:
             if cls.flag_renderless:
                 used_dt = forced_dt
-                simulation_dt = used_dt
+                Main.simulation_dt = used_dt
             else:
-                simulation_dt = used_dt
                 used_dt = min(forced_dt * 2, real_dt)
+                Main.simulation_dt = used_dt
             
             # Simulation_dt is timestep for dogfight kinetics:
-           
-            cls.current_state = cls.current_state(hg.time_to_sec_f(simulation_dt)) # Minimum frame rate security
+ 
+            cls.current_state = cls.current_state(hg.time_to_sec_f(Main.simulation_dt)) # Minimum frame rate security
             
             # Used_dt is timestep used for Harfang 3D:
             hg.SceneUpdateSystems(cls.scene, cls.clocks, used_dt, cls.scene_physics, used_dt, 1000)  # ,10,1000)
 
             # =========== Render scene visuals:
-            if not cls.flag_renderless:
+            
+            # Renderless
+            if cls.flag_renderless:
+                if cls.flag_display_recorder:
+                    hg.ImGuiEndFrame(255)
+                cls.update_renderless(forced_dt)
+            
+            # Render
+            else:
 
                 if cls.flag_vr:
                     cls.render_frame_vr()
                 else:
                     cls.render_frame()
 
-                if cls.flag_gui:
+                if cls.flag_gui or cls.flag_display_recorder:
                     hg.ImGuiEndFrame(255)
                 hg.Frame()
                 if cls.flag_vr:
                     hg.OpenVRSubmitFrame(cls.vr_left_fb, cls.vr_right_fb)
                 #hg.UpdateWindow(cls.win)
-
-            # =========== Renderless mode:
-            else:
-                cls.update_renderless(forced_dt)
-
+                
             cls.clear_display_lists()
 
         cls.flag_client_ask_update_scene = False
