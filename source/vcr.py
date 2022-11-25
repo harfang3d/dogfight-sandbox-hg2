@@ -60,7 +60,7 @@ def AddItem(item, params=[], name=None, container=None):
     name = dc.conform_string(name)
     #print("VCR - add item " + name)
     items[name] = {"i": item, "params": params, "container": container, "recording": True}
-    
+
     items_list.append(items[name])
     items_names.append(name)
     return items[name]
@@ -71,8 +71,7 @@ def clear_items():
     items = {}
     items_list = []
     items_names = []
-
-
+    
 def is_init():
     return flag_init
 
@@ -91,7 +90,7 @@ def init():
         table_users_exists = c.fetchone()
 
         c.execute('''CREATE TABLE IF NOT EXISTS users(id_user INTEGER PRIMARY KEY, name TEXT, info TEXT)''')
-        c.execute('''CREATE TABLE IF NOT EXISTS records(id_rec INTEGER PRIMARY KEY, name TEXT, max_clock FLOAT, fps INT, id_user INTEGER REFERENCES users, CONSTRAINT fk_users FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE)''')
+        c.execute('''CREATE TABLE IF NOT EXISTS records(id_rec INTEGER PRIMARY KEY, name TEXT, max_clock FLOAT, fps INT,scene_items TEXT, id_user INTEGER REFERENCES users, CONSTRAINT fk_users FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE)''')
         
         # add default user
         if table_users_exists is None:
@@ -101,6 +100,13 @@ def init():
 
     selected_record = 0
 
+def create_scene_items_list():
+    scene_items = []
+    for name, params in items.items():
+        item = params["i"]
+        if isinstance( item,Machines.Destroyable_Machine): 
+            scene_items.append(str(item.type) + ";" + item.model_name + ";" + name)
+    return scene_items
 
 def start_record(name_record):
     global recording, records, timer, current_id_rec, last_value_recorded
@@ -114,13 +120,15 @@ def start_record(name_record):
     last_value_recorded = {}
     timer = 0
 
+    scene_items = ":".join(create_scene_items_list())
+
     # add record
     c = conn.cursor()
     #c.execute(f'''SELECT id_rec FROM records WHERE id_user={current_id_user} AND name=\"{name_record}\"''')
     #r = c.fetchone()
     #if r is None:
     # insert the new record
-    c.execute(f'''INSERT INTO records(id_user, name, fps) VALUES ({current_id_user}, \"{name_record}\", {fps_record})''')
+    c.execute(f'''INSERT INTO records(id_user, name, fps, scene_items) VALUES ({current_id_user}, \"{name_record}\", {fps_record},\"{scene_items}\")''')
     c.execute(f'''SELECT id_rec FROM records WHERE id_user={current_id_user} AND name=\"{name_record}\"''')
     r = c.fetchone()
             
@@ -201,7 +209,7 @@ def update_recording(dt):
                         v = params["container"][item]
                     else:
                         v = item
-                elif p in "str":
+                elif p == "str":
                     v = item
                 else:
                     v = eval(p["save"])
@@ -246,7 +254,6 @@ def update_play(scene, dt):
         return hg.TransformationMat4(pos, rot)
     '''
     
-        
     c = conn.cursor()
 
     for name, params in items.items():

@@ -502,19 +502,19 @@ class Main:
             for j in range(md.num_slots):
                 missile_type = md.missiles_config[j]
                 if missile_type == Sidewinder.model_name:
-                    missile = Sidewinder(machine.name + "." + missile_type + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
+                    missile = Sidewinder(machine.name + "-" + missile_type + "-" + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
                 if missile_type == Meteor.model_name:
-                    missile = Meteor(machine.name + "." + missile_type + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
+                    missile = Meteor(machine.name + "-" + missile_type + "-" + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
                 if missile_type == Mica.model_name:
-                    missile = Mica(machine.name + "." + missile_type + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
+                    missile = Mica(machine.name + "-" + missile_type + "-" + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
                 if missile_type == AIM_SL.model_name:
-                    missile = AIM_SL(machine.name + "." + missile_type + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
+                    missile = AIM_SL(machine.name + "-" + missile_type + "-" + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
                 if missile_type == Karaoke.model_name:
-                    missile = Karaoke(machine.name + "." + missile_type + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
+                    missile = Karaoke(machine.name + "-" + missile_type + "-" + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
                 if missile_type == CFT.model_name:
-                    missile = CFT(machine.name + "." + missile_type + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
+                    missile = CFT(machine.name + "-" + missile_type + "-" + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
                 if missile_type == S400.model_name:
-                    missile = S400(machine.name + "." + missile_type + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
+                    missile = S400(machine.name + "-" + missile_type + "-" + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
 
                 md.fit_missile(missile, j)
                 missile.set_smoke_color(smoke_color)

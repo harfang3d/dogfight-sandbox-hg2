@@ -298,10 +298,9 @@ def init_main_state():
     HUD_Radar.setup_plots(Main.resolution, n_aircrafts, n_missiles, mission.allies_carriers + mission.ennemies_carriers, n_missile_launchers)
 
     # Setup recorder
-    vcr.clear_items
+    vcr.clear_items()
     for dm in Main.destroyables_list:
-        if dm.type == Machines.Destroyable_Machine.TYPE_AIRCRAFT \
-            or dm.type == Machines.Destroyable_Machine.TYPE_MISSILE:
+        if dm.type == Machines.Destroyable_Machine.TYPE_AIRCRAFT or dm.type == Machines.Destroyable_Machine.TYPE_MISSILE:
             vcr.AddItem(dm, ["machine_state"])
 
     Main.num_start_frames = 10
@@ -573,7 +572,7 @@ def end_state(dts):
         HUD_MissileTarget.display_selected_target(Main, Main.selected_aircraft)
 
     mission = Missions.get_current_mission()
-    mission.end_state(Main, dts)
+    mission.update_end_phase(Main, dts)
 
     if not Main.fading_to_next_state:
         if Main.end_state_following_aircraft.flag_destroyed or Main.end_state_following_aircraft.wreck:
