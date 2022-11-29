@@ -9,6 +9,7 @@ from datetime import datetime
 import data_converter as dc
 import sqlite3
 import Machines
+import MissileLauncherS400
 
 flag_init = False
 conn = None
@@ -38,12 +39,20 @@ selected_record = 0
 records = None
 last_value_recorded = {}
 
-items_words_list = ["world", "int", "float"]
+items_words_list = ["world", "int", "float", "machine_state"]
 
 fps_record = 60
 
 state = "disable"
 request_state = "disable"
+
+# Create recordable items from dogfight scene
+def setup_items(main):
+    clear_items()
+    machines_types = [Machines.Destroyable_Machine.TYPE_AIRCRAFT, Machines.Destroyable_Machine.TYPE_MISSILE,Machines.Destroyable_Machine.TYPE_MISSILE_LAUNCHER, Machines.Destroyable_Machine.TYPE_SHIP]
+    for dm in main.destroyables_list:
+        if dm.type in machines_types:
+            AddItem(dm, ["machine_state"], dm.name)
 
 #item: hg.Node
 #params: "world", "pos", "mat4", "enable", "float", "int", "bool", "str"
@@ -105,7 +114,7 @@ def create_scene_items_list():
     for name, params in items.items():
         item = params["i"]
         if isinstance( item,Machines.Destroyable_Machine): 
-            scene_items.append(str(item.type) + ";" + item.model_name + ";" + name)
+            scene_items.append(str(item.type) + ";" + item.model_name + ";" + str(item.nationality) + ";" + name)
     return scene_items
 
 def start_record(name_record):
@@ -182,7 +191,7 @@ def update_recording(dt):
         previous_timer = 0
 
     if timer - previous_timer > 1.0 / fps_record:
-        print(str(fps_record) + " " + str(timer))
+        #print(str(fps_record) + " " + str(timer))
         record = {}
         for name, params in items.items():
             if not params["recording"]:
@@ -221,14 +230,39 @@ def update_recording(dt):
         previous_timer = timer
     timer += hg.time_to_sec_f(dt)
 
+def create_scene(main, scene_items):
+    for scene_item in scene_items:
+        item_def = scene_item.split(";")
+        item_def[0] = int(item_def[0])
+        item_def[2] = int(item_def[2])
+        if item_def[0] == Machines.Destroyable_Machine.TYPE_AIRCRAFT:
+            main.create_aircraft(item_def[1], item_def[3], item_def[2])
+        elif item_def[0] == Machines.Destroyable_Machine.TYPE_MISSILE:
+            main.create_missile(item_def[1], item_def[3], item_def[2])
+        elif item_def[0] == Machines.Destroyable_Machine.TYPE_MISSILE_LAUNCHER:
+            main.create_missile_launcher(item_def[3], item_def[2])
+        elif item_def[0] == Machines.Destroyable_Machine.TYPE_SHIP:
+            main.create_aircraft_carrier(item_def[3], item_def[2])
+    main.init_playground()
+    setup_items(main)
 
-def start_play(scene):
+
+def start_play(main):
     global playing, timer
     
-    timer = 0
-    playing = True
+    c = conn.cursor()
+    c.execute(f"SELECT scene_items FROM records where id_rec={current_id_play} and id_user = {current_id_user};")
+    r = c.fetchone()
+    if r is not None:
+        scene_items = r["scene_items"].split(":")
+        if len(scene_items) > 0:
+            main.destroy_players()
+            create_scene(main, scene_items)
+            timer = 0
+            playing = True
 
-def stop_play(scene):
+
+def stop_play():
     global playing, pausing
     playing = False
     pausing = False
@@ -260,8 +294,8 @@ def update_play(scene, dt):
         item = params["i"]
         for p in params["params"]:
             n = f"{name}_{p}"
-            if p not in items_words_list:
-                n = f"{name}_{p['n']}"
+            #if p not in items_words_list:
+            #    n = f"{name}_{p['n']}"
             
             c.execute(f"SELECT v FROM {n} where id_rec={current_id_play} and c <= {timer} ORDER BY c DESC LIMIT 1;")
             r = c.fetchone()
@@ -269,6 +303,7 @@ def update_play(scene, dt):
                 v = r["v"]
                 if p == "machine_state":
                     deserialize_machine_state(item, v)
+                
                 elif p == "world":
                     item.GetTransform().SetWorld(dc.deserialize_mat4(v))
                 elif p == "mat4":
@@ -293,11 +328,11 @@ def update_play(scene, dt):
     if not pausing:
         timer += hg.time_to_sec_f(dt)
 
-    if timer > recorded_max_time:
+    if timer >= recorded_max_time:
         stop_play(scene)
 
 
-def update_gui_record(scene, keyboard):
+def update_gui_record():
     
     global selected_item_idx, recorded_max_time, timer, fps_record, current_id_play, selected_record, current_id_user, adding_user, user_name, user_info, recorded_fps, request_state
     
@@ -376,7 +411,7 @@ def update_gui_record(scene, keyboard):
                     stop_record()
     hg.ImGuiEnd()
 
-def update_gui_replay(scene, keyboard):
+def update_gui_replay(main, keyboard):
     
     global recorded_max_time, timer, fps_record, current_id_play, selected_record, current_id_user, adding_user, user_name, user_info, recorded_fps, request_state
     
@@ -385,6 +420,16 @@ def update_gui_replay(scene, keyboard):
             
             c = conn.cursor()
             
+            c.execute(f'''SELECT name, id_user FROM users''')
+            r = c.fetchall()
+            users = [(str(user[1]) +" - " + user[0]) for user in r]
+
+            current_id_user -= 1
+            f, current_id_user = hg.ImGuiCombo("Users", current_id_user, users)
+            if f:
+                selected_record = 0
+            current_id_user += 1
+
             c.execute(f'''SELECT name FROM records WHERE id_user={current_id_user}''')
             r = c.fetchall()
             r = [x for xs in r for x in xs]
@@ -407,7 +452,7 @@ def update_gui_replay(scene, keyboard):
                     hg.ImGuiText("Record infos: Duration: %.2f - FPS: %d" % (recorded_max_time, recorded_fps))
 
                 if hg.ImGuiButton("Start play"):
-                    start_play(scene)
+                    start_play(main)
             
             if hg.ImGuiButton("Exit replay mode"):
                 request_state = "disable"
@@ -428,7 +473,7 @@ def update_gui_replay(scene, keyboard):
                 if hg.ImGuiButton("Next frame >") or keyboard.Pressed(hg.K_Add):
                     timer += 1/recorded_fps
             if hg.ImGuiButton("Stop playing"):
-                stop_play(scene)
+                stop_play()
     hg.ImGuiEnd()
 
 def update_gui_wait_request():
@@ -460,14 +505,14 @@ def validate_requested_state():
     global state
     state = request_state
 
-def update_gui(scene,keyboard):
+def update_gui(main,keyboard):
 
     if state != request_state:
         update_gui_wait_request()
     elif state == "record":
-        update_gui_record(scene, keyboard)
+        update_gui_record()
     elif state == "replay":
-        update_gui_replay(scene, keyboard)
+        update_gui_replay(main, keyboard)
     elif state == "disable":
         update_gui_disable()
     
@@ -490,33 +535,46 @@ def before_quit_app():
 def serialize_machine_state(machine:Machines.Destroyable_Machine):
     if machine.type == Machines.Destroyable_Machine.TYPE_AIRCRAFT:
         return serialize_aircraft_state(machine)
-    if machine.type == Machines.Destroyable_Machine.TYPE_MISSILE:
+    elif machine.type == Machines.Destroyable_Machine.TYPE_MISSILE:
         return serialize_missile_state(machine)
+    elif machine.type == Machines.Destroyable_Machine.TYPE_MISSILE_LAUNCHER:
+       return serialize_missile_launcher_state(machine)
+    elif machine.type == Machines.Destroyable_Machine.TYPE_SHIP:
+       return serialize_ship_state(machine)
 
 def deserialize_machine_state(machine:Machines.Destroyable_Machine, s:str):
     if machine.type == Machines.Destroyable_Machine.TYPE_AIRCRAFT:
         deserialize_aircraft_state(machine, s)
-    if machine.type == Machines.Destroyable_Machine.TYPE_MISSILE:
+    elif machine.type == Machines.Destroyable_Machine.TYPE_MISSILE:
         deserialize_missile_state(machine, s)
+    elif machine.type == Machines.Destroyable_Machine.TYPE_SHIP:
+        deserialize_ship_state(machine, s)
+    
 
 def serialize_missile_state(machine:Machines.Missile):
-
     matrix = dc.serialize_mat4(machine.get_parent_node().GetTransform().GetWorld())
     v_move = dc.serialize_vec3(machine.get_move_vector())
     return matrix +":"+ v_move
 
 def serialize_aircraft_state(machine:Machines.Aircraft):
-
     matrix = dc.serialize_mat4(machine.get_parent_node().GetTransform().GetWorld())
     v_move = dc.serialize_vec3(machine.get_move_vector())
     health_lvl = str(machine.get_health_level())
     return matrix +":"+ v_move +":"+ health_lvl
 
+def serialize_missile_launcher_state(machine:MissileLauncherS400):
+    matrix = dc.serialize_mat4(machine.get_parent_node().GetTransform().GetWorld())
+    return matrix
+
+def serialize_ship_state(machine:Machines.Carrier):
+    matrix = dc.serialize_mat4(machine.get_parent_node().GetTransform().GetWorld())
+    return matrix
+
 def deserialize_aircraft_state(machine:Machines.Aircraft, s:str):
     f = s.split(":")
     matrix = dc.deserialize_mat4(f[0])
     v_move = dc.deserialize_vec3(f[1])
-    health_lvl = f[2]
+    health_lvl = float(f[2])
     machine.get_parent_node().GetTransform().SetWorld(matrix)
     machine.v_move = v_move
     machine.set_health_level(health_lvl)
@@ -528,81 +586,12 @@ def deserialize_missile_state(machine:Machines.Missile, s:str):
     machine.get_parent_node().GetTransform().SetWorld(matrix)
     machine.v_move = v_move
 
-    """
-    h_spd, v_spd = machine.get_world_speed()
+def deserialize_ship_state(machine:Machines.Carrier, s:str):
+    #f = s.split(":")
+    matrix = dc.deserialize_mat4(s)
+    machine.get_parent_node().GetTransform().SetWorld(matrix)
 
-	gear = machine.get_device("Gear")
-	apctrl = machine.get_device("AutopilotControlDevice")
-	iactrl = machine.get_device("IAControlDevice")
-	td = machine.get_device("TargettingDevice")
-
-	if gear is not None:
-		gear_activated = gear.activated
-	else:
-		gear_activated = False
-
-	if apctrl is not None:
-		autopilot_activated = apctrl.is_activated()
-		autopilot_heading = apctrl.autopilot_heading
-		autopilot_speed = apctrl.autopilot_speed
-		autopilot_altitude = apctrl.autopilot_altitude
-	else:
-		autopilot_activated = False
-		autopilot_heading = 0
-		autopilot_speed = 0
-		autopilot_altitude = 0
-
-	if iactrl is not None:
-		ia_activated = iactrl.is_activated()
-	else:
-		ia_activated = False
-
-	if td is not None:
-		target_id = td.get_target_name()
-		target_locked = td.target_locked
-	else:
-		target_id = "- ! No TargettingDevice ! -"
-		target_locked = False
-
-	position = machine.get_position()
-	rotation = machine.get_Euler()
-	v_move = machine.get_move_vector()
-	state = {
-		"timestamp": main.timestamp,
-		"timestep": main.timestep,
-		"position": [position.x, position.y, position.z],
-		"Euler_angles": [rotation.x, rotation.y, rotation.z],
-		"easy_steering": machine.flag_easy_steering,
-		"health_level": machine.health_level,
-		"destroyed": machine.flag_destroyed,
-		"wreck": machine.wreck,
-		"crashed": machine.flag_crashed,
-		"active": machine.activated,
-		"type": Destroyable_Machine.types_labels[machine.type],
-		"nationality": machine.nationality,
-		"thrust_level": machine.get_thrust_level(),
-		"brake_level": machine.get_brake_level(),
-		"flaps_level": machine.get_flaps_level(),
-		"horizontal_speed": h_spd,
-		"vertical_speed": v_spd,
-		"linear_speed": machine.get_linear_speed(),
-		"move_vector": [v_move.x, v_move.y, v_move.z],
-		"linear_acceleration": machine.get_linear_acceleration(),
-		"altitude": machine.get_altitude(),
-		"heading": machine.get_heading(),
-		"pitch_attitude": machine.get_pitch_attitude(),
-		"roll_attitude": machine.get_roll_attitude(),
-		"post_combustion": machine.post_combustion,
-		"user_pitch_level": machine.get_pilot_pitch_level(),
-		"user_roll_level": machine.get_pilot_roll_level(),
-		"user_yaw_level": machine.get_pilot_yaw_level(),
-		"gear": gear_activated,
-		"ia": ia_activated,
-		"autopilot": autopilot_activated,
-		"autopilot_heading": autopilot_heading,
-		"autopilot_speed": autopilot_speed,
-		"autopilot_altitude": autopilot_altitude,
-		"target_id": target_id,
-		"target_locked": target_locked
-	}
-    """
+def deserialize_missile_launcher_state(machine:MissileLauncherS400, s:str):
+    #f = s.split(":")
+    matrix = dc.deserialize_mat4(s)
+    machine.get_parent_node().GetTransform().SetWorld(matrix)

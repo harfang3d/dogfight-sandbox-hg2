@@ -164,10 +164,6 @@ class Main:
     background_color = 0x1070a0ff  # 0xb9efffff
 
     ennemyaircraft_nodes = None
-    num_players_ennemies = 0
-    num_players_allies = 0
-    num_missile_launchers_allies = 0
-    num_missile_launchers_ennemies = 0
     players_allies = []
     players_ennemies = []
     players_sfx = []
@@ -476,6 +472,17 @@ class Main:
 
         cls.scene_cockpit_aircrafts = []
 
+    @classmethod
+    def create_aircraft_carrier(cls, name, nationality):
+        carrier = Carrier(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality)
+        if carrier is not None:
+            if nationality == 1:
+                cls.aircraft_carrier_allies.append(carrier)
+            elif nationality == 2:
+                cls.aircraft_carrier_ennemies.append(carrier)
+            cls.destroyables_list.append(carrier)
+            carrier.add_to_update_list()
+
 
     @classmethod
     def create_aircraft_carriers(cls, num_allies, num_ennemies):
@@ -483,78 +490,109 @@ class Main:
         cls.aircraft_carrier_allies = []
         cls.aircraft_carrier_ennemies = []
         for i in range(num_allies):
-            carrier = Carrier("Ally_Carrier_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 1)
-            cls.aircraft_carrier_allies.append(carrier)
-            cls.destroyables_list.append(carrier)
-            carrier.add_to_update_list()
-
+            carrier = cls.create_aircraft_carrier("Ally_Carrier_" + str(i + 1), 1)
+            
         for i in range(num_ennemies):
-            carrier = Carrier("Ennemy_Carrier_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 2)
-            cls.aircraft_carrier_ennemies.append(carrier)
-            cls.destroyables_list.append(carrier)
-            carrier.add_to_update_list()
+            carrier = cls.create_aircraft_carrier("Ennemy_Carrier_" + str(i + 1), 2)
+
 
     @classmethod
-    def create_missiles(cls, machine:Destroyable_Machine, smoke_color):
+    def create_missile(cls, model_name, name, nationality):
+        if model_name == Sidewinder.model_name:
+            missile = Sidewinder(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality)
+        elif model_name == Meteor.model_name:
+            missile = Meteor(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality)
+        elif model_name == Mica.model_name:
+            missile = Mica(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality)
+        elif model_name == AIM_SL.model_name:
+            missile = AIM_SL(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality)
+        elif model_name == Karaoke.model_name:
+            missile = Karaoke(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality)
+        elif model_name == CFT.model_name:
+            missile = CFT(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality)
+        elif model_name == S400.model_name:
+            missile = S400(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality)
+        else:
+            missile = None
+        if missile is not None:
+            if nationality == 1:
+                cls.missiles_allies.append(missile)
+            elif nationality == 2:
+                cls.missiles_ennemies.append(missile)
+            cls.destroyables_list.append(missile)
+        return missile
+
+
+    @classmethod
+    def create_missiles_from_machine_config(cls, machine:Destroyable_Machine, smoke_color):
         md = machine.get_device("MissilesDevice")
         md.set_missiles_config(machine.missiles_config)
         if md is not None:
             for j in range(md.num_slots):
                 missile_type = md.missiles_config[j]
-                if missile_type == Sidewinder.model_name:
-                    missile = Sidewinder(machine.name + "-" + missile_type + "-" + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
-                if missile_type == Meteor.model_name:
-                    missile = Meteor(machine.name + "-" + missile_type + "-" + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
-                if missile_type == Mica.model_name:
-                    missile = Mica(machine.name + "-" + missile_type + "-" + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
-                if missile_type == AIM_SL.model_name:
-                    missile = AIM_SL(machine.name + "-" + missile_type + "-" + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
-                if missile_type == Karaoke.model_name:
-                    missile = Karaoke(machine.name + "-" + missile_type + "-" + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
-                if missile_type == CFT.model_name:
-                    missile = CFT(machine.name + "-" + missile_type + "-" + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
-                if missile_type == S400.model_name:
-                    missile = S400(machine.name + "-" + missile_type + "-" + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
-
+                missile = cls.create_missile(missile_type, machine.name + "-" + missile_type + "-" + str(j), machine.nationality)
                 md.fit_missile(missile, j)
                 missile.set_smoke_color(smoke_color)
             return md.missiles
         return None
 
     @classmethod
+    def create_missile_launcher(cls, name, nationality):
+        launcher = MissileLauncherS400(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
+        if launcher is not None:
+            if nationality == 1:
+                cls.missile_launchers_allies.append(launcher)
+            elif nationality == 2:
+                cls.missile_launchers_ennemies.append(launcher)
+            cls.destroyables_list.append(launcher)
+            launcher.add_to_update_list()
+        return launcher
+
+    @classmethod
     def create_missile_launchers(cls, num_allies, num_ennemies):
         cls.missile_launchers_allies = []
         cls.missile_launchers_ennemies = []
-        cls.num_missile_launchers_allies = num_allies
-        cls.num_missile_launchers_ennemies = num_ennemies
 
         for i in range(num_allies):
-            launcher = MissileLauncherS400("Ally_Missile_launcher_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 1, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            cls.missile_launchers_allies.append(launcher)
-            cls.destroyables_list.append(launcher)
-            launcher.add_to_update_list()
-
-            missiles = cls.create_missiles(launcher, cls.allies_missiles_smoke_color)
-            if missiles is not None:
-                cls.missiles_allies.append([] + missiles)
-                cls.destroyables_list += missiles
-
+            launcher = cls.create_missile_launcher("Ally_Missile_launcher_" + str(i + 1), 1)
+            missiles = cls.create_missiles_from_machine_config(launcher, cls.allies_missiles_smoke_color)
 
         for i in range(num_ennemies):
-            launcher = MissileLauncherS400("Ennemy_Missile_launcher_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 2, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            cls.missile_launchers_ennemies.append(launcher)
-            cls.destroyables_list.append(launcher)
-            launcher.add_to_update_list()
+            launcher = cls.create_missile_launcher("Ennemy_Missile_launcher_" + str(i + 1), 2)
+            missiles = cls.create_missiles_from_machine_config(launcher, cls.ennemies_missiles_smoke_color)
 
-            missiles = cls.create_missiles(launcher, cls.ennemies_missiles_smoke_color)
-            if missiles is not None:
-                cls.missiles_ennemies.append([] + missiles)
-                cls.destroyables_list += missiles
+
+    @classmethod
+    def create_aircraft(cls,model_name, name, nationality):
+        if model_name == F14_Parameters.model_name:
+            aircraft = F14(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
+        elif model_name == F14_2_Parameters.model_name:
+            aircraft = F14_2(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
+        elif model_name == Rafale_Parameters.model_name:
+            aircraft = Rafale(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
+        elif model_name == Eurofighter_Parameters.model_name:
+            aircraft = Eurofighter(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
+        elif model_name == F16_Parameters.model_name:
+            aircraft = F16(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
+        elif model_name == TFX_Parameters.model_name:
+            aircraft = TFX(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
+        elif model_name == Miuss_Parameters.model_name:
+            aircraft = Miuss(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
+        else:
+            aircraft = None
+        
+        if aircraft is not None:
+            cls.destroyables_list.append(aircraft)
+            aircraft.add_to_update_list()
+            if nationality == 1:
+                cls.players_allies.append(aircraft)
+            elif nationality == 2:
+                cls.players_ennemies.append(aircraft)
+        
+        return aircraft
 
     @classmethod
     def create_players(cls, allies_types, ennemies_types):
-        cls.num_players_allies = len(allies_types)
-        cls.num_players_ennemies = len(ennemies_types)
         cls.players_allies = []
         cls.players_ennemies = []
         cls.missiles_allies = []
@@ -562,61 +600,13 @@ class Main:
         cls.players_sfx = []
         cls.missiles_sfx = []
 
+        for i, model_name in enumerate(allies_types):
+            aircraft = cls.create_aircraft(model_name, "ally_" + str(i + 1), 1)
+            missiles = cls.create_missiles_from_machine_config(aircraft, cls.allies_missiles_smoke_color)
 
-        for i, a_type in enumerate(allies_types):
-
-            if a_type == F14_Parameters.model_name:
-                aircraft = F14("ally_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 1, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            elif a_type == F14_2_Parameters.model_name:
-                aircraft = F14_2("ally_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 1, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            elif a_type == Rafale_Parameters.model_name:
-                aircraft = Rafale("ally_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 1, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            elif a_type == Eurofighter_Parameters.model_name:
-                aircraft = Eurofighter("ally_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 1, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            elif a_type == F16_Parameters.model_name:
-                aircraft = F16("ally_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 1, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            elif a_type == TFX_Parameters.model_name:
-                aircraft = TFX("ally_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 1, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            elif a_type == Miuss_Parameters.model_name:
-                aircraft = Miuss("ally_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 1, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-
-            cls.destroyables_list.append(aircraft)
-            aircraft.add_to_update_list()
-
-            cls.players_allies.append(aircraft)
-
-            missiles = cls.create_missiles(aircraft, cls.allies_missiles_smoke_color)
-            if missiles is not None:
-                cls.missiles_allies.append([] + missiles)
-                cls.destroyables_list += missiles
-
-
-        for i, a_type in enumerate(ennemies_types):
-
-            if a_type == F14_Parameters.model_name:
-                aircraft = F14("ennemy_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 2, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            elif a_type == F14_2_Parameters.model_name:
-                aircraft = F14_2("ennemy_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 2, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            elif a_type == Rafale_Parameters.model_name:
-                aircraft = Rafale("ennemy_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 2, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            elif a_type == Eurofighter_Parameters.model_name:
-                aircraft = Eurofighter("ennemy_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 2, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            elif a_type == F16_Parameters.model_name:
-                aircraft = F16("ennemy_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 2, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            elif a_type == TFX_Parameters.model_name:
-                aircraft = TFX("ennemy_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 2, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            elif a_type == Miuss_Parameters.model_name:
-                aircraft = Miuss("ennemy_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 2, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-
-            aircraft.add_to_update_list()
-            cls.destroyables_list.append(aircraft)
-
-            cls.players_ennemies.append(aircraft)
-
-            missiles = cls.create_missiles(aircraft, cls.ennemies_missiles_smoke_color)
-            if missiles is not None:
-                cls.missiles_ennemies.append([] + missiles)
-                cls.destroyables_list += missiles
+        for i, model_name in enumerate(ennemies_types):
+            aircraft = cls.create_aircraft(model_name, "ennemy_" + str(i + 1), 2)
+            missiles = cls.create_missiles_from_machine_config(aircraft, cls.ennemies_missiles_smoke_color)
 
         if cls.flag_sfx:
             cls.setup_sfx()
@@ -658,30 +648,30 @@ class Main:
             td.set_destroyable_targets(cls.players_ennemies)
             pl.set_landing_targets(lt_allies)
             td.targets = cls.players_ennemies
-            if cls.num_players_ennemies > 0:
-                td.set_target_id(int(uniform(0, 1000) % cls.num_players_ennemies))
+            if len(cls.players_ennemies) > 0:
+                td.set_target_id(int(uniform(0, 1000) % len(cls.players_ennemies)))
 
         for i, pl in enumerate(cls.missile_launchers_allies):
             td = pl.get_device("TargettingDevice")
             td.set_destroyable_targets(cls.players_ennemies)
             td.targets = cls.players_ennemies
-            if cls.num_players_ennemies > 0:
-                td.set_target_id(int(uniform(0, 1000) % cls.num_players_ennemies))
+            if len(cls.players_ennemies) > 0:
+                td.set_target_id(int(uniform(0, 1000) % len(cls.players_ennemies)))
 
         for i, pl in enumerate(cls.players_ennemies):
             td = pl.get_device("TargettingDevice")
             td.set_destroyable_targets(cls.players_allies)
             pl.set_landing_targets(lt_ennemies)
             td.targets = cls.players_allies
-            if cls.num_players_allies > 0:
-                td.set_target_id(int(uniform(0, 1000) % cls.num_players_allies))
+            if len(cls.players_allies) > 0:
+                td.set_target_id(int(uniform(0, 1000) % len(cls.players_allies)))
 
         for i, pl in enumerate(cls.missile_launchers_ennemies):
             td = pl.get_device("TargettingDevice")
             td.set_destroyable_targets(cls.players_allies)
             td.targets = cls.players_allies
-            if cls.num_players_allies > 0:
-                td.set_target_id(int(uniform(0, 1000) % cls.num_players_allies))
+            if len(cls.players_allies) > 0:
+                td.set_target_id(int(uniform(0, 1000) % len(cls.players_allies)))
 
 
         cls.destroyables_items = {}
@@ -690,6 +680,13 @@ class Main:
 
         Destroyable_Machine.machines_list = cls.destroyables_list # !!! Move to Destroyable_Machine.__init__()
         Destroyable_Machine.machines_items = cls.destroyables_items # !!! Move to Destroyable_Machine.__init__()
+
+        # Setup HUD systems:
+        n_aircrafts = len(cls.players_allies) + len(cls.players_ennemies)
+        n_missile_launchers = len(cls.missile_launchers_allies) + len(cls.missile_launchers_ennemies)
+        n_missiles = len(cls.missiles_allies) + len(cls.missiles_ennemies)
+
+        HUD_Radar.setup_plots(cls.resolution, n_aircrafts, n_missiles, len(cls.aircraft_carrier_allies) + len(cls.aircraft_carrier_ennemies), n_missile_launchers)
 
     # ----------------- Views -------------------------------------------------------------------
     @classmethod
@@ -707,14 +704,14 @@ class Main:
             cls.camera_fps.GetTransform().SetWorld(fps_start_matrix)
 
         cls.views_carousel = ["fps"]
-        for i in range(cls.num_players_allies):
+        for i in range(len(cls.players_allies)):
             cls.views_carousel.append("Aircraft_ally_" + str(i + 1))
-        for i in range(cls.num_missile_launchers_allies):
+        for i in range(len(cls.missile_launchers_allies)):
             cls.views_carousel.append("MissileLauncher_ally_" + str(i + 1))
         if flag_include_enemies:
-            for i in range(cls.num_players_ennemies):
+            for i in range(len(cls.players_ennemies)):
                 cls.views_carousel.append("Aircraft_enemy_" + str(i + 1))
-            for i in range(cls.num_missile_launchers_ennemies):
+            for i in range(len(cls.missile_launchers_ennemies)):
                 cls.views_carousel.append("MissileLauncher_enemy_" + str(i + 1))
         cls.views_carousel_ptr = 1
 
@@ -1497,7 +1494,7 @@ class Main:
                 if not vcr.is_init():
                     vcr.init()
                 else:
-                    vcr.update_gui(cls.scene,cls.keyboard)
+                    vcr.update_gui(cls,cls.keyboard)
                     
             # =========== State update:
             if cls.flag_renderless:

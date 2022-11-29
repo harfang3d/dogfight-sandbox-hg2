@@ -287,8 +287,8 @@ def init_main_state():
 
     mission.setup_players(Main)
 
-    n_aircrafts = Main.num_players_allies + Main.num_players_ennemies
-    n_missile_launchers = Main.num_missile_launchers_allies + Main.num_missile_launchers_ennemies
+    n_aircrafts = len(Main.players_allies) + len(Main.players_ennemies)
+    n_missile_launchers = len(Main.missile_launchers_allies) + len(Main.missile_launchers_ennemies)
     n_missiles = 0
     for aircraft in Main.players_allies:
         n_missiles += aircraft.get_num_missiles_slots()
@@ -298,10 +298,7 @@ def init_main_state():
     HUD_Radar.setup_plots(Main.resolution, n_aircrafts, n_missiles, mission.allies_carriers + mission.ennemies_carriers, n_missile_launchers)
 
     # Setup recorder
-    vcr.clear_items()
-    for dm in Main.destroyables_list:
-        if dm.type == Machines.Destroyable_Machine.TYPE_AIRCRAFT or dm.type == Machines.Destroyable_Machine.TYPE_MISSILE:
-            vcr.AddItem(dm, ["machine_state"])
+    vcr.setup_items(Main)
 
     Main.num_start_frames = 10
     Main.timestamp = 0
