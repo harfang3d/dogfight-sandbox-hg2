@@ -1505,7 +1505,7 @@ class Main:
                 Main.simulation_dt = used_dt
             
             # Simulation_dt is timestep for dogfight kinetics:
- 
+
             cls.current_state = cls.current_state(hg.time_to_sec_f(Main.simulation_dt)) # Minimum frame rate security
             
             # Used_dt is timestep used for Harfang 3D:

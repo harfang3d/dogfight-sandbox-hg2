@@ -25,6 +25,8 @@ adding_user = False
 recording = False
 playing = False
 pausing= False
+updating_database = False
+progress_cptr = 0
 render_head = False
 timer = 0
 previous_timer = 0
@@ -38,6 +40,8 @@ selected_item_idx = 0
 selected_record = 0
 records = None
 last_value_recorded = {}
+
+task_record_in_database = None
 
 items_words_list = ["world", "int", "float", "machine_state"]
 
@@ -145,20 +149,16 @@ def start_record(name_record):
         current_id_rec = r["id_rec"]
     conn.commit()
     print(f"create record: {name_record}, {current_id_rec}")
-    
 
-def stop_record():
-    global recording
-    
-    # check if we are already stopped
-    if not recording:
-        return
-
-    recording = False
+# Coroutine
+def record_in_database():
+    global updating_database, progress_cptr
     c = conn.cursor()
 
     # save the current record
     # create db for items
+    print("Record items table if necessary")
+    i = 0
     for t, record in records.items():
         for name, value in record.items():
             if isinstance(value, str):
@@ -170,17 +170,36 @@ def stop_record():
             elif isinstance(value, float):
                 c.execute(f"CREATE TABLE IF NOT EXISTS {name}(id_rec INTEGER, c FLOAT, v FLOAT, PRIMARY KEY (id_rec, c), CONSTRAINT fk_record FOREIGN KEY (id_rec) REFERENCES records(id_rec) ON DELETE CASCADE) WITHOUT ROWID;")                
             #c.execute(f"DELETE FROM {name} WHERE id_rec={current_id_rec};")
-
+        progress_cptr = i / (2*len(records))
+        i+=1
+        if (i % fps_record) == 0:
+            yield
     # add value to items
     for t, record in records.items():
         for name, value in record.items():
             c.execute(f"INSERT INTO {name}(id_rec, c, v) VALUES ({current_id_rec}, {t}, \"{value}\");")
+        progress_cptr = i / (2*len(records))
+        i+=1
+        if (i % fps_record) == 0:
+            yield
     
-    print(str(current_id_rec))
     c.execute(f"UPDATE records SET max_clock={timer} WHERE id_rec={current_id_rec};")
-    print(str(current_id_rec))
     #c.execute(f"UPDATE records SET fps={fps_record} WHERE id_rec={current_id_rec};")
     conn.commit()
+    yield
+    updating_database = False
+
+def stop_record():
+    global recording, updating_database, task_record_in_database
+    
+    # check if we are already stopped
+    if not recording:
+        return
+    recording = False
+    task_record_in_database = record_in_database()
+    progress_cptr = 0
+
+    updating_database = True
 
 
 def update_recording(dt):
@@ -244,6 +263,9 @@ def create_scene(main, scene_items):
         elif item_def[0] == Machines.Destroyable_Machine.TYPE_SHIP:
             main.create_aircraft_carrier(item_def[3], item_def[2])
     main.init_playground()
+    main.user_aircraft = None
+    main.setup_views_carousel(True)
+    main.set_view_carousel("fps")
     setup_items(main)
 
 
@@ -329,7 +351,7 @@ def update_play(scene, dt):
         timer += hg.time_to_sec_f(dt)
 
     if timer >= recorded_max_time:
-        stop_play(scene)
+        stop_play()
 
 
 def update_gui_record():
@@ -489,15 +511,30 @@ def update_gui_disable():
         
         if hg.ImGuiButton("Enter replay mode"):
             request_state = "replay"
-
     hg.ImGuiEnd()
 
+def update_gui_updating_database():
+    if hg.ImGuiBegin("Dogfight - Recorder"):
+        hg.ImGuiText("... Wait while writing in database ...")
+        hg.ImGuiProgressBar(progress_cptr)
+    hg.ImGuiEnd()
 
 # Call this to lock recorder:
 
 def request_new_state(req_state):
     global request_state
     request_state = req_state
+    if req_state == "disable":
+        if recording:
+            stop_record()
+        elif playing:
+            stop_play()
+    elif req_state == "record":
+        if playing:
+            stop_play()
+    elif req_state =="replay":
+        if recording:
+            stop_record()
 
 # Call this when the scene to record/replay is ready:
 
@@ -510,7 +547,10 @@ def update_gui(main,keyboard):
     if state != request_state:
         update_gui_wait_request()
     elif state == "record":
-        update_gui_record()
+        if updating_database:
+            update_gui_updating_database()
+        else:
+            update_gui_record()
     elif state == "replay":
         update_gui_replay(main, keyboard)
     elif state == "disable":
@@ -518,10 +558,16 @@ def update_gui(main,keyboard):
     
 
 def update(scene, dt):
+    global updating_database
     if recording:
         update_recording(dt)
     elif playing:
         update_play(scene, dt)
+    elif updating_database:
+        try:
+            next(task_record_in_database)
+        except StopIteration as stop:
+            updating_database = False
 
 
 def before_quit_app():

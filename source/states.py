@@ -13,6 +13,7 @@ def init_menu_state():
     Main.flag_running = False
     
     vcr.request_new_state("disable")
+    Main.smart_camera.flag_inertia = True
     
     Main.set_renderless_mode(False)
     Main.flag_network_mode = False
@@ -275,6 +276,7 @@ def menu_state(dts):
 # =================================== IN GAME =============================================
 
 def init_main_state():
+    Main.smart_camera.flag_inertia = True
     vcr.request_new_state("record")
     Main.flag_running = False
     Main.fading_to_next_state = False
@@ -416,6 +418,7 @@ def main_state(dts):
 # =================================== REPLAY MODE =============================================
 
 def init_replay_state():
+    Main.smart_camera.flag_inertia = False
     Main.set_renderless_mode(False)
     Main.flag_running = False
     Main.fading_to_next_state = False
@@ -486,9 +489,9 @@ def replay_state(dts):
     if Main.satellite_view:
         cam = Main.satellite_camera
 
-    Main.smart_camera.update(cam, dts, camera_noise_level)
 
     vcr.update(Main.scene, Main.simulation_dt)
+    Main.smart_camera.update(cam, dts, camera_noise_level)
 
     if not Main.fading_to_next_state:
         
@@ -510,6 +513,7 @@ def replay_state(dts):
 # =================================== END GAME =============================================
 
 def init_end_state():
+    Main.smart_camera.flag_inertia = True
     vcr.request_new_state("disable")
     Main.set_renderless_mode(False)
     Main.flag_running = False
