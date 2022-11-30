@@ -217,7 +217,7 @@ class Main:
 
     #======= Aircrafts view:
     selected_aircraft_id = 0
-    selected_aircraft = None
+    selected_machine = None
 
     @classmethod
     def init(cls):
@@ -441,6 +441,17 @@ class Main:
         for ne in cls.nfps:
             cls.num_fps += ne
         cls.num_fps = cls.num_fps / len(cls.nfps)
+
+    @classmethod
+    def clear_scene(cls):
+        cls.selected_machine = None
+        cls.user_aircraft = None
+        cls.set_view_carousel("fps")
+        cls.destroy_players()
+        cls.destroy_sfx()
+        ParticlesEngine.reset_engines()
+        Destroyable_Machine.reset_machines()
+        cls.setup_views_carousel(False)
 
     @classmethod
     def destroy_players(cls):
@@ -1062,22 +1073,26 @@ class Main:
             d, f = hg.ImGuiCheckbox("Display selected aircraft", cls.flag_display_selected_aircraft)
             if d: cls.flag_display_selected_aircraft = f
 
-            aircrafts_list = hg.StringList()
+            if len(aircrafts) > 0:
+                aircrafts_list = hg.StringList()
 
-            for aircraft in aircrafts:
-                nm = aircraft.name
-                if aircraft == cls.user_aircraft:
-                    nm += " - USER -"
-                aircrafts_list.push_back(nm)
+                for aircraft in aircrafts:
+                    nm = aircraft.name
+                    if aircraft == cls.user_aircraft:
+                        nm += " - USER -"
+                    aircrafts_list.push_back(nm)
 
-            f, d = hg.ImGuiListBox("Aircrafts", cls.selected_aircraft_id, aircrafts_list,20)
-            if f:
-                cls.selected_aircraft_id = d
+                f, d = hg.ImGuiListBox("Aircrafts", cls.selected_aircraft_id, aircrafts_list,20)
+                if f:
+                    cls.selected_aircraft_id = d
 
         hg.ImGuiEnd()
 
-        cls.selected_aircraft = aircrafts[cls.selected_aircraft_id]
-        cls.selected_aircraft.gui()
+        if len(aircrafts) > 0: 
+            cls.selected_machine = aircrafts[cls.selected_aircraft_id]
+            cls.selected_machine.gui()
+        else:
+            cls.selected_machine = None
 
 
     @classmethod
@@ -1507,6 +1522,7 @@ class Main:
             # Simulation_dt is timestep for dogfight kinetics:
 
             cls.current_state = cls.current_state(hg.time_to_sec_f(Main.simulation_dt)) # Minimum frame rate security
+            
             
             # Used_dt is timestep used for Harfang 3D:
             hg.SceneUpdateSystems(cls.scene, cls.clocks, used_dt, cls.scene_physics, used_dt, 1000)  # ,10,1000)

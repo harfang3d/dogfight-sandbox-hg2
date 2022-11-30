@@ -197,12 +197,10 @@ def stop_record():
         return
     recording = False
     task_record_in_database = record_in_database()
-    progress_cptr = 0
-
     updating_database = True
 
 
-def update_recording(dt):
+def update_recording(main, dt):
     global records, timer, previous_timer, last_value_recorded
     if records is None:
         records = {}
@@ -284,17 +282,19 @@ def start_play(main):
             playing = True
 
 
-def stop_play():
+def stop_play(main):
     global playing, pausing
     playing = False
     pausing = False
+    clear_items()
+    main.clear_scene()
 
 def pause_play():
     global pausing
     pausing = not pausing
 
 
-def update_play(scene, dt):
+def update_play(main, dt):
     global timer, playing
     
     '''
@@ -351,7 +351,9 @@ def update_play(scene, dt):
         timer += hg.time_to_sec_f(dt)
 
     if timer >= recorded_max_time:
-        stop_play()
+        timer = recorded_max_time
+        if not pausing:
+            pause_play()
 
 
 def update_gui_record():
@@ -435,7 +437,7 @@ def update_gui_record():
 
 def update_gui_replay(main, keyboard):
     
-    global recorded_max_time, timer, fps_record, current_id_play, selected_record, current_id_user, adding_user, user_name, user_info, recorded_fps, request_state
+    global selected_item_idx, recorded_max_time, timer, fps_record, current_id_play, selected_record, current_id_user, adding_user, user_name, user_info, recorded_fps, request_state
     
     if hg.ImGuiBegin("Dogfight - Replayer"):
         if not playing:
@@ -495,7 +497,21 @@ def update_gui_replay(main, keyboard):
                 if hg.ImGuiButton("Next frame >") or keyboard.Pressed(hg.K_Add):
                     timer += 1/recorded_fps
             if hg.ImGuiButton("Stop playing"):
-                stop_play()
+                stop_play(main)
+        
+        # Items list:
+        d, f = hg.ImGuiCheckbox("Display selected item", main.flag_display_selected_aircraft)
+        if d: 
+            main.flag_display_selected_aircraft = f
+        if len(items_list) > 0:
+            f, d = hg.ImGuiListBox("Items", selected_item_idx, items_names,20)
+            if f:
+                selected_item_idx = d
+            if main.flag_display_selected_aircraft:
+                main.selected_machine = items[items_names[selected_item_idx]]["i"]
+        else:
+            main.selected_machine = None
+    
     hg.ImGuiEnd()
 
 def update_gui_wait_request():
@@ -521,17 +537,18 @@ def update_gui_updating_database():
 
 # Call this to lock recorder:
 
-def request_new_state(req_state):
+def request_new_state(main, req_state):
     global request_state
     request_state = req_state
+    clear_items()
     if req_state == "disable":
         if recording:
             stop_record()
         elif playing:
-            stop_play()
+            stop_play(main)
     elif req_state == "record":
         if playing:
-            stop_play()
+            stop_play(main)
     elif req_state =="replay":
         if recording:
             stop_record()
@@ -542,33 +559,33 @@ def validate_requested_state():
     global state
     state = request_state
 
+
 def update_gui(main,keyboard):
 
-    if state != request_state:
+    if updating_database:
+        update_gui_updating_database()
+    elif state != request_state:
         update_gui_wait_request()
     elif state == "record":
-        if updating_database:
-            update_gui_updating_database()
-        else:
-            update_gui_record()
+        update_gui_record()
     elif state == "replay":
         update_gui_replay(main, keyboard)
     elif state == "disable":
         update_gui_disable()
     
 
-def update(scene, dt):
+def update(main, dt):
     global updating_database
-    if recording:
-        update_recording(dt)
-    elif playing:
-        update_play(scene, dt)
-    elif updating_database:
+    if updating_database:
         try:
             next(task_record_in_database)
         except StopIteration as stop:
             updating_database = False
-
+    elif recording:
+        update_recording(main, dt)
+    elif playing:
+        update_play(main, dt)
+    
 
 def before_quit_app():
     global conn
