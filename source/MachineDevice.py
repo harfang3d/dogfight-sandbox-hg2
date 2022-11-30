@@ -334,10 +334,10 @@ class MissilesDevice(MachineDevice):
         self.flag_hide_fitted_missiles = False
 
     def destroy(self):
-        if self.missiles is not None:
-            for missile in self.missiles:
-                if missile is not None:
-                    missile.destroy()
+        #if self.missiles is not None:
+        #    for missile in self.missiles:
+        #        if missile is not None:
+        #            missile.destroy()
         self.missiles = None
         self.num_slots = 0
         self.slots_nodes = None

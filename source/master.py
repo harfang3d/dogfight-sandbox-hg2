@@ -455,6 +455,7 @@ class Main:
 
     @classmethod
     def destroy_players(cls):
+        """
         for aircraft in cls.players_ennemies:
             aircraft.destroy()
         for aircraft in cls.players_allies:
@@ -467,6 +468,9 @@ class Main:
             ml.destroy()
         for ml in cls.missile_launchers_allies:
             ml.destroy()
+        """
+        for machine in cls.destroyables_list:
+            machine.destroy()
 
         for cockpit in cls.scene_cockpit_aircrafts:
             cockpit.destroy()
