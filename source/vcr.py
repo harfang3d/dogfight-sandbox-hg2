@@ -69,6 +69,7 @@ def AddItem(item, params=[], name=None, container=None):
         name = item
     elif isinstance(item, Machines.Destroyable_Machine) and name is None:
         name = item.name
+        item.name = dc.conform_string(name) # !!! This could change the machine name in the scene !!! Need valid machine name to keep right links references (targets, missiles parents....)
 
     name = dc.conform_string(name)
     #print("VCR - add item " + name)
@@ -356,7 +357,7 @@ def update_play(main, dt):
             pause_play()
 
 
-def update_gui_record():
+def update_gui_record(main):
     
     global selected_item_idx, recorded_max_time, timer, fps_record, current_id_play, selected_record, current_id_user, adding_user, user_name, user_info, recorded_fps, request_state
     
@@ -427,8 +428,8 @@ def update_gui_record():
                         recorded_fps = r["fps"]
                         hg.ImGuiText("Record infos: Duration: %.2f - FPS: %d" % (recorded_max_time, recorded_fps))
 
-                    if hg.ImGuiButton("Enter replay mode"):
-                        request_state = "replay"
+                if hg.ImGuiButton("Enter replay mode"):
+                    request_new_state(main, "replay")
 
             elif recording:
                 if hg.ImGuiButton("Stop recording"):
@@ -567,7 +568,7 @@ def update_gui(main,keyboard):
     elif state != request_state:
         update_gui_wait_request()
     elif state == "record":
-        update_gui_record()
+        update_gui_record(main)
     elif state == "replay":
         update_gui_replay(main, keyboard)
     elif state == "disable":
@@ -617,44 +618,69 @@ def deserialize_machine_state(machine:Machines.Destroyable_Machine, s:str):
 def serialize_missile_state(machine:Machines.Missile):
     matrix = dc.serialize_mat4(machine.get_parent_node().GetTransform().GetWorld())
     v_move = dc.serialize_vec3(machine.get_move_vector())
-    return matrix +":"+ v_move
+    wreck = dc.serialize_boolean(machine.wreck)
+    return matrix + ":" + v_move + ":" + wreck
 
 def serialize_aircraft_state(machine:Machines.Aircraft):
     matrix = dc.serialize_mat4(machine.get_parent_node().GetTransform().GetWorld())
     v_move = dc.serialize_vec3(machine.get_move_vector())
     health_lvl = str(machine.get_health_level())
-    return matrix +":"+ v_move +":"+ health_lvl
+    wreck = dc.serialize_boolean(machine.wreck)
+    brake_level = str(machine.get_brake_level())
+    flaps_level = str(machine.get_flaps_level())
+    landed = dc.serialize_boolean(machine.flag_landed)
+    td = machine.get_device("TargettingDevice")
+    if td is not None:
+        target_name = td.get_target_name()
+    else:
+        target_name = None
+    if target_name is None:
+        target_name = str(target_name)
+    return matrix +":"+ v_move +":"+ health_lvl + ":" + wreck + ":" + brake_level + ":" + flaps_level + ":" + landed + ":" + target_name
+
+
 
 def serialize_missile_launcher_state(machine:MissileLauncherS400):
     matrix = dc.serialize_mat4(machine.get_parent_node().GetTransform().GetWorld())
-    return matrix
+    wreck = dc.serialize_boolean(machine.wreck)
+    return matrix + ":" + wreck
 
 def serialize_ship_state(machine:Machines.Carrier):
     matrix = dc.serialize_mat4(machine.get_parent_node().GetTransform().GetWorld())
-    return matrix
+    wreck = dc.serialize_boolean(machine.wreck)
+    return matrix + ":" + wreck
+
 
 def deserialize_aircraft_state(machine:Machines.Aircraft, s:str):
     f = s.split(":")
     matrix = dc.deserialize_mat4(f[0])
-    v_move = dc.deserialize_vec3(f[1])
+    machine.v_move = dc.deserialize_vec3(f[1])
+    machine.wreck = bool(f[3])
     health_lvl = float(f[2])
     machine.get_parent_node().GetTransform().SetWorld(matrix)
-    machine.v_move = v_move
     machine.set_health_level(health_lvl)
+    machine.reset_brake_level(float(f[4]))
+    machine.reset_flaps_level(float(f[5]))
+    machine.flag_landed = bool(f[6])
+    td = machine.get_device("TargettingDevice")
+    if td is not None:
+        td.set_target_by_name(f[7])
 
 def deserialize_missile_state(machine:Machines.Missile, s:str):
     f = s.split(":")
     matrix = dc.deserialize_mat4(f[0])
-    v_move = dc.deserialize_vec3(f[1])
+    machine.v_move = dc.deserialize_vec3(f[1])
+    machine.wreck = bool(f[2])
     machine.get_parent_node().GetTransform().SetWorld(matrix)
-    machine.v_move = v_move
 
 def deserialize_ship_state(machine:Machines.Carrier, s:str):
-    #f = s.split(":")
-    matrix = dc.deserialize_mat4(s)
+    f = s.split(":")
+    machine.wreck = bool(f[1])
+    matrix = dc.deserialize_mat4(f[0])
     machine.get_parent_node().GetTransform().SetWorld(matrix)
 
 def deserialize_missile_launcher_state(machine:MissileLauncherS400, s:str):
-    #f = s.split(":")
-    matrix = dc.deserialize_mat4(s)
+    f = s.split(":")
+    machine.wreck = bool(f[1])
+    matrix = dc.deserialize_mat4(f[0])
     machine.get_parent_node().GetTransform().SetWorld(matrix)

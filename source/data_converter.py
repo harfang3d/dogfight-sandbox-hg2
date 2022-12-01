@@ -69,6 +69,10 @@ def serialize_vec3(v):
 	return "{0:.6f};{1:.6f};{2:.6f}".format(
 		v.x, v.y, v.z)
 
+# bool("any_string") returns True
+# bool("") (empty string) returns False
+def serialize_boolean(v:bool):
+    return "1" if v else ""
 
 def deserialize_vec3(s):
 	f = s.split(";")

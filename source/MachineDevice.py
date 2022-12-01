@@ -231,6 +231,11 @@ class TargettingDevice(MachineDevice):
             if target.wreck or not target.activated:
                 self.next_target()
 
+    def get_target_name(self):
+        if self.target_id == 0:
+            return None
+        return self.targets[self.target_id-1].name
+
     def set_target_by_name(self, target_name):
         tid = 0
         for i, tgt in enumerate(self.targets):

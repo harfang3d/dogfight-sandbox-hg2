@@ -524,7 +524,6 @@ def replay_state(dts):
 def init_end_state():
     Main.flag_display_selected_aircraft = False
     Main.smart_camera.flag_inertia = True
-    vcr.request_new_state(Main, "disable")
     Main.set_renderless_mode(False)
     Main.flag_running = False
     Main.deactivate_cockpit_view()
@@ -565,7 +564,6 @@ def init_end_state():
     Main.smart_camera.setup(SmartCamera.TYPE_FOLLOW, Main.camera, aircraft.get_parent_node())
     Main.scene.SetCurrentCamera(Main.camera)
     Main.flag_running = True
-    vcr.validate_requested_state()
     return end_state
 
 
