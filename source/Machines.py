@@ -50,6 +50,9 @@ class Collisions_Object(MachineDevice):
             for ndt in self.collision_nodes:
                 if nd == ndt: return True
         return False
+    
+    def hit(self, value, position):
+        pass
 
 
 # =====================================================================================================
@@ -341,6 +344,9 @@ class Destroyable_Machine(AnimatedModel):
 
         self.flag_focus = False
 
+        self.flag_record_hits = False # Used by recorder. When machine is hitted, the event is recorded with hit damages level
+        self.hits = []
+
         self.playfield_distance = 0
 
         self.commands.update({"SET_HEALTH_LEVEL": self.set_health_level})
@@ -453,6 +459,7 @@ class Destroyable_Machine(AnimatedModel):
 
     def reset(self, position=None, rotation=None):
         AnimatedModel.reset(self)
+        self.hits = []
         if position is not None:
             self.start_position = position
         if rotation is not None:
@@ -485,8 +492,11 @@ class Destroyable_Machine(AnimatedModel):
         self.mat_view_prec = self.mat_view
         self.mat_view = cam_mat_view * self.parent_node.GetTransform().GetWorld()
 
-    def hit(self, value):
-        self.set_health_level(self.health_level - value)
+    def hit(self, value, position, timestamp = 0):
+        if not self.wreck:
+            self.set_health_level(self.health_level - value)
+            if self.flag_record_hits:
+                self.hits.append([timestamp, value, position]) # ??? position or hg.Vec3(position) ???
 
     def destroy_nodes(self):
         AnimatedModel.destroy_nodes(self)
@@ -970,6 +980,7 @@ class Missile(Destroyable_Machine):
 
         # Don't call parent's function, World Matrix mustn't be reseted !
         #Destroyable_Machine.reset(self, position, rotation)
+        self.hits = []
 
         if position is not None:
             self.start_position = position
@@ -1149,7 +1160,7 @@ class Missile(Destroyable_Machine):
                                 collision_object = Collisions_Object.get_object_by_collision_node(hit.node)
                                 if collision_object is not None and hasattr(collision_object, "nationality") and collision_object.nationality != self.nationality:
                                     self.start_explosion()
-                                    collision_object.hit(self.get_hit_damages())
+                                    collision_object.hit(self.get_hit_damages(), hit.P)
 
         #debug:
         if self.flag_user_control:
@@ -1449,9 +1460,9 @@ class Aircraft(Destroyable_Machine):
 
         self.flag_landed = self.start_landed
 
-    def hit(self, value):
+    def hit(self, value, position):
+        Destroyable_Machine.hit(self, value, position)
         if not self.wreck:
-            self.set_health_level(self.health_level - value)
             if self.health_level == 0 and not self.wreck:
                 self.start_explosion()
             ia_ctrl = self.get_device("IAControlDevice")
@@ -1535,7 +1546,7 @@ class Aircraft(Destroyable_Machine):
             f = pow((alt - self.max_safe_altitude) / (self.max_altitude - self.max_safe_altitude), 2)
             perturb = (self.thrust_disfunction_noise.temporal_Perlin_noise(dts) * 0.5 + 0.5) * f
             collapse = 1 - perturb
-            self.hit(self.thrust_level * 0.001 * perturb)
+            self.hit(self.thrust_level * 0.001 * perturb, self.parent_node.GetTransform().GetPos())
 
         dest = self.thrust_level_dest * collapse
 
@@ -1855,7 +1866,7 @@ class Aircraft(Destroyable_Machine):
                     hit = collision["hits"][0]
                     machine = self.get_machine_by_node(hit.node)
                     if machine is not None and machine.type != Destroyable_Machine.TYPE_SHIP and machine.type != Destroyable_Machine.TYPE_GROUND:
-                        self.hit(1)
+                        self.hit(1, hit.P)
                     else:
                         self.ground_node_collision = hit.node
                         alt = hit.P.y + bottom_alt
@@ -1894,7 +1905,7 @@ class Aircraft(Destroyable_Machine):
         return hg.TransformationMat4(pos, rot)
 
     def crash(self):
-        self.hit(1)
+        self.hit(1, self.parent_node.GetTransform().GetPos())
         self.flag_crashed = True
         self.set_thrust_level(0)
         ia_ctrl = self.get_device("IAControlDevice")
@@ -2373,7 +2384,7 @@ class Carrier(Destroyable_Machine):
             self.destroy_nodes()
             self.flag_destroyed = True
 
-    def hit(self, value):
+    def hit(self, value, position):
         pass
 
     def update_kinetics(self, dts):
