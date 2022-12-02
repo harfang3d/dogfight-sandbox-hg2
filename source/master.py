@@ -73,6 +73,8 @@ class Main:
     win = None
 
     timestamp = 0  # Frame count.
+    timer = 0 # clock in s (incremented at each frame)
+
     timestep = 1 / 60  # Frame dt
     simulation_dt = 0 # dt in ns used by simulation (kinetics & renderer) 
 
@@ -1462,6 +1464,16 @@ class Main:
                     cls.flag_generic_controller = False
             else:
                 cls.flag_generic_controller = False
+
+    @classmethod
+    def reset_timestamp(cls):
+        cls.timestamp = 0
+        cls.timer = 0
+
+    @classmethod
+    def update_timestamp(cls, dts):
+        cls.timestamp += 1
+        cls.timer += dts
 
     @classmethod
     def client_update(cls):

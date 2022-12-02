@@ -30,6 +30,7 @@ progress_cptr = 0
 render_head = False
 timer = 0
 previous_timer = 0
+recorded_min_time = 0
 recorded_max_time = 0
 recorded_fps = 60
 
@@ -104,7 +105,7 @@ def init():
         table_users_exists = c.fetchone()
 
         c.execute('''CREATE TABLE IF NOT EXISTS users(id_user INTEGER PRIMARY KEY, name TEXT, info TEXT)''')
-        c.execute('''CREATE TABLE IF NOT EXISTS records(id_rec INTEGER PRIMARY KEY, name TEXT, max_clock FLOAT, fps INT,scene_items TEXT, id_user INTEGER REFERENCES users, CONSTRAINT fk_users FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE)''')
+        c.execute('''CREATE TABLE IF NOT EXISTS records(id_rec INTEGER PRIMARY KEY, name TEXT, min_clock FLOAT, max_clock FLOAT, fps INT,scene_items TEXT, id_user INTEGER REFERENCES users, CONSTRAINT fk_users FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE)''')
         
         # add default user
         if table_users_exists is None:
@@ -123,7 +124,7 @@ def create_scene_items_list():
     return scene_items
 
 def start_record(name_record):
-    global recording, records, timer, current_id_rec, last_value_recorded
+    global recording, records, current_id_rec, last_value_recorded
     
     # check if we are already start
     if recording:
@@ -132,7 +133,6 @@ def start_record(name_record):
     recording = True
     records = None
     last_value_recorded = {}
-    timer = 0
 
     scene_items = ":".join(create_scene_items_list())
 
@@ -183,8 +183,8 @@ def record_in_database():
         i+=1
         if (i % fps_record) == 0:
             yield
-    
-    c.execute(f"UPDATE records SET max_clock={timer} WHERE id_rec={current_id_rec};")
+
+    c.execute(f"UPDATE records SET max_clock={timer}, min_clock={recorded_min_time}  WHERE id_rec={current_id_rec};")
     #c.execute(f"UPDATE records SET fps={fps_record} WHERE id_rec={current_id_rec};")
     conn.commit()
     yield
@@ -202,12 +202,12 @@ def stop_record():
 
 
 def update_recording(main, dt):
-    global records, timer, previous_timer, last_value_recorded
+    global records, timer, previous_timer, last_value_recorded, recorded_min_time
     if records is None:
         records = {}
-        timer = 0
-        previous_timer = 0
+        previous_timer = main.timer
 
+    timer = main.timer
     if timer - previous_timer > 1.0 / fps_record:
         #print(str(fps_record) + " " + str(timer))
         record = {}
@@ -244,9 +244,12 @@ def update_recording(main, dt):
                 if n not in last_value_recorded or (n in last_value_recorded and v != last_value_recorded[n]):
                     last_value_recorded[n] = record[n] = v
 
+        if len(records) == 0:
+            recorded_min_time = timer
         records[timer] = record
         previous_timer = timer
-    timer += hg.time_to_sec_f(dt)
+    
+    #timer += hg.time_to_sec_f(dt)
 
 def create_scene(main, scene_items):
     for scene_item in scene_items:
@@ -272,6 +275,8 @@ def start_play(main):
     global playing, timer
     
     c = conn.cursor()
+
+    # Get record items and create scene
     c.execute(f"SELECT scene_items FROM records where id_rec={current_id_play} and id_user = {current_id_user};")
     r = c.fetchone()
     if r is not None:
@@ -281,6 +286,8 @@ def start_play(main):
             create_scene(main, scene_items)
             timer = 0
             playing = True
+
+    
 
 
 def stop_play(main):
@@ -310,7 +317,7 @@ def update_play(main, dt):
 
         return hg.TransformationMat4(pos, rot)
     '''
-    
+
     c = conn.cursor()
 
     for name, params in items.items():
@@ -359,7 +366,7 @@ def update_play(main, dt):
 
 def update_gui_record(main):
     
-    global selected_item_idx, recorded_max_time, timer, fps_record, current_id_play, selected_record, current_id_user, adding_user, user_name, user_info, recorded_fps, request_state
+    global selected_item_idx, recorded_min_time, recorded_max_time, timer, fps_record, current_id_play, selected_record, current_id_user, adding_user, user_name, user_info, recorded_fps, request_state
     
     if hg.ImGuiBegin("Dogfight - Recorder"):
         if adding_user:
@@ -419,14 +426,16 @@ def update_gui_record(main):
                     if r is not None:
                         current_id_play = r["id_rec"]
                         
-                    c.execute(f'''SELECT max_clock, fps FROM records WHERE id_rec={current_id_play}''')
+                    c.execute(f'''SELECT max_clock, min_clock, fps FROM records WHERE id_rec={current_id_play}''')
                     recorded_max_time = 0
+                    recorded_min_time = 0
                     recorded_fps = 60
                     r = c.fetchone()
                     if r is not None:
+                        recorded_min_time = r["min_clock"]
                         recorded_max_time = r["max_clock"]
                         recorded_fps = r["fps"]
-                        hg.ImGuiText("Record infos: Duration: %.2f - FPS: %d" % (recorded_max_time, recorded_fps))
+                        hg.ImGuiText("Record infos: Duration: %.2f - FPS: %d" % (recorded_max_time - recorded_min_time, recorded_fps))
 
                 if hg.ImGuiButton("Enter replay mode"):
                     request_new_state(main, "replay")

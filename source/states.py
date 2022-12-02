@@ -306,7 +306,7 @@ def init_main_state():
     vcr.setup_items(Main)
 
     Main.num_start_frames = 10
-    Main.timestamp = 0
+    Main.reset_timestamp()
     Main.flag_running = True
     vcr.validate_requested_state()
     return main_state
@@ -314,7 +314,7 @@ def init_main_state():
 
 def main_state(dts):
     
-    Main.timestamp += 1
+    Main.update_timestamp(dts)
     if not Main.flag_renderless:
         Main.post_process.update_fading(dts)
         if Main.flag_sfx:
@@ -441,13 +441,13 @@ def init_replay_state():
     Main.setup_views_carousel(True)
     Main.set_view_carousel("fps")
 
-    Main.timestamp = 0
+    Main.reset_timestamp()
     Main.flag_running = True
     vcr.validate_requested_state()
 
 
 def replay_state(dts):
-    Main.timestamp += 1
+
     Main.post_process.update_fading(dts)
     
     if Main.flag_control_views:
