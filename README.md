@@ -107,12 +107,12 @@ The "Network" mode allows you to control the planes from a third party machine.
 | Command | Key |
 | ------- | :-: |
 | Back view | 2 |
-| Front view | 2 |
+| Front view | 8 |
 | Left view | 4 |
 | Right view | 6 |
 | Satellite view | 5 |
 | Tactical view | 7 |
-| Pursuit view | 8 |
+| Pursuit view | 9 |
 | Cockpit view | 3 |
 
 ## FPS camera views commands
