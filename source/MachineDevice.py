@@ -65,6 +65,7 @@ class MachineDevice:
         self.name = name
         self.wreck = False
         self.commands = {"RESET": self.reset, "ACTIVATE": self.activate, "DEACTIVATE": self.deactivate}
+        self.events_history = []
 
     def record_start_state(self, start_state=None):
         if start_state is None:
@@ -75,7 +76,7 @@ class MachineDevice:
     def reset(self):
         self.activated = self.start_state
 
-    def update(self, dts):
+    def update(self, dts, timestamp):
         pass
 
     def activate(self):
@@ -149,7 +150,7 @@ class Gear(MachineDevice):
                 # self.gear_moving_delay = Get anim time
                 self.gear_anim_play = self.scene.PlayAnim(self.retract_anim, hg.ALM_Once, hg.E_InOutSine, hg.time_from_sec_f(0), hg.time_from_sec_f(self.gear_moving_delay), False, 1)
 
-    def update(self, dts):
+    def update(self, dts, timestamp):
         if self.flag_gear_moving:
             lvl = self.gear_moving_t / self.gear_moving_delay
             if self.gear_direction < 0:
@@ -320,7 +321,7 @@ class TargettingDevice(MachineDevice):
                 self.target_out_of_range = True
                 self.target_locking_state = 0
 
-    def update(self, dts):
+    def update(self, dts, timestamp):
         self.update_target_lock(dts)
 
 # =====================================================================================================
@@ -480,7 +481,7 @@ class MachineGun(MachineDevice):
             fb.reset()
             fb.flow = 3000
 
-    def update(self, dts):
+    def update(self, dts, timestamp):
         td = self.machine.get_device("TargettingDevice")
         if td is not None:
             targets = td.destroyable_targets
@@ -542,11 +543,13 @@ class MachineGun(MachineDevice):
         self.bullets_particles.particles_cnt_max = int(num)
         self.bullets_particles.reset()
 
-    def fire_machine_gun(self):
+    def fire_machine_gun(self, timestamp):
         if not self.wreck:
+            self.events_history.append([timestamp, "fire"])
             self.bullets_particles.flow = 24 / 2
 
-    def stop_machine_gun(self):
+    def stop_machine_gun(self, timestamp):
+        self.events_history.append([timestamp, "stop"])
         self.bullets_particles.flow = 0
 
     def is_gun_activated(self):
@@ -646,7 +649,7 @@ class MissileUserControlDevice(ControlDevice):
         ControlDevice.__init__(self, name, machine, "", "MissileLauncherUserInputsMapping", control_mode, start_state)
         self.pos_mem = None
 
-    def update(self, dts):
+    def update(self, dts, timestamp):
         if self.is_activated():
             mat, pos, rot, aX, aY, aZ = self.machine.decompose_matrix()
             step = 0.5
@@ -737,7 +740,7 @@ class MissileLauncherUserControlDevice(ControlDevice):
     def update_cm_mouse(self, dts):
         im = self.inputs_mapping["MissileLauncherUserInputsMapping"]["Mouse"]
 
-    def update(self, dts):
+    def update(self, dts, timestamp):
         if self.activated:
             if self.flag_user_control and self.machine.has_focus():
                 if self.control_mode == ControlDevice.CM_KEYBOARD:
@@ -958,141 +961,141 @@ class AircraftUserControlDevice(ControlDevice):
 
     # =================== Functions =================================================================
 
-    def update_cm_la3(self, dts):
+    def update_cm_la3(self, dts, timestamp):
         im = self.inputs_mapping["AircraftUserInputsMapping"]["LogitechAttack3"]
         for cmd, input_code in im.items():
             if cmd in self.commands and input_code != "":
-                self.commands[cmd](input_code)
+                self.commands[cmd](input_code, timestamp)
 
-    def update_cm_keyboard(self, dts):
+    def update_cm_keyboard(self, dts, timestamp):
         im = self.inputs_mapping["AircraftUserInputsMapping"]["Keyboard"]
         for cmd, input_code in im.items():
             if cmd in self.commands and input_code != "":
-                self.commands[cmd](input_code)
+                self.commands[cmd](input_code, timestamp)
 
-    def update_cm_gamepad(self, dts):
+    def update_cm_gamepad(self, dts, timestamp):
         im = self.inputs_mapping["AircraftUserInputsMapping"]["GamePad"]
         for cmd, input_code in im.items():
             if cmd in self.commands and input_code != "":
-                self.commands[cmd](input_code)
+                self.commands[cmd](input_code, timestamp)
 
-    def update_cm_mouse(self, dts):
+    def update_cm_mouse(self, dts, timestamp):
         im = self.inputs_mapping["AircraftUserInputsMapping"]["Mouse"]
 
-    def update(self, dts):
+    def update(self, dts, timestamp):
         if self.activated:
             if self.flag_user_control and self.machine.has_focus():
                 if self.control_mode == ControlDevice.CM_KEYBOARD:
-                    self.update_cm_keyboard(dts)
+                    self.update_cm_keyboard(dts, timestamp)
                 elif self.control_mode == ControlDevice.CM_GAMEPAD:
-                    self.update_cm_gamepad(dts)
+                    self.update_cm_gamepad(dts, timestamp)
                 elif self.control_mode == ControlDevice.CM_MOUSE:
-                    self.update_cm_mouse(dts)
+                    self.update_cm_mouse(dts, timestamp)
                 elif self.control_mode == ControlDevice.CM_LOGITECH_ATTACK_3:
-                    self.update_cm_la3(dts)
+                    self.update_cm_la3(dts, timestamp)
 
     # =============================== Keyboard commands ====================================
 
-    def switch_activation_kb(self, value):
+    def switch_activation_kb(self, value, timestamp):
         pass
 
-    def next_pilot_kb(self, value):
+    def next_pilot_kb(self, value, timestamp):
         pass
 
-    def increase_health_level_kb(self, value):
+    def increase_health_level_kb(self, value, timestamp):
         if ControlDevice.keyboard.Down(value):
             self.machine.set_health_level(self.machine.health_level + 0.01)
 
-    def decrease_health_level_kb(self, value):
+    def decrease_health_level_kb(self, value, timestamp):
         if ControlDevice.keyboard.Down(value):
             self.machine.set_health_level(self.machine.health_level - 0.01)
 
-    def increase_thrust_level_kb(self, value):
+    def increase_thrust_level_kb(self, value, timestamp):
         if ControlDevice.keyboard.Down(value):
             self.machine.set_thrust_level(self.machine.thrust_level_dest + 0.01)
 
-    def decrease_thrust_level_kb(self, value):
+    def decrease_thrust_level_kb(self, value, timestamp):
         if ControlDevice.keyboard.Down(value):
             self.machine.set_thrust_level(self.machine.thrust_level_dest - 0.01)
 
     def set_thrust_level_kb(self, value):
         pass
 
-    def increase_brake_level_kb(self, value):
+    def increase_brake_level_kb(self, value, timestamp):
         if ControlDevice.keyboard.Down(value):
             self.machine.set_brake_level(self.machine.brake_level_dest + 0.01)
 
-    def decrease_brake_level_kb(self, value):
+    def decrease_brake_level_kb(self, value, timestamp):
         if ControlDevice.keyboard.Down(value):
             self.machine.set_brake_level(self.machine.brake_level_dest - 0.01)
 
-    def increase_flaps_level_kb(self, value):
+    def increase_flaps_level_kb(self, value, timestamp):
         if ControlDevice.keyboard.Down(value):
             self.machine.set_flaps_level(self.machine.flaps_level + 0.01)
 
-    def decrease_flaps_level_kb(self, value):
+    def decrease_flaps_level_kb(self, value, timestamp):
         if ControlDevice.keyboard.Down(value):
             self.machine.set_flaps_level(self.machine.flaps_level - 0.01)
 
-    def roll_left_kb(self, value):
+    def roll_left_kb(self, value, timestamp):
         if ControlDevice.keyboard.Down(value):
             self.machine.set_roll_level(1)
         elif ControlDevice.keyboard.Released(value):
             self.machine.set_roll_level(0)
 
-    def roll_right_kb(self, value):
+    def roll_right_kb(self, value, timestamp):
         if ControlDevice.keyboard.Down(value):
             self.machine.set_roll_level(-1)
         elif ControlDevice.keyboard.Released(value):
             self.machine.set_roll_level(0)
 
-    def set_roll_kb(self, value):
+    def set_roll_kb(self, value, timestamp):
         pass
 
-    def pitch_up_kb(self, value):
+    def pitch_up_kb(self, value, timestamp):
         if ControlDevice.keyboard.Down(value):
             self.machine.set_pitch_level(1)
         elif ControlDevice.keyboard.Released(value):
             self.machine.set_pitch_level(0)
 
-    def pitch_down_kb(self, value):
+    def pitch_down_kb(self, value, timestamp):
         if ControlDevice.keyboard.Down(value):
             self.machine.set_pitch_level(-1)
         elif ControlDevice.keyboard.Released(value):
             self.machine.set_pitch_level(0)
 
-    def set_pitch_kb(self, value):
+    def set_pitch_kb(self, value, timestamp):
         pass
 
-    def yaw_left_kb(self, value):
+    def yaw_left_kb(self, value, timestamp):
         if ControlDevice.keyboard.Down(value):
             self.machine.set_yaw_level(-1)
         elif ControlDevice.keyboard.Released(value):
             self.machine.set_yaw_level(0)
 
-    def yaw_right_kb(self, value):
+    def yaw_right_kb(self, value, timestamp):
         if ControlDevice.keyboard.Down(value):
             self.machine.set_yaw_level(1)
         elif ControlDevice.keyboard.Released(value):
             self.machine.set_yaw_level(0)
 
-    def set_yaw_kb(self, value):
+    def set_yaw_kb(self, value, timestamp):
         pass
 
-    def switch_post_combustion_kb(self, value):
+    def switch_post_combustion_kb(self, value, timestamp):
         if ControlDevice.keyboard.Pressed(value):
             if self.machine.post_combustion:
                 self.machine.deactivate_post_combustion()
             else:
                 self.machine.activate_post_combustion()
 
-    def next_target_kb(self, value):
+    def next_target_kb(self, value, timestamp):
         if ControlDevice.keyboard.Pressed(value):
             td = self.machine.get_device("TargettingDevice")
             if td is not None:
                 td.next_target()
 
-    def switch_gear_kb(self, value):
+    def switch_gear_kb(self, value, timestamp):
         if ControlDevice.keyboard.Pressed(value):
             if "Gear" in self.machine.devices and self.machine.devices["Gear"] is not None:
                 gear = self.machine.devices["Gear"]
@@ -1102,7 +1105,7 @@ class AircraftUserControlDevice(ControlDevice):
                     else:
                         gear.activate()
 
-    def activate_autopilot_kb(self, value):
+    def activate_autopilot_kb(self, value, timestamp):
         if ControlDevice.keyboard.Pressed(value):
             autopilot_device = self.machine.get_device("AutopilotControlDevice")
             if autopilot_device is not None:
@@ -1110,131 +1113,131 @@ class AircraftUserControlDevice(ControlDevice):
                 autopilot_device.activate()
 
 
-    def activate_ia_kb(self, value):
+    def activate_ia_kb(self, value, timestamp):
         if ControlDevice.keyboard.Pressed(value):
             ia_device = self.machine.get_device("IAControlDevice")
             if ia_device is not None:
                 self.deactivate()
                 ia_device.activate()
 
-    def switch_easy_steering_kb(self, value):
+    def switch_easy_steering_kb(self, value, timestamp):
         if ControlDevice.keyboard.Pressed(value):
             self.machine.flag_easy_steering = not self.machine.flag_easy_steering
 
-    def fire_machine_gun_kb(self, value):
+    def fire_machine_gun_kb(self, value, timestamp):
         if ControlDevice.keyboard.Down(value):
             n = self.machine.get_machinegun_count()
             for i in range(n):
                 mgd = self.machine.get_device("MachineGunDevice_%02d" % i)
                 if mgd is not None and not mgd.is_gun_activated():
-                    mgd.fire_machine_gun()
+                    mgd.fire_machine_gun(timestamp)
         elif ControlDevice.keyboard.Released(value):
             n = self.machine.get_machinegun_count()
             for i in range(n):
                 mgd = self.machine.get_device("MachineGunDevice_%02d" % i)
                 if mgd is not None and mgd.is_gun_activated():
-                    mgd.stop_machine_gun()
+                    mgd.stop_machine_gun(timestamp)
 
-    def fire_missile_kb(self, value):
+    def fire_missile_kb(self, value, timestamp):
         if ControlDevice.keyboard.Pressed(value):
             md = self.machine.get_device("MissilesDevice")
             if md is not None:
                 md.fire_missile()
 
-    def rearm_kb(self, value):
+    def rearm_kb(self, value, timestamp):
         if ControlDevice.keyboard.Pressed(value):
             self.machine.rearm()
 
     # =============================== Logitech Attack 3 ====================================
 
-    def switch_activation_la3(self, value):
+    def switch_activation_la3(self, value, timestamp):
         pass
 
-    def next_pilot_la3(self, value):
+    def next_pilot_la3(self, value, timestamp):
         pass
 
-    def increase_health_level_la3(self, value):
+    def increase_health_level_la3(self, value, timestamp):
         pass
 
-    def decrease_health_level_la3(self, value):
+    def decrease_health_level_la3(self, value, timestamp):
         pass
 
-    def increase_thrust_level_la3(self, value):
+    def increase_thrust_level_la3(self, value, timestamp):
         pass
 
-    def decrease_thrust_level_la3(self, value):
+    def decrease_thrust_level_la3(self, value, timestamp):
         pass
 
-    def set_thrust_level_la3(self, value):
+    def set_thrust_level_la3(self, value, timestamp):
         # epsilon = 0.1 # threshold to cancel the device's jitter
         v = -ControlDevice.generic_controller.Axes(value)
         self.machine.set_thrust_level((v + 1.0) / 2.0)
 
-    def increase_brake_level_la3(self, value):
+    def increase_brake_level_la3(self, value, timestamp):
         if ControlDevice.generic_controller.Down(value):
             self.machine.set_brake_level(self.machine.brake_level_dest + 0.01)
 
-    def decrease_brake_level_la3(self, value):
+    def decrease_brake_level_la3(self, value, timestamp):
         if ControlDevice.generic_controller.Down(value):
             self.machine.set_brake_level(self.machine.brake_level_dest - 0.01)
 
-    def increase_flaps_level_la3(self, value):
+    def increase_flaps_level_la3(self, value, timestamp):
         if ControlDevice.generic_controller.Down(value):
             self.machine.set_flaps_level(self.machine.flaps_level_dest + 0.01)
 
-    def decrease_flaps_level_la3(self, value):
+    def decrease_flaps_level_la3(self, value, timestamp):
         if ControlDevice.generic_controller.Down(value):
             self.machine.set_flaps_level(self.machine.flaps_level_dest - 0.01)
 
-    def roll_left_la3(self, value):
+    def roll_left_la3(self, value, timestamp):
         pass
 
-    def roll_right_la3(self, value):
+    def roll_right_la3(self, value, timestamp):
         pass
 
-    def set_roll_la3(self, value):
+    def set_roll_la3(self, value, timestamp):
         v = -ControlDevice.generic_controller.Axes(value)
         self.machine.set_roll_level(v)
 
-    def set_pitch_la3(self, value):
+    def set_pitch_la3(self, value, timestamp):
         v = -ControlDevice.generic_controller.Axes(value)
         self.machine.set_pitch_level(v)
 
-    def pitch_up_la3(self, value):
+    def pitch_up_la3(self, value, timestamp):
         pass
 
-    def pitch_down_la3(self, value):
+    def pitch_down_la3(self, value, timestamp):
         pass
 
-    def yaw_left_la3(self, value):
+    def yaw_left_la3(self, value, timestamp):
         if ControlDevice.generic_controller.Down(value):
             self.machine.set_yaw_level(-1)
         elif ControlDevice.generic_controller.Released(value):
             self.machine.set_yaw_level(0)
 
-    def yaw_right_la3(self, value):
+    def yaw_right_la3(self, value, timestamp):
         if ControlDevice.generic_controller.Down(value):
             self.machine.set_yaw_level(1)
         elif ControlDevice.generic_controller.Released(value):
             self.machine.set_yaw_level(0)
 
-    def set_yaw_la3(self, value):
+    def set_yaw_la3(self, value, timestamp):
         pass
 
-    def switch_post_combustion_la3(self, value):
+    def switch_post_combustion_la3(self, value, timestamp):
         if ControlDevice.generic_controller.Pressed(value):
             if self.machine.post_combustion:
                 self.machine.deactivate_post_combustion()
             else:
                 self.machine.activate_post_combustion()
 
-    def next_target_la3(self, value):
+    def next_target_la3(self, value, timestamp):
         if ControlDevice.generic_controller.Pressed(value):
             td = self.machine.get_device("TargettingDevice")
             if td is not None:
                 td.next_target()
 
-    def switch_gear_la3(self, value):
+    def switch_gear_la3(self, value, timestamp):
         if ControlDevice.generic_controller.Pressed(value):
             if "Gear" in self.machine.devices and self.machine.devices["Gear"] is not None:
                 gear = self.machine.devices["Gear"]
@@ -1245,32 +1248,32 @@ class AircraftUserControlDevice(ControlDevice):
                         gear.activate()
 
 
-    def activate_autopilot_la3(self, value):
+    def activate_autopilot_la3(self, value, timestamp):
         pass
 
-    def activate_ia_la3(self, value):
+    def activate_ia_la3(self, value, timestamp):
         pass
 
-    def switch_easy_steering_la3(self, value):
+    def switch_easy_steering_la3(self, value, timestamp):
         pass
 
 
-    def fire_machine_gun_la3(self, value):
+    def fire_machine_gun_la3(self, value, timestamp):
         if ControlDevice.generic_controller.Down(value):
             n = self.machine.get_machinegun_count()
             for i in range(n):
                 mgd = self.machine.get_device("MachineGunDevice_%02d" % i)
                 if mgd is not None and not mgd.is_gun_activated():
-                    mgd.fire_machine_gun()
+                    mgd.fire_machine_gun(timestamp)
         elif ControlDevice.generic_controller.Released(value):
             n = self.machine.get_machinegun_count()
             for i in range(n):
                 mgd = self.machine.get_device("MachineGunDevice_%02d" % i)
                 if mgd is not None and mgd.is_gun_activated():
-                    mgd.stop_machine_gun()
+                    mgd.stop_machine_gun(timestamp)
 
 
-    def fire_missile_la3(self, value):
+    def fire_missile_la3(self, value, timestamp):
         if ControlDevice.generic_controller.Pressed(value):
             md = self.machine.get_device("MissilesDevice")
             if md is not None:
@@ -1280,93 +1283,93 @@ class AircraftUserControlDevice(ControlDevice):
 
     # =============================== Gamepad commands ====================================
 
-    def switch_activation_gp(self, value):
+    def switch_activation_gp(self, value, timestamp):
         pass
 
-    def next_pilot_gp(self, value):
+    def next_pilot_gp(self, value, timestamp):
         pass
 
-    def increase_health_level_gp(self, value):
+    def increase_health_level_gp(self, value, timestamp):
         pass
 
-    def decrease_health_level_gp(self, value):
+    def decrease_health_level_gp(self, value, timestamp):
         pass
 
-    def increase_thrust_level_gp(self, value):
+    def increase_thrust_level_gp(self, value, timestamp):
         pass
 
-    def decrease_thrust_level_gp(self, value):
+    def decrease_thrust_level_gp(self, value, timestamp):
         pass
 
-    def set_thrust_level_gp(self, value):
+    def set_thrust_level_gp(self, value, timestamp):
         epsilon = 0.1
         v = -ControlDevice.gamepad.Axes(value)
         if v < - epsilon or v > epsilon:
             self.machine.set_thrust_level(self.machine.thrust_level_dest + v * 0.01)
 
-    def increase_brake_level_gp(self, value):
+    def increase_brake_level_gp(self, value, timestamp):
         if ControlDevice.gamepad.Down(value):
             self.machine.set_brake_level(self.machine.brake_level_dest + 0.01)
 
-    def decrease_brake_level_gp(self, value):
+    def decrease_brake_level_gp(self, value, timestamp):
         if ControlDevice.gamepad.Down(value):
             self.machine.set_brake_level(self.machine.brake_level_dest - 0.01)
 
-    def increase_flaps_level_gp(self, value):
+    def increase_flaps_level_gp(self, value, timestamp):
         if ControlDevice.gamepad.Down(value):
             self.machine.set_flaps_level(self.machine.flaps_level_dest + 0.01)
 
-    def decrease_flaps_level_gp(self, value):
+    def decrease_flaps_level_gp(self, value, timestamp):
         if ControlDevice.gamepad.Down(value):
             self.machine.set_flaps_level(self.machine.flaps_level_dest - 0.01)
 
-    def roll_left_gp(self, value):
+    def roll_left_gp(self, value, timestamp):
         pass
 
-    def roll_right_gp(self, value):
+    def roll_right_gp(self, value, timestamp):
         pass
 
-    def set_roll_gp(self, value):
+    def set_roll_gp(self, value, timestamp):
         v = -ControlDevice.gamepad.Axes(value)
         self.machine.set_roll_level(v)
 
-    def pitch_up_gp(self, value):
+    def pitch_up_gp(self, value, timestamp):
         pass
 
-    def pitch_down_gp(self, value):
+    def pitch_down_gp(self, value, timestamp):
         pass
 
-    def set_pitch_gp(self, value):
+    def set_pitch_gp(self, value, timestamp):
         v = -ControlDevice.gamepad.Axes(value)
         self.machine.set_pitch_level(v)
 
-    def yaw_left_gp(self, value):
+    def yaw_left_gp(self, value, timestamp):
         pass
 
-    def yaw_right_gp(self, value):
+    def yaw_right_gp(self, value, timestamp):
         pass
 
-    def set_yaw_gp(self, value):
+    def set_yaw_gp(self, value, timestamp):
         epsilon = 0.016
         v = ControlDevice.gamepad.Axes(value)
         if -epsilon < v < epsilon:
             v = 0
         self.machine.set_yaw_level(v)
 
-    def switch_post_combustion_gp(self, value):
+    def switch_post_combustion_gp(self, value, timestamp):
         if ControlDevice.gamepad.Pressed(value):
             if self.machine.post_combustion:
                 self.machine.deactivate_post_combustion()
             else:
                 self.machine.activate_post_combustion()
 
-    def next_target_gp(self, value):
+    def next_target_gp(self, value, timestamp):
         if ControlDevice.gamepad.Pressed(value):
             td = self.machine.get_device("TargettingDevice")
             if td is not None:
                 td.next_target()
 
-    def switch_gear_gp(self, value):
+    def switch_gear_gp(self, value, timestamp):
         if ControlDevice.gamepad.Pressed(value):
             if "Gear" in self.machine.devices and self.machine.devices["Gear"] is not None:
                 gear = self.machine.devices["Gear"]
@@ -1376,34 +1379,34 @@ class AircraftUserControlDevice(ControlDevice):
                     else:
                         gear.activate()
 
-    def activate_autopilot_gp(self, value):
+    def activate_autopilot_gp(self, value, timestamp):
         pass
 
-    def activate_ia_gp(self, value):
+    def activate_ia_gp(self, value, timestamp):
         if ControlDevice.gamepad.Pressed(value):
             ia_device = self.machine.get_device("IAControlDevice")
             if ia_device is not None:
                 self.deactivate()
                 ia_device.activate()
 
-    def switch_easy_steering_gp(self, value):
+    def switch_easy_steering_gp(self, value, timestamp):
         pass
 
-    def fire_machine_gun_gp(self, value):
+    def fire_machine_gun_gp(self, value, timestamp):
         if ControlDevice.gamepad.Down(value):
             n = self.machine.get_machinegun_count()
             for i in range(n):
                 mgd = self.machine.get_device("MachineGunDevice_%02d" % i)
                 if mgd is not None and not mgd.is_gun_activated():
-                    mgd.fire_machine_gun()
+                    mgd.fire_machine_gun(timestamp)
         elif ControlDevice.gamepad.Released(value):
             n = self.machine.get_machinegun_count()
             for i in range(n):
                 mgd = self.machine.get_device("MachineGunDevice_%02d" % i)
                 if mgd is not None and mgd.is_gun_activated():
-                    mgd.stop_machine_gun()
+                    mgd.stop_machine_gun(timestamp)
 
-    def fire_missile_gp(self, value):
+    def fire_missile_gp(self, value, timestamp):
         if ControlDevice.gamepad.Pressed(value):
             md = self.machine.get_device("MissilesDevice")
             if md is not None:
@@ -1675,7 +1678,7 @@ class AircraftAutopilotControlDevice(ControlDevice):
                 tp = max(-1, min(1, diff / 10))
                 aircraft.set_pitch_level(-tp)
 
-    def update(self, dts):
+    def update(self, dts, timestamp):
         if self.activated:
             if self.flag_user_control and self.machine.has_focus():
                 if self.control_mode == ControlDevice.CM_KEYBOARD:
@@ -1839,19 +1842,19 @@ class AircraftIAControlDevice(ControlDevice):
         else:
             return landing_proj
 
-    def update_controlled_device(self, dts):
+    def update_controlled_device(self, dts, timestamp):
         aircraft = self.machine
         if not aircraft.wreck and not aircraft.flag_going_to_takeoff_position:
             if self.IA_command == AircraftIAControlDevice.IA_COM_IDLE:
-                self.update_IA_idle(aircraft)
+                self.update_IA_idle(aircraft, timestamp)
             elif self.IA_command == AircraftIAControlDevice.IA_COM_LIFTOFF:
-                self.update_IA_liftoff(aircraft, dts)
+                self.update_IA_liftoff(aircraft, dts, timestamp)
             elif self.IA_command == AircraftIAControlDevice.IA_COM_FIGHT:
-                self.update_IA_fight(aircraft, dts)
+                self.update_IA_fight(aircraft, dts, timestamp)
             elif self.IA_command == AircraftIAControlDevice.IA_COM_LANDING:
-                self.update_IA_landing(aircraft, dts)
+                self.update_IA_landing(aircraft, dts, timestamp)
 
-    def update_IA_liftoff(self, aircraft, dts):
+    def update_IA_liftoff(self, aircraft, dts, timestamp):
         self.IA_flag_landing_target_found = False
         aircraft.set_flaps_level(1)
         if self.flag_IA_start_liftoff:
@@ -1884,7 +1887,7 @@ class AircraftIAControlDevice(ControlDevice):
                             else:
                                 self.IA_command = AircraftIAControlDevice.IA_COM_FIGHT
 
-    def update_IA_idle(self, aircraft):
+    def update_IA_idle(self, aircraft, timestamp):
         autopilot = aircraft.devices["AutopilotControlDevice"]
         if autopilot is not None:
             autopilot.set_autopilot_speed(400 / 3.6)
@@ -1915,7 +1918,7 @@ class AircraftIAControlDevice(ControlDevice):
         distances.sort(key=lambda p: p["distance"])
         return distances[0]["landing_target"]
 
-    def update_IA_landing(self, aircraft, dts):
+    def update_IA_landing(self, aircraft, dts, timestamp):
         if "AutopilotControlDevice" in aircraft.devices and aircraft.devices["AutopilotControlDevice"] is not None:
             autopilot = aircraft.devices["AutopilotControlDevice"]
             if not self.IA_flag_landing_target_found:
@@ -1996,7 +1999,7 @@ class AircraftIAControlDevice(ControlDevice):
                                         self.IA_liftoff_delay = 2
                                         self.IA_command = AircraftIAControlDevice.IA_COM_LIFTOFF
 
-    def update_IA_fight(self, aircraft, dts):
+    def update_IA_fight(self, aircraft, dts, timestamp):
         autopilot = aircraft.devices["AutopilotControlDevice"]
         if autopilot is not None:
             if "Gear" in aircraft.devices and aircraft.devices["Gear"] is not None:
@@ -2066,13 +2069,13 @@ class AircraftIAControlDevice(ControlDevice):
                         for i in range(n):
                             mgd = aircraft.get_device("MachineGunDevice_%02d" % i)
                             if mgd is not None and not mgd.is_gun_activated():
-                                mgd.fire_machine_gun()
+                                mgd.fire_machine_gun(timestamp)
                     else:
                         n = aircraft.get_machinegun_count()
                         for i in range(n):
                             mgd = aircraft.get_device("MachineGunDevice_%02d" % i)
                             if mgd is not None and mgd.is_gun_activated():
-                                mgd.stop_machine_gun()
+                                mgd.stop_machine_gun(timestamp)
 
                     flag_missiles_ok = False
                     if md is not None:
@@ -2145,29 +2148,29 @@ class AircraftIAControlDevice(ControlDevice):
 
     # ====================================================================================
 
-    def update_cm_keyboard(self, dts):
+    def update_cm_keyboard(self, dts, timestamp):
         im = self.inputs_mapping["AircraftIAInputsMapping"]["Keyboard"]
         for cmd, input_code in im.items():
             if cmd in self.commands and input_code != "":
                 self.commands[cmd](input_code)
 
-    def update_cm_gamepad(self, dts):
+    def update_cm_gamepad(self, dts, timestamp):
         im = self.inputs_mapping["AircraftIAInputsMapping"]["GamePad"]
         for cmd, input_code in im.items():
             if cmd in self.commands and input_code != "":
                 self.commands[cmd](input_code)
 
-    def update_cm_mouse(self, dts):
+    def update_cm_mouse(self, dts, timestamp):
         im = self.inputs_mapping["AircraftIAInputsMapping"]["Mouse"]
 
-    def update(self, dts):
+    def update(self, dts, timestamp):
         if self.activated:
             if self.flag_user_control and self.machine.has_focus():
                 if self.control_mode == ControlDevice.CM_KEYBOARD:
-                    self.update_cm_keyboard(dts)
+                    self.update_cm_keyboard(dts, timestamp)
                 elif self.control_mode == ControlDevice.CM_GAMEPAD:
-                    self.update_cm_gamepad(dts)
+                    self.update_cm_gamepad(dts, timestamp)
                 elif self.control_mode == ControlDevice.CM_MOUSE:
-                    self.update_cm_mouse(dts)
+                    self.update_cm_mouse(dts, timestamp)
 
-            self.update_controlled_device(dts)
+            self.update_controlled_device(dts, timestamp)

@@ -284,7 +284,8 @@ def start_play(main):
         if len(scene_items) > 0:
             main.destroy_players()
             create_scene(main, scene_items)
-            timer = 0
+            timer = recorded_min_time
+            print(str(timer))
             playing = True
 
     
@@ -447,7 +448,7 @@ def update_gui_record(main):
 
 def update_gui_replay(main, keyboard):
     
-    global selected_item_idx, recorded_max_time, timer, fps_record, current_id_play, selected_record, current_id_user, adding_user, user_name, user_info, recorded_fps, request_state
+    global selected_item_idx, recorded_min_time, recorded_max_time, timer, fps_record, current_id_play, selected_record, current_id_user, adding_user, user_name, user_info, recorded_fps, request_state
     
     if hg.ImGuiBegin("Dogfight - Replayer"):
         if not playing:
@@ -476,14 +477,16 @@ def update_gui_replay(main, keyboard):
                 if r is not None:
                     current_id_play = r["id_rec"]
                     
-                c.execute(f'''SELECT max_clock, fps FROM records WHERE id_rec={current_id_play}''')
+                c.execute(f'''SELECT max_clock, min_clock, fps FROM records WHERE id_rec={current_id_play}''')
+                recorded_min_time = 0
                 recorded_max_time = 0
                 recorded_fps = 60
                 r = c.fetchone()
                 if r is not None:
+                    recorded_min_time = r["min_clock"]
                     recorded_max_time = r["max_clock"]
                     recorded_fps = r["fps"]
-                    hg.ImGuiText("Record infos: Duration: %.2f - FPS: %d" % (recorded_max_time, recorded_fps))
+                    hg.ImGuiText("Record infos: Duration: %.2f - FPS: %d" % (recorded_max_time - recorded_min_time, recorded_fps))
 
                 if hg.ImGuiButton("Start play"):
                     start_play(main)
@@ -493,7 +496,7 @@ def update_gui_replay(main, keyboard):
         
         else:
             if recorded_max_time:
-                timer = hg.ImGuiSliderFloat("Timeline", timer, 0, recorded_max_time)[1]
+                timer = hg.ImGuiSliderFloat("Timeline", timer, recorded_min_time, recorded_max_time)[1]
             if pausing:
                 lbl = "Resume"
             else:
@@ -620,6 +623,8 @@ def deserialize_machine_state(machine:Machines.Destroyable_Machine, s:str):
         deserialize_aircraft_state(machine, s)
     elif machine.type == Machines.Destroyable_Machine.TYPE_MISSILE:
         deserialize_missile_state(machine, s)
+    elif machine.type == Machines.Destroyable_Machine.TYPE_MISSILE_LAUNCHER:
+        deserialize_missile_launcher_state(machine, s)
     elif machine.type == Machines.Destroyable_Machine.TYPE_SHIP:
         deserialize_ship_state(machine, s)
     

@@ -344,7 +344,8 @@ class Destroyable_Machine(AnimatedModel):
 
         self.flag_focus = False
 
-        self.flag_record_hits = False # Used by recorder. When machine is hitted, the event is recorded with hit damages level
+        self.event_listeners = []   #list of functions used to listen events - Current lestenable events : "hit"
+                                    # listener prototype: listener(str event_name, list parameters)
         self.hits = []
 
         self.playfield_distance = 0
@@ -433,9 +434,9 @@ class Destroyable_Machine(AnimatedModel):
             return self.devices.pop(device_name)
         return None
 
-    def update_devices(self, dts):
+    def update_devices(self, dts, timestamp):
         for name, device in self.devices.items():
-            device.update(dts)
+            device.update(dts, timestamp)
 
     def get_device(self, device_name):
         if device_name in self.devices:
@@ -495,8 +496,8 @@ class Destroyable_Machine(AnimatedModel):
     def hit(self, value, position, timestamp = 0):
         if not self.wreck:
             self.set_health_level(self.health_level - value)
-            if self.flag_record_hits:
-                self.hits.append([timestamp, value, position]) # ??? position or hg.Vec3(position) ???
+            for listener in self.event_listeners:
+                listener("hit",[value, position, timestamp]) # ??? position or hg.Vec3(position) ???
 
     def destroy_nodes(self):
         AnimatedModel.destroy_nodes(self)
@@ -799,7 +800,7 @@ class Destroyable_Machine(AnimatedModel):
                 "flag_easy_steering": False
                 }
 
-    def update_kinetics(self, dts):
+    def update_kinetics(self, dts, timestamp):
         if self.activated:
             if self.custom_matrix is not None:
                 matrix = self.custom_matrix
@@ -831,7 +832,7 @@ class Destroyable_Machine(AnimatedModel):
             self.rec_linear_speed()
             self.update_linear_acceleration()
 
-            self.update_devices(dts)
+            self.update_devices(dts, timestamp)
 
             self.update_mobile_parts(dts)
             self.update_feedbacks(dts)
@@ -1189,11 +1190,11 @@ class Missile(Destroyable_Machine):
                 "flag_easy_steering": False
                 }
 
-    def update_kinetics(self, dts):
+    def update_kinetics(self, dts, timestamp):
 
         if self.activated:
 
-            self.update_devices(dts)
+            self.update_devices(dts, timestamp)
 
             self.life_cptr += dts
 
@@ -1947,17 +1948,17 @@ class Aircraft(Destroyable_Machine):
                 "flag_easy_steering": self.flag_easy_steering
                 }
 
-    def update_kinetics(self, dts):
+    def update_kinetics(self, dts, timestamp):
 
         # Custom physics (but keep inner collisions system)
         if self.flag_custom_physics_mode:
-            Destroyable_Machine.update_kinetics(self, dts)
+            Destroyable_Machine.update_kinetics(self, dts, timestamp)
 
         # Inner physics
         else:
 
             if self.activated:
-                self.update_devices(dts) # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                self.update_devices(dts, timestamp) # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
                 # # ========================= Flight physics Repositionning after landing :
 
@@ -2387,7 +2388,7 @@ class Carrier(Destroyable_Machine):
     def hit(self, value, position):
         pass
 
-    def update_kinetics(self, dts):
+    def update_kinetics(self, dts, timestamp):
         rot = self.radar.GetTransform().GetRot()
         rot.y += radians(45 * dts)
         self.radar.GetTransform().SetRot(rot)
@@ -2420,5 +2421,5 @@ class LandVehicle(Destroyable_Machine):
     def get_brake_level(self):
         return self.brake_level
 
-    def update_kinetics(self, dts):
-        Destroyable_Machine.update_kinetics(self, dts)
+    def update_kinetics(self, dts, timestamp):
+        Destroyable_Machine.update_kinetics(self, dts, timestamp)

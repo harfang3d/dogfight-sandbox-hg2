@@ -1137,7 +1137,7 @@ class Main:
         #    dm.update_collision_nodes_matrices()
 
         for dm in Destroyable_Machine.update_list:
-            dm.update_kinetics(dts)
+            dm.update_kinetics(dts, cls.timestamp)
             cls.display_machine_vectors(dm)
 
 

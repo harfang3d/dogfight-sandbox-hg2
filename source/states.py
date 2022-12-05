@@ -124,7 +124,7 @@ def menu_state(dts):
         tools.set_stereo_volume(Main.main_music_source, Main.master_sfx_volume)
 
     for carrier in Main.aircraft_carrier_allies:
-        carrier.update_kinetics(dts)
+        carrier.update_kinetics(dts, Main.timestamp)
 
     if Main.display_dark_design:
         Main.spr_design_menu.set_position(0.5 * Main.resolution.x, 0.5 * Main.resolution.y)
