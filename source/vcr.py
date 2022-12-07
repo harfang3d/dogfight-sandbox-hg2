@@ -40,6 +40,7 @@ items_names = []
 selected_item_idx = 0
 selected_record = 0
 records = None
+records_events = None
 last_value_recorded = {}
 
 task_record_in_database = None
@@ -64,12 +65,10 @@ def setup_items(main):
 #container: if not None, contain the value to record
 def AddItem(item, params=[], name=None, container=None):
     global items, items_list, items_names
-    if isinstance(item, hg.Node) and name is None:
-        name = f"{item.GetName()} {item.GetTransform().GetPos().x:.2}{item.GetTransform().GetPos().y:.2}{item.GetTransform().GetPos().z:.2}"
-    elif isinstance(item, str) and name is None:
-        name = item
-    elif isinstance(item, Machines.Destroyable_Machine) and name is None:
-        name = item.name
+    if isinstance(item, Machines.Destroyable_Machine):
+        item.add_listener(event_call_back)
+        if name is None:
+            name = item.name
         item.name = dc.conform_string(name) # !!! This could change the machine name in the scene !!! Need valid machine name to keep right links references (targets, missiles parents....)
 
     name = dc.conform_string(name)
@@ -80,12 +79,18 @@ def AddItem(item, params=[], name=None, container=None):
     items_names.append(name)
     return items[name]
 
+def event_call_back(event_name:str, params:list):
+    global records_events
+    if recording:
+        records_events.append([params["timestamp"], event_name + ":" + str(params["value"]) + ":" + dc.serialize_vec3(params["position"])])
+
 def clear_items():
-    global items, items_list, selected_item_idx, items_names
+    global items, items_list, selected_item_idx, items_names, records_events
     selected_item_idx = 0
     items = {}
     items_list = []
     items_names = []
+    records_events = []
     
 def is_init():
     return flag_init
@@ -106,6 +111,7 @@ def init():
 
         c.execute('''CREATE TABLE IF NOT EXISTS users(id_user INTEGER PRIMARY KEY, name TEXT, info TEXT)''')
         c.execute('''CREATE TABLE IF NOT EXISTS records(id_rec INTEGER PRIMARY KEY, name TEXT, min_clock FLOAT, max_clock FLOAT, fps INT,scene_items TEXT, id_user INTEGER REFERENCES users, CONSTRAINT fk_users FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE)''')
+        c.execute('''CREATE TABLE IF NOT EXISTS events(id_rec INTEGER REFERENCES records, c FLOAT, v TEXT)''')
         
         # add default user
         if table_users_exists is None:
@@ -124,14 +130,14 @@ def create_scene_items_list():
     return scene_items
 
 def start_record(name_record):
-    global recording, records, current_id_rec, last_value_recorded
+    global recording, records, records_events, current_id_rec, last_value_recorded
     
     # check if we are already start
     if recording:
         return
 
-    recording = True
     records = None
+    records_events = []
     last_value_recorded = {}
 
     scene_items = ":".join(create_scene_items_list())
@@ -150,6 +156,8 @@ def start_record(name_record):
         current_id_rec = r["id_rec"]
     conn.commit()
     print(f"create record: {name_record}, {current_id_rec}")
+    
+    recording = True
 
 # Coroutine
 def record_in_database():
@@ -160,6 +168,7 @@ def record_in_database():
     # create db for items
     print("Record items table if necessary")
     i = 0
+    n_steps = 2*len(records) + len(records_events)
     for t, record in records.items():
         for name, value in record.items():
             if isinstance(value, str):
@@ -171,7 +180,7 @@ def record_in_database():
             elif isinstance(value, float):
                 c.execute(f"CREATE TABLE IF NOT EXISTS {name}(id_rec INTEGER, c FLOAT, v FLOAT, PRIMARY KEY (id_rec, c), CONSTRAINT fk_record FOREIGN KEY (id_rec) REFERENCES records(id_rec) ON DELETE CASCADE) WITHOUT ROWID;")                
             #c.execute(f"DELETE FROM {name} WHERE id_rec={current_id_rec};")
-        progress_cptr = i / (2*len(records))
+        progress_cptr = i / n_steps
         i+=1
         if (i % fps_record) == 0:
             yield
@@ -179,10 +188,18 @@ def record_in_database():
     for t, record in records.items():
         for name, value in record.items():
             c.execute(f"INSERT INTO {name}(id_rec, c, v) VALUES ({current_id_rec}, {t}, \"{value}\");")
-        progress_cptr = i / (2*len(records))
+        progress_cptr = i / n_steps
         i+=1
         if (i % fps_record) == 0:
             yield
+    # record events:
+    for evt in records_events:
+        c.execute(f"INSERT INTO events(id_rec, c, v) VALUES ({current_id_rec}, {evt[0]}, \"{evt[1]}\");")
+        progress_cptr = i / n_steps
+        i+=1
+        if (i % 10) == 0:
+            yield
+
 
     c.execute(f"UPDATE records SET max_clock={timer}, min_clock={recorded_min_time}  WHERE id_rec={current_id_rec};")
     #c.execute(f"UPDATE records SET fps={fps_record} WHERE id_rec={current_id_rec};")

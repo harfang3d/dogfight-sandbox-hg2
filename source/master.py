@@ -72,7 +72,7 @@ class Main:
     flag_exit = False
     win = None
 
-    timestamp = 0  # Frame count.
+    framecount = 0  # Frame count.
     timer = 0 # clock in s (incremented at each frame)
 
     timestep = 1 / 60  # Frame dt
@@ -1137,7 +1137,7 @@ class Main:
         #    dm.update_collision_nodes_matrices()
 
         for dm in Destroyable_Machine.update_list:
-            dm.update_kinetics(dts, cls.timestamp)
+            dm.update_kinetics(dts)
             cls.display_machine_vectors(dm)
 
 
@@ -1467,13 +1467,19 @@ class Main:
 
     @classmethod
     def reset_timestamp(cls):
-        cls.timestamp = 0
+        cls.framecount = 0
         cls.timer = 0
+        MachineDevice.framecount = 0
+        Collisions_Object.framecount = 0
 
     @classmethod
     def update_timestamp(cls, dts):
-        cls.timestamp += 1
+        cls.framecount += 1
         cls.timer += dts
+        MachineDevice.framecount = cls.framecount
+        MachineDevice.timer = cls.timer
+        Collisions_Object.framecount = cls.framecount
+        Collisions_Object.timer = cls.timer
 
     @classmethod
     def client_update(cls):

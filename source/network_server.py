@@ -257,7 +257,7 @@ def set_machine_custom_physics_mode(args):
 def get_machine_custom_physics_mode(args):
 	machine = main.destroyables_items[args["machine_id"]]
 	state = {
-		"timestamp": main.timestamp,
+		"timestamp": main.framecount,
 		"timestep": main.timestep,
 		"custom_physics_mode": machine.flag_custom_physics_mode
 	}
@@ -348,7 +348,7 @@ def get_mobile_parts_list(args):
 def get_machine_gun_state(args):
 	machine = main.destroyables_items[args["machine_id"]]
 	state = {
-		"timestamp": main.timestamp,
+		"timestamp": main.framecount,
 		"timestep": main.timestep,
 		"MachineGunDevices": {}
 	}
@@ -376,7 +376,7 @@ def get_missiles_device_slots_state(args):
 	md = machine.get_device("MissilesDevice")
 	if md is not None:
 		state = {
-			"timestamp": main.timestamp,
+			"timestamp": main.framecount,
 			"timestep": main.timestep,
 			"missiles_slots": md.get_missiles_state()
 		}
@@ -431,7 +431,7 @@ def deactivate_machine_gun(args):
 def get_health(args):
 	machine = main.destroyables_items[args["machine_id"]]
 	state = {
-		"timestamp": main.timestamp,
+		"timestamp": main.framecount,
 		"timestep": main.timestep,
 		"health_level": machine.get_health_level()
 	}
@@ -453,7 +453,7 @@ def get_target_idx(args):
 	td = machine.get_device("TargettingDevice")
 	if td is not None:
 		state = {
-			"timestamp": main.timestamp,
+			"timestamp": main.framecount,
 			"timestep": main.timestep,
 			"target_idx": td.get_target_id()
 		}
@@ -462,7 +462,7 @@ def get_target_idx(args):
 			print(str(state))
 	else:
 		state = {
-			"timestamp": main.timestamp,
+			"timestamp": main.framecount,
 			"timestep": main.timestep,
 			"target_idx": 0
 		}
@@ -523,7 +523,7 @@ def is_autopilot_activated(args):
 	apctrl = machine.get_device("AutopilotControlDevice")
 	if apctrl is not None:
 		state = {
-			"timestamp": main.timestamp,
+			"timestamp": main.framecount,
 			"timestep": main.timestep,
 			"autopilot": apctrl.is_activated()
 		}
@@ -532,7 +532,7 @@ def is_autopilot_activated(args):
 			print(str(state))
 	else:
 		state = {
-			"timestamp": main.timestamp,
+			"timestamp": main.framecount,
 			"timestep": main.timestep,
 			"autopilot": False
 		}
@@ -544,7 +544,7 @@ def is_ia_activated(args):
 	iactrl = machine.get_device("IAControlDevice")
 	if iactrl is not None:
 		state = {
-			"timestamp": main.timestamp,
+			"timestamp": main.framecount,
 			"timestep": main.timestep,
 			"ia": iactrl.is_activated()
 		}
@@ -553,7 +553,7 @@ def is_ia_activated(args):
 			print(str(state))
 	else:
 		state = {
-			"timestamp": main.timestamp,
+			"timestamp": main.framecount,
 			"timestep": main.timestep,
 			"ia": False
 		}
@@ -565,7 +565,7 @@ def is_user_control_activated(args):
 	uctrl = machine.get_device("UserControlDevice")
 	if uctrl is not None:
 		state = {
-			"timestamp": main.timestamp,
+			"timestamp": main.framecount,
 			"timestep": main.timestep,
 			"user": uctrl.is_activated()
 		}
@@ -574,7 +574,7 @@ def is_user_control_activated(args):
 			print(str(state))
 	else:
 		state = {
-			"timestamp": main.timestamp,
+			"timestamp": main.framecount,
 			"timestep": main.timestep,
 			"user": False
 		}
@@ -662,7 +662,7 @@ def get_plane_state(args):
 	rotation = machine.get_Euler()
 	v_move = machine.get_move_vector()
 	state = {
-		"timestamp": main.timestamp,
+		"timestamp": main.framecount,
 		"timestep": main.timestep,
 		"position": [position.x, position.y, position.z],
 		"Euler_angles": [rotation.x, rotation.y, rotation.z],
@@ -743,7 +743,7 @@ def set_plane_thrust(args):
 def get_plane_thrust(args):
 	machine = main.destroyables_items[args["plane_id"]]
 	state = {
-		"timestamp": main.timestamp,
+		"timestamp": main.framecount,
 		"timestep": main.timestep,
 		"thrust_level": machine.get_thrust_level()
 	}
@@ -899,7 +899,7 @@ def get_missile_launcher_state(args):
 		target_id = "- ! No TargettingDevice ! -"
 		target_locked = False
 	state = {
-		"timestamp": main.timestamp,
+		"timestamp": main.framecount,
 		"timestep": main.timestep,
 		"position": [position.x, position.y, position.z],
 		"Euler_angles": [rotation.x, rotation.y, rotation.z],
@@ -940,7 +940,7 @@ def get_missile_state(args):
 	v_move = machine.get_move_vector()
 	h_spd, v_spd = machine.get_world_speed()
 	state = {
-		"timestamp": main.timestamp,
+		"timestamp": main.framecount,
 		"timestep": main.timestep,
 		"type": Destroyable_Machine.types_labels[machine.type],
 		"position": [position.x, position.y, position.z],
