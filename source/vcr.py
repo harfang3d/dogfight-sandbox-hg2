@@ -111,7 +111,7 @@ def init():
 
         c.execute('''CREATE TABLE IF NOT EXISTS users(id_user INTEGER PRIMARY KEY, name TEXT, info TEXT)''')
         c.execute('''CREATE TABLE IF NOT EXISTS records(id_rec INTEGER PRIMARY KEY, name TEXT, min_clock FLOAT, max_clock FLOAT, fps INT,scene_items TEXT, id_user INTEGER REFERENCES users, CONSTRAINT fk_users FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE)''')
-        c.execute('''CREATE TABLE IF NOT EXISTS events(id_rec INTEGER REFERENCES records, c FLOAT, v TEXT)''')
+        c.execute('''CREATE TABLE IF NOT EXISTS events(id_rec INTEGER, c FLOAT, v TEXT)''')
         
         # add default user
         if table_users_exists is None:
@@ -372,6 +372,13 @@ def update_play(main, dt):
                     item = v
                 else:
                     eval(p["load"])
+    # Events:
+    c.execute(f"SELECT * FROM events where id_rec={current_id_play} and c <= {timer + 2} and c >= {timer - 2} ORDER BY c DESC;")
+    r = c.fetchall()
+    if r is not None and len(r)>0:
+        print("----------EVENTS !")
+        for row in r:
+            print("timestamp:" + str(row["c"]) + " - value:" + row["v"])
 
     if not pausing:
         timer += hg.time_to_sec_f(dt)

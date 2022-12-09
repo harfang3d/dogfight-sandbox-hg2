@@ -1714,7 +1714,7 @@ class Aircraft(Destroyable_Machine):
         for i in range(n):
             mgd = self.get_device("MachineGunDevice_%02d" % i)
             if mgd is not None:
-                mgd.stop_machine_gun()
+                mgd.deactivate()
 
         self.wreck = True
 
