@@ -1147,6 +1147,7 @@ class Main:
         #cls.texts_display_list = []
         Overlays.texts2D_display_list = []
         Overlays.texts3D_display_list = []
+        Overlays.primitives3D_display_list = []
         Overlays.lines = []
 
     @classmethod
@@ -1223,6 +1224,7 @@ class Main:
             hg.SetViewClear(vid, hg.CF_Depth, 0, 1.0, 0)
             hg.SetViewTransform(vid, vs_left.view, vs_left.proj)
             eye_left = cls.vr_state.head * cls.vr_state.left.offset
+            Overlays.display_primitives3D(vid, eye_left)
             Overlays.display_texts3D(vid, eye_left)
             Overlays.draw_lines(vid)
             vid += 1
@@ -1233,6 +1235,7 @@ class Main:
             hg.SetViewClear(vid, hg.CF_Depth, 0, 1.0, 0)
             hg.SetViewTransform(vid, cls.vr_viewstate.vs_right.view, cls.vr_viewstate.vs_right.proj)
             eye_right = cls.vr_state.head * cls.vr_state.right.offset
+            Overlays.display_primitives3D(vid, eye_right)
             Overlays.display_texts3D(vid, eye_right)
             Overlays.draw_lines(vid)
             vid += 1
@@ -1366,6 +1369,7 @@ class Main:
 
         #Overlays.add_text3D("HELLO WORLD", hg.Vec3(0, 50, 200), 1, hg.Color.Red)
 
+        Overlays.display_primitives3D(vid, cls.scene.GetCurrentCamera().GetTransform().GetWorld())
         Overlays.display_texts3D(vid, cls.scene.GetCurrentCamera().GetTransform().GetWorld())
         Overlays.draw_lines(vid)
         if cls.flag_display_physics_debug:

@@ -10,6 +10,7 @@ import data_converter as dc
 import sqlite3
 import Machines
 import MissileLauncherS400
+from overlays import *
 
 flag_init = False
 conn = None
@@ -51,6 +52,12 @@ fps_record = 60
 
 state = "disable"
 request_state = "disable"
+
+color_before_event = hg.Color(1, 1, 0, 1)
+color_after_event = hg.Color(1, 0, 0, 1)
+event_max_size = 20
+event_timer_bound_futur = 0.25
+event_timer_bound_past = 2
 
 # Create recordable items from dogfight scene
 def setup_items(main):
@@ -306,8 +313,6 @@ def start_play(main):
             playing = True
 
     
-
-
 def stop_play(main):
     global playing, pausing
     playing = False
@@ -372,13 +377,27 @@ def update_play(main, dt):
                     item = v
                 else:
                     eval(p["load"])
+    
     # Events:
-    c.execute(f"SELECT * FROM events where id_rec={current_id_play} and c <= {timer + 2} and c >= {timer - 2} ORDER BY c DESC;")
+    c.execute(f"SELECT * FROM events where id_rec={current_id_play} and c <= {timer + event_timer_bound_futur} and c >= {timer - event_timer_bound_past} ORDER BY c DESC;")
     r = c.fetchall()
     if r is not None and len(r)>0:
-        print("----------EVENTS !")
         for row in r:
-            print("timestamp:" + str(row["c"]) + " - value:" + row["v"])
+            #print("timestamp:" + str(row["c"]) + " - value:" + row["v"])
+            v = row["v"].split(":")
+            if v[0]=="hit":
+                if timer < row["c"]:
+                    t = 1 - (row["c"] - timer) / event_timer_bound_futur
+                    c = hg.Color(color_before_event)
+                else:
+                    t =  1 - (timer - row["c"]) / event_timer_bound_past
+                    c = hg.Color(color_after_event)
+                
+                c.a = t
+                
+                if t > 1e-5:
+                    Overlays.add_circle3D(dc.deserialize_vec3(v[2]), float(v[1]) * event_max_size * t, c)
+           
 
     if not pausing:
         timer += hg.time_to_sec_f(dt)
