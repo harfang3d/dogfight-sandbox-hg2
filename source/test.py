@@ -8,12 +8,14 @@ hg.InputInit()
 hg.WindowSystemInit()
 
 res_x, res_y = 600, 800
-win = hg.RenderInit('Harfang - Read Gamepad', res_x, res_y, hg.RF_VSync)
+win = hg.NewWindow(res_x, res_y)
+hg.RenderInit(win, hg.RT_OpenGL)
+hg.RenderReset(res_x, res_y, hg.RF_MSAA4X | hg.RF_MaxAnisotropy)
 
-hg.AddAssetsFolder('assets_compiled')
+hg.AddAssetsFolder("assets_compiled")
 
-imgui_prg = hg.LoadProgramFromAssets('core/shader/imgui')
-imgui_img_prg = hg.LoadProgramFromAssets('core/shader/imgui_image')
+imgui_prg = hg.LoadProgramFromAssets("core/shader/imgui")
+imgui_img_prg = hg.LoadProgramFromAssets("core/shader/imgui_image")
 
 hg.ImGuiInit(10, imgui_prg, imgui_img_prg)
 
@@ -21,11 +23,14 @@ hg.ImGuiInit(10, imgui_prg, imgui_img_prg)
 while not hg.ReadKeyboard().Key(hg.K_Escape):
 	hg.ImGuiBeginFrame(res_x, res_y, hg.TickClock(), hg.ReadMouse(), hg.ReadKeyboard())
 
-	for i in range(16):
-		generic_controller = hg.Joystick(f"generic_controller_slot_{i}")
+
+	joysticks = hg.GetJoystickNames()
+
+	for joystick_name in joysticks:
+		generic_controller = hg.Joystick(joystick_name)
 		generic_controller.Update()
 		if generic_controller.IsConnected():
-			if hg.ImGuiCollapsingHeader(f"generic_controller_slot_{i}"):
+			if hg.ImGuiCollapsingHeader(joystick_name):
 				hg.ImGuiIndent()
 				for j in range(generic_controller.ButtonsCount()):
 					hg.ImGuiText(f"button {j}: {generic_controller.Down(j)}")
@@ -33,27 +38,29 @@ while not hg.ReadKeyboard().Key(hg.K_Escape):
 					hg.ImGuiText(f"axe {j}: {generic_controller.Axes(j)}")
 				hg.ImGuiUnindent()
 		else:
-			hg.ImGuiText(f"Generic Controller: {i} not connected")
+			hg.ImGuiText(f"Joystick not connected - " + joystick_name)
+	
+	gamespads = hg.GetGamepadNames()
+	
+	for gp_name in gamespads:
+		gamepad_controller = hg.Gamepad(gp_name)
+		gamepad_controller.Update()
+		if gamepad_controller.IsConnected():
+			if hg.ImGuiCollapsingHeader("gamepad: " + gp_name):
+				hg.ImGuiIndent()
+				for j in range(16):
+					hg.ImGuiText(f"button {j}: {gamepad_controller.Down(j)}")
+				for j in range(10):
+					hg.ImGuiText(f"axe {j}: {gamepad_controller.Axes(j)}")
+				hg.ImGuiUnindent()
+		else:
+			hg.ImGuiText("Gamepad Controller not connected - " + gp_name)
+	
 
-
-	gamepad_controller = hg.Gamepad()
-	gamepad_controller.Update()
-	if gamepad_controller.IsConnected():
-		if hg.ImGuiCollapsingHeader("gamepad"):
-			hg.ImGuiIndent()
-			for j in range(10):
-				hg.ImGuiText(f"button {j}: {gamepad_controller.Down(j)}")
-			for j in range(10):
-				hg.ImGuiText(f"axe {j}: {gamepad_controller.Axes(j)}")
-			hg.ImGuiUnindent()
-	else:
-		hg.ImGuiText("Gamepad Controller not connected")
-
-
-
-	hg.SetView2D(0, res_x, res_y, -1, 1, 1, 100, hg.CF_Color | hg.CF_Depth, hg.Color.Black, 1, 0)
+	hg.SetView2D(0, 0, 0, res_x, res_y, -1, 1, hg.CF_Color | hg.CF_Depth, hg.Color.Black, 1, 0)
 	hg.ImGuiEndFrame(0)
 	hg.Frame()
 	hg.UpdateWindow(win)
 
+hg.RenderShutdown()
 hg.DestroyWindow(win)
