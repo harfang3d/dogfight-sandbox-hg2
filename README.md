@@ -34,6 +34,37 @@ The source code and the graphics assets are made available for studying purpose.
   * HTC Vive Pro
   * Meta Quest 2 (in Oculus Link mode)
 
+
+## Record / Replay API overview:
+
+1. Choose the mission you want to record.  
+2. Type "F9" to open the recorder interface:  
+![Recorder](screenshots/recorder_02.png)  
+  * `Add user` : You can add a user. Each user has his own list of records.  
+  * `Users` : Use this combo boxe to selected the user.  
+  * `Item`: List of recordable items.  
+  * `Start recording`: Record the simulation.  
+  * `Recording FPS` : Recording frequency (Frame Per Second).  
+  * `Records`: Select record to replay.  
+  * `Enter replay mode`: Replayer.
+
+3. Replay:  
+![Recorder](screenshots/recorder_03.png)  
+* Selected the user and record you want to replay.  
+* Press `Start play`  
+  The items are created. You can pause the replay, and move the Timeline cursor.  
+![Recorder](screenshots/recorder_04.png)  
+* `Display selected item`: Display a sight on selected item, to identify the item in 3D view.  
+* `Prev frame`, `Next frame`: Backward / foreward frame by frame. You can also press `-`, `+` on keyboard.  
+
+### Events:
+Hits (missiles, machine gun, crashes) are recorded and displayed as circles during replay:  
+![Recorder](screenshots/recorder_05.png)
+Yellow circles : before the event  
+Red circles : after the event  
+The maximum size of the circle depends on the power of the collision.
+
+
 ## Network mode overview
 
 The "Network" mode allows you to control the planes from a third party machine.  
