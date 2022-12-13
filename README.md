@@ -50,7 +50,7 @@ The source code and the graphics assets are made available for studying purpose.
 
 3. Replay:  
 ![Recorder](screenshots/recorder_03.png)  
-* Selected the user and record you want to replay.  
+* Select the user and record you want to replay.  
 * Press `Start play`  
   The items are created. You can pause the replay, and move the Timeline cursor.  
 ![Recorder](screenshots/recorder_04.png)  
