@@ -226,7 +226,7 @@ class Missions:
 
 		# --------- Views setup
 		main.setup_views_carousel(True)
-		main.set_view_carousel("Aircraft_ally_" + str(main.num_players_allies))
+		main.set_view_carousel("Aircraft_ally_" + str(len(main.players_allies)))
 		main.set_track_view("back")
 
 		main.user_aircraft = main.get_player_from_caroursel_id(main.views_carousel[main.views_carousel_ptr])
@@ -269,7 +269,7 @@ class Missions:
 		for ally in main.players_allies:
 			if ally.wreck: allies_wreck += 1
 
-		if main.num_players_allies == allies_wreck:
+		if len(main.players_allies) == allies_wreck:
 			mission.failed = True
 			print("MISSION FAILED !")
 			return True
@@ -329,7 +329,7 @@ class Missions:
 				ia.activate()
 
 		main.setup_views_carousel(False)
-		main.set_view_carousel("Aircraft_ally_" + str(main.num_players_allies))
+		main.set_view_carousel("Aircraft_ally_" + str(len(main.players_allies)))
 		main.set_track_view("back")
 
 		main.user_aircraft = main.get_player_from_caroursel_id(main.views_carousel[main.views_carousel_ptr])
@@ -342,7 +342,7 @@ class Missions:
 			uctrl = main.user_aircraft.get_device("UserControlDevice")
 			if uctrl is not None:
 				uctrl.activate()
-			if main.num_players_allies < 3:
+			if len(main.players_allies) < 3:
 				main.user_aircraft.reset_thrust_level(1)
 				main.user_aircraft.activate_post_combustion()
 
@@ -356,10 +356,10 @@ class Missions:
 		for ally in main.players_allies:
 			if ally.wreck: allies_wreck += 1
 
-		if main.num_players_ennemies == ennemies_wreck:
+		if len(main.players_ennemies) == ennemies_wreck:
 			mission.failed = False
 			return True
-		if main.num_players_allies == allies_wreck:
+		if len(main.players_allies) == allies_wreck:
 			mission.failed = True
 			return True
 
@@ -412,7 +412,7 @@ class Missions:
 				ia.activate()
 
 		main.setup_views_carousel()
-		main.set_view_carousel("Aircraft_ally_" + str(main.num_players_allies))
+		main.set_view_carousel("Aircraft_ally_" + str(len(main.players_allies)))
 		main.set_track_view("back")
 
 		main.user_aircraft = main.get_player_from_caroursel_id(main.views_carousel[main.views_carousel_ptr])
@@ -425,7 +425,7 @@ class Missions:
 			uctrl = main.user_aircraft.get_device("UserControlDevice")
 			if uctrl is not None:
 				uctrl.activate()
-			if main.num_players_allies < 4:
+			if len(main.players_allies) < 4:
 				main.user_aircraft.reset_thrust_level(1)
 				main.user_aircraft.activate_post_combustion()
 
@@ -582,7 +582,7 @@ class Missions:
 		cls.validation_state = tools.create_stereo_sound_state(hg.SR_Once)
 		cls.validation_state.volume = 0.5
 
-		cls.missions.append(Mission("Network mode", ["Eurofighter"], ["Rafale"], 1, 1, Missions.network_mode_setup, Missions.network_mode_end_test, Missions.network_mode_end_phase_update))
+		cls.missions.append(Mission("Network mode", ["Eurofighter"]*4, ["Rafale"]*4, 1, 1, Missions.network_mode_setup, Missions.network_mode_end_test, Missions.network_mode_end_phase_update))
 
 		cls.missions.append(Mission("Training with Rafale", [], ["Rafale"], 0, 1, Missions.mission_setup_training, Missions.mission_training_end_test, Missions.mission_training_end_phase_update))
 		cls.missions.append(Mission("Training with Eurofighter", [], ["Eurofighter"], 0, 1, Missions.mission_setup_training, Missions.mission_training_end_test, Missions.mission_training_end_phase_update))

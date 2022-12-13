@@ -23,6 +23,8 @@ class SmartCamera:
 		self.flag_fix_mouse_controls_rotation = True  # True = FIX camera rotation controlled with mouse
 		self.flag_reseting_rotation = False
 
+		self.flag_inertia = True
+
 		self.type = cam_type
 
 		self.keyboard = keyboard
@@ -175,15 +177,19 @@ class SmartCamera:
 			self.update_tactical_camera(camera, dts)
 
 	def update_target_point(self, dts):
-		v = self.target_node.GetTransform().GetPos() - self.target_point
-		self.target_point += v * self.pos_inertia * dts * 60
-		mat_n = hg.TransformationMat4(self.target_node.GetTransform().GetPos(), self.target_node.GetTransform().GetRot())
-		rz = hg.Cross(hg.GetZ(self.target_matrix), hg.GetZ(mat_n))
-		ry = hg.Cross(hg.GetY(self.target_matrix), hg.GetY(mat_n))
-		mr = rz + ry
-		le = hg.Len(mr)
-		if le > 0.001:
-			self.target_matrix = ms.MathsSupp.rotate_matrix(self.target_matrix, hg.Normalize(mr), le * self.rot_inertia * dts * 60)
+		if self.flag_inertia:
+			v = self.target_node.GetTransform().GetPos() - self.target_point
+			self.target_point += v * self.pos_inertia * dts * 60
+			mat_n = hg.TransformationMat4(self.target_node.GetTransform().GetPos(), self.target_node.GetTransform().GetRot())
+			rz = hg.Cross(hg.GetZ(self.target_matrix), hg.GetZ(mat_n))
+			ry = hg.Cross(hg.GetY(self.target_matrix), hg.GetY(mat_n))
+			mr = rz + ry
+			le = hg.Len(mr)
+			if le > 0.001:
+				self.target_matrix = ms.MathsSupp.rotate_matrix(self.target_matrix, hg.Normalize(mr), le * self.rot_inertia * dts * 60)
+		else:
+			self.target_point = self.target_node.GetTransform().GetPos()
+			self.target_matrix = hg.RotationMat3(hg.GetR(self.target_node.GetTransform().GetWorld()))
 
 	# ============== Camera fix =====================
 	def enable_mouse_controls_fix_rotation(self):

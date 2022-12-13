@@ -1,38 +1,47 @@
 # Copyright (C) 2018-2021 Eric Kernin, NWNC HARFANG.
 
 import harfang as hg
-from math import atan
+from math import atan, cos, sin, pi
 
 class Overlays:
+
+	uniforms_values_list = hg.UniformSetValueList()
+	uniforms_textures_list = hg.UniformSetTextureList()
+	flat_render_state = None
+
 	# ================= Lines 3D
 	vtx_decl_lines = None
-	lines_program = None
+	shader_flat = None
 	lines = []
 
 	# ================= Texts 3D
 	font_program = None
 	debug_font = None
 	text_matrx = None
-	text_uniform_set_values = hg.UniformSetValueList()
-	text_uniform_set_texture_list = hg.UniformSetTextureList()
-	text_render_state = None
 	texts3D_display_list = []
 	texts2D_display_list = []
 
+	# ================= Primitives 3D
+	vtx_layout_flat = None
+	vtx_flat = None
+	uniforms_values_list = hg.UniformSetValueList()
+	uniforms_textures_list = hg.UniformSetTextureList()
+	circle_num_sections = 32
+	primitives3D_display_list = []
+
 	@classmethod
 	def init(cls):
-		cls.vtx_decl_lines = hg.VertexLayout()
-		cls.vtx_decl_lines.Begin()
-		cls.vtx_decl_lines.Add(hg.A_Position, 3, hg.AT_Float)
-		cls.vtx_decl_lines.Add(hg.A_Color0, 3, hg.AT_Float)
-		cls.vtx_decl_lines.End()
-		cls.lines_program = hg.LoadProgramFromAssets("shaders/pos_rgb")
+		cls.vtx_decl_lines = hg. VertexLayoutPosFloatColorFloat()
+		cls.shader_flat = hg.LoadProgramFromAssets("shaders/pos_rgb")
 
 		cls.font_program = hg.LoadProgramFromAssets("core/shader/font.vsb", "core/shader/font.fsb")
 		cls.debug_font = hg.LoadFontFromAssets("font/default.ttf", 64)
 		cls.text_matrx = hg.TransformationMat4(hg.Vec3(0, 0, 0), hg.Vec3(hg.Deg(0), hg.Deg(0), hg.Deg(0)), hg.Vec3(1, -1, 1))
-		cls.text_uniform_set_values.push_back(hg.MakeUniformSetValue("u_color", hg.Vec4(1, 1, 0, 1)))
-		cls.text_render_state = hg.ComputeRenderState(hg.BM_Alpha, hg.DT_Disabled, hg.FC_Disabled)
+		cls.uniforms_values_list.push_back(hg.MakeUniformSetValue("u_color", hg.Vec4(1, 1, 0, 1)))
+		cls.flat_render_state = hg.ComputeRenderState(hg.BM_Alpha, hg.DT_Disabled, hg.FC_Disabled)
+
+		cls.vtx_layout_flat = hg. VertexLayoutPosFloatColorFloat()
+		cls.vtx_flat = hg.Vertices(cls.vtx_layout_flat, cls.circle_num_sections + 1)
 
 	@classmethod
 	def display_named_vector(cls, position, direction, label, label_offset2D, color, label_size=0.012):
@@ -71,11 +80,11 @@ class Overlays:
 		for i, line in enumerate(cls.lines):
 			vtx.Begin(i * 2).SetPos(line[0]).SetColor0(line[2]).End()
 			vtx.Begin(i * 2 + 1).SetPos(line[1]).SetColor0(line[3]).End()
-		hg.DrawLines(vid, vtx, cls.lines_program)
+		hg.DrawLines(vid, vtx, cls.shader_flat)
 
 	@classmethod
 	def display_physics_debug(cls, vid, physics):
-		physics.RenderCollision(vid, cls.vtx_decl_lines, cls.lines_program, hg.ComputeRenderState(hg.BM_Opaque, hg.DT_Disabled, hg.FC_Disabled), 1)
+		physics.RenderCollision(vid, cls.vtx_decl_lines, cls.shader_flat, hg.ComputeRenderState(hg.BM_Opaque, hg.DT_Disabled, hg.FC_Disabled), 1)
 
 	@classmethod
 	def get_2d(cls, camera, point3d: hg.Vec3, resolution: hg.Vec2):
@@ -105,6 +114,37 @@ class Overlays:
 	def add_text3D(cls, text, pos, size, color, h_align=hg.DTHA_Left):
 		cls.texts3D_display_list.append({"text": text, "pos": pos, "size": size, "color": color, "h_align": h_align, "font": cls.debug_font})
 
+
+	@classmethod
+	def add_circle3D(cls, position:hg.Vec3, r:float, color:hg.Color):
+		cls.primitives3D_display_list.append({"type": "circle", "pos": position, "r": r, "color":color})
+
+	@classmethod
+	def display_circle3D(cls, vid, camera_rotation_matrix, pos, r, color, angle_start=0, angle=2*pi):
+		cls.vtx_flat.Clear()
+		cls.uniforms_values_list.clear()
+		cls.uniforms_textures_list.clear()
+		matrix = hg.TransformationMat4(pos, camera_rotation_matrix)
+		cls.vtx_flat.Begin(0).SetPos(pos).SetColor0(color).SetTexCoord0(hg.Vec2(0, 0)).End()
+
+		idx = []
+		step = angle / cls.circle_num_sections
+
+		for i in range(cls.circle_num_sections + 1):
+			alpha = i * step + angle_start
+			cls.vtx_flat.Begin(i + 1).SetPos(matrix * hg.Vec3(cos(alpha) * r, sin(alpha) * r, 0)).SetColor0(color).End()
+			if i > 0:
+				idx += [0, i + 1, i]
+
+		hg.DrawTriangles(vid, idx, cls.vtx_flat, cls.shader_flat, cls.uniforms_values_list, cls.uniforms_textures_list, cls.flat_render_state)
+
+	@classmethod
+	def display_primitives3D(cls, vid, camera_matrix):
+		rotmat = hg.GetRotationMatrix(camera_matrix)
+		for primitive in cls.primitives3D_display_list:
+			if primitive["type"] == "circle":
+				cls.display_circle3D(vid, rotmat, primitive["pos"], primitive["r"], primitive["color"])
+
 	@classmethod
 	def display_texts3D(cls, vid, camera_matrix):
 		for txt in cls.texts3D_display_list:
@@ -112,7 +152,6 @@ class Overlays:
 
 	@classmethod
 	def display_text3D(cls, vid, camera_matrix, text, pos, size, font, color, h_align=hg.DTHA_Center):
-
 		"""
 		cam_pos = hg.GetT(cam_mat)
 		az = hg.Normalize(pos-cam_pos)
@@ -121,13 +160,13 @@ class Overlays:
 		mat = hg.Mat3(ax, ay, az)
 		"""
 		mat = hg.GetRotationMatrix(camera_matrix)
-		cls.text_uniform_set_values.clear()
-		cls.text_uniform_set_values.push_back(hg.MakeUniformSetValue("u_color", hg.Vec4(color.r, color.g, color.b, color.a)))  # Color
+		cls.uniforms_values_list.clear()
+		cls.uniforms_values_list.push_back(hg.MakeUniformSetValue("u_color", hg.Vec4(color.r, color.g, color.b, color.a)))  # Color
 		hg.DrawText(vid, font, text, cls.font_program, "u_tex", 0,
 					hg.TransformationMat4(pos, mat, hg.Vec3(1, -1, 1) * size),  # * (size * resolution.y / 64)),
 					hg.Vec3(0, 0, 0),
 					h_align, hg.DTVA_Bottom,
-					cls.text_uniform_set_values, cls.text_uniform_set_texture_list, cls.text_render_state)
+					cls.uniforms_values_list, cls.uniforms_textures_list, cls.flat_render_state)
 
 	@classmethod
 	def add_text2D_from_3D_position(cls, text, pos3D, offset2D, size, color, font=None, h_align=hg.DTHA_Left):
@@ -153,13 +192,13 @@ class Overlays:
 
 	@classmethod
 	def display_text2D(cls, vid, resolution, text, pos, size, font, color, h_align):
-		cls.text_uniform_set_values.clear()
-		cls.text_uniform_set_values.push_back(hg.MakeUniformSetValue("u_color", hg.Vec4(color.r, color.g, color.b, color.a)))  # Color
+		cls.uniforms_values_list.clear()
+		cls.uniforms_values_list.push_back(hg.MakeUniformSetValue("u_color", hg.Vec4(color.r, color.g, color.b, color.a)))  # Color
 		hg.DrawText(vid, font, text, cls.font_program, "u_tex", 0,
 					hg.TransformationMat4(hg.Vec3(pos.x * resolution.x, pos.y * resolution.y, 1), hg.Vec3(0, 0, 0), hg.Vec3(1, -1, 1) * (size * resolution.y / 64)),
 					hg.Vec3(0, 0, 0),
 					h_align, hg.DTVA_Bottom,
-					cls.text_uniform_set_values, cls.text_uniform_set_texture_list, cls.text_render_state)
+					cls.uniforms_values_list, cls.uniforms_textures_list, cls.flat_render_state)
 
 	@classmethod
 	def display_texts2D_vr(cls, vid, head_matrix: hg.Mat4, z_near, z_far, resolution, vr_matrix, vr_hud_pos):
@@ -180,10 +219,10 @@ class Overlays:
 		scale_vr = hg.Vec3(scale2D.x / resolution.x * vr_hud_pos.x, scale2D.y / resolution.y * vr_hud_pos.y, 1)
 		matrix = vr_matrix * hg.TransformationMat4(pos_vr, hg.Vec3(0, 0, 0), scale_vr)
 
-		cls.text_uniform_set_values.clear()
-		cls.text_uniform_set_values.push_back(hg.MakeUniformSetValue("u_color", hg.Vec4(color.r, color.g, color.b, color.a)))  # Color
+		cls.uniforms_values_list.clear()
+		cls.uniforms_values_list.push_back(hg.MakeUniformSetValue("u_color", hg.Vec4(color.r, color.g, color.b, color.a)))  # Color
 		hg.DrawText(v_id, font, text, cls.font_program, "u_tex", 0,
 					matrix,
 					hg.Vec3(0, 0, 0),
 					h_align, hg.DTVA_Bottom,
-					cls.text_uniform_set_values, cls.text_uniform_set_texture_list, cls.text_render_state)
+					cls.uniforms_values_list, cls.uniforms_textures_list, cls.flat_render_state)

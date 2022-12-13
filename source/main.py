@@ -138,7 +138,7 @@ Main.pipeline = hg.CreateForwardPipeline()
 hg.ResetClock()
 
 # ------------------- Setup state:
-Main.current_state = states.init_menu_phase()
+Main.current_state = states.init_menu_state()
 
 # ------------------- Main loop:
 
@@ -153,7 +153,6 @@ while not Main.flag_exit:
             
         Main.update_window()
 
-        
 
 # ----------------- Exit:
 

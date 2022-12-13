@@ -57,6 +57,9 @@ class LandingTarget:
 
 class MachineDevice:
 
+    framecount = 0 #Updated with Main.framecount
+    timer = 0
+
     # Start state: activated or not.
     def __init__(self, name, machine, start_state=False):
         self.activated = start_state
@@ -231,6 +234,11 @@ class TargettingDevice(MachineDevice):
             if target.wreck or not target.activated:
                 self.next_target()
 
+    def get_target_name(self):
+        if self.target_id == 0:
+            return None
+        return self.targets[self.target_id-1].name
+
     def set_target_by_name(self, target_name):
         tid = 0
         for i, tgt in enumerate(self.targets):
@@ -334,10 +342,10 @@ class MissilesDevice(MachineDevice):
         self.flag_hide_fitted_missiles = False
 
     def destroy(self):
-        if self.missiles is not None:
-            for missile in self.missiles:
-                if missile is not None:
-                    missile.destroy()
+        #if self.missiles is not None:
+        #    for missile in self.missiles:
+        #        if missile is not None:
+        #            missile.destroy()
         self.missiles = None
         self.num_slots = 0
         self.slots_nodes = None
@@ -510,6 +518,8 @@ class MachineGun(MachineDevice):
                             break
 
                     """
+
+                    #Collision using raycast:
                     rc_len = hg.Len(p1 - pos_fb)
                     hit = self.scene_physics.RaycastFirstHit(self.scene, pos_fb, p1)
                     if 0 < hit.t < rc_len:
@@ -519,7 +529,7 @@ class MachineGun(MachineDevice):
                                 cnds = target.get_collision_nodes()
                                 for nd in cnds:
                                     if nd == hit.node:
-                                        target.hit(0.1)
+                                        target.hit(0.1, hit.P)
                                         bullet.v_move = target.v_move
                                         self.strike(i)
                                         break
@@ -537,18 +547,22 @@ class MachineGun(MachineDevice):
         self.bullets_particles.particles_cnt_max = int(num)
         self.bullets_particles.reset()
 
-    def fire_machine_gun(self):
+    def activate(self):
         if not self.wreck:
+            super().activate()
             self.bullets_particles.flow = 24 / 2
-
-    def stop_machine_gun(self):
+    
+    def deactivate(self):
+        super().deactivate()
         self.bullets_particles.flow = 0
 
+    """
     def is_gun_activated(self):
         if self.bullets_particles.flow == 0:
             return False
         else:
             return True
+    """
 
     def get_new_bullets_count(self):
         return self.bullets_particles.num_new
@@ -564,6 +578,7 @@ class ControlDevice(MachineDevice):
     CM_MOUSE = "Mouse"
     CM_LOGITECH_EXTREME_3DPRO = "Logitech extreme 3DPro"
     CM_LOGITECH_ATTACK_3 = "Logitech Attack 3"
+    CM_NONE = "None"
 
     keyboard = None
     mouse = None
@@ -1120,14 +1135,14 @@ class AircraftUserControlDevice(ControlDevice):
             n = self.machine.get_machinegun_count()
             for i in range(n):
                 mgd = self.machine.get_device("MachineGunDevice_%02d" % i)
-                if mgd is not None and not mgd.is_gun_activated():
-                    mgd.fire_machine_gun()
+                if mgd is not None and not mgd.is_activated():
+                    mgd.activate()
         elif ControlDevice.keyboard.Released(value):
             n = self.machine.get_machinegun_count()
             for i in range(n):
                 mgd = self.machine.get_device("MachineGunDevice_%02d" % i)
-                if mgd is not None and mgd.is_gun_activated():
-                    mgd.stop_machine_gun()
+                if mgd is not None and mgd.is_activated():
+                    mgd.deactivate()
 
     def fire_missile_kb(self, value):
         if ControlDevice.keyboard.Pressed(value):
@@ -1254,14 +1269,14 @@ class AircraftUserControlDevice(ControlDevice):
             n = self.machine.get_machinegun_count()
             for i in range(n):
                 mgd = self.machine.get_device("MachineGunDevice_%02d" % i)
-                if mgd is not None and not mgd.is_gun_activated():
-                    mgd.fire_machine_gun()
+                if mgd is not None and not mgd.is_activated():
+                    mgd.activate()
         elif ControlDevice.generic_controller.Released(value):
             n = self.machine.get_machinegun_count()
             for i in range(n):
                 mgd = self.machine.get_device("MachineGunDevice_%02d" % i)
-                if mgd is not None and mgd.is_gun_activated():
-                    mgd.stop_machine_gun()
+                if mgd is not None and mgd.is_activated():
+                    mgd.deactivate()
 
 
     def fire_missile_la3(self, value):
@@ -1388,14 +1403,14 @@ class AircraftUserControlDevice(ControlDevice):
             n = self.machine.get_machinegun_count()
             for i in range(n):
                 mgd = self.machine.get_device("MachineGunDevice_%02d" % i)
-                if mgd is not None and not mgd.is_gun_activated():
-                    mgd.fire_machine_gun()
+                if mgd is not None and not mgd.is_activated():
+                    mgd.activate()
         elif ControlDevice.gamepad.Released(value):
             n = self.machine.get_machinegun_count()
             for i in range(n):
                 mgd = self.machine.get_device("MachineGunDevice_%02d" % i)
-                if mgd is not None and mgd.is_gun_activated():
-                    mgd.stop_machine_gun()
+                if mgd is not None and mgd.is_activated():
+                    mgd.deactivate()
 
     def fire_missile_gp(self, value):
         if ControlDevice.gamepad.Pressed(value):
@@ -1758,8 +1773,8 @@ class AircraftIAControlDevice(ControlDevice):
                 n = aircraft.get_machinegun_count()
                 for i in range(n):
                     mgd = aircraft.get_device("MachineGunDevice_%02d" % i)
-                    if mgd is not None and mgd.is_gun_activated():
-                        mgd.stop_machine_gun()
+                    if mgd is not None and mgd.is_activated():
+                        mgd.deactivate()
 
                 self.IA_flag_go_to_target = False
                 if aircraft.flag_landed:
@@ -1784,8 +1799,8 @@ class AircraftIAControlDevice(ControlDevice):
             n = aircraft.get_machinegun_count()
             for i in range(n):
                 mgd = aircraft.get_device("MachineGunDevice_%02d" % i)
-                if mgd is not None and mgd.is_gun_activated():
-                    mgd.stop_machine_gun()
+                if mgd is not None and mgd.is_activated():
+                    mgd.deactivate()
             self.IA_flag_go_to_target = False
             aircraft.set_flaps_level(0)
             self.IA_flag_landing_target_found = False
@@ -1885,8 +1900,8 @@ class AircraftIAControlDevice(ControlDevice):
             n = aircraft.get_machinegun_count()
             for i in range(n):
                 mgd = aircraft.get_device("MachineGunDevice_%02d" % i)
-                if mgd is not None and mgd.is_gun_activated():
-                    mgd.stop_machine_gun()
+                if mgd is not None and mgd.is_activated():
+                    mgd.deactivate()
             autopilot.set_autopilot_altitude(self.IA_cruising_altitude)
             autopilot.set_autopilot_heading(0)
 
@@ -1916,8 +1931,8 @@ class AircraftIAControlDevice(ControlDevice):
                 n = aircraft.get_machinegun_count()
                 for i in range(n):
                     mgd = aircraft.get_device("MachineGunDevice_%02d" % i)
-                    if mgd is not None and mgd.is_gun_activated():
-                        mgd.stop_machine_gun()
+                    if mgd is not None and mgd.is_activated():
+                        mgd.deactivate()
                 self.IA_landing_target = self.get_nearest_landing_target(aircraft)
                 if self.IA_landing_target is not None:
                     self.IA_flag_landing_target_found = True
@@ -2059,14 +2074,14 @@ class AircraftIAControlDevice(ControlDevice):
                         n = aircraft.get_machinegun_count()
                         for i in range(n):
                             mgd = aircraft.get_device("MachineGunDevice_%02d" % i)
-                            if mgd is not None and not mgd.is_gun_activated():
-                                mgd.fire_machine_gun()
+                            if mgd is not None and not mgd.is_activated():
+                                mgd.activate()
                     else:
                         n = aircraft.get_machinegun_count()
                         for i in range(n):
                             mgd = aircraft.get_device("MachineGunDevice_%02d" % i)
-                            if mgd is not None and mgd.is_gun_activated():
-                                mgd.stop_machine_gun()
+                            if mgd is not None and mgd.is_activated():
+                                mgd.deactivate()
 
                     flag_missiles_ok = False
                     if md is not None:
@@ -2086,8 +2101,8 @@ class AircraftIAControlDevice(ControlDevice):
                     n = aircraft.get_machinegun_count()
                     for i in range(n):
                         mgd = aircraft.get_device("MachineGunDevice_%02d" % i)
-                        if mgd is not None and mgd.is_gun_activated():
-                            mgd.stop_machine_gun()
+                        if mgd is not None and mgd.is_activated():
+                            mgd.deactivate()
                     self.IA_flag_landing_target_found = False
                     self.IA_command = AircraftIAControlDevice.IA_COM_LANDING
                     # self.set_autopilot_altitude(self.IA_cruising_altitude)

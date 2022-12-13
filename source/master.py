@@ -30,6 +30,7 @@ from planet_render import *
 from WaterReflection import *
 from overlays import *
 from math import atan
+import vcr
 
 
 class Main:
@@ -42,6 +43,7 @@ class Main:
     flag_OpenGL = True
     antialiasing = 4
     flag_display_HUD = True
+    flag_display_recorder = False
 
     # Control devices
 
@@ -70,8 +72,11 @@ class Main:
     flag_exit = False
     win = None
 
-    timestamp = 0  # Frame count.
+    framecount = 0  # Frame count.
+    timer = 0 # clock in s (incremented at each frame)
+
     timestep = 1 / 60  # Frame dt
+    simulation_dt = 0 # dt in ns used by simulation (kinetics & renderer) 
 
     flag_network_mode = False
     flag_client_update_mode = False
@@ -126,8 +131,9 @@ class Main:
     current_state = None
     t = 0
     fading_to_next_state = False
+    next_state = "main" #Used to switch to replay state
     end_state_timer = 0
-    end_phase_following_aircraft = None
+    end_state_following_aircraft = None
 
     current_view = None
     camera = None
@@ -160,10 +166,6 @@ class Main:
     background_color = 0x1070a0ff  # 0xb9efffff
 
     ennemyaircraft_nodes = None
-    num_players_ennemies = 0
-    num_players_allies = 0
-    num_missile_launchers_allies = 0
-    num_missile_launchers_ennemies = 0
     players_allies = []
     players_ennemies = []
     players_sfx = []
@@ -217,7 +219,7 @@ class Main:
 
     #======= Aircrafts view:
     selected_aircraft_id = 0
-    selected_aircraft = None
+    selected_machine = None
 
     @classmethod
     def init(cls):
@@ -300,7 +302,7 @@ class Main:
         cls.camera_fps = cls.scene.GetNode("Camera_fps")
         cls.satellite_camera = cls.scene.GetNode("Camera_satellite")
         cls.smart_camera = SmartCamera(SmartCamera.TYPE_FOLLOW, cls.keyboard, cls.mouse)
-        #  Camera used in start phase :
+        #  Camera used in start state :
         cls.camera_intro = cls.scene.GetNode("Camera_intro")
 
         # Shadows setup
@@ -443,7 +445,19 @@ class Main:
         cls.num_fps = cls.num_fps / len(cls.nfps)
 
     @classmethod
+    def clear_scene(cls):
+        cls.selected_machine = None
+        cls.user_aircraft = None
+        cls.set_view_carousel("fps")
+        cls.destroy_players()
+        cls.destroy_sfx()
+        ParticlesEngine.reset_engines()
+        Destroyable_Machine.reset_machines()
+        cls.setup_views_carousel(False)
+
+    @classmethod
     def destroy_players(cls):
+        """
         for aircraft in cls.players_ennemies:
             aircraft.destroy()
         for aircraft in cls.players_allies:
@@ -456,6 +470,9 @@ class Main:
             ml.destroy()
         for ml in cls.missile_launchers_allies:
             ml.destroy()
+        """
+        for machine in cls.destroyables_list:
+            machine.destroy()
 
         for cockpit in cls.scene_cockpit_aircrafts:
             cockpit.destroy()
@@ -472,6 +489,17 @@ class Main:
 
         cls.scene_cockpit_aircrafts = []
 
+    @classmethod
+    def create_aircraft_carrier(cls, name, nationality):
+        carrier = Carrier(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality)
+        if carrier is not None:
+            if nationality == 1:
+                cls.aircraft_carrier_allies.append(carrier)
+            elif nationality == 2:
+                cls.aircraft_carrier_ennemies.append(carrier)
+            cls.destroyables_list.append(carrier)
+            carrier.add_to_update_list()
+
 
     @classmethod
     def create_aircraft_carriers(cls, num_allies, num_ennemies):
@@ -479,78 +507,109 @@ class Main:
         cls.aircraft_carrier_allies = []
         cls.aircraft_carrier_ennemies = []
         for i in range(num_allies):
-            carrier = Carrier("Ally_Carrier_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 1)
-            cls.aircraft_carrier_allies.append(carrier)
-            cls.destroyables_list.append(carrier)
-            carrier.add_to_update_list()
-
+            carrier = cls.create_aircraft_carrier("Ally_Carrier_" + str(i + 1), 1)
+            
         for i in range(num_ennemies):
-            carrier = Carrier("Ennemy_Carrier_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 2)
-            cls.aircraft_carrier_ennemies.append(carrier)
-            cls.destroyables_list.append(carrier)
-            carrier.add_to_update_list()
+            carrier = cls.create_aircraft_carrier("Ennemy_Carrier_" + str(i + 1), 2)
+
 
     @classmethod
-    def create_missiles(cls, machine:Destroyable_Machine, smoke_color):
+    def create_missile(cls, model_name, name, nationality):
+        if model_name == Sidewinder.model_name:
+            missile = Sidewinder(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality)
+        elif model_name == Meteor.model_name:
+            missile = Meteor(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality)
+        elif model_name == Mica.model_name:
+            missile = Mica(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality)
+        elif model_name == AIM_SL.model_name:
+            missile = AIM_SL(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality)
+        elif model_name == Karaoke.model_name:
+            missile = Karaoke(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality)
+        elif model_name == CFT.model_name:
+            missile = CFT(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality)
+        elif model_name == S400.model_name:
+            missile = S400(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality)
+        else:
+            missile = None
+        if missile is not None:
+            if nationality == 1:
+                cls.missiles_allies.append(missile)
+            elif nationality == 2:
+                cls.missiles_ennemies.append(missile)
+            cls.destroyables_list.append(missile)
+        return missile
+
+
+    @classmethod
+    def create_missiles_from_machine_config(cls, machine:Destroyable_Machine, smoke_color):
         md = machine.get_device("MissilesDevice")
         md.set_missiles_config(machine.missiles_config)
         if md is not None:
             for j in range(md.num_slots):
                 missile_type = md.missiles_config[j]
-                if missile_type == Sidewinder.model_name:
-                    missile = Sidewinder(missile_type + machine.name + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
-                if missile_type == Meteor.model_name:
-                    missile = Meteor(missile_type + machine.name + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
-                if missile_type == Mica.model_name:
-                    missile = Mica(missile_type + machine.name + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
-                if missile_type == AIM_SL.model_name:
-                    missile = AIM_SL(missile_type + machine.name + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
-                if missile_type == Karaoke.model_name:
-                    missile = Karaoke(missile_type + machine.name + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
-                if missile_type == CFT.model_name:
-                    missile = CFT(missile_type + machine.name + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
-                if missile_type == S400.model_name:
-                    missile = S400(missile_type + machine.name + "." + str(j), cls.scene, cls.scene_physics, cls.pl_resources, machine.nationality)
-
+                missile = cls.create_missile(missile_type, machine.name + "-" + missile_type + "-" + str(j), machine.nationality)
                 md.fit_missile(missile, j)
                 missile.set_smoke_color(smoke_color)
             return md.missiles
         return None
 
     @classmethod
+    def create_missile_launcher(cls, name, nationality):
+        launcher = MissileLauncherS400(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
+        if launcher is not None:
+            if nationality == 1:
+                cls.missile_launchers_allies.append(launcher)
+            elif nationality == 2:
+                cls.missile_launchers_ennemies.append(launcher)
+            cls.destroyables_list.append(launcher)
+            launcher.add_to_update_list()
+        return launcher
+
+    @classmethod
     def create_missile_launchers(cls, num_allies, num_ennemies):
         cls.missile_launchers_allies = []
         cls.missile_launchers_ennemies = []
-        cls.num_missile_launchers_allies = num_allies
-        cls.num_missile_launchers_ennemies = num_ennemies
 
         for i in range(num_allies):
-            launcher = MissileLauncherS400("Ally_Missile_launcher_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 1, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            cls.missile_launchers_allies.append(launcher)
-            cls.destroyables_list.append(launcher)
-            launcher.add_to_update_list()
-
-            missiles = cls.create_missiles(launcher, cls.allies_missiles_smoke_color)
-            if missiles is not None:
-                cls.missiles_allies.append([] + missiles)
-                cls.destroyables_list += missiles
-
+            launcher = cls.create_missile_launcher("Ally_Missile_launcher_" + str(i + 1), 1)
+            missiles = cls.create_missiles_from_machine_config(launcher, cls.allies_missiles_smoke_color)
 
         for i in range(num_ennemies):
-            launcher = MissileLauncherS400("Ennemy_Missile_launcher_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 2, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            cls.missile_launchers_ennemies.append(launcher)
-            cls.destroyables_list.append(launcher)
-            launcher.add_to_update_list()
+            launcher = cls.create_missile_launcher("Ennemy_Missile_launcher_" + str(i + 1), 2)
+            missiles = cls.create_missiles_from_machine_config(launcher, cls.ennemies_missiles_smoke_color)
 
-            missiles = cls.create_missiles(launcher, cls.ennemies_missiles_smoke_color)
-            if missiles is not None:
-                cls.missiles_ennemies.append([] + missiles)
-                cls.destroyables_list += missiles
+
+    @classmethod
+    def create_aircraft(cls,model_name, name, nationality):
+        if model_name == F14_Parameters.model_name:
+            aircraft = F14(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
+        elif model_name == F14_2_Parameters.model_name:
+            aircraft = F14_2(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
+        elif model_name == Rafale_Parameters.model_name:
+            aircraft = Rafale(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
+        elif model_name == Eurofighter_Parameters.model_name:
+            aircraft = Eurofighter(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
+        elif model_name == F16_Parameters.model_name:
+            aircraft = F16(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
+        elif model_name == TFX_Parameters.model_name:
+            aircraft = TFX(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
+        elif model_name == Miuss_Parameters.model_name:
+            aircraft = Miuss(name, cls.scene, cls.scene_physics, cls.pl_resources, nationality, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
+        else:
+            aircraft = None
+        
+        if aircraft is not None:
+            cls.destroyables_list.append(aircraft)
+            aircraft.add_to_update_list()
+            if nationality == 1:
+                cls.players_allies.append(aircraft)
+            elif nationality == 2:
+                cls.players_ennemies.append(aircraft)
+        
+        return aircraft
 
     @classmethod
     def create_players(cls, allies_types, ennemies_types):
-        cls.num_players_allies = len(allies_types)
-        cls.num_players_ennemies = len(ennemies_types)
         cls.players_allies = []
         cls.players_ennemies = []
         cls.missiles_allies = []
@@ -558,61 +617,13 @@ class Main:
         cls.players_sfx = []
         cls.missiles_sfx = []
 
+        for i, model_name in enumerate(allies_types):
+            aircraft = cls.create_aircraft(model_name, "ally_" + str(i + 1), 1)
+            missiles = cls.create_missiles_from_machine_config(aircraft, cls.allies_missiles_smoke_color)
 
-        for i, a_type in enumerate(allies_types):
-
-            if a_type == F14_Parameters.model_name:
-                aircraft = F14("ally_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 1, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            elif a_type == F14_2_Parameters.model_name:
-                aircraft = F14_2("ally_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 1, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            elif a_type == Rafale_Parameters.model_name:
-                aircraft = Rafale("ally_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 1, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            elif a_type == Eurofighter_Parameters.model_name:
-                aircraft = Eurofighter("ally_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 1, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            elif a_type == F16_Parameters.model_name:
-                aircraft = F16("ally_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 1, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            elif a_type == TFX_Parameters.model_name:
-                aircraft = TFX("ally_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 1, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            elif a_type == Miuss_Parameters.model_name:
-                aircraft = Miuss("ally_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 1, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-
-            cls.destroyables_list.append(aircraft)
-            aircraft.add_to_update_list()
-
-            cls.players_allies.append(aircraft)
-
-            missiles = cls.create_missiles(aircraft, cls.allies_missiles_smoke_color)
-            if missiles is not None:
-                cls.missiles_allies.append([] + missiles)
-                cls.destroyables_list += missiles
-
-
-        for i, a_type in enumerate(ennemies_types):
-
-            if a_type == F14_Parameters.model_name:
-                aircraft = F14("ennemy_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 2, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            elif a_type == F14_2_Parameters.model_name:
-                aircraft = F14_2("ennemy_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 2, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            elif a_type == Rafale_Parameters.model_name:
-                aircraft = Rafale("ennemy_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 2, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            elif a_type == Eurofighter_Parameters.model_name:
-                aircraft = Eurofighter("ennemy_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 2, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            elif a_type == F16_Parameters.model_name:
-                aircraft = F16("ennemy_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 2, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            elif a_type == TFX_Parameters.model_name:
-                aircraft = TFX("ennemy_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 2, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-            elif a_type == Miuss_Parameters.model_name:
-                aircraft = Miuss("ennemy_" + str(i + 1), cls.scene, cls.scene_physics, cls.pl_resources, 2, hg.Vec3(0, 500, 0), hg.Vec3(0, 0, 0))
-
-            aircraft.add_to_update_list()
-            cls.destroyables_list.append(aircraft)
-
-            cls.players_ennemies.append(aircraft)
-
-            missiles = cls.create_missiles(aircraft, cls.ennemies_missiles_smoke_color)
-            if missiles is not None:
-                cls.missiles_ennemies.append([] + missiles)
-                cls.destroyables_list += missiles
+        for i, model_name in enumerate(ennemies_types):
+            aircraft = cls.create_aircraft(model_name, "ennemy_" + str(i + 1), 2)
+            missiles = cls.create_missiles_from_machine_config(aircraft, cls.ennemies_missiles_smoke_color)
 
         if cls.flag_sfx:
             cls.setup_sfx()
@@ -654,30 +665,30 @@ class Main:
             td.set_destroyable_targets(cls.players_ennemies)
             pl.set_landing_targets(lt_allies)
             td.targets = cls.players_ennemies
-            if cls.num_players_ennemies > 0:
-                td.set_target_id(int(uniform(0, 1000) % cls.num_players_ennemies))
+            if len(cls.players_ennemies) > 0:
+                td.set_target_id(int(uniform(0, 1000) % len(cls.players_ennemies)))
 
         for i, pl in enumerate(cls.missile_launchers_allies):
             td = pl.get_device("TargettingDevice")
             td.set_destroyable_targets(cls.players_ennemies)
             td.targets = cls.players_ennemies
-            if cls.num_players_ennemies > 0:
-                td.set_target_id(int(uniform(0, 1000) % cls.num_players_ennemies))
+            if len(cls.players_ennemies) > 0:
+                td.set_target_id(int(uniform(0, 1000) % len(cls.players_ennemies)))
 
         for i, pl in enumerate(cls.players_ennemies):
             td = pl.get_device("TargettingDevice")
             td.set_destroyable_targets(cls.players_allies)
             pl.set_landing_targets(lt_ennemies)
             td.targets = cls.players_allies
-            if cls.num_players_allies > 0:
-                td.set_target_id(int(uniform(0, 1000) % cls.num_players_allies))
+            if len(cls.players_allies) > 0:
+                td.set_target_id(int(uniform(0, 1000) % len(cls.players_allies)))
 
         for i, pl in enumerate(cls.missile_launchers_ennemies):
             td = pl.get_device("TargettingDevice")
             td.set_destroyable_targets(cls.players_allies)
             td.targets = cls.players_allies
-            if cls.num_players_allies > 0:
-                td.set_target_id(int(uniform(0, 1000) % cls.num_players_allies))
+            if len(cls.players_allies) > 0:
+                td.set_target_id(int(uniform(0, 1000) % len(cls.players_allies)))
 
 
         cls.destroyables_items = {}
@@ -686,6 +697,13 @@ class Main:
 
         Destroyable_Machine.machines_list = cls.destroyables_list # !!! Move to Destroyable_Machine.__init__()
         Destroyable_Machine.machines_items = cls.destroyables_items # !!! Move to Destroyable_Machine.__init__()
+
+        # Setup HUD systems:
+        n_aircrafts = len(cls.players_allies) + len(cls.players_ennemies)
+        n_missile_launchers = len(cls.missile_launchers_allies) + len(cls.missile_launchers_ennemies)
+        n_missiles = len(cls.missiles_allies) + len(cls.missiles_ennemies)
+
+        HUD_Radar.setup_plots(cls.resolution, n_aircrafts, n_missiles, len(cls.aircraft_carrier_allies) + len(cls.aircraft_carrier_ennemies), n_missile_launchers)
 
     # ----------------- Views -------------------------------------------------------------------
     @classmethod
@@ -703,14 +721,14 @@ class Main:
             cls.camera_fps.GetTransform().SetWorld(fps_start_matrix)
 
         cls.views_carousel = ["fps"]
-        for i in range(cls.num_players_allies):
+        for i in range(len(cls.players_allies)):
             cls.views_carousel.append("Aircraft_ally_" + str(i + 1))
-        for i in range(cls.num_missile_launchers_allies):
+        for i in range(len(cls.missile_launchers_allies)):
             cls.views_carousel.append("MissileLauncher_ally_" + str(i + 1))
         if flag_include_enemies:
-            for i in range(cls.num_players_ennemies):
+            for i in range(len(cls.players_ennemies)):
                 cls.views_carousel.append("Aircraft_enemy_" + str(i + 1))
-            for i in range(cls.num_missile_launchers_ennemies):
+            for i in range(len(cls.missile_launchers_ennemies)):
                 cls.views_carousel.append("MissileLauncher_enemy_" + str(i + 1))
         cls.views_carousel_ptr = 1
 
@@ -1061,22 +1079,26 @@ class Main:
             d, f = hg.ImGuiCheckbox("Display selected aircraft", cls.flag_display_selected_aircraft)
             if d: cls.flag_display_selected_aircraft = f
 
-            aircrafts_list = hg.StringList()
+            if len(aircrafts) > 0:
+                aircrafts_list = hg.StringList()
 
-            for aircraft in aircrafts:
-                nm = aircraft.name
-                if aircraft == cls.user_aircraft:
-                    nm += " - USER -"
-                aircrafts_list.push_back(nm)
+                for aircraft in aircrafts:
+                    nm = aircraft.name
+                    if aircraft == cls.user_aircraft:
+                        nm += " - USER -"
+                    aircrafts_list.push_back(nm)
 
-            f, d = hg.ImGuiListBox("Aircrafts", cls.selected_aircraft_id, aircrafts_list,20)
-            if f:
-                cls.selected_aircraft_id = d
+                f, d = hg.ImGuiListBox("Aircrafts", cls.selected_aircraft_id, aircrafts_list,20)
+                if f:
+                    cls.selected_aircraft_id = d
 
         hg.ImGuiEnd()
 
-        cls.selected_aircraft = aircrafts[cls.selected_aircraft_id]
-        cls.selected_aircraft.gui()
+        if len(aircrafts) > 0: 
+            cls.selected_machine = aircrafts[cls.selected_aircraft_id]
+            cls.selected_machine.gui()
+        else:
+            cls.selected_machine = None
 
 
     @classmethod
@@ -1125,6 +1147,7 @@ class Main:
         #cls.texts_display_list = []
         Overlays.texts2D_display_list = []
         Overlays.texts3D_display_list = []
+        Overlays.primitives3D_display_list = []
         Overlays.lines = []
 
     @classmethod
@@ -1201,6 +1224,7 @@ class Main:
             hg.SetViewClear(vid, hg.CF_Depth, 0, 1.0, 0)
             hg.SetViewTransform(vid, vs_left.view, vs_left.proj)
             eye_left = cls.vr_state.head * cls.vr_state.left.offset
+            Overlays.display_primitives3D(vid, eye_left)
             Overlays.display_texts3D(vid, eye_left)
             Overlays.draw_lines(vid)
             vid += 1
@@ -1211,6 +1235,7 @@ class Main:
             hg.SetViewClear(vid, hg.CF_Depth, 0, 1.0, 0)
             hg.SetViewTransform(vid, cls.vr_viewstate.vs_right.view, cls.vr_viewstate.vs_right.proj)
             eye_right = cls.vr_state.head * cls.vr_state.right.offset
+            Overlays.display_primitives3D(vid, eye_right)
             Overlays.display_texts3D(vid, eye_right)
             Overlays.draw_lines(vid)
             vid += 1
@@ -1344,6 +1369,7 @@ class Main:
 
         #Overlays.add_text3D("HELLO WORLD", hg.Vec3(0, 50, 200), 1, hg.Color.Red)
 
+        Overlays.display_primitives3D(vid, cls.scene.GetCurrentCamera().GetTransform().GetWorld())
         Overlays.display_texts3D(vid, cls.scene.GetCurrentCamera().GetTransform().GetWorld())
         Overlays.draw_lines(vid)
         if cls.flag_display_physics_debug:
@@ -1420,10 +1446,11 @@ class Main:
 
     @classmethod
     def update_inputs(cls):
-        if cls.flag_running:
-            cls.keyboard.Update()
-            cls.mouse.Update()
+        
+        cls.keyboard.Update()
+        cls.mouse.Update()
 
+        if cls.flag_running:
             if cls.gamepad is not None:
                 cls.gamepad.Update()
                 if cls.gamepad.IsConnected():
@@ -1441,6 +1468,22 @@ class Main:
                     cls.flag_generic_controller = False
             else:
                 cls.flag_generic_controller = False
+
+    @classmethod
+    def reset_timestamp(cls):
+        cls.framecount = 0
+        cls.timer = 0
+        MachineDevice.framecount = 0
+        Collisions_Object.framecount = 0
+
+    @classmethod
+    def update_timestamp(cls, dts):
+        cls.framecount += 1
+        cls.timer += dts
+        MachineDevice.framecount = cls.framecount
+        MachineDevice.timer = cls.timer
+        Collisions_Object.framecount = cls.framecount
+        Collisions_Object.timer = cls.timer
 
     @classmethod
     def client_update(cls):
@@ -1467,46 +1510,72 @@ class Main:
 
             if cls.keyboard.Pressed(hg.K_F10):
                 cls.flag_display_HUD = not cls.flag_display_HUD
+            
+            if cls.keyboard.Pressed(hg.K_F9):
+                cls.flag_display_recorder = not cls.flag_display_recorder
 
-            if cls.flag_gui:
-                hg.ImGuiBeginFrame(int(cls.resolution.x), int(cls.resolution.y), real_dt, hg.ReadMouse(), hg.ReadKeyboard())
-                cls.smart_camera.update_hovering_ImGui()
-                cls.gui()
-                cls.sea_render.gui(cls.scene.GetCurrentCamera().GetTransform().GetPos())
-                ParticlesEngine.gui()
+            if not cls.flag_renderless:
+                if cls.flag_gui or cls.flag_display_recorder:
+                    hg.ImGuiBeginFrame(int(cls.resolution.x), int(cls.resolution.y), real_dt, hg.ReadMouse(), hg.ReadKeyboard())
+                    cls.smart_camera.update_hovering_ImGui()
+                if cls.flag_gui:
+                    cls.gui()
+                    cls.sea_render.gui(cls.scene.GetCurrentCamera().GetTransform().GetPos())
+                    ParticlesEngine.gui()
+            else:
+                if cls.flag_display_recorder:
+                    hg.ImGuiBeginFrame(int(cls.resolution.x), int(cls.resolution.y), real_dt, hg.ReadMouse(), hg.ReadKeyboard())
 
             if cls.flag_display_fps:
                 cls.update_num_fps(hg.time_to_sec_f(real_dt))
                 #cls.texts_display_list.append({"text": "FPS %d" % (cls.num_fps), "font": cls.hud_font, "pos": hg.Vec2(0.001, 0.999), "size": 0.018, "color": hg.Color.Yellow})
                 Overlays.add_text2D("FPS %d" % (cls.num_fps), hg.Vec2(0.001, 0.999), 0.018, hg.Color.Yellow, cls.hud_font)
 
+            if cls.flag_display_recorder: # and cls.current_state.__name__ == "main_state":
+                if not vcr.is_init():
+                    vcr.init()
+                else:
+                    vcr.update_gui(cls,cls.keyboard)
+                    
             # =========== State update:
             if cls.flag_renderless:
                 used_dt = forced_dt
+                Main.simulation_dt = used_dt
             else:
                 used_dt = min(forced_dt * 2, real_dt)
-            cls.current_state = cls.current_state(hg.time_to_sec_f(used_dt)) # Minimum frame rate security
+                Main.simulation_dt = used_dt
+            
+            # Simulation_dt is timestep for dogfight kinetics:
+
+            cls.current_state = cls.current_state(hg.time_to_sec_f(Main.simulation_dt)) # Minimum frame rate security
+            
+            
+            # Used_dt is timestep used for Harfang 3D:
             hg.SceneUpdateSystems(cls.scene, cls.clocks, used_dt, cls.scene_physics, used_dt, 1000)  # ,10,1000)
 
             # =========== Render scene visuals:
-            if not cls.flag_renderless:
+            
+            # Renderless
+            if cls.flag_renderless:
+                if cls.flag_display_recorder:
+                    hg.ImGuiEndFrame(255)
+                cls.update_renderless(forced_dt)
+            
+            # Render
+            else:
 
                 if cls.flag_vr:
                     cls.render_frame_vr()
                 else:
                     cls.render_frame()
 
-                if cls.flag_gui:
+                if cls.flag_gui or cls.flag_display_recorder:
                     hg.ImGuiEndFrame(255)
                 hg.Frame()
                 if cls.flag_vr:
                     hg.OpenVRSubmitFrame(cls.vr_left_fb, cls.vr_right_fb)
                 #hg.UpdateWindow(cls.win)
-
-            # =========== Renderless mode:
-            else:
-                cls.update_renderless(forced_dt)
-
+                
             cls.clear_display_lists()
 
         cls.flag_client_ask_update_scene = False

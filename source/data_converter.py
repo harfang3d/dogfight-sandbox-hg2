@@ -65,6 +65,38 @@ def vec3_to_list_degrees(v: hg.Vec3):
 	l[2] = degrees(l[2])
 	return l
 
+def serialize_vec3(v):
+	return "{0:.6f};{1:.6f};{2:.6f}".format(
+		v.x, v.y, v.z)
+
+# bool("any_string") returns True
+# bool("") (empty string) returns False
+def serialize_boolean(v:bool):
+    return "1" if v else ""
+
+def deserialize_vec3(s):
+	f = s.split(";")
+	return hg.Vec3(float(f[0]), float(f[1]), float(f[2]))
+
+
+def serialize_mat4(m):
+	r0 = hg.GetRow(m, 0)
+	r1 = hg.GetRow(m, 1)
+	r2 = hg.GetRow(m, 2)
+	return "{0:.6f};{1:.6f};{2:.6f};{3:.6f};{4:.6f};{5:.6f};{6:.6f};{7:.6f};{8:.6f};{9:.6f};{10:.6f};{11:.6f}".format(
+		r0.x, r0.y, r0.z, r0.w,
+		r1.x, r1.y, r1.z, r1.w,
+		r2.x, r2.y, r2.z, r2.w)
+		
+
+def deserialize_mat4(s):
+	f = s.split(";")
+	m = hg.Mat4()
+	hg.SetRow(m, 0, hg.Vec4(float(f[0]), float(f[1]), float(f[2]), float(f[3])))
+	hg.SetRow(m, 1, hg.Vec4(float(f[4]), float(f[5]), float(f[6]), float(f[7])))
+	hg.SetRow(m, 2, hg.Vec4(float(f[8]), float(f[9]), float(f[10]), float(f[11])))
+	return m
+
 
 def load_json_matrix(file_name):
 	file = hg.OpenText(file_name)

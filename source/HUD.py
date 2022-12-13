@@ -229,16 +229,18 @@ class HUD_MissileTarget:
 			target = td.get_target()
 			f = 1  # Main.HSL_postProcess.GetL()
 			if target is not None:
-				p2D = main.get_2d_hud(target.get_parent_node().GetTransform().GetPos())
+				target_pos = target.get_parent_node().GetTransform().GetPos()
+				target_distance = hg.Len(target_pos - machine.get_parent_node().GetTransform().GetPos())
+				p2D = main.get_2d_hud(target_pos)
 				if p2D is not None:
 					a_pulse = 0.5 if (sin(tps * 20) > 0) else 0.75
 					if td.target_locked:
 						c = hg.Color(1., 0.5, 0.5, a_pulse)
-						msg = "LOCKED - " + str(int(td.target_distance))
+						msg = "LOCKED - " + str(int(target_distance))
 						x = (p2D.x / main.resolution.x - 32 / 1600)
 						a = a_pulse
 					else:
-						msg = str(int(td.target_distance))
+						msg = str(int(target_distance))
 						x = (p2D.x / main.resolution.x - 12 / 1600)
 						c = hg.Color(0.5, 1, 0.5, 0.75)
 
@@ -261,9 +263,9 @@ class HUD_MissileTarget:
 
 				c = hg.Color(0, 1, 0, f)
 
-				Overlays.add_text2D("Target dist: %d" % (td.target_distance), hg.Vec2(0.05, 0.91), 0.016, c, main.hud_font)
-				Overlays.add_text2D("Target heading: %d" % (td.target_heading),hg.Vec2(0.05, 0.89), 0.016, c, main.hud_font)
-				Overlays.add_text2D("Target alt: %d" % (td.target_altitude), hg.Vec2(0.05, 0.87), 0.016, c, main.hud_font)
+				Overlays.add_text2D("Target dist: %d" % (target_distance), hg.Vec2(0.05, 0.91), 0.016, c, main.hud_font)
+				Overlays.add_text2D("Target heading: %d" % (target.get_heading()),hg.Vec2(0.05, 0.89), 0.016, c, main.hud_font)
+				Overlays.add_text2D("Target alt: %d" % (target.get_altitude()), hg.Vec2(0.05, 0.87), 0.016, c, main.hud_font)
 
 
 class HUD_Aircraft:
