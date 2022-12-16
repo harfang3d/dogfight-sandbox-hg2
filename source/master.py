@@ -48,6 +48,7 @@ class Main:
     # Control devices
 
     control_mode = ControlDevice.CM_KEYBOARD
+    devices_configurations_file = "scripts/devices_config.json"
 
     # VR mode
     flag_vr = False
@@ -229,7 +230,7 @@ class Main:
         cls.gamepad = hg.Gamepad()
         cls.generic_controller = hg.Joystick()
         Overlays.init()
-        ControlDevice.init(cls.keyboard, cls.mouse, cls.gamepad, cls.generic_controller)
+        ControlDevice.init(cls.keyboard, cls.mouse, cls.gamepad, cls.generic_controller,cls.devices_configurations_file)
 
     @classmethod
     def setup_vr(cls):

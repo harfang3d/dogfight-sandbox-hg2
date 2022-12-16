@@ -1,0 +1,105 @@
+000
+{"GamePad":{
+        "GA_LeftX": {
+            "type": "axis",
+            "id": 0,
+            "min": -1,
+            "max": 1,
+            "zero": -0.0156,
+            "zero_epsilon": 0.01
+        },
+        "GA_LeftY": {
+            "type": "axis",
+            "id": 1,
+            "min": -1,
+            "max": 1,
+            "zero": -0.0156,
+            "zero_epsilon": 0.01
+        },
+        "GA_RightX": {
+            "type": "axis",
+            "id": 2,
+            "min": -1,
+            "max": 1,
+            "zero": -0.007797,
+            "zero_epsilon": 0.01
+        },
+        "GA_RightY": {
+            "type": "axis",
+            "id": 3,
+            "min": -1,
+            "max": 1,
+            "zero": -0.007797,
+            "zero_epsilon": 0.01
+        },
+        "GA_LeftTrigger": {
+            "type": "axis",
+            "id": 4,
+            "min": -1,
+            "max": 1,
+            "zero": -1,
+            "zero_epsilon": 0.01
+        },
+        "GA_RightTrigger": {
+            "type": "axis",
+            "id": 5,
+            "min": -1,
+            "max": 1,
+            "zero": -1,
+            "zero_epsilon": 0.01
+        },
+        "GB_ButtonA": {"type": "button", "id": 0},
+        "GB_ButtonB": {"type": "button", "id": 1},
+        "GB_ButtonX": {"type": "button", "id": 2},
+        "GB_ButtonY": {"type": "button", "id": 3},
+        "GB_LeftBumper": {"type": "button", "id": 4},
+        "GB_RightBumper": {"type": "button", "id": 5},
+        "GB_Back": {"type": "button", "id": 6},
+        "GB_Start": {"type": "button", "id": 7},
+        "GB_Guide": {"type": "button", "id": 8},
+        "GB_LeftThumb": {"type": "button", "id": 9},
+        "GB_RightThumb": {"type": "button", "id": 10},
+        "GB_DPadUp": {"type": "button", "id": 11},
+        "GB_DPadRight": {"type": "button", "id": 12},
+        "GB_DPadDown": {"type": "button", "id": 13},
+        "GB_DPadLeft": {"type": "button", "id": 14}
+},
+
+"LogitechAttack3":{
+        "LA3A_AxisX": {
+            "type": "axis",
+            "id": 0,
+            "min": -1,
+            "max": 1,
+            "zero": 0,
+            "zero_epsilon": 0.01
+        },
+        "LA3A_AxisY": {
+            "type": "axis",
+            "id": 1,
+            "min": -1,
+            "max": 1,
+            "zero": 0,
+            "zero_epsilon": 0.01
+        },
+        "LA3A_Throttle": {
+            "type": "axis",
+            "id": 3,
+            "min": -1,
+            "max": 1,
+            "zero": -1,
+            "zero_epsilon": 0.01
+        },
+        "LA3B_Trigger": {"type": "button", "id": 0},
+        "LA3B_BottomHead": {"type": "button", "id": 1},
+        "LA3B_LeftHead": {"type": "button", "id": 2},
+        "LA3B_TopHead": {"type": "button", "id": 3},
+        "LA3B_RightHead": {"type": "button", "id": 4},
+        "LA3B_LeftTop": {"type": "button", "id": 5},
+        "LA3B_LeftBottom": {"type": "button", "id": 6},
+        "LA3B_MiddleLeft": {"type": "button", "id": 7},
+        "LA3B_MiddleRight": {"type": "button", "id": 8},
+        "LA3B_RightBottom": {"type": "button", "id": 9},
+        "LA3B_RightTop": {"type": "button", "id": 10}
+}
+}
