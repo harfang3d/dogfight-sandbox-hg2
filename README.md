@@ -2,7 +2,18 @@
 
 Air to air combat sandbox, created in Python 3 using the [HARFANG 3D 2 framework](https://www.harfang3d.com).
 
-[![video](screenshots/dogfight-sandbox-python-vr-yt.png)](https://www.youtube.com/watch?v=4Q2f0dKh8vE)
+**Table of content**
+
+- [Overview](#dogfight-2-air-to-air-combat-sandbox)
+- [How to run the Dogfight Sandbox](#how-to-run-the-dogfight-sandbox)
+- [About VR mode](#about-vr-mode)
+- [Network mode overview](#network-mode-overview)
+- [Aircraft Commands](#aircraft-keyboard-commands)
+- [Contributors](#contributors)
+- [Screenshots](#screenshots)
+- [Publications and citations](#publications-and-citations)
+
+[![](screenshots/dogfight-sandbox-python-vr-yt.png)](https://www.youtube.com/watch?v=4Q2f0dKh8vE)
 
 The game features :
 
@@ -249,3 +260,24 @@ ____
 ![screenshot](screenshots/screenshot_5.png)
 
 ![screenshot](screenshots/screenshot_3.png)
+
+## Publications and citations
+
+### Harfang3D Dog-Fight Sandbox: A Reinforcement Learning Research Platform for the Customized Control Tasks of Fighter Aircrafts
+
+(Muhammed Murat Özbek, Süleyman Yıldırım, Muhammet Aksoy, Eric Kernin, Emre Koyuncu)
+
+[Harfang3D Dog-Fight Sandbox: A Reinforcement Learning Research Platform on arxiv.org](https://arxiv.org/abs/2210.07282)
+
+_How to cite this publication:_
+ 
+```
+@misc{2210.07282,
+  Author = {Muhammed Murat Özbek,  Süleyman Yıldırım,  Muhammet Aksoy, Eric Kernin and Emre Koyuncu},
+  Title = {Harfang3D Dog-Fight Sandbox: A Reinforcement Learning Research Platform for the Customized Control Tasks of Fighter Aircrafts},
+  publisher = {arXiv},
+  doi = {10.48550/ARXIV.2210.07282},
+  Year = {2022},
+  Eprint = {arXiv:2210.07282},
+}
+```
