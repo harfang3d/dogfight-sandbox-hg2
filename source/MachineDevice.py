@@ -585,12 +585,110 @@ class ControlDevice(MachineDevice):
     gamepad = None
     generic_controller = None
 
+    device_configurations = None
+    devices = {}
+
     @classmethod
-    def init(cls, keyboard, mouse, gamepad, generic_controller):
+    def init(cls, keyboard, mouse, gamepad, generic_controller, devices_configurations_file):
         cls.keyboard = keyboard
         cls.mouse = mouse
         cls.gamepad = gamepad
         cls.generic_controller = generic_controller
+        cls.device_configurations = cls.load_devices_configurations_file(devices_configurations_file)
+        cls.devices = {
+            cls.CM_KEYBOARD: cls.keyboard,
+            cls.CM_GAMEPAD: cls.gamepad,
+            cls.CM_LOGITECH_ATTACK_3: cls.generic_controller,
+            cls.CM_LOGITECH_EXTREME_3DPRO: cls.generic_controller
+        }
+    
+    @classmethod
+    def get_device_input_name(cls, device_name, input_type, id):
+        if device_name in cls.device_configurations:
+            for inpt in cls.device_configurations[device_name].values():
+                if inpt["type"] == input_type and inpt["id"] == id:
+                    return inpt["name"]
+        return ""
+
+    @classmethod
+    def load_devices_configurations_file(cls, file_name):
+        #file = hg.OpenText(file_name)
+        file = open(file_name, "r")
+        if not file:
+            print("ERROR - Can't open json file : " + file_name)
+        else:
+            #json_script = hg.ReadString(file)
+            #hg.Close(file)
+            json_script = file.read()
+            file.close()
+            if json_script != "":
+                jsonscript = json.loads(json_script)
+                for name, device in jsonscript.items():
+                    for i_name, inpt in device.items():
+                        if "reset" in inpt:
+                            inpt["reset"] = True if inpt["reset"] == "true" else False
+                        if "invert" in inpt:
+                            inpt["invert"] = True if inpt["invert"] == "true" else False
+                return jsonscript
+
+    @staticmethod
+    def load_inputs_mapping_file(file_name, input_mapping_name):
+        #file = hg.OpenText(file_name)
+        file = open(file_name, "r")
+        inputs_mapping_encoded = None
+        inputs_mapping = None
+        if not file:
+            print("ERROR - Can't open json file : " + file_name)
+        else:
+            #json_script = hg.ReadString(file)
+            #hg.Close(file)
+            json_script = file.read()
+            file.close()
+            if json_script != "":
+                inputs_mapping_encoded = json.loads(json_script)
+                im = inputs_mapping_encoded[input_mapping_name]
+                cmode_decode = {}
+                for cmode, maps in im.items():
+                    maps_decode = {}
+                    # If inputs names refers to Harfang Enums...:
+                    if cmode == "Keyboard":
+                        for cmd, hg_enum in maps.items():
+                            if hg_enum != "":
+                                if not hg_enum.isdigit():
+                                    try:
+                                        exec("maps_decode['%s'] = hg.%s" % (cmd, hg_enum))
+                                    except AttributeError:
+                                        print("ERROR - Harfang Enum not implemented ! - " + "hg." + hg_enum)
+                                        maps_decode[cmd] = ""
+                                else:
+                                    maps_decode[cmd] = int(hg_enum)
+                            else:
+                                maps_decode[cmd] = ""
+                    # ...Else
+                    else:
+                        maps_decode = maps
+                    cmode_decode[cmode] = maps_decode
+                inputs_mapping = {input_mapping_name: cmode_decode}
+            else:
+                print("ERROR - Inputs parameters empty : " + file_name)
+        return inputs_mapping_encoded, inputs_mapping
+
+    @classmethod
+    def normalize_axis_value(cls, device_id, axis_def):
+        if axis_def["type"] == "axis":
+            v = ControlDevice.devices[device_id].Axes(axis_def["id"])
+            v = min(max(v, axis_def["min"]), axis_def["max"])
+            if axis_def["zero"] - axis_def["zero_epsilon"] < v < axis_def["zero_epsilon"] + axis_def["zero"]:
+                return 0  
+            elif v > axis_def["zero"]:
+                v = (v - axis_def["zero"]) / (axis_def["max"] - axis_def["zero"])
+            elif v < axis_def["zero"]:
+                v = - (v - axis_def["zero"]) / (axis_def["min"] - axis_def["zero"])
+            if axis_def["invert"]:
+                v = -v
+            return v
+        return 0
+
 
     def __init__(self, name, machine, inputs_mapping_file="", input_mapping_name="", control_mode=CM_KEYBOARD, start_state=False):
         MachineDevice.__init__(self, name, machine, start_state)
@@ -601,40 +699,10 @@ class ControlDevice(MachineDevice):
         self.inputs_mapping = {}
         self.input_mapping_name = input_mapping_name
         if self.inputs_mapping_file != "":
-            self.load_inputs_mapping_file(self.inputs_mapping_file)
+            self.inputs_mapping_encoded, self.inputs_mapping = self.load_inputs_mapping_file(self.inputs_mapping_file, input_mapping_name)
 
     def set_control_mode(self, cmode):
         self.control_mode = cmode
-
-    def load_inputs_mapping_file(self, file_name):
-        file = hg.OpenText(file_name)
-        if not file:
-            print("ERROR - Can't open json file : " + file_name)
-        else:
-            json_script = hg.ReadString(file)
-            hg.Close(file)
-            if json_script != "":
-                self.inputs_mapping_encoded = json.loads(json_script)
-                im = self.inputs_mapping_encoded[self.input_mapping_name]
-                cmode_decode = {}
-                for cmode, maps in im.items():
-                    maps_decode = {}
-                    for cmd, hg_enum in maps.items():
-                        if hg_enum != "":
-                            if not hg_enum.isdigit():
-                                try:
-                                    exec("maps_decode['%s'] = hg.%s" % (cmd, hg_enum))
-                                except AttributeError:
-                                    print("ERROR - Harfang Enum not implemented ! - " + "hg." + hg_enum)
-                                    maps_decode[cmd] = ""
-                            else:
-                                maps_decode[cmd] = int(hg_enum)
-                        else:
-                            maps_decode[cmd] = ""
-                    cmode_decode[cmode] = maps_decode
-                self.inputs_mapping = {self.input_mapping_name: cmode_decode}
-            else:
-                print("ERROR - Inputs parameters empty : " + file_name)
 
     def activate_user_control(self):
         self.flag_user_control = True
@@ -683,68 +751,33 @@ class MissileLauncherUserControlDevice(ControlDevice):
     def __init__(self, name, machine, inputs_mapping_file, control_mode=ControlDevice.CM_KEYBOARD, start_state=False):
         ControlDevice.__init__(self, name, machine, inputs_mapping_file, "MissileLauncherUserInputsMapping", control_mode, start_state)
         self.set_control_mode(control_mode)
-
-    def set_control_mode(self, cmode):
-        self.control_mode = cmode
-        if cmode == ControlDevice.CM_KEYBOARD:
-            self.commands.update({
-                "SWITCH_ACTIVATION": self.switch_activation_kb,
-                "NEXT_PILOT": self.next_pilot_kb,
-                "INCREASE_HEALTH_LEVEL": self.increase_health_level_kb,
-                "DECREASE_HEALTH_LEVEL": self.decrease_health_level_kb,
-                "NEXT_TARGET": self.next_target_kb,
-                "FIRE_MISSILE": self.fire_missile_kb,
-                "REARM": self.rearm_kb
+        self.commands.update({
+                "SWITCH_ACTIVATION": self.switch_activation,
+                "NEXT_PILOT": self.next_pilot,
+                "INCREASE_HEALTH_LEVEL": self.increase_health_level,
+                "DECREASE_HEALTH_LEVEL": self.decrease_health_level,
+                "NEXT_TARGET": self.next_target,
+                "FIRE_MISSILE": self.fire_missile,
+                "REARM": self.rearm
             })
-        elif cmode == ControlDevice.CM_GAMEPAD:
-            self.commands.update({
-                "SWITCH_ACTIVATION": self.switch_activation_gp,
-                "NEXT_PILOT": self.next_pilot_gp,
-                "INCREASE_HEALTH_LEVEL": self.increase_health_level_gp,
-                "DECREASE_HEALTH_LEVEL": self.decrease_health_level_gp,
-                "NEXT_TARGET": self.next_target_gp,
-                "FIRE_MISSILE": self.fire_missile_gp,
-                "REARM": self.rearm_gp
-            })
-        elif cmode == ControlDevice.CM_LOGITECH_ATTACK_3:
-            self.commands.update({
-                "SWITCH_ACTIVATION": self.switch_activation_la3,
-                "NEXT_PILOT": self.next_pilot_la3,
-                "INCREASE_HEALTH_LEVEL": self.increase_health_level_la3,
-                "DECREASE_HEALTH_LEVEL": self.decrease_health_level_la3,
-                "NEXT_TARGET": self.next_target_la3,
-                "FIRE_MISSILE": self.fire_missile_la3,
-                "REARM": self.rearm_la3
-            })
-
-        elif cmode == ControlDevice.CM_LOGITECH_EXTREME_3DPRO:
-            self.commands.update({})
-
-        elif cmode == ControlDevice.CM_MOUSE:
-            self.commands.update({})
 
     # ====================================================================================
 
-    def update_cm_la3(self, dts):
-        im = self.inputs_mapping["MissileLauncherUserInputsMapping"]["LogitechAttack3"]
-        for cmd, input_code in im.items():
-            if cmd in self.commands and input_code != "":
-                self.commands[cmd](input_code)
-
     def update_cm_keyboard(self, dts):
-        im = self.inputs_mapping["MissileLauncherUserInputsMapping"]["Keyboard"]
+        im = self.inputs_mapping["MissileLauncherUserInputsMapping"][self.control_mode]
         for cmd, input_code in im.items():
             if cmd in self.commands and input_code != "":
-                self.commands[cmd](input_code)
+                self.commands[cmd]({"id": input_code})
 
-    def update_cm_gamepad(self, dts):
-        im = self.inputs_mapping["MissileLauncherUserInputsMapping"]["GamePad"]
-        for cmd, input_code in im.items():
-            if cmd in self.commands and input_code != "":
-                self.commands[cmd](input_code)
+    def update_cm_joystick(self, dts):
+        im = self.inputs_mapping["MissileLauncherUserInputsMapping"][self.control_mode]
+        for cmd, input_name in im.items():
+            if cmd in self.commands and input_name != "":
+                i_def = ControlDevice.device_configurations[self.control_mode][input_name]
+                self.commands[cmd](i_def)
 
     def update_cm_mouse(self, dts):
-        im = self.inputs_mapping["MissileLauncherUserInputsMapping"]["Mouse"]
+        im = self.inputs_mapping["MissileLauncherUserInputsMapping"][self.control_mode]
 
     def update(self, dts):
         if self.activated:
@@ -752,102 +785,42 @@ class MissileLauncherUserControlDevice(ControlDevice):
                 if self.control_mode == ControlDevice.CM_KEYBOARD:
                     self.update_cm_keyboard(dts)
                 elif self.control_mode == ControlDevice.CM_GAMEPAD:
-                    self.update_cm_gamepad(dts)
+                    self.update_cm_joystick(dts)
                 elif self.control_mode == ControlDevice.CM_MOUSE:
                     self.update_cm_mouse(dts)
                 elif self.control_mode == ControlDevice.CM_LOGITECH_ATTACK_3:
-                    self.update_cm_la3(dts)
+                    self.update_cm_joystick(dts)
 
     # =============================== Keyboard commands ====================================
 
-    def switch_activation_kb(self, value):
+    def switch_activation(self, value):
         pass
 
-    def next_pilot_kb(self, value):
+    def next_pilot(self, value):
         pass
 
-    def increase_health_level_kb(self, value):
-        if ControlDevice.keyboard.Down(value):
+    def increase_health_level(self, value):
+        if ControlDevice.devices[self.control_mode].Down(value["id"]):
             self.machine.set_health_level(self.machine.health_level + 0.01)
 
-    def decrease_health_level_kb(self, value):
-        if ControlDevice.keyboard.Down(value):
+    def decrease_health_level(self, value):
+        if ControlDevice.devices[self.control_mode].Down(value["id"]):
             self.machine.set_health_level(self.machine.health_level - 0.01)
 
-    def next_target_kb(self, value):
-        if ControlDevice.keyboard.Pressed(value):
+    def next_target(self, value):
+        if ControlDevice.devices[self.control_mode].Pressed(value["id"]):
             td = self.machine.get_device("TargettingDevice")
             if td is not None:
                 td.next_target()
 
-    def fire_missile_kb(self, value):
-        if ControlDevice.keyboard.Pressed(value):
+    def fire_missile(self, value):
+        if ControlDevice.devices[self.control_mode].Pressed(value["id"]):
             md = self.machine.get_device("MissilesDevice")
             if md is not None:
                 md.fire_missile()
 
-    def rearm_kb(self, value):
-        if ControlDevice.keyboard.Pressed(value):
-            self.machine.rearm()
-
-    # =============================== Logitech Attack 3 ====================================
-
-    def switch_activation_la3(self, value):
-        pass
-
-    def next_pilot_la3(self, value):
-        pass
-
-    def increase_health_level_la3(self, value):
-        pass
-
-    def decrease_health_level_la3(self, value):
-        pass
-
-    def next_target_la3(self, value):
-        if ControlDevice.generic_controller.Pressed(value):
-            td = self.machine.get_device("TargettingDevice")
-            if td is not None:
-                td.next_target()
-
-    def fire_missile_la3(self, value):
-        if ControlDevice.generic_controller.Pressed(value):
-            md = self.machine.get_device("MissilesDevice")
-            if md is not None:
-                md.fire_missile()
-
-    def rearm_la3(self, value):
-        if ControlDevice.generic_controller.Pressed(value):
-            self.machine.rearm()
-
-    # =============================== Gamepad commands ====================================
-
-    def switch_activation_gp(self, value):
-        pass
-
-    def next_pilot_gp(self, value):
-        pass
-
-    def increase_health_level_gp(self, value):
-        pass
-
-    def decrease_health_level_gp(self, value):
-        pass
-
-    def next_target_gp(self, value):
-        if ControlDevice.gamepad.Pressed(value):
-            td = self.machine.get_device("TargettingDevice")
-            if td is not None:
-                td.next_target()
-
-    def fire_missile_gp(self, value):
-        if ControlDevice.gamepad.Pressed(value):
-            md = self.machine.get_device("MissilesDevice")
-            if md is not None:
-                md.fire_missile()
-
-    def rearm_gp(self, value):
-        if ControlDevice.gamepad.Pressed(value):
+    def rearm(self, value):
+        if ControlDevice.devices[self.control_mode].Pressed(value["id"]):
             self.machine.rearm()
 
 # ==============================================
@@ -859,134 +832,55 @@ class AircraftUserControlDevice(ControlDevice):
     def __init__(self, name, machine, inputs_mapping_file, control_mode=ControlDevice.CM_KEYBOARD, start_state=False):
         ControlDevice.__init__(self, name, machine, inputs_mapping_file, "AircraftUserInputsMapping", control_mode, start_state)
         self.set_control_mode(control_mode)
-
-    def set_control_mode(self, cmode):
-        self.control_mode = cmode
-        if cmode == ControlDevice.CM_KEYBOARD:
-            self.commands.update({
-                "SWITCH_ACTIVATION": self.switch_activation_kb,
-                "NEXT_PILOT": self.next_pilot_kb,
-                "INCREASE_HEALTH_LEVEL": self.increase_health_level_kb,
-                "DECREASE_HEALTH_LEVEL": self.decrease_health_level_kb,
-                "INCREASE_THRUST_LEVEL": self.increase_thrust_level_kb,
-                "DECREASE_THRUST_LEVEL": self.decrease_thrust_level_kb,
-                "SET_THRUST_LEVEL": self.set_thrust_level_kb,
-                "INCREASE_BRAKE_LEVEL": self.increase_brake_level_kb,
-                "DECREASE_BRAKE_LEVEL": self.decrease_brake_level_kb,
-                "INCREASE_FLAPS_LEVEL": self.increase_flaps_level_kb,
-                "DECREASE_FLAPS_LEVEL": self.decrease_flaps_level_kb,
-                "ROLL_LEFT": self.roll_left_kb,
-                "ROLL_RIGHT": self.roll_right_kb,
-                "SET_ROLL": self.set_roll_kb,
-                "PITCH_UP": self.pitch_up_kb,
-                "PITCH_DOWN": self.pitch_down_kb,
-                "SET_PITCH": self.set_pitch_kb,
-                "YAW_LEFT": self.yaw_left_kb,
-                "YAW_RIGHT": self.yaw_right_kb,
-                "SET_YAW": self.set_yaw_kb,
-                "SWITCH_POST_COMBUSTION": self.switch_post_combustion_kb,
-                "NEXT_TARGET": self.next_target_kb,
-                "SWITCH_GEAR": self.switch_gear_kb,
-                "ACTIVATE_IA": self.activate_ia_kb,
-                "ACTIVATE_AUTOPILOT": self.activate_autopilot_kb,
-                "SWITCH_EASY_STEERING": self.switch_easy_steering_kb,
-                "FIRE_MACHINE_GUN": self.fire_machine_gun_kb,
-                "FIRE_MISSILE": self.fire_missile_kb,
-                "REARM": self.rearm_kb
+        self.commands.update({
+                "SWITCH_ACTIVATION": self.switch_activation,
+                "NEXT_PILOT": self.next_pilot,
+                "INCREASE_HEALTH_LEVEL": self.increase_health_level,
+                "DECREASE_HEALTH_LEVEL": self.decrease_health_level,
+                "INCREASE_THRUST_LEVEL": self.increase_thrust_level,
+                "DECREASE_THRUST_LEVEL": self.decrease_thrust_level,
+                "SET_THRUST_LEVEL": self.set_thrust_level,
+                "INCREASE_BRAKE_LEVEL": self.increase_brake_level,
+                "DECREASE_BRAKE_LEVEL": self.decrease_brake_level,
+                "INCREASE_FLAPS_LEVEL": self.increase_flaps_level,
+                "DECREASE_FLAPS_LEVEL": self.decrease_flaps_level,
+                "ROLL_LEFT": self.roll_left,
+                "ROLL_RIGHT": self.roll_right,
+                "SET_ROLL": self.set_roll,
+                "PITCH_UP": self.pitch_up,
+                "PITCH_DOWN": self.pitch_down,
+                "SET_PITCH": self.set_pitch,
+                "YAW_LEFT": self.yaw_left,
+                "YAW_RIGHT": self.yaw_right,
+                "SET_YAW": self.set_yaw,
+                "SWITCH_POST_COMBUSTION": self.switch_post_combustion,
+                "NEXT_TARGET": self.next_target,
+                "SWITCH_GEAR": self.switch_gear,
+                "ACTIVATE_IA": self.activate_ia,
+                "ACTIVATE_AUTOPILOT": self.activate_autopilot,
+                "SWITCH_EASY_STEERING": self.switch_easy_steering,
+                "FIRE_MACHINE_GUN": self.fire_machine_gun,
+                "FIRE_MISSILE": self.fire_missile,
+                "REARM": self.rearm
             })
-
-        elif cmode == ControlDevice.CM_GAMEPAD:
-            self.commands.update({
-                "SWITCH_ACTIVATION": self.switch_activation_gp,
-                "NEXT_PILOT": self.next_pilot_gp,
-                "INCREASE_HEALTH_LEVEL": self.increase_health_level_gp,
-                "DECREASE_HEALTH_LEVEL": self.decrease_health_level_gp,
-                "INCREASE_THRUST_LEVEL": self.increase_thrust_level_gp,
-                "DECREASE_THRUST_LEVEL": self.decrease_thrust_level_gp,
-                "SET_THRUST_LEVEL": self.set_thrust_level_gp,
-                "INCREASE_BRAKE_LEVEL": self.increase_brake_level_gp,
-                "DECREASE_BRAKE_LEVEL": self.decrease_brake_level_gp,
-                "INCREASE_FLAPS_LEVEL": self.increase_flaps_level_gp,
-                "DECREASE_FLAPS_LEVEL": self.decrease_flaps_level_gp,
-                "ROLL_LEFT": self.roll_left_gp,
-                "ROLL_RIGHT": self.roll_right_gp,
-                "SET_ROLL": self.set_roll_gp,
-                "PITCH_UP": self.pitch_up_gp,
-                "PITCH_DOWN": self.pitch_down_gp,
-                "SET_PITCH": self.set_pitch_gp,
-                "YAW_LEFT": self.yaw_left_gp,
-                "YAW_RIGHT": self.yaw_right_gp,
-                "SET_YAW": self.set_yaw_gp,
-                "SWITCH_POST_COMBUSTION": self.switch_post_combustion_gp,
-                "NEXT_TARGET": self.next_target_gp,
-                "SWITCH_GEAR": self.switch_gear_gp,
-                "ACTIVATE_AUTOPILOT": self.activate_autopilot_gp,
-                "ACTIVATE_IA": self.activate_ia_gp,
-                "SWITCH_EASY_STEERING": self.switch_easy_steering_gp,
-                "FIRE_MACHINE_GUN": self.fire_machine_gun_gp,
-                "FIRE_MISSILE": self.fire_missile_gp})
-
-        elif cmode == ControlDevice.CM_LOGITECH_ATTACK_3:
-            self.commands.update({
-                "SWITCH_ACTIVATION": self.switch_activation_la3,
-                "NEXT_PILOT": self.next_pilot_la3,
-                "INCREASE_HEALTH_LEVEL": self.increase_health_level_la3,
-                "DECREASE_HEALTH_LEVEL": self.decrease_health_level_la3,
-                "INCREASE_THRUST_LEVEL": self.increase_thrust_level_la3,
-                "DECREASE_THRUST_LEVEL": self.decrease_thrust_level_la3,
-                "SET_THRUST_LEVEL": self.set_thrust_level_la3,
-                "INCREASE_BRAKE_LEVEL": self.increase_brake_level_la3,
-                "DECREASE_BRAKE_LEVEL": self.decrease_brake_level_la3,
-                "INCREASE_FLAPS_LEVEL": self.increase_flaps_level_la3,
-                "DECREASE_FLAPS_LEVEL": self.decrease_flaps_level_la3,
-                "ROLL_LEFT": self.roll_left_la3,
-                "ROLL_RIGHT": self.roll_right_la3,
-                "SET_ROLL": self.set_roll_la3,
-                "PITCH_UP": self.pitch_up_la3,
-                "PITCH_DOWN": self.pitch_down_la3,
-                "SET_PITCH": self.set_pitch_la3,
-                "YAW_LEFT": self.yaw_left_la3,
-                "YAW_RIGHT": self.yaw_right_la3,
-                "SET_YAW": self.set_yaw_la3,
-                "SWITCH_POST_COMBUSTION": self.switch_post_combustion_la3,
-                "NEXT_TARGET": self.next_target_la3,
-                "SWITCH_GEAR": self.switch_gear_la3,
-                "ACTIVATE_AUTOPILOT": self.activate_autopilot_la3,
-                "ACTIVATE_IA": self.activate_ia_la3,
-                "SWITCH_EASY_STEERING": self.switch_easy_steering_la3,
-                "FIRE_MACHINE_GUN": self.fire_machine_gun_la3,
-                "FIRE_MISSILE": self.fire_missile_la3
-            })
-
-        elif cmode == ControlDevice.CM_LOGITECH_EXTREME_3DPRO:
-            self.commands.update({
-                })
-
-        elif cmode == ControlDevice.CM_MOUSE:
-            self.commands.update({})
 
     # =================== Functions =================================================================
 
-    def update_cm_la3(self, dts):
-        im = self.inputs_mapping["AircraftUserInputsMapping"]["LogitechAttack3"]
-        for cmd, input_code in im.items():
-            if cmd in self.commands and input_code != "":
-                self.commands[cmd](input_code)
-
     def update_cm_keyboard(self, dts):
-        im = self.inputs_mapping["AircraftUserInputsMapping"]["Keyboard"]
+        im = self.inputs_mapping["AircraftUserInputsMapping"][self.control_mode]
         for cmd, input_code in im.items():
             if cmd in self.commands and input_code != "":
-                self.commands[cmd](input_code)
+                self.commands[cmd]({"id":input_code})
 
-    def update_cm_gamepad(self, dts):
-        im = self.inputs_mapping["AircraftUserInputsMapping"]["GamePad"]
-        for cmd, input_code in im.items():
-            if cmd in self.commands and input_code != "":
-                self.commands[cmd](input_code)
+    def update_cm_joystick(self, dts):
+        im = self.inputs_mapping["AircraftUserInputsMapping"][self.control_mode]
+        for cmd, input_name in im.items():
+            if cmd in self.commands and input_name != "":
+                i_def = ControlDevice.device_configurations[self.control_mode][input_name]
+                self.commands[cmd](i_def)
 
     def update_cm_mouse(self, dts):
-        im = self.inputs_mapping["AircraftUserInputsMapping"]["Mouse"]
+        im = self.inputs_mapping["AircraftUserInputsMapping"][self.control_mode]
 
     def update(self, dts):
         if self.activated:
@@ -994,115 +888,121 @@ class AircraftUserControlDevice(ControlDevice):
                 if self.control_mode == ControlDevice.CM_KEYBOARD:
                     self.update_cm_keyboard(dts)
                 elif self.control_mode == ControlDevice.CM_GAMEPAD:
-                    self.update_cm_gamepad(dts)
+                    self.update_cm_joystick(dts)
                 elif self.control_mode == ControlDevice.CM_MOUSE:
                     self.update_cm_mouse(dts)
                 elif self.control_mode == ControlDevice.CM_LOGITECH_ATTACK_3:
-                    self.update_cm_la3(dts)
+                    self.update_cm_joystick(dts)
 
     # =============================== Keyboard commands ====================================
 
-    def switch_activation_kb(self, value):
+    def switch_activation(self, value):
         pass
 
-    def next_pilot_kb(self, value):
+    def next_pilot(self, value):
         pass
 
-    def increase_health_level_kb(self, value):
-        if ControlDevice.keyboard.Down(value):
+    def increase_health_level(self, value):
+        if ControlDevice.devices[self.control_mode].Down(value["id"]):
             self.machine.set_health_level(self.machine.health_level + 0.01)
 
-    def decrease_health_level_kb(self, value):
-        if ControlDevice.keyboard.Down(value):
+    def decrease_health_level(self, value):
+        if ControlDevice.devices[self.control_mode].Down(value["id"]):
             self.machine.set_health_level(self.machine.health_level - 0.01)
 
-    def increase_thrust_level_kb(self, value):
-        if ControlDevice.keyboard.Down(value):
+    def increase_thrust_level(self, value):
+        if ControlDevice.devices[self.control_mode].Down(value["id"]):
             self.machine.set_thrust_level(self.machine.thrust_level_dest + 0.01)
 
-    def decrease_thrust_level_kb(self, value):
-        if ControlDevice.keyboard.Down(value):
+    def decrease_thrust_level(self, value):
+        if ControlDevice.devices[self.control_mode].Down(value["id"]):
             self.machine.set_thrust_level(self.machine.thrust_level_dest - 0.01)
 
-    def set_thrust_level_kb(self, value):
-        pass
+    def set_thrust_level(self, value):
+        v = ControlDevice.normalize_axis_value(self.control_mode, value)
+        if value["reset"]:
+            v = v * 0.01 + self.machine.thrust_level_dest
+        self.machine.set_thrust_level(v)
 
-    def increase_brake_level_kb(self, value):
-        if ControlDevice.keyboard.Down(value):
+    def increase_brake_level(self, value):
+        if ControlDevice.devices[self.control_mode].Down(value["id"]):
             self.machine.set_brake_level(self.machine.brake_level_dest + 0.01)
 
-    def decrease_brake_level_kb(self, value):
-        if ControlDevice.keyboard.Down(value):
+    def decrease_brake_level(self, value):
+        if ControlDevice.devices[self.control_mode].Down(value["id"]):
             self.machine.set_brake_level(self.machine.brake_level_dest - 0.01)
 
-    def increase_flaps_level_kb(self, value):
-        if ControlDevice.keyboard.Down(value):
+    def increase_flaps_level(self, value):
+        if ControlDevice.devices[self.control_mode].Down(value["id"]):
             self.machine.set_flaps_level(self.machine.flaps_level + 0.01)
 
-    def decrease_flaps_level_kb(self, value):
-        if ControlDevice.keyboard.Down(value):
+    def decrease_flaps_level(self, value):
+        if ControlDevice.devices[self.control_mode].Down(value["id"]):
             self.machine.set_flaps_level(self.machine.flaps_level - 0.01)
 
-    def roll_left_kb(self, value):
-        if ControlDevice.keyboard.Down(value):
+    def roll_left(self, value):
+        if ControlDevice.devices[self.control_mode].Down(value["id"]):
             self.machine.set_roll_level(1)
-        elif ControlDevice.keyboard.Released(value):
+        elif ControlDevice.devices[self.control_mode].Released(value["id"]):
             self.machine.set_roll_level(0)
 
-    def roll_right_kb(self, value):
-        if ControlDevice.keyboard.Down(value):
+    def roll_right(self, value):
+        if ControlDevice.devices[self.control_mode].Down(value["id"]):
             self.machine.set_roll_level(-1)
-        elif ControlDevice.keyboard.Released(value):
+        elif ControlDevice.devices[self.control_mode].Released(value["id"]):
             self.machine.set_roll_level(0)
 
-    def set_roll_kb(self, value):
-        pass
+    def set_roll(self, value):
+        v = -ControlDevice.normalize_axis_value(self.control_mode, value)
+        self.machine.set_roll_level(v)
 
-    def pitch_up_kb(self, value):
-        if ControlDevice.keyboard.Down(value):
+    def pitch_up(self, value):
+        if ControlDevice.devices[self.control_mode].Down(value["id"]):
             self.machine.set_pitch_level(1)
-        elif ControlDevice.keyboard.Released(value):
+        elif ControlDevice.devices[self.control_mode].Released(value["id"]):
             self.machine.set_pitch_level(0)
 
-    def pitch_down_kb(self, value):
-        if ControlDevice.keyboard.Down(value):
+    def pitch_down(self, value):
+        if ControlDevice.devices[self.control_mode].Down(value["id"]):
             self.machine.set_pitch_level(-1)
-        elif ControlDevice.keyboard.Released(value):
+        elif ControlDevice.devices[self.control_mode].Released(value["id"]):
             self.machine.set_pitch_level(0)
 
-    def set_pitch_kb(self, value):
-        pass
+    def set_pitch(self, value):
+        v = -ControlDevice.normalize_axis_value(self.control_mode,value)
+        self.machine.set_pitch_level(v)
 
-    def yaw_left_kb(self, value):
-        if ControlDevice.keyboard.Down(value):
+    def yaw_left(self, value):
+        if ControlDevice.devices[self.control_mode].Down(value["id"]):
             self.machine.set_yaw_level(-1)
-        elif ControlDevice.keyboard.Released(value):
+        elif ControlDevice.devices[self.control_mode].Released(value["id"]):
             self.machine.set_yaw_level(0)
 
-    def yaw_right_kb(self, value):
-        if ControlDevice.keyboard.Down(value):
+    def yaw_right(self, value):
+        if ControlDevice.devices[self.control_mode].Down(value["id"]):
             self.machine.set_yaw_level(1)
-        elif ControlDevice.keyboard.Released(value):
+        elif ControlDevice.devices[self.control_mode].Released(value["id"]):
             self.machine.set_yaw_level(0)
 
-    def set_yaw_kb(self, value):
-        pass
+    def set_yaw(self, value):
+        v = ControlDevice.normalize_axis_value(self.control_mode,value)
+        self.machine.set_yaw_level(v)
 
-    def switch_post_combustion_kb(self, value):
-        if ControlDevice.keyboard.Pressed(value):
+    def switch_post_combustion(self, value):
+        if ControlDevice.devices[self.control_mode].Pressed(value["id"]):
             if self.machine.post_combustion:
                 self.machine.deactivate_post_combustion()
             else:
                 self.machine.activate_post_combustion()
 
-    def next_target_kb(self, value):
-        if ControlDevice.keyboard.Pressed(value):
+    def next_target(self, value):
+        if ControlDevice.devices[self.control_mode].Pressed(value["id"]):
             td = self.machine.get_device("TargettingDevice")
             if td is not None:
                 td.next_target()
 
-    def switch_gear_kb(self, value):
-        if ControlDevice.keyboard.Pressed(value):
+    def switch_gear(self, value):
+        if ControlDevice.devices[self.control_mode].Pressed(value["id"]):
             if "Gear" in self.machine.devices and self.machine.devices["Gear"] is not None:
                 gear = self.machine.devices["Gear"]
                 if not self.machine.flag_landed:
@@ -1111,313 +1011,48 @@ class AircraftUserControlDevice(ControlDevice):
                     else:
                         gear.activate()
 
-    def activate_autopilot_kb(self, value):
-        if ControlDevice.keyboard.Pressed(value):
+    def activate_autopilot(self, value):
+        if ControlDevice.devices[self.control_mode].Pressed(value["id"]):
             autopilot_device = self.machine.get_device("AutopilotControlDevice")
             if autopilot_device is not None:
                 self.deactivate()
                 autopilot_device.activate()
 
 
-    def activate_ia_kb(self, value):
-        if ControlDevice.keyboard.Pressed(value):
+    def activate_ia(self, value):
+        if ControlDevice.devices[self.control_mode].Pressed(value["id"]):
             ia_device = self.machine.get_device("IAControlDevice")
             if ia_device is not None:
                 self.deactivate()
                 ia_device.activate()
 
-    def switch_easy_steering_kb(self, value):
-        if ControlDevice.keyboard.Pressed(value):
+    def switch_easy_steering(self, value):
+        if ControlDevice.devices[self.control_mode].Pressed(value["id"]):
             self.machine.flag_easy_steering = not self.machine.flag_easy_steering
 
-    def fire_machine_gun_kb(self, value):
-        if ControlDevice.keyboard.Down(value):
+    def fire_machine_gun(self, value):
+        if ControlDevice.devices[self.control_mode].Down(value["id"]):
             n = self.machine.get_machinegun_count()
             for i in range(n):
                 mgd = self.machine.get_device("MachineGunDevice_%02d" % i)
                 if mgd is not None and not mgd.is_activated():
                     mgd.activate()
-        elif ControlDevice.keyboard.Released(value):
+        elif ControlDevice.devices[self.control_mode].Released(value["id"]):
             n = self.machine.get_machinegun_count()
             for i in range(n):
                 mgd = self.machine.get_device("MachineGunDevice_%02d" % i)
                 if mgd is not None and mgd.is_activated():
                     mgd.deactivate()
 
-    def fire_missile_kb(self, value):
-        if ControlDevice.keyboard.Pressed(value):
+    def fire_missile(self, value):
+        if ControlDevice.devices[self.control_mode].Pressed(value["id"]):
             md = self.machine.get_device("MissilesDevice")
             if md is not None:
                 md.fire_missile()
 
-    def rearm_kb(self, value):
-        if ControlDevice.keyboard.Pressed(value):
+    def rearm(self, value):
+        if ControlDevice.devices[self.control_mode].Pressed(value["id"]):
             self.machine.rearm()
-
-    # =============================== Logitech Attack 3 ====================================
-
-    def switch_activation_la3(self, value):
-        pass
-
-    def next_pilot_la3(self, value):
-        pass
-
-    def increase_health_level_la3(self, value):
-        pass
-
-    def decrease_health_level_la3(self, value):
-        pass
-
-    def increase_thrust_level_la3(self, value):
-        pass
-
-    def decrease_thrust_level_la3(self, value):
-        pass
-
-    def set_thrust_level_la3(self, value):
-        # epsilon = 0.1 # threshold to cancel the device's jitter
-        v = -ControlDevice.generic_controller.Axes(value)
-        self.machine.set_thrust_level((v + 1.0) / 2.0)
-
-    def increase_brake_level_la3(self, value):
-        if ControlDevice.generic_controller.Down(value):
-            self.machine.set_brake_level(self.machine.brake_level_dest + 0.01)
-
-    def decrease_brake_level_la3(self, value):
-        if ControlDevice.generic_controller.Down(value):
-            self.machine.set_brake_level(self.machine.brake_level_dest - 0.01)
-
-    def increase_flaps_level_la3(self, value):
-        if ControlDevice.generic_controller.Down(value):
-            self.machine.set_flaps_level(self.machine.flaps_level_dest + 0.01)
-
-    def decrease_flaps_level_la3(self, value):
-        if ControlDevice.generic_controller.Down(value):
-            self.machine.set_flaps_level(self.machine.flaps_level_dest - 0.01)
-
-    def roll_left_la3(self, value):
-        pass
-
-    def roll_right_la3(self, value):
-        pass
-
-    def set_roll_la3(self, value):
-        v = -ControlDevice.generic_controller.Axes(value)
-        self.machine.set_roll_level(v)
-
-    def set_pitch_la3(self, value):
-        v = -ControlDevice.generic_controller.Axes(value)
-        self.machine.set_pitch_level(v)
-
-    def pitch_up_la3(self, value):
-        pass
-
-    def pitch_down_la3(self, value):
-        pass
-
-    def yaw_left_la3(self, value):
-        if ControlDevice.generic_controller.Down(value):
-            self.machine.set_yaw_level(-1)
-        elif ControlDevice.generic_controller.Released(value):
-            self.machine.set_yaw_level(0)
-
-    def yaw_right_la3(self, value):
-        if ControlDevice.generic_controller.Down(value):
-            self.machine.set_yaw_level(1)
-        elif ControlDevice.generic_controller.Released(value):
-            self.machine.set_yaw_level(0)
-
-    def set_yaw_la3(self, value):
-        pass
-
-    def switch_post_combustion_la3(self, value):
-        if ControlDevice.generic_controller.Pressed(value):
-            if self.machine.post_combustion:
-                self.machine.deactivate_post_combustion()
-            else:
-                self.machine.activate_post_combustion()
-
-    def next_target_la3(self, value):
-        if ControlDevice.generic_controller.Pressed(value):
-            td = self.machine.get_device("TargettingDevice")
-            if td is not None:
-                td.next_target()
-
-    def switch_gear_la3(self, value):
-        if ControlDevice.generic_controller.Pressed(value):
-            if "Gear" in self.machine.devices and self.machine.devices["Gear"] is not None:
-                gear = self.machine.devices["Gear"]
-                if not self.machine.flag_landed:
-                    if gear.activated:
-                        gear.deactivate()
-                    else:
-                        gear.activate()
-
-
-    def activate_autopilot_la3(self, value):
-        pass
-
-    def activate_ia_la3(self, value):
-        pass
-
-    def switch_easy_steering_la3(self, value):
-        pass
-
-
-    def fire_machine_gun_la3(self, value):
-        if ControlDevice.generic_controller.Down(value):
-            n = self.machine.get_machinegun_count()
-            for i in range(n):
-                mgd = self.machine.get_device("MachineGunDevice_%02d" % i)
-                if mgd is not None and not mgd.is_activated():
-                    mgd.activate()
-        elif ControlDevice.generic_controller.Released(value):
-            n = self.machine.get_machinegun_count()
-            for i in range(n):
-                mgd = self.machine.get_device("MachineGunDevice_%02d" % i)
-                if mgd is not None and mgd.is_activated():
-                    mgd.deactivate()
-
-
-    def fire_missile_la3(self, value):
-        if ControlDevice.generic_controller.Pressed(value):
-            md = self.machine.get_device("MissilesDevice")
-            if md is not None:
-                md.fire_missile()
-
-
-
-    # =============================== Gamepad commands ====================================
-
-    def switch_activation_gp(self, value):
-        pass
-
-    def next_pilot_gp(self, value):
-        pass
-
-    def increase_health_level_gp(self, value):
-        pass
-
-    def decrease_health_level_gp(self, value):
-        pass
-
-    def increase_thrust_level_gp(self, value):
-        pass
-
-    def decrease_thrust_level_gp(self, value):
-        pass
-
-    def set_thrust_level_gp(self, value):
-        epsilon = 0.1
-        v = -ControlDevice.gamepad.Axes(value)
-        if v < - epsilon or v > epsilon:
-            self.machine.set_thrust_level(self.machine.thrust_level_dest + v * 0.01)
-
-    def increase_brake_level_gp(self, value):
-        if ControlDevice.gamepad.Down(value):
-            self.machine.set_brake_level(self.machine.brake_level_dest + 0.01)
-
-    def decrease_brake_level_gp(self, value):
-        if ControlDevice.gamepad.Down(value):
-            self.machine.set_brake_level(self.machine.brake_level_dest - 0.01)
-
-    def increase_flaps_level_gp(self, value):
-        if ControlDevice.gamepad.Down(value):
-            self.machine.set_flaps_level(self.machine.flaps_level_dest + 0.01)
-
-    def decrease_flaps_level_gp(self, value):
-        if ControlDevice.gamepad.Down(value):
-            self.machine.set_flaps_level(self.machine.flaps_level_dest - 0.01)
-
-    def roll_left_gp(self, value):
-        pass
-
-    def roll_right_gp(self, value):
-        pass
-
-    def set_roll_gp(self, value):
-        v = -ControlDevice.gamepad.Axes(value)
-        self.machine.set_roll_level(v)
-
-    def pitch_up_gp(self, value):
-        pass
-
-    def pitch_down_gp(self, value):
-        pass
-
-    def set_pitch_gp(self, value):
-        v = -ControlDevice.gamepad.Axes(value)
-        self.machine.set_pitch_level(v)
-
-    def yaw_left_gp(self, value):
-        pass
-
-    def yaw_right_gp(self, value):
-        pass
-
-    def set_yaw_gp(self, value):
-        epsilon = 0.016
-        v = ControlDevice.gamepad.Axes(value)
-        if -epsilon < v < epsilon:
-            v = 0
-        self.machine.set_yaw_level(v)
-
-    def switch_post_combustion_gp(self, value):
-        if ControlDevice.gamepad.Pressed(value):
-            if self.machine.post_combustion:
-                self.machine.deactivate_post_combustion()
-            else:
-                self.machine.activate_post_combustion()
-
-    def next_target_gp(self, value):
-        if ControlDevice.gamepad.Pressed(value):
-            td = self.machine.get_device("TargettingDevice")
-            if td is not None:
-                td.next_target()
-
-    def switch_gear_gp(self, value):
-        if ControlDevice.gamepad.Pressed(value):
-            if "Gear" in self.machine.devices and self.machine.devices["Gear"] is not None:
-                gear = self.machine.devices["Gear"]
-                if not self.machine.flag_landed:
-                    if gear.activated:
-                        gear.deactivate()
-                    else:
-                        gear.activate()
-
-    def activate_autopilot_gp(self, value):
-        pass
-
-    def activate_ia_gp(self, value):
-        if ControlDevice.gamepad.Pressed(value):
-            ia_device = self.machine.get_device("IAControlDevice")
-            if ia_device is not None:
-                self.deactivate()
-                ia_device.activate()
-
-    def switch_easy_steering_gp(self, value):
-        pass
-
-    def fire_machine_gun_gp(self, value):
-        if ControlDevice.gamepad.Down(value):
-            n = self.machine.get_machinegun_count()
-            for i in range(n):
-                mgd = self.machine.get_device("MachineGunDevice_%02d" % i)
-                if mgd is not None and not mgd.is_activated():
-                    mgd.activate()
-        elif ControlDevice.gamepad.Released(value):
-            n = self.machine.get_machinegun_count()
-            for i in range(n):
-                mgd = self.machine.get_device("MachineGunDevice_%02d" % i)
-                if mgd is not None and mgd.is_activated():
-                    mgd.deactivate()
-
-    def fire_missile_gp(self, value):
-        if ControlDevice.gamepad.Pressed(value):
-            md = self.machine.get_device("MissilesDevice")
-            if md is not None:
-                md.fire_missile()
-
 
 # ===================================================================
 #       Aircraft Autopilot control device
@@ -1447,39 +1082,18 @@ class AircraftAutopilotControlDevice(ControlDevice):
         self.flag_easy_steering_mem = False
 
         self.set_control_mode(control_mode)
-
-    def set_control_mode(self, cmode):
-        self.control_mode = cmode
-        if cmode == ControlDevice.CM_KEYBOARD:
-            self.commands.update({
-                "ACTIVATE_USER_CONTROL": self.activate_user_control_kb,
-                "INCREASE_SPEED": self.increase_speed_kb,
-                "DECREASE_SPEED": self.decrease_speed_kb,
-                "SET_SPEED": self.set_speed_kb,
-                "INCREASE_HEADING": self.increase_heading_kb,
-                "DECREASE_HEADING": self.decrease_heading_kb,
-                "SET_HEADING": self.set_heading_kb,
-                "INCREASE_ALTITUDE": self.increase_altitude_kb,
-                "DECREASE_ALTITUDE": self.decrease_altitude_kb,
-                "SET_ALTITUDE": self.set_altitude_kb
+        self.commands.update({
+                "ACTIVATE_USER_CONTROL": self.activate_user_control_device,
+                "INCREASE_SPEED": self.increase_speed,
+                "DECREASE_SPEED": self.decrease_speed,
+                "SET_SPEED": self.set_speed,
+                "INCREASE_HEADING": self.increase_heading,
+                "DECREASE_HEADING": self.decrease_heading,
+                "SET_HEADING": self.set_heading,
+                "INCREASE_ALTITUDE": self.increase_altitude,
+                "DECREASE_ALTITUDE": self.decrease_altitude,
+                "SET_ALTITUDE": self.set_altitude
             })
-
-        elif cmode == ControlDevice.CM_GAMEPAD:
-            self.commands.update({
-                "ACTIVATE_USER_CONTROL": self.activate_user_control_gp,
-                "INCREASE_SPEED": self.increase_speed_gp,
-                "DECREASE_SPEED": self.decrease_speed_gp,
-                "SET_SPEED": self.set_speed_gp,
-                "INCREASE_HEADING": self.increase_heading_gp,
-                "DECREASE_HEADING": self.decrease_heading_gp,
-                "SET_HEADING": self.set_heading_gp,
-                "INCREASE_ALTITUDE": self.increase_altitude_gp,
-                "DECREASE_ALTITUDE": self.decrease_altitude_gp,
-                "SET_ALTITUDE": self.set_altitude_gp
-            })
-
-        elif cmode == ControlDevice.CM_MOUSE:
-            self.commands.update({})
 
 
     # ============================== functions
@@ -1506,100 +1120,64 @@ class AircraftAutopilotControlDevice(ControlDevice):
 
     # =============================== Keyboard commands ====================================
 
-    def activate_user_control_kb(self, value):
-        if ControlDevice.keyboard.Pressed(value):
+    def activate_user_control_device(self, value):
+        if ControlDevice.devices[self.control_mode].Pressed(value["id"]):
             uctrl = self.machine.get_device("UserControlDevice")
             if uctrl is not None:
                 self.deactivate()
                 uctrl.activate()
 
-    def increase_speed_kb(self, value):
-        if ControlDevice.keyboard.Down(value):
+    def increase_speed(self, value):
+        if ControlDevice.devices[self.control_mode].Down(value["id"]):
             self.autopilot_speed = min(self.autopilot_speed + self.speed_step, self.speed_range[1])
 
-    def decrease_speed_kb(self, value):
-        if ControlDevice.keyboard.Down(value):
+    def decrease_speed(self, value):
+        if ControlDevice.devices[self.control_mode].Down(value["id"]):
             self.autopilot_speed = max(self.autopilot_speed - self.speed_step, self.speed_range[0])
 
-    def set_speed_kb(self, value):
+    def set_speed(self, value):
         pass
 
-    def increase_heading_kb(self, value):
-        if ControlDevice.keyboard.Down(value):
+    def increase_heading(self, value):
+        if ControlDevice.devices[self.control_mode].Down(value["id"]):
             self.autopilot_heading = (self.autopilot_heading + self.heading_step) % 360
 
-    def decrease_heading_kb(self, value):
-        if ControlDevice.keyboard.Down(value):
+    def decrease_heading(self, value):
+        if ControlDevice.devices[self.control_mode].Down(value["id"]):
             self.autopilot_heading = (self.autopilot_heading - self.heading_step) % 360
 
-    def set_heading_kb(self, value):
+    def set_heading(self, value):
         pass
 
-    def increase_altitude_kb(self, value):
-        if ControlDevice.keyboard.Down(value):
+    def increase_altitude(self, value):
+        if ControlDevice.devices[self.control_mode].Down(value["id"]):
             self.autopilot_altitude = min(self.autopilot_altitude + self.altitude_step, self.altitude_range[1])
 
-    def decrease_altitude_kb(self, value):
-        if ControlDevice.keyboard.Down(value):
+    def decrease_altitude(self, value):
+        if ControlDevice.devices[self.control_mode].Down(value["id"]):
             self.autopilot_altitude = max(self.autopilot_altitude - self.altitude_step, self.altitude_range[0])
 
-    def set_altitude_kb(self, value):
+    def set_altitude(self, value):
         pass
 
-    # =============================== Gamepad commands ====================================
-
-    def switch_activation_gp(self, value):
-        pass
-
-    def increase_speed_gp(self, value):
-        pass
-
-    def decrease_speed_gp(self, value):
-        pass
-
-    def set_speed_kb(self, value):
-        pass
-
-    def increase_heading_gp(self, value):
-        pass
-
-    def decrease_heading_gp(self, value):
-        pass
-
-    def set_heading_gp(self, value):
-        pass
-
-    def increase_altitude_gp(self, value):
-        pass
-
-    def decrease_altitude_gp(self, value):
-        pass
-
-    def set_altitude_gp(self, value):
-        pass
 
     # ====================================================================================
 
-    def update_cm_la3(self, dts):
-        im = self.inputs_mapping["AircraftAutopilotInputsMapping"]["LogitechAttack3"]
-        for cmd, input_code in im.items():
-            if cmd in self.commands and input_code != "":
-                self.commands[cmd](input_code)
-
     def update_cm_keyboard(self, dts):
-        im = self.inputs_mapping["AircraftAutopilotInputsMapping"]["Keyboard"]
+        im = self.inputs_mapping["AircraftAutopilotInputsMapping"][self.control_mode]
         for cmd, input_code in im.items():
             if cmd in self.commands and input_code != "":
-                self.commands[cmd](input_code)
+                self.commands[cmd]({"id": input_code})
 
-    def update_cm_gamepad(self, dts):
-        im = self.inputs_mapping["AircraftAutopilotInputsMapping"]["GamePad"]
-        for cmd, input_code in im.items():
-            if cmd in self.commands and input_code != "":
-                self.commands[cmd](input_code)
+    def update_cm_joystick(self, dts):
+        im = self.inputs_mapping["AircraftAutopilotInputsMapping"][self.control_mode]
+        for cmd, input_name in im.items():
+            if cmd in self.commands and input_name != "":
+                i_def = ControlDevice.device_configurations[self.control_mode][input_name]
+                self.commands[cmd](i_def)
 
     def update_cm_mouse(self, dts):
-        im = self.inputs_mapping["AircraftAutopilotInputsMapping"]["Mouse"]
+        im = self.inputs_mapping["AircraftAutopilotInputsMapping"][self.control_mode]
 
     def update_controlled_devices(self, dts):
         aircraft = self.machine
@@ -1690,11 +1268,11 @@ class AircraftAutopilotControlDevice(ControlDevice):
                 if self.control_mode == ControlDevice.CM_KEYBOARD:
                     self.update_cm_keyboard(dts)
                 elif self.control_mode == ControlDevice.CM_GAMEPAD:
-                    self.update_cm_gamepad(dts)
+                    self.update_cm_joystick(dts)
                 elif self.control_mode == ControlDevice.CM_MOUSE:
                     self.update_cm_mouse(dts)
                 elif self.control_mode == ControlDevice.CM_LOGITECH_ATTACK_3:
-                     self.update_cm_la3(dts)
+                     self.update_cm_joystick(dts)
 
             self.update_controlled_devices(dts)
 
@@ -1743,20 +1321,9 @@ class AircraftIAControlDevice(ControlDevice):
         self.IA_flag_goto_landing_approach_point = False
         self.IA_flag_reached_landing_point = False
 
-    def set_control_mode(self, cmode):
-        self.control_mode = cmode
-        if cmode == ControlDevice.CM_KEYBOARD:
-            self.commands.update({
-                "ACTIVATE_USER_CONTROL": self.activate_user_control_kb
+        self.commands.update({
+                "ACTIVATE_USER_CONTROL": self.activate_user_control
             })
-
-        elif cmode == ControlDevice.CM_GAMEPAD:
-            self.commands.update({
-                "ACTIVATE_USER_CONTROL": self.activate_user_control_gp
-            })
-
-        elif cmode == ControlDevice.CM_MOUSE:
-            self.commands.update({})
 
     # ==================================== functions
 
@@ -2134,19 +1701,11 @@ class AircraftIAControlDevice(ControlDevice):
             if len(offenders) > 1:
                 offenders.sort(key=lambda p: p[1])
             td.set_target_id(offenders[0][0])
+
     # =============================== Keyboard commands ====================================
 
-    def activate_user_control_kb(self, value):
-        if ControlDevice.keyboard.Pressed(value):
-            uctrl = self.machine.get_device("UserControlDevice")
-            if uctrl is not None:
-                self.deactivate()
-                uctrl.activate()
-
-    # =============================== Gamepad commands ====================================
-
-    def activate_user_control_gp(self, value):
-        if ControlDevice.gamepad.Pressed(value):
+    def activate_user_control(self, value):
+        if ControlDevice.devices[self.control_mode].Pressed(value["id"]):
             uctrl = self.machine.get_device("UserControlDevice")
             if uctrl is not None:
                 self.deactivate()
@@ -2155,19 +1714,20 @@ class AircraftIAControlDevice(ControlDevice):
     # ====================================================================================
 
     def update_cm_keyboard(self, dts):
-        im = self.inputs_mapping["AircraftIAInputsMapping"]["Keyboard"]
+        im = self.inputs_mapping["AircraftIAInputsMapping"][self.control_mode]
         for cmd, input_code in im.items():
             if cmd in self.commands and input_code != "":
-                self.commands[cmd](input_code)
+                self.commands[cmd]({"id": input_code})
 
-    def update_cm_gamepad(self, dts):
-        im = self.inputs_mapping["AircraftIAInputsMapping"]["GamePad"]
-        for cmd, input_code in im.items():
-            if cmd in self.commands and input_code != "":
-                self.commands[cmd](input_code)
+    def update_cm_joystick(self, dts):
+        im = self.inputs_mapping["AircraftIAInputsMapping"][self.control_mode]
+        for cmd, input_name in im.items():
+            if cmd in self.commands and input_name != "":
+                i_def = ControlDevice.device_configurations[self.control_mode][input_name]
+                self.commands[cmd](i_def)
 
     def update_cm_mouse(self, dts):
-        im = self.inputs_mapping["AircraftIAInputsMapping"]["Mouse"]
+        im = self.inputs_mapping["AircraftIAInputsMapping"][self.control_mode]
 
     def update(self, dts):
         if self.activated:
@@ -2175,7 +1735,7 @@ class AircraftIAControlDevice(ControlDevice):
                 if self.control_mode == ControlDevice.CM_KEYBOARD:
                     self.update_cm_keyboard(dts)
                 elif self.control_mode == ControlDevice.CM_GAMEPAD:
-                    self.update_cm_gamepad(dts)
+                    self.update_cm_joystick(dts)
                 elif self.control_mode == ControlDevice.CM_MOUSE:
                     self.update_cm_mouse(dts)
 

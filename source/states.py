@@ -99,6 +99,74 @@ def init_menu_state():
         # pos, rot, fov = hg.Vec3(-28.444, 19.464, 41.583), hg.Vec3(0.010, 1.545, 0.000), 0.039 # missiles
         # pos, rot, fov = hg.Vec3(-7.179, 16.457, 832.241), hg.Vec3(-0.015, 3.130, 0.000), 0.052 # behind carrier
 
+    # Keyboard & gamepad commands:
+    inputs_mapping_encoded, inputs_mapping = ControlDevice.load_inputs_mapping_file(Aircraft.user_inputs_mapping_file, "AircraftUserInputsMapping")
+    
+    imkb = {}
+    for k, v in inputs_mapping_encoded["AircraftUserInputsMapping"]["Keyboard"].items():
+        if "_" in v:
+            v = v.split("_")[1]
+        imkb[k] = v
+    
+    
+    def create_inputs_names(df_device_name, control_device_name):
+        im = {}
+        for k, v in inputs_mapping_encoded[df_device_name][control_device_name].items():
+            if v != "":
+                if "name" in ControlDevice.device_configurations[control_device_name][v]:
+                    v = ControlDevice.device_configurations[control_device_name][v]["name"]
+                elif "_" in v:
+                    v = v.split("_")[1]
+            im[k] = v
+        return im
+    
+    imgp = create_inputs_names("AircraftUserInputsMapping","GamePad")
+    imgn = create_inputs_names("AircraftUserInputsMapping","LogitechAttack3")
+
+    Main.inputs_commands = [
+        ["START MISSION", {"keyboard": "SPACE", "gamepad": "Start", "generic": ControlDevice.get_device_input_name("LogitechAttack3", "button", 0)}],
+        ["Recenter view", {"keyboard": "F11"}],
+        ["Pitch" , {"keyboard": imkb["PITCH_UP"] + " / " + imkb["PITCH_DOWN"], "gamepad": imgp["SET_PITCH"], "generic": imgn["SET_PITCH"]}],
+        ["Roll" , {"keyboard": imkb["ROLL_LEFT"] + " / " + imkb["ROLL_RIGHT"], "gamepad": imgp["SET_ROLL"], "generic": imgn["SET_ROLL"]}],
+        ["Yaw" , {"keyboard": imkb["YAW_LEFT"] + " / " + imkb["YAW_RIGHT"], "gamepad": imgp["SET_YAW"], "generic": imgn["SET_YAW"]}],
+        ["Gun" , {"keyboard": imkb["FIRE_MACHINE_GUN"], "gamepad": imgp["FIRE_MACHINE_GUN"], "generic": imgn["FIRE_MACHINE_GUN"]}],
+        ["Missiles" , {"keyboard": imkb["FIRE_MISSILE"], "gamepad": imgp["FIRE_MISSILE"], "generic": imgn["FIRE_MISSILE"]}],
+        ["Target selection" , {"keyboard": imkb["NEXT_TARGET"], "gamepad": imgp["NEXT_TARGET"], "generic": imgn["NEXT_TARGET"]}],
+        ["Thrust level", {
+            "keyboard": imkb["INCREASE_THRUST_LEVEL"] + " / " + imkb["DECREASE_THRUST_LEVEL"],
+            "gamepad": imgp["SET_THRUST_LEVEL"] if imgp["SET_THRUST_LEVEL"] != "" else (imgp["INCREASE_THRUST_LEVEL"] + " / " + imgp["DECREASE_THRUST_LEVEL"]),
+            "generic": imgn["SET_THRUST_LEVEL"] if imgn["SET_THRUST_LEVEL"] != "" else (imgn["INCREASE_THRUST_LEVEL"] + " / " + imgn["DECREASE_THRUST_LEVEL"])
+            }],
+        ["Brake" , {
+            "keyboard": imkb["INCREASE_BRAKE_LEVEL"] + " / " + imkb["DECREASE_BRAKE_LEVEL"],
+            "gamepad": imgp["INCREASE_BRAKE_LEVEL"] + " / " + imgp["DECREASE_BRAKE_LEVEL"],
+            "generic": imgn["INCREASE_BRAKE_LEVEL"] + " / " + imgn["DECREASE_BRAKE_LEVEL"]
+            }],
+        ["Flaps" , {
+            "keyboard": imkb["INCREASE_FLAPS_LEVEL"] + " / " + imkb["DECREASE_FLAPS_LEVEL"],
+            "gamepad": imgp["INCREASE_FLAPS_LEVEL"] + " / " + imgp["DECREASE_FLAPS_LEVEL"],
+            "generic": imgn["INCREASE_FLAPS_LEVEL"] + " / " + imgn["DECREASE_FLAPS_LEVEL"]
+            }],
+        ["Post combustion (only thrust=100%)" ,
+            {"keyboard": imkb["SWITCH_POST_COMBUSTION"],
+             "gamepad": imgp["SWITCH_POST_COMBUSTION"],
+             "generic": imgn["SWITCH_POST_COMBUSTION"]
+             }],
+        ["Deploy / Undeploy gear",
+            {"keyboard": imkb["SWITCH_GEAR"],
+            "gamepad": imgp["SWITCH_GEAR"],
+            "generic": imgn["SWITCH_GEAR"]
+            }],
+        ["Reset game" , {"keyboard": "TAB"}],
+        ["Set View" , {"keyboard":"2/3/4/8/6/5/7/9"}],
+        ["Zoom" , {"keyboard": "Insert / Page Up"}],
+        ["Aircraft selection (multi allies missions)" , {"keyboard": "Numeric pad : 1"}],
+        ["Activate IA" , {"keyboard": "I"}],
+        ["Activate User control" , {"keyboard": "U"}],
+        ["HUD ON / OFF" , {"keyboard":"F10"}]
+    ]
+
+
     Main.scene.SetCurrentCamera(Main.camera_intro)
     Main.t = 0
     Main.fading_cptr = 0
@@ -147,85 +215,77 @@ def menu_state(dts):
 
         f = Main.menu_fading_cptr / menu_fade_in_delay
 
-        yof7 = -0.15
+        yof7 = -0.1 
 
         Overlays.add_text2D("DOGFIGHT", hg.Vec2(0.5, 800 / 900 - 0.08), 0.035, hg.Color.White * f, Main.title_font, hg.DTHA_Center)
         Overlays.add_text2D("Sandbox", hg.Vec2(0.5, 770 / 900 - 0.08), 0.025, hg.Color.White * f, Main.hud_font, hg.DTHA_Center)
 
         Missions.display_mission_title(Main, f, dts, yof7)
 
-        Overlays.add_text2D("Hit space or Start", hg.Vec2(0.5, 611 / 900 + yof7), 0.025, hg.Color(1, 1, 1, (0.7 + sin(tps * 5) * 0.3)) * f, Main.title_font, hg.DTHA_Center)
+        Overlays.add_text2D("Choose your device", hg.Vec2(0.5, 611 / 900 + yof7), 0.025, hg.Color(1, 1, 1, (0.7 + sin(tps * 5) * 0.3)) * f, Main.title_font, hg.DTHA_Center)
+
+        # Number of colmuns for commands display
+        n_col = 1
+        if Main.flag_paddle: n_col += 1
+        if Main.flag_generic_controller: n_col += 1
+        x_step_cmds = 345 / 1600
+        x_step = 200 / 1600
+        w = x_step_cmds + n_col * x_step
+        x_start = 0.5 - (w/2)
 
         s = 0.015
-        x = 470 / 1600
-        y = 520 + yof7 * 900
+        x = x_start
+        y = 500 + yof7 * 900
         c = hg.Color(1., 0.9, 0.3, 1) * f
+        Overlays.add_text2D(Main.inputs_commands[0][0], hg.Vec2(x, (y+40) / 900), s, c, Main.hud_font)
         if Main.flag_vr:
-            Overlays.add_text2D("Recenter view", hg.Vec2(x, (y+20) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("Thrust level", hg.Vec2(x, (y) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("Pitch", hg.Vec2(x, (y - 20) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("Roll", hg.Vec2(x, (y - 40) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("Yaw", hg.Vec2(x, (y - 60) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("Gun", hg.Vec2(x, (y - 80) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("Missiles", hg.Vec2(x, (y - 100) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("Target selection", hg.Vec2(x, (y - 120) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("Brake", hg.Vec2(x, (y - 140) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("Flaps", hg.Vec2(x, (y - 160) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("Post combustion (only thrust=100%)", hg.Vec2(x, (y - 180) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("Deploy / Undeploy gear", hg.Vec2(x, (y - 200) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("Reset game", hg.Vec2(x, (y - 220) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("Set View", hg.Vec2(x, (y - 240) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("Zoom", hg.Vec2(x, (y - 260) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("Aircraft selection (multi allies missions)", hg.Vec2(x, (y - 280) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("Activate IA", hg.Vec2(x, (y - 300) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("Activate User control", hg.Vec2(x, (y - 320) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("HUD ON / OFF", hg.Vec2(x, (y - 340) / 900), s, c, Main.hud_font)
-
-
+            Overlays.add_text2D(Main.inputs_commands[1][0], hg.Vec2(x, (y+20) / 900), s, c, Main.hud_font)
+        stp = 0
+        for i in range(2,len(Main.inputs_commands)):
+            command = Main.inputs_commands[i]
+            Overlays.add_text2D(command[0], hg.Vec2(x, (y - stp) / 900), s, c, Main.hud_font)
+            stp += 20
+    
         c2 = hg.Color.Grey * f
 
         # Keyboard:
-        x = 815 / 1600
+        x += x_step_cmds
         c = hg.Color.White * f
-        Overlays.add_text2D("Keyboard commands", hg.Vec2(x, (y+40) / 900), s, c2, Main.hud_font)
+        Overlays.add_text2D("Keyboard commands", hg.Vec2(x, (y+60) / 900), s, c2, Main.hud_font)
+        Overlays.add_text2D(Main.inputs_commands[0][1]["keyboard"], hg.Vec2(x, (y+40) / 900), s, c, Main.hud_font)
         if Main.flag_vr:
-            Overlays.add_text2D("F11", hg.Vec2(x, (y+20) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("Home / End", hg.Vec2(x, (y) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("Up / Down", hg.Vec2(x, (y - 20) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("Right / Left", hg.Vec2(x, (y - 40) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("Suppr / Page down", hg.Vec2(x, (y - 60) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("ENTER", hg.Vec2(x, (y - 80) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("F1", hg.Vec2(x, (y - 100) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("T", hg.Vec2(x, (y - 120) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("B / N", hg.Vec2(x, (y - 140) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("C / V", hg.Vec2(x, (y - 160) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("Space", hg.Vec2(x, (y - 180) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("G", hg.Vec2(x, (y - 200) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("Tab", hg.Vec2(x, (y - 220) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("2/3/4/8/6/5/7/9", hg.Vec2(x, (y - 240) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("Insert / Page Up", hg.Vec2(x, (y - 260) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("Numeric pad : 1", hg.Vec2(x, (y - 280) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("I", hg.Vec2(x, (y - 300) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("U", hg.Vec2(x, (y - 320) / 900), s, c, Main.hud_font)
-        Overlays.add_text2D("F10", hg.Vec2(x, (y - 340) / 900), s, c, Main.hud_font)
+            Overlays.add_text2D(Main.inputs_commands[1][1]["keyboard"], hg.Vec2(x, (y+20) / 900), s, c, Main.hud_font)
+        stp = 0
+        for i in range(2, len(Main.inputs_commands)):
+            command = Main.inputs_commands[i]
+            if "keyboard" in command[1]:
+                Overlays.add_text2D(command[1]["keyboard"], hg.Vec2(x, (y - stp) / 900), s, c, Main.hud_font)
+            stp += 20
+       
 
         # Paddle
         if Main.flag_paddle:
-            x = 990 / 1600
-            Overlays.add_text2D("Gamepad commands", hg.Vec2(x, (y+40) / 900), s, c2, Main.hud_font)
-            Overlays.add_text2D("Right pad vertical",  hg.Vec2(x, (y) / 900), s, c, Main.hud_font)
-            Overlays.add_text2D("Left pad vertical", hg.Vec2(x, (y - 20) / 900), s, c, Main.hud_font)
-            Overlays.add_text2D("Left pad horizontal", hg.Vec2(x, (y - 40) / 900), s, c, Main.hud_font)
-            Overlays.add_text2D("Right pad horizontal", hg.Vec2(x, (y - 60) / 900), s, c, Main.hud_font)
-            Overlays.add_text2D("A", hg.Vec2(x, (y - 80) / 900), s, c, Main.hud_font)
-            Overlays.add_text2D("X", hg.Vec2(x, (y - 100) / 900), s, c, Main.hud_font)
-            Overlays.add_text2D("Y", hg.Vec2(x, (y - 120) / 900), s, c, Main.hud_font)
-            Overlays.add_text2D("Cross Up / Down", hg.Vec2(x, (y - 140) / 900), s, c, Main.hud_font)
-            Overlays.add_text2D("Cross Right / Left", hg.Vec2(x, (y - 160) / 900), s, c, Main.hud_font)
-            Overlays.add_text2D("B",  hg.Vec2(x, (y - 180) / 900), s, c, Main.hud_font)
-            Overlays.add_text2D("Back", hg.Vec2(x, (y - 200) / 900), s, c, Main.hud_font)
-            Overlays.add_text2D("Left Thumb", hg.Vec2(x, (y - 300) / 900), s, c, Main.hud_font)
-            Overlays.add_text2D("Right Thumb", hg.Vec2(x, (y - 320) / 900), s, c, Main.hud_font)
+            x += x_step
+            Overlays.add_text2D("Gamepad commands", hg.Vec2(x, (y+60) / 900), s, c2, Main.hud_font)
+            Overlays.add_text2D(Main.inputs_commands[0][1]["gamepad"], hg.Vec2(x, (y+40) / 900), s, c, Main.hud_font)
+            stp = 0
+            for i in range(2, len(Main.inputs_commands)):
+                command = Main.inputs_commands[i]
+                if "gamepad" in command[1]:
+                    Overlays.add_text2D(command[1]["gamepad"],  hg.Vec2(x, (y - stp) / 900), s, c, Main.hud_font)
+                stp += 20
+        
+        if Main.flag_generic_controller:
+            x += x_step
+            Overlays.add_text2D("Logitec Attack 3 commands", hg.Vec2(x, (y+60) / 900), s, c2, Main.hud_font)
+            Overlays.add_text2D(Main.inputs_commands[0][1]["generic"], hg.Vec2(x, (y+40) / 900), s, c, Main.hud_font)
+            stp = 0
+            for i in range(2, len(Main.inputs_commands)):
+                command = Main.inputs_commands[i]
+                if "generic" in command[1]:
+                    Overlays.add_text2D(command[1]["generic"],  hg.Vec2(x, (y - stp) / 900), s, c, Main.hud_font)
+                stp += 20
+
 
         if vcr.is_init():
             vcr.update(Main, Main.simulation_dt)

@@ -218,12 +218,15 @@ class PlanetRender:
 		return cam_pos
 
 	def load_json_script(self, file_name="scripts/planet_parameters.json"):
-		file = hg.OpenText(file_name)
+		#file = hg.OpenText(file_name)
+		file = open(file_name, "r")
 		if not file:
 			print("ERROR - Can't open json file : " + file_name)
 		else:
-			json_script = hg.ReadString(file)
-			hg.Close(file)
+			#json_script = hg.ReadString(file)
+			json_script = file.read()
+			#hg.Close(file)
+			file.close()
 			if json_script != "":
 				script_parameters = json.loads(json_script)
 				self.low_atmosphere_color = dc.list_to_color(script_parameters["low_atmosphere_color"])
@@ -320,10 +323,14 @@ class PlanetRender:
 							"atmosphere_luminosity_falloff": self.atmosphere_luminosity_falloff
 		}
 		json_script = json.dumps(script_parameters, indent=4)
-		file = hg.OpenWrite(output_filename)
+		file = open(output_filename, "w")
+		
+		#file = hg.OpenWrite(output_filename)
 		if file:
-			hg.WriteString(file, json_script)
-			hg.Close(file)
+			file.write(json_script)
+			file.close()
+			#hg.WriteString(file, json_script)
+			#hg.Close(file)
 			return True
 		else:
 			print("ERROR - Can't open json file : " + output_filename)

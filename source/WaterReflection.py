@@ -82,15 +82,3 @@ class WaterReflection():
 
 	def restore_camera(self, scene):
 		scene.SetCurrentCamera(self.main_camera)
-
-	def load_parameters(self, file_name="assets/scripts/water_reflection.json"):
-		json_script = hg.GetFilesystem().FileToString(file_name)
-		if json_script != "":
-			script_parameters = json.loads(json_script)
-			self.color = dc.list_to_color(script_parameters["color"])
-			self.reflect_level = script_parameters["reflect_level"]
-
-	def save_parameters(self, output_filename="assets/scripts/water_reflection.json"):
-		script_parameters = {"color": dc.color_to_list(self.color), "reflect_level": self.reflect_level}
-		json_script = json.dumps(script_parameters, indent=4)
-		return hg.GetFilesystem().StringToFile(output_filename, json_script)

@@ -35,6 +35,8 @@ import vcr
 
 class Main:
 
+    inputs_commands = None
+    
     # Main display configuration (user-defined in "config.json" file)
 
     flag_fullscreen = False
@@ -48,6 +50,7 @@ class Main:
     # Control devices
 
     control_mode = ControlDevice.CM_KEYBOARD
+    devices_configurations_file = "scripts/devices_config.json"
 
     # VR mode
     flag_vr = False
@@ -229,7 +232,7 @@ class Main:
         cls.gamepad = hg.Gamepad()
         cls.generic_controller = hg.Joystick()
         Overlays.init()
-        ControlDevice.init(cls.keyboard, cls.mouse, cls.gamepad, cls.generic_controller)
+        ControlDevice.init(cls.keyboard, cls.mouse, cls.gamepad, cls.generic_controller,cls.devices_configurations_file)
 
     @classmethod
     def setup_vr(cls):
@@ -1103,12 +1106,16 @@ class Main:
 
     @classmethod
     def load_json_script(cls, file_name="scripts/simulator_parameters.json"):
-        file = hg.OpenText(file_name)
+        file = open(file_name, "r")
+        
+        #file = hg.OpenText(file_name)
         if not file:
             print("ERROR - Can't open json file : " + file_name)
         else:
-            json_script = hg.ReadString(file)
-            hg.Close(file)
+            json_script = file.read()
+            file.close()
+            #json_script = hg.ReadString(file)
+            #hg.Close(file)
             if json_script != "":
                 script_parameters = json.loads(json_script)
                 cls.allies_missiles_smoke_color = dc.list_to_color(script_parameters["allies_missiles_smoke_color"])
@@ -1120,10 +1127,13 @@ class Main:
                              "ennemies_missiles_smoke_color": dc.color_to_list(cls.ennemies_missiles_smoke_color),
                              }
         json_script = json.dumps(script_parameters, indent=4)
-        file = hg.OpenWrite(output_filename)
+        file = open(output_filename, "w")
+        #file = hg.OpenWrite(output_filename)
         if file:
-            hg.WriteString(file, json_script)
-            hg.Close(file)
+            file.write(json_script)
+            file.close()
+            #hg.WriteString(file, json_script)
+            #hg.Close(file)
             return True
         else:
             print("ERROR - Can't open json file : " + output_filename)
