@@ -5,7 +5,11 @@
 ```
 glfw3.dll
 harfang.pyd
-lua53.dll
+lua54.dll
 openvr_api.dll
 __init__.py
+bin/__init__.py
+bin/__main.py
+bin/run.py
+bin/assetc
 ```
