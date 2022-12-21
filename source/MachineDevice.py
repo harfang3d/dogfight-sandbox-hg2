@@ -603,54 +603,50 @@ class ControlDevice(MachineDevice):
         }
     
     @classmethod
-    def load_devices_configurations_file(self, file_name):
-        file = hg.OpenText(file_name)
-        if not file:
-            print("ERROR - Can't open json file : " + file_name)
-        else:
-            json_script = hg.ReadString(file)
-            hg.Close(file)
-            if json_script != "":
-                return json.loads(json_script)
+    def get_device_input_name(cls, device_name, input_type, id):
+        if device_name in cls.device_configurations:
+            for inpt in cls.device_configurations[device_name].values():
+                if inpt["type"] == input_type and inpt["id"] == id:
+                    return inpt["name"]
+        return ""
 
     @classmethod
-    def normalize_axis_value(cls, device_id, axis_def):
-        if axis_def["type"] == "axis":
-            v = ControlDevice.devices[device_id].Axes(axis_def["id"])
-            v = min(max(v, axis_def["min"]), axis_def["max"])
-            if axis_def["zero"] - axis_def["zero_epsilon"] < v < axis_def["zero_epsilon"] + axis_def["zero"]:
-                return 0  
-            elif v > axis_def["zero"]:
-                return (v - axis_def["zero"]) / (axis_def["max"] - axis_def["zero"])
-            elif v < axis_def["zero"]:
-                return - (v - axis_def["zero"]) / (axis_def["min"] - axis_def["zero"])
-        return 0
-
-
-    def __init__(self, name, machine, inputs_mapping_file="", input_mapping_name="", control_mode=CM_KEYBOARD, start_state=False):
-        MachineDevice.__init__(self, name, machine, start_state)
-        self.flag_user_control = True
-        self.control_mode = control_mode
-        self.inputs_mapping_file = inputs_mapping_file
-        self.inputs_mapping_encoded = {}
-        self.inputs_mapping = {}
-        self.input_mapping_name = input_mapping_name
-        if self.inputs_mapping_file != "":
-            self.load_inputs_mapping_file(self.inputs_mapping_file)
-
-    def set_control_mode(self, cmode):
-        self.control_mode = cmode
-
-    def load_inputs_mapping_file(self, file_name):
-        file = hg.OpenText(file_name)
+    def load_devices_configurations_file(cls, file_name):
+        #file = hg.OpenText(file_name)
+        file = open(file_name, "r")
         if not file:
             print("ERROR - Can't open json file : " + file_name)
         else:
-            json_script = hg.ReadString(file)
-            hg.Close(file)
+            #json_script = hg.ReadString(file)
+            #hg.Close(file)
+            json_script = file.read()
+            file.close()
             if json_script != "":
-                self.inputs_mapping_encoded = json.loads(json_script)
-                im = self.inputs_mapping_encoded[self.input_mapping_name]
+                jsonscript = json.loads(json_script)
+                for name, device in jsonscript.items():
+                    for i_name, inpt in device.items():
+                        if "reset" in inpt:
+                            inpt["reset"] = True if inpt["reset"] == "true" else False
+                        if "invert" in inpt:
+                            inpt["invert"] = True if inpt["invert"] == "true" else False
+                return jsonscript
+
+    @staticmethod
+    def load_inputs_mapping_file(file_name, input_mapping_name):
+        #file = hg.OpenText(file_name)
+        file = open(file_name, "r")
+        inputs_mapping_encoded = None
+        inputs_mapping = None
+        if not file:
+            print("ERROR - Can't open json file : " + file_name)
+        else:
+            #json_script = hg.ReadString(file)
+            #hg.Close(file)
+            json_script = file.read()
+            file.close()
+            if json_script != "":
+                inputs_mapping_encoded = json.loads(json_script)
+                im = inputs_mapping_encoded[input_mapping_name]
                 cmode_decode = {}
                 for cmode, maps in im.items():
                     maps_decode = {}
@@ -672,9 +668,41 @@ class ControlDevice(MachineDevice):
                     else:
                         maps_decode = maps
                     cmode_decode[cmode] = maps_decode
-                self.inputs_mapping = {self.input_mapping_name: cmode_decode}
+                inputs_mapping = {input_mapping_name: cmode_decode}
             else:
                 print("ERROR - Inputs parameters empty : " + file_name)
+        return inputs_mapping_encoded, inputs_mapping
+
+    @classmethod
+    def normalize_axis_value(cls, device_id, axis_def):
+        if axis_def["type"] == "axis":
+            v = ControlDevice.devices[device_id].Axes(axis_def["id"])
+            v = min(max(v, axis_def["min"]), axis_def["max"])
+            if axis_def["zero"] - axis_def["zero_epsilon"] < v < axis_def["zero_epsilon"] + axis_def["zero"]:
+                return 0  
+            elif v > axis_def["zero"]:
+                v = (v - axis_def["zero"]) / (axis_def["max"] - axis_def["zero"])
+            elif v < axis_def["zero"]:
+                v = - (v - axis_def["zero"]) / (axis_def["min"] - axis_def["zero"])
+            if axis_def["invert"]:
+                v = -v
+            return v
+        return 0
+
+
+    def __init__(self, name, machine, inputs_mapping_file="", input_mapping_name="", control_mode=CM_KEYBOARD, start_state=False):
+        MachineDevice.__init__(self, name, machine, start_state)
+        self.flag_user_control = True
+        self.control_mode = control_mode
+        self.inputs_mapping_file = inputs_mapping_file
+        self.inputs_mapping_encoded = {}
+        self.inputs_mapping = {}
+        self.input_mapping_name = input_mapping_name
+        if self.inputs_mapping_file != "":
+            self.inputs_mapping_encoded, self.inputs_mapping = self.load_inputs_mapping_file(self.inputs_mapping_file, input_mapping_name)
+
+    def set_control_mode(self, cmode):
+        self.control_mode = cmode
 
     def activate_user_control(self):
         self.flag_user_control = True
@@ -891,8 +919,10 @@ class AircraftUserControlDevice(ControlDevice):
             self.machine.set_thrust_level(self.machine.thrust_level_dest - 0.01)
 
     def set_thrust_level(self, value):
-        v = -ControlDevice.normalize_axis_value(self.control_mode, value)
-        self.machine.set_thrust_level(self.machine.thrust_level_dest + v * 0.01)
+        v = ControlDevice.normalize_axis_value(self.control_mode, value)
+        if value["reset"]:
+            v = v * 0.01 + self.machine.thrust_level_dest
+        self.machine.set_thrust_level(v)
 
     def increase_brake_level(self, value):
         if ControlDevice.devices[self.control_mode].Down(value["id"]):

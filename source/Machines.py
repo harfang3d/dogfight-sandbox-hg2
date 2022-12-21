@@ -1302,6 +1302,10 @@ class Aircraft(Destroyable_Machine):
     IA_COM_RETURN_TO_BASE = 3
     IA_COM_LANDING = 4
 
+    user_inputs_mapping_file = "scripts/aircraft_user_inputs_mapping.json"
+    autopilot_inputs_mapping_file = "scripts/aircraft_autopilot_inputs_mapping.json"
+    ia_inputs_mapping_file = "scripts/aircraft_ia_inputs_mapping.json"
+
     def __init__(self, name, model_name, scene, scene_physics, pipeline_ressource: hg.PipelineResources, instance_scene_name, nationality, start_position, start_rotation):
 
         Destroyable_Machine.__init__(self, name, model_name, scene, scene_physics, pipeline_ressource, instance_scene_name, Destroyable_Machine.TYPE_AIRCRAFT, nationality, start_position, start_rotation)
@@ -1315,9 +1319,9 @@ class Aircraft(Destroyable_Machine):
                               "DEACTIVATE_POST_COMBUSTION": self.deactivate_post_combustion
                               })
 
-        self.add_device(AircraftUserControlDevice("UserControlDevice", self, "scripts/aircraft_user_inputs_mapping.json"))
-        self.add_device(AircraftAutopilotControlDevice("AutopilotControlDevice", self, "scripts/aircraft_autopilot_inputs_mapping.json"))
-        self.add_device(AircraftIAControlDevice("IAControlDevice", self, "scripts/aircraft_ia_inputs_mapping.json"))
+        self.add_device(AircraftUserControlDevice("UserControlDevice", self, Aircraft.user_inputs_mapping_file ))
+        self.add_device(AircraftAutopilotControlDevice("AutopilotControlDevice", self, Aircraft.autopilot_inputs_mapping_file))
+        self.add_device(AircraftIAControlDevice("IAControlDevice", self, Aircraft.ia_inputs_mapping_file))
         self.add_device(TargettingDevice("TargettingDevice", self, True))
         self.setup_collisions()
 
