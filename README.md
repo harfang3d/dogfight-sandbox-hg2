@@ -6,9 +6,11 @@ Air to air combat sandbox, created in Python 3 using the [HARFANG 3D 2 framework
 
 - [Overview](#dogfight-2-air-to-air-combat-sandbox)
 - [How to run the Dogfight Sandbox](#how-to-run-the-dogfight-sandbox)
+- [Recorder API](#recorder-api-overview)
 - [About VR mode](#about-vr-mode)
 - [Network mode overview](#network-mode-overview)
 - [Aircraft Commands](#aircraft-keyboard-commands)
+- [How to configure input devices](#how-to-configure-input-devices)
 - [Contributors](#contributors)
 - [Screenshots](#screenshots)
 - [Publications and citations](#publications-and-citations)
@@ -48,7 +50,7 @@ The source code and the graphics assets are made available for studying purpose.
   * HTC Vive Pro
   * Meta Quest 2 (in Oculus Link mode)
 
-## Record / Replay API overview
+## Recorder API overview
 
 1. Choose the mission you want to record.  
 2. Type "F9" to open the recorder interface:  
@@ -180,7 +182,7 @@ There are two types of command configuration files.
 * sources/scripts/XXX_inputs_mapping.json  
   * These files contain the command parameters for the different vehicles or systems.
 
-### Device configuration
+### Devices configuration
 
 The `devices_config.json` file contains the inputs parameters of the device.  
 
