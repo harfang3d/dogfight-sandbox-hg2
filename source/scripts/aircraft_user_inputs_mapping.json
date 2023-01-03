@@ -1,6 +1,6 @@
 {"AircraftUserInputsMapping":
 	{
-		"LogitechAttack3":{
+		"Logitech Attack 3":{
 			"SWITCH_ACTIVATION": "",
 			"NEXT_PILOT": "",
 			"INCREASE_HEALTH_LEVEL": "",
@@ -61,7 +61,7 @@
 			"FIRE_MISSILE": "K_F1",
 			"REARM": "K_F5"
 		},
-		"GamePad":{
+		"Xbox Controller":{
 			"SWITCH_ACTIVATION": "",
 			"NEXT_PILOT": "",
 			"INCREASE_HEALTH_LEVEL": "",
@@ -90,8 +90,6 @@
 			"SWITCH_EASY_STEERING": "",
 			"FIRE_MACHINE_GUN": "GB_ButtonA",
 			"FIRE_MISSILE" : "GB_ButtonX"
-		},
-		"Mouse":{
 		}
 	}
 }

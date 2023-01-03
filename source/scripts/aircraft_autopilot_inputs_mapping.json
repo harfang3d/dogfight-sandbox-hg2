@@ -11,20 +11,6 @@
 			"INCREASE_ALTITUDE": "K_Up",
 			"DECREASE_ALTITUDE": "K_Down",
 			"SET_ALTITUDE": ""
-		},
-		"GamePad":{
-			"ACTIVATE_USER_CONTROL": "",
-			"INCREASE_SPEED": "",
-			"DECREASE_SPEED": "",
-			"SET_SPEED": "",
-			"INCREASE_HEADING": "",
-			"DECREASE_HEADING": "",
-			"SET_HEADING": "",
-			"INCREASE_ALTITUDE": "",
-			"DECREASE_ALTITUDE": "",
-			"SET_ALTITUDE": ""
-		},
-		"Mouse":{
 		}
 	}
 }

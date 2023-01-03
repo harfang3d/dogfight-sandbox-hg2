@@ -7,6 +7,7 @@ from Missions import *
 from SmartCamera import *
 from HUD import *
 from overlays import *
+from MachineDevice import ControlDevice
 import Machines
 
 def init_menu_state():

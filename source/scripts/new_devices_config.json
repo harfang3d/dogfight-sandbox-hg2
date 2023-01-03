@@ -231,96 +231,96 @@
         "button_0": {
             "type": "button",
             "id": 0,
-            "name": "1"
+            "name": "Button  0"
         },
         "button_1": {
             "type": "button",
             "id": 1,
-            "name": "3"
+            "name": "Button  1"
         },
         "button_2": {
             "type": "button",
             "id": 2,
-            "name": "2"
+            "name": "Button  2"
         },
         "button_3": {
             "type": "button",
             "id": 3,
-            "name": "4"
+            "name": "Button  3"
         },
         "button_4": {
             "type": "button",
             "id": 4,
-            "name": "L1"
+            "name": "Button  4"
         },
         "button_5": {
             "type": "button",
             "id": 5,
-            "name": "R1"
+            "name": "Button  5"
         },
         "button_6": {
             "type": "button",
             "id": 6,
-            "name": "L2"
+            "name": "Button  6"
         },
         "button_7": {
             "type": "button",
             "id": 7,
-            "name": "R2"
+            "name": "Button  7"
         },
         "button_8": {
             "type": "button",
             "id": 8,
-            "name": "Share"
+            "name": "Button  8"
         },
         "button_9": {
             "type": "button",
             "id": 9,
-            "name": "Options"
+            "name": "Button  9"
         },
         "button_10": {
             "type": "button",
             "id": 10,
-            "name": "Left Thumb"
+            "name": "Button  10"
         },
         "button_11": {
             "type": "button",
             "id": 11,
-            "name": "Right Thumb"
+            "name": "Button  11"
         },
         "button_12": {
             "type": "button",
             "id": 12,
-            "name": "Next"
+            "name": "Button  12"
         },
         "button_13": {
             "type": "button",
             "id": 13,
-            "name": "Steel Play"
+            "name": "Button  13"
         },
         "button_14": {
             "type": "button",
             "id": 14,
-            "name": "Up"
+            "name": "Button  14"
         },
         "button_15": {
             "type": "button",
             "id": 15,
-            "name": "Right"
+            "name": "Button  15"
         },
         "button_16": {
             "type": "button",
             "id": 16,
-            "name": "Bottom"
+            "name": "Button  16"
         },
         "button_17": {
             "type": "button",
             "id": 17,
-            "name": "Left"
+            "name": "Button  17"
         },
         "axis_0": {
             "type": "axis",
-            "name": "Left pad horizontal",
+            "name": "Axis 0",
             "reset": "true",
             "invert": "false",
             "id": 0,
@@ -331,7 +331,7 @@
         },
         "axis_1": {
             "type": "axis",
-            "name": "Left pad vertical",
+            "name": "Axis 1",
             "reset": "true",
             "invert": "false",
             "id": 1,
@@ -342,7 +342,7 @@
         },
         "axis_2": {
             "type": "axis",
-            "name": "Right pad horizontal",
+            "name": "Axis 2",
             "reset": "true",
             "invert": "false",
             "id": 2,
@@ -353,7 +353,7 @@
         },
         "axis_3": {
             "type": "axis",
-            "name": "Left trigger",
+            "name": "Axis 3",
             "reset": "true",
             "invert": "false",
             "id": 3,
@@ -364,7 +364,7 @@
         },
         "axis_4": {
             "type": "axis",
-            "name": "Right trigger",
+            "name": "Axis 4",
             "reset": "true",
             "invert": "false",
             "id": 4,
@@ -375,7 +375,7 @@
         },
         "axis_5": {
             "type": "axis",
-            "name": "Right pad vertical",
+            "name": "Axis 5",
             "reset": "true",
             "invert": "false",
             "id": 5,
@@ -389,46 +389,46 @@
         "button_0": {
             "type": "button",
             "id": 0,
-            "name": "Trigger 1"
+            "name": "Button  0"
         },
         "button_1": {
             "type": "button",
             "id": 1,
-            "name": "Middle head"
+            "name": "Button  1"
         },
         "button_2": {
             "type": "button",
             "id": 2,
-            "name": "Trigger 2"
+            "name": "Button  2"
         },
         "button_3": {
             "type": "button",
             "id": 3,
-            "name": "Right head"
+            "name": "Button  3"
         },
         "button_4": {
             "type": "button",
             "id": 4,
-            "name": "Up"
+            "name": "Button  4"
         },
         "button_5": {
             "type": "button",
             "id": 5,
-            "name": "Right"
+            "name": "Button  5"
         },
         "button_6": {
             "type": "button",
             "id": 6,
-            "name": "Down"
+            "name": "Button  6"
         },
         "button_7": {
             "type": "button",
             "id": 7,
-            "name": "Left"
+            "name": "Button  7"
         },
         "axis_0": {
             "type": "axis",
-            "name": "Horizontal",
+            "name": "Axis 0",
             "reset": "true",
             "invert": "false",
             "id": 0,
@@ -439,7 +439,7 @@
         },
         "axis_1": {
             "type": "axis",
-            "name": "Vertical",
+            "name": "Axis 1",
             "reset": "true",
             "invert": "false",
             "id": 1,
@@ -450,7 +450,7 @@
         },
         "axis_2": {
             "type": "axis",
-            "name": "Throttle",
+            "name": "Axis 2",
             "reset": "true",
             "invert": "false",
             "id": 2,

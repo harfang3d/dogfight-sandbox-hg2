@@ -5,6 +5,7 @@ import json
 from math import radians, degrees, pi, sqrt, exp, floor, acos, asin, sin, cos
 from random import uniform
 from Particles import *
+import data_converter as dc
 
 # =====================================================================================================
 #                                  Landing
@@ -574,33 +575,57 @@ class MachineGun(MachineDevice):
 class ControlDevice(MachineDevice):
 
     CM_KEYBOARD = "Keyboard"
-    CM_GAMEPAD = "GamePad"
+    CM_JOYSTICK = "Joystick"
     CM_MOUSE = "Mouse"
-    CM_LOGITECH_EXTREME_3DPRO = "Logitech extreme 3DPro"
-    CM_LOGITECH_ATTACK_3 = "Logitech Attack 3"
     CM_NONE = "None"
 
     keyboard = None
     mouse = None
-    gamepad = None
-    generic_controller = None
 
     device_configurations = None
     devices = {}
+    joysticks = []
 
     @classmethod
-    def init(cls, keyboard, mouse, gamepad, generic_controller, devices_configurations_file):
+    def init(cls, keyboard, mouse, devices_configurations_file):
         cls.keyboard = keyboard
         cls.mouse = mouse
-        cls.gamepad = gamepad
-        cls.generic_controller = generic_controller
         cls.device_configurations = cls.load_devices_configurations_file(devices_configurations_file)
         cls.devices = {
             cls.CM_KEYBOARD: cls.keyboard,
-            cls.CM_GAMEPAD: cls.gamepad,
-            cls.CM_LOGITECH_ATTACK_3: cls.generic_controller,
-            cls.CM_LOGITECH_EXTREME_3DPRO: cls.generic_controller
+            cls.CM_MOUSE: cls.mouse,
+            cls.CM_JOYSTICK: None,
         }
+        
+
+        # Get connected devices:
+        cls.joysticks = []
+        joysticks_names = hg.GetJoystickNames()
+        for nm in joysticks_names:
+            if nm != "" and nm !="default":
+                joystick = hg.Joystick(nm)
+                joystick.Update()
+                if joystick.IsConnected():
+                    device_name = joystick.GetDeviceName()
+                    if device_name in cls.device_configurations:
+                        cls.joysticks.append(joystick)
+        
+        if len(cls.joysticks)>0:
+            cls.devices[cls.CM_JOYSTICK] = cls.joysticks[0]
+    
+    @classmethod
+    def set_current_joystick(cls, joystick:hg.Joystick):
+        if joystick.GetDeviceName() in cls.device_configurations:
+            cls.devices[cls.CM_JOYSTICK] = joystick
+    
+    @classmethod
+    def get_joystick_button_down(cls):
+        #Return the joystick wich button is down, or None.
+        for joystick in cls.joysticks:
+            for j in range(joystick.ButtonsCount()):
+                if joystick.Down(j):
+                    return joystick
+        return None
     
     @classmethod
     def get_device_input_name(cls, device_name, input_type, id):
@@ -623,12 +648,7 @@ class ControlDevice(MachineDevice):
             file.close()
             if json_script != "":
                 jsonscript = json.loads(json_script)
-                for name, device in jsonscript.items():
-                    for i_name, inpt in device.items():
-                        if "reset" in inpt:
-                            inpt["reset"] = True if inpt["reset"] == "true" else False
-                        if "invert" in inpt:
-                            inpt["invert"] = True if inpt["invert"] == "true" else False
+                dc.str_to_booleans(jsonscript)
                 return jsonscript
 
     @staticmethod
@@ -688,6 +708,11 @@ class ControlDevice(MachineDevice):
                 v = -v
             return v
         return 0
+
+    @classmethod
+    def update_input_devices(cls):
+        for joystick in cls.joysticks:
+            joystick.Update()
 
 
     def __init__(self, name, machine, inputs_mapping_file="", input_mapping_name="", control_mode=CM_KEYBOARD, start_state=False):
