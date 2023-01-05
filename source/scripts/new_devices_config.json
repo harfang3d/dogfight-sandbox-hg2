@@ -164,7 +164,7 @@
             "type": "axis",
             "reset": "false",
             "name": "Throttle",
-            "invert": "true",
+            "invert": "false",
             "id": 2,
             "min": -1,
             "max": 1,
@@ -228,99 +228,99 @@
         }
     },
     "Wired Gamepad": {
-        "WGPB_1": {
+        "button_0": {
             "type": "button",
             "id": 0,
-            "name": "Button 1"
+            "name": "Button  0"
         },
-        "WGPB_3": {
+        "button_1": {
             "type": "button",
             "id": 1,
-            "name": "Button 3"
+            "name": "Button  1"
         },
-        "WGPB_2": {
+        "button_2": {
             "type": "button",
             "id": 2,
-            "name": "Button 2"
+            "name": "Button  2"
         },
-        "WGPB_4": {
+        "button_3": {
             "type": "button",
             "id": 3,
-            "name": "Button 4"
+            "name": "Button  3"
         },
-        "WGPB_L1": {
+        "button_4": {
             "type": "button",
             "id": 4,
-            "name": "L1"
+            "name": "Button  4"
         },
-        "WGPB_R1": {
+        "button_5": {
             "type": "button",
             "id": 5,
-            "name": "R1"
+            "name": "Button  5"
         },
-        "WGPB_L2": {
+        "button_6": {
             "type": "button",
             "id": 6,
-            "name": "L2"
+            "name": "Button  6"
         },
-        "WGPB_R2": {
+        "button_7": {
             "type": "button",
             "id": 7,
-            "name": "R2"
+            "name": "Button  7"
         },
-        "WGPB_Share": {
+        "button_8": {
             "type": "button",
             "id": 8,
-            "name": "Share"
+            "name": "Button  8"
         },
-        "WGPB_Options": {
+        "button_9": {
             "type": "button",
             "id": 9,
-            "name": "Options"
+            "name": "Button  9"
         },
-        "WGPB_LThumb": {
+        "button_10": {
             "type": "button",
             "id": 10,
-            "name": "Left Thumb"
+            "name": "Button  10"
         },
-        "WGPB_RThumb": {
+        "button_11": {
             "type": "button",
             "id": 11,
-            "name": "Right Thumb"
+            "name": "Button  11"
         },
-        "WGPB_Next": {
+        "button_12": {
             "type": "button",
             "id": 12,
-            "name": "Next"
+            "name": "Button  12"
         },
-        "WGPB_SteelPlay": {
+        "button_13": {
             "type": "button",
             "id": 13,
-            "name": "Steel Play"
+            "name": "Button  13"
         },
-        "WGPB_Up": {
+        "button_14": {
             "type": "button",
             "id": 14,
-            "name": "Up"
+            "name": "Button  14"
         },
-        "WGPB_Right": {
+        "button_15": {
             "type": "button",
             "id": 15,
-            "name": "Right"
+            "name": "Button  15"
         },
-        "WGPB_Down": {
+        "button_16": {
             "type": "button",
             "id": 16,
-            "name": "Down"
+            "name": "Button  16"
         },
-        "WGPB_Left": {
+        "button_17": {
             "type": "button",
             "id": 17,
-            "name": "Left"
+            "name": "Button  17"
         },
-        "WGPA_LeftX": {
+        "axis_0": {
             "type": "axis",
-            "name": "Left pad horizontal",
+            "name": "Axis 0",
             "reset": "true",
             "invert": "false",
             "id": 0,
@@ -329,20 +329,20 @@
             "zero": 0,
             "zero_epsilon": 0.01
         },
-        "WGPA_LeftY": {
+        "axis_1": {
             "type": "axis",
-            "name": "Left pad vertical",
+            "name": "Axis 1",
             "reset": "true",
-            "invert": "true",
+            "invert": "false",
             "id": 1,
             "min": -1,
             "max": 1,
             "zero": 0,
             "zero_epsilon": 0.01
         },
-        "WGPA_RightX": {
+        "axis_2": {
             "type": "axis",
-            "name": "Right pad horizontal",
+            "name": "Axis 2",
             "reset": "true",
             "invert": "false",
             "id": 2,
@@ -351,9 +351,9 @@
             "zero": 0,
             "zero_epsilon": 0.01
         },
-        "WGPA_LeftTrigger": {
+        "axis_3": {
             "type": "axis",
-            "name": "Left trigger",
+            "name": "Axis 3",
             "reset": "true",
             "invert": "false",
             "id": 3,
@@ -362,9 +362,9 @@
             "zero": 0,
             "zero_epsilon": 0.01
         },
-        "WGPA_RightTrigger": {
+        "axis_4": {
             "type": "axis",
-            "name": "Right trigger",
+            "name": "Axis 4",
             "reset": "true",
             "invert": "false",
             "id": 4,
@@ -373,9 +373,9 @@
             "zero": 0,
             "zero_epsilon": 0.01
         },
-        "WGPA_RightY": {
+        "axis_5": {
             "type": "axis",
-            "name": "Right pad vertical",
+            "name": "Axis 5",
             "reset": "true",
             "invert": "false",
             "id": 5,
@@ -386,49 +386,49 @@
         }
     },
     "USB Game Controllers": {
-        "GCB_Trigger1": {
+        "button_0": {
             "type": "button",
             "id": 0,
-            "name": "Trigger 1"
+            "name": "Button  0"
         },
-        "GCB_MiddleHead": {
+        "button_1": {
             "type": "button",
             "id": 1,
-            "name": "Middle head"
+            "name": "Button  1"
         },
-        "GCB_Trigger2": {
+        "button_2": {
             "type": "button",
             "id": 2,
-            "name": "Trigger 2"
+            "name": "Button  2"
         },
-        "GCB_RightHead": {
+        "button_3": {
             "type": "button",
             "id": 3,
-            "name": "Right head"
+            "name": "Button  3"
         },
-        "GCB_Up": {
+        "button_4": {
             "type": "button",
             "id": 4,
-            "name": "Up"
+            "name": "Button  4"
         },
-        "GCB_Right": {
+        "button_5": {
             "type": "button",
             "id": 5,
-            "name": "Right"
+            "name": "Button  5"
         },
-        "GCB_Down": {
+        "button_6": {
             "type": "button",
             "id": 6,
-            "name": "Down"
+            "name": "Button  6"
         },
-        "GCB_Left": {
+        "button_7": {
             "type": "button",
             "id": 7,
-            "name": "Left"
+            "name": "Button  7"
         },
-        "GCA_X": {
+        "axis_0": {
             "type": "axis",
-            "name": "Horizontal",
+            "name": "Axis 0",
             "reset": "true",
             "invert": "false",
             "id": 0,
@@ -437,9 +437,9 @@
             "zero": 0,
             "zero_epsilon": 0.01
         },
-        "GCA_Y": {
+        "axis_1": {
             "type": "axis",
-            "name": "Vertical",
+            "name": "Axis 1",
             "reset": "true",
             "invert": "false",
             "id": 1,
@@ -448,11 +448,11 @@
             "zero": 0,
             "zero_epsilon": 0.01
         },
-        "GCA_Throttle": {
+        "axis_2": {
             "type": "axis",
-            "name": "Throttle",
+            "name": "Axis 2",
             "reset": "true",
-            "invert": "true",
+            "invert": "false",
             "id": 2,
             "min": -1,
             "max": 1,

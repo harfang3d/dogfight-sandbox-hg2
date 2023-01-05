@@ -5,6 +5,7 @@ import json
 from math import radians, degrees, pi, sqrt, exp, floor, acos, asin, sin, cos
 from random import uniform
 from Particles import *
+import data_converter as dc
 
 # =====================================================================================================
 #                                  Landing
@@ -574,33 +575,81 @@ class MachineGun(MachineDevice):
 class ControlDevice(MachineDevice):
 
     CM_KEYBOARD = "Keyboard"
-    CM_GAMEPAD = "GamePad"
+    CM_JOYSTICK = "Joystick"
     CM_MOUSE = "Mouse"
-    CM_LOGITECH_EXTREME_3DPRO = "Logitech extreme 3DPro"
-    CM_LOGITECH_ATTACK_3 = "Logitech Attack 3"
     CM_NONE = "None"
 
     keyboard = None
     mouse = None
-    gamepad = None
-    generic_controller = None
 
     device_configurations = None
     devices = {}
+    joysticks = []
+    joysticks_names = []
 
     @classmethod
-    def init(cls, keyboard, mouse, gamepad, generic_controller, devices_configurations_file):
+    def init(cls, keyboard, mouse, devices_configurations_file):
         cls.keyboard = keyboard
         cls.mouse = mouse
-        cls.gamepad = gamepad
-        cls.generic_controller = generic_controller
         cls.device_configurations = cls.load_devices_configurations_file(devices_configurations_file)
         cls.devices = {
             cls.CM_KEYBOARD: cls.keyboard,
-            cls.CM_GAMEPAD: cls.gamepad,
-            cls.CM_LOGITECH_ATTACK_3: cls.generic_controller,
-            cls.CM_LOGITECH_EXTREME_3DPRO: cls.generic_controller
+            cls.CM_MOUSE: cls.mouse,
+            cls.CM_JOYSTICK: None,
         }
+        
+
+        # Get connected devices:
+        cls.joysticks = []
+        cls.joystick_names = []
+        joysticks_names = hg.GetJoystickNames()
+        for nm in joysticks_names:
+            if nm != "" and nm !="default":
+                joystick = hg.Joystick(nm)
+                joystick.Update()
+                if joystick.IsConnected():
+                    device_name = joystick.GetDeviceName()
+                    if device_name in cls.device_configurations:
+                        cls.joysticks.append(joystick)
+                        cls.joystick_names.append(nm)
+        
+        # Default:
+        if len(cls.joysticks)>0:
+            cls.devices[cls.CM_JOYSTICK] = cls.joysticks[0]
+    
+    @classmethod
+    def is_joystick_connected(cls):
+        if len(cls.joysticks)>0:
+            return True
+        return False
+
+    @classmethod
+    def get_current_joystick(cls):
+        return cls.devices[cls.CM_JOYSTICK]
+    
+    @classmethod
+    def get_current_joystick_name(cls):
+        if len(cls.joysticks)>0:
+            i = 0
+            for joystick in cls.joysticks:
+                if joystick == cls.devices[cls.CM_JOYSTICK]:
+                    return cls.joystick_names[i]
+                i += 1
+        return ""
+
+    @classmethod
+    def set_current_joystick(cls, joystick:hg.Joystick):
+        if joystick.GetDeviceName() in cls.device_configurations:
+            cls.devices[cls.CM_JOYSTICK] = joystick
+    
+    @classmethod
+    def get_joystick_button_pressed(cls):
+        #Return the joystick wich button is down, or None.
+        for joystick in cls.joysticks:
+            for j in range(joystick.ButtonsCount()):
+                if joystick.Pressed(j):
+                    return joystick
+        return None
     
     @classmethod
     def get_device_input_name(cls, device_name, input_type, id):
@@ -623,12 +672,7 @@ class ControlDevice(MachineDevice):
             file.close()
             if json_script != "":
                 jsonscript = json.loads(json_script)
-                for name, device in jsonscript.items():
-                    for i_name, inpt in device.items():
-                        if "reset" in inpt:
-                            inpt["reset"] = True if inpt["reset"] == "true" else False
-                        if "invert" in inpt:
-                            inpt["invert"] = True if inpt["invert"] == "true" else False
+                dc.str_to_booleans(jsonscript)
                 return jsonscript
 
     @staticmethod
@@ -677,6 +721,8 @@ class ControlDevice(MachineDevice):
     def normalize_axis_value(cls, device_id, axis_def):
         if axis_def["type"] == "axis":
             v = ControlDevice.devices[device_id].Axes(axis_def["id"])
+            if axis_def["invert"]:
+                v = -v
             v = min(max(v, axis_def["min"]), axis_def["max"])
             if axis_def["zero"] - axis_def["zero_epsilon"] < v < axis_def["zero_epsilon"] + axis_def["zero"]:
                 return 0  
@@ -684,10 +730,13 @@ class ControlDevice(MachineDevice):
                 v = (v - axis_def["zero"]) / (axis_def["max"] - axis_def["zero"])
             elif v < axis_def["zero"]:
                 v = - (v - axis_def["zero"]) / (axis_def["min"] - axis_def["zero"])
-            if axis_def["invert"]:
-                v = -v
             return v
         return 0
+
+    @classmethod
+    def update_input_devices(cls):
+        for joystick in cls.joysticks:
+            joystick.Update()
 
 
     def __init__(self, name, machine, inputs_mapping_file="", input_mapping_name="", control_mode=CM_KEYBOARD, start_state=False):
@@ -764,32 +813,39 @@ class MissileLauncherUserControlDevice(ControlDevice):
     # ====================================================================================
 
     def update_cm_keyboard(self, dts):
-        im = self.inputs_mapping["MissileLauncherUserInputsMapping"][self.control_mode]
+        im = self.inputs_mapping["MissileLauncherUserInputsMapping"]["Keyboard"]
         for cmd, input_code in im.items():
             if cmd in self.commands and input_code != "":
                 self.commands[cmd]({"id": input_code})
 
     def update_cm_joystick(self, dts):
-        im = self.inputs_mapping["MissileLauncherUserInputsMapping"][self.control_mode]
+        device_name = self.get_current_joystick().GetDeviceName()
+        im = self.inputs_mapping["MissileLauncherUserInputsMapping"][device_name]
         for cmd, input_name in im.items():
-            if cmd in self.commands and input_name != "":
-                i_def = ControlDevice.device_configurations[self.control_mode][input_name]
-                self.commands[cmd](i_def)
+            if cmd in self.commands:
+                if input_name == "":
+                    input_code = self.inputs_mapping["MissileLauncherUserInputsMapping"]["Keyboard"][cmd]
+                    if input_code != "":
+                        cm_mem = self.control_mode
+                        self.control_mode = self.CM_KEYBOARD
+                        self.commands[cmd]({"id":input_code})
+                        self.control_mode = cm_mem
+                else:
+                    i_def = ControlDevice.device_configurations[device_name][input_name]
+                    self.commands[cmd](i_def)
 
     def update_cm_mouse(self, dts):
-        im = self.inputs_mapping["MissileLauncherUserInputsMapping"][self.control_mode]
+        im = self.inputs_mapping["MissileLauncherUserInputsMapping"]["Mouse"]
 
     def update(self, dts):
         if self.activated:
             if self.flag_user_control and self.machine.has_focus():
                 if self.control_mode == ControlDevice.CM_KEYBOARD:
                     self.update_cm_keyboard(dts)
-                elif self.control_mode == ControlDevice.CM_GAMEPAD:
+                elif self.control_mode == ControlDevice.CM_JOYSTICK:
                     self.update_cm_joystick(dts)
                 elif self.control_mode == ControlDevice.CM_MOUSE:
                     self.update_cm_mouse(dts)
-                elif self.control_mode == ControlDevice.CM_LOGITECH_ATTACK_3:
-                    self.update_cm_joystick(dts)
 
     # =============================== Keyboard commands ====================================
 
@@ -867,32 +923,39 @@ class AircraftUserControlDevice(ControlDevice):
     # =================== Functions =================================================================
 
     def update_cm_keyboard(self, dts):
-        im = self.inputs_mapping["AircraftUserInputsMapping"][self.control_mode]
+        im = self.inputs_mapping["AircraftUserInputsMapping"]["Keyboard"]
         for cmd, input_code in im.items():
             if cmd in self.commands and input_code != "":
                 self.commands[cmd]({"id":input_code})
 
     def update_cm_joystick(self, dts):
-        im = self.inputs_mapping["AircraftUserInputsMapping"][self.control_mode]
+        device_name = self.get_current_joystick().GetDeviceName()
+        im = self.inputs_mapping["AircraftUserInputsMapping"][device_name]
         for cmd, input_name in im.items():
-            if cmd in self.commands and input_name != "":
-                i_def = ControlDevice.device_configurations[self.control_mode][input_name]
-                self.commands[cmd](i_def)
+            if cmd in self.commands:
+                if input_name == "":
+                    input_code = self.inputs_mapping["AircraftUserInputsMapping"]["Keyboard"][cmd]
+                    if input_code != "":
+                        cm_mem = self.control_mode
+                        self.control_mode = self.CM_KEYBOARD
+                        self.commands[cmd]({"id":input_code})
+                        self.control_mode = cm_mem
+                else:
+                    i_def = ControlDevice.device_configurations[device_name][input_name]
+                    self.commands[cmd](i_def)
 
     def update_cm_mouse(self, dts):
-        im = self.inputs_mapping["AircraftUserInputsMapping"][self.control_mode]
+        im = self.inputs_mapping["AircraftUserInputsMapping"]["Mouse"]
 
     def update(self, dts):
         if self.activated:
             if self.flag_user_control and self.machine.has_focus():
                 if self.control_mode == ControlDevice.CM_KEYBOARD:
                     self.update_cm_keyboard(dts)
-                elif self.control_mode == ControlDevice.CM_GAMEPAD:
+                elif self.control_mode == ControlDevice.CM_JOYSTICK:
                     self.update_cm_joystick(dts)
                 elif self.control_mode == ControlDevice.CM_MOUSE:
                     self.update_cm_mouse(dts)
-                elif self.control_mode == ControlDevice.CM_LOGITECH_ATTACK_3:
-                    self.update_cm_joystick(dts)
 
     # =============================== Keyboard commands ====================================
 
@@ -1164,20 +1227,29 @@ class AircraftAutopilotControlDevice(ControlDevice):
     # ====================================================================================
 
     def update_cm_keyboard(self, dts):
-        im = self.inputs_mapping["AircraftAutopilotInputsMapping"][self.control_mode]
+        im = self.inputs_mapping["AircraftAutopilotInputsMapping"]["Keyboard"]
         for cmd, input_code in im.items():
             if cmd in self.commands and input_code != "":
                 self.commands[cmd]({"id": input_code})
 
     def update_cm_joystick(self, dts):
-        im = self.inputs_mapping["AircraftAutopilotInputsMapping"][self.control_mode]
+        device_name = self.get_current_joystick().GetDeviceName()
+        im = self.inputs_mapping["AircraftAutopilotInputsMapping"][device_name]
         for cmd, input_name in im.items():
-            if cmd in self.commands and input_name != "":
-                i_def = ControlDevice.device_configurations[self.control_mode][input_name]
-                self.commands[cmd](i_def)
+            if cmd in self.commands:
+                if input_name == "":
+                    input_code = self.inputs_mapping["AircraftAutopilotInputsMapping"]["Keyboard"][cmd]
+                    if input_code != "":
+                        cm_mem = self.control_mode
+                        self.control_mode = self.CM_KEYBOARD
+                        self.commands[cmd]({"id":input_code})
+                        self.control_mode = cm_mem
+                else:
+                    i_def = ControlDevice.device_configurations[device_name][input_name]
+                    self.commands[cmd](i_def)
 
     def update_cm_mouse(self, dts):
-        im = self.inputs_mapping["AircraftAutopilotInputsMapping"][self.control_mode]
+        im = self.inputs_mapping["AircraftAutopilotInputsMapping"]["Mouse"]
 
     def update_controlled_devices(self, dts):
         aircraft = self.machine
@@ -1267,12 +1339,10 @@ class AircraftAutopilotControlDevice(ControlDevice):
             if self.flag_user_control and self.machine.has_focus():
                 if self.control_mode == ControlDevice.CM_KEYBOARD:
                     self.update_cm_keyboard(dts)
-                elif self.control_mode == ControlDevice.CM_GAMEPAD:
+                elif self.control_mode == ControlDevice.CM_JOYSTICK:
                     self.update_cm_joystick(dts)
                 elif self.control_mode == ControlDevice.CM_MOUSE:
                     self.update_cm_mouse(dts)
-                elif self.control_mode == ControlDevice.CM_LOGITECH_ATTACK_3:
-                     self.update_cm_joystick(dts)
 
             self.update_controlled_devices(dts)
 
@@ -1714,27 +1784,36 @@ class AircraftIAControlDevice(ControlDevice):
     # ====================================================================================
 
     def update_cm_keyboard(self, dts):
-        im = self.inputs_mapping["AircraftIAInputsMapping"][self.control_mode]
+        im = self.inputs_mapping["AircraftIAInputsMapping"]["Keyboard"]
         for cmd, input_code in im.items():
             if cmd in self.commands and input_code != "":
                 self.commands[cmd]({"id": input_code})
 
     def update_cm_joystick(self, dts):
-        im = self.inputs_mapping["AircraftIAInputsMapping"][self.control_mode]
+        device_name = self.get_current_joystick().GetDeviceName()
+        im = self.inputs_mapping["AircraftIAInputsMapping"][device_name]
         for cmd, input_name in im.items():
-            if cmd in self.commands and input_name != "":
-                i_def = ControlDevice.device_configurations[self.control_mode][input_name]
-                self.commands[cmd](i_def)
+            if cmd in self.commands:
+                if input_name == "":
+                    input_code = self.inputs_mapping["AircraftIAInputsMapping"]["Keyboard"][cmd]
+                    if input_code != "":
+                        cm_mem = self.control_mode
+                        self.control_mode = self.CM_KEYBOARD
+                        self.commands[cmd]({"id":input_code})
+                        self.control_mode = cm_mem
+                else:
+                    i_def = ControlDevice.device_configurations[device_name][input_name]
+                    self.commands[cmd](i_def)
 
     def update_cm_mouse(self, dts):
-        im = self.inputs_mapping["AircraftIAInputsMapping"][self.control_mode]
+        im = self.inputs_mapping["AircraftIAInputsMapping"]["Mouse"]
 
     def update(self, dts):
         if self.activated:
             if self.flag_user_control and self.machine.has_focus():
                 if self.control_mode == ControlDevice.CM_KEYBOARD:
                     self.update_cm_keyboard(dts)
-                elif self.control_mode == ControlDevice.CM_GAMEPAD:
+                elif self.control_mode == ControlDevice.CM_JOYSTICK:
                     self.update_cm_joystick(dts)
                 elif self.control_mode == ControlDevice.CM_MOUSE:
                     self.update_cm_mouse(dts)

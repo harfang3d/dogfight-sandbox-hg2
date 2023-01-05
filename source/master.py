@@ -51,6 +51,7 @@ class Main:
 
     control_mode = ControlDevice.CM_KEYBOARD
     devices_configurations_file = "scripts/devices_config.json"
+    aircraft_inputs_mapping_encoded = None # Used in menu state. Might be improved/remove in case of adding an input device configuration api.
 
     # VR mode
     flag_vr = False
@@ -94,9 +95,6 @@ class Main:
     flag_sfx_mem = True
     max_view_id = 0
 
-    flag_paddle = False
-    flag_generic_controller = False
-
     assets_compiled = "assets_compiled"
 
     allies_missiles_smoke_color = hg.Color(1.0, 1.0, 1.0, 1.0)
@@ -127,8 +125,6 @@ class Main:
     num_start_frames = 10
     keyboard = None
     mouse = None
-    gamepad = None
-    generic_controller = None
     pipeline = None
 
     current_state = None
@@ -229,10 +225,9 @@ class Main:
         cls.pl_resources = hg.PipelineResources()
         cls.keyboard = hg.Keyboard()
         cls.mouse = hg.Mouse()
-        cls.gamepad = hg.Gamepad()
-        cls.generic_controller = hg.Joystick()
+        
         Overlays.init()
-        ControlDevice.init(cls.keyboard, cls.mouse, cls.gamepad, cls.generic_controller,cls.devices_configurations_file)
+        ControlDevice.init(cls.keyboard, cls.mouse, cls.devices_configurations_file)
 
     @classmethod
     def setup_vr(cls):
@@ -1461,23 +1456,7 @@ class Main:
         cls.mouse.Update()
 
         if cls.flag_running:
-            if cls.gamepad is not None:
-                cls.gamepad.Update()
-                if cls.gamepad.IsConnected():
-                    cls.flag_paddle = True
-                else:
-                    cls.flag_paddle = False
-            else:
-                cls.flag_paddle = False
-
-            if cls.generic_controller is not None:
-                cls.generic_controller.Update()
-                if cls.generic_controller.IsConnected():
-                    cls.flag_generic_controller = True
-                else:
-                    cls.flag_generic_controller = False
-            else:
-                cls.flag_generic_controller = False
+            ControlDevice.update_input_devices()
 
     @classmethod
     def reset_timestamp(cls):

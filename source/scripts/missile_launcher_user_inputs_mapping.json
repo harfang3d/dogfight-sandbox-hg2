@@ -1,12 +1,12 @@
 {"MissileLauncherUserInputsMapping":
 	{
-		"LogitechAttack3":{
+		"Logitech Attack 3":{
 			"SWITCH_ACTIVATION": "",
 			"NEXT_PILOT": "",
 			"INCREASE_HEALTH_LEVEL": "",
 			"DECREASE_HEALTH_LEVEL": "",
-			"NEXT_TARGET": "3",
-			"FIRE_MISSILE" : "1",
+			"NEXT_TARGET": "LA3B_TopHead",
+			"FIRE_MISSILE" : "LA3B_BottomHead",
 			"REARM" : ""
 		},
 		"Keyboard":{
@@ -18,7 +18,7 @@
 			"FIRE_MISSILE" : "K_F1",
 			"REARM" : "K_F5"
 		},
-		"GamePad":{
+		"Xbox Controller":{
 			"SWITCH_ACTIVATION": "",
 			"NEXT_PILOT": "",
 			"INCREASE_HEALTH_LEVEL": "",
@@ -27,7 +27,23 @@
 			"FIRE_MISSILE" : "GB_ButtonX",
 			"REARM" : ""
 		},
-		"Mouse":{
+		"Wired Gamepad":{
+			"SWITCH_ACTIVATION": "",
+			"NEXT_PILOT": "",
+			"INCREASE_HEALTH_LEVEL": "",
+			"DECREASE_HEALTH_LEVEL": "",
+			"NEXT_TARGET": "WGPB_4",
+			"FIRE_MISSILE" : "WGPB_1",
+			"REARM" : ""
+		},
+		"USB Game Controllers":{
+			"SWITCH_ACTIVATION": "",
+			"NEXT_PILOT": "",
+			"INCREASE_HEALTH_LEVEL": "",
+			"DECREASE_HEALTH_LEVEL": "",
+			"NEXT_TARGET": "GCB_MiddleHead",
+			"FIRE_MISSILE" : "GCB_Trigger2",
+			"REARM" : ""
 		}
 	}
 }

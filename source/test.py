@@ -4,6 +4,7 @@
 
 import harfang as hg
 
+
 hg.InputInit()
 hg.WindowSystemInit()
 
@@ -19,6 +20,14 @@ imgui_img_prg = hg.LoadProgramFromAssets("core/shader/imgui_image")
 
 hg.ImGuiInit(10, imgui_prg, imgui_img_prg)
 
+joysticks = hg.GetJoystickNames()
+for joystick_name in joysticks:
+	joystick = hg.Joystick(joystick_name)
+	dev_name = joystick.GetDeviceName()
+	print(joystick_name + " - " + dev_name)
+vr_controller_names = hg.GetVRControllerNames()
+for vrc_name in vr_controller_names:
+	print(vrc_name)
 
 while not hg.ReadKeyboard().Key(hg.K_Escape):
 	hg.ImGuiBeginFrame(res_x, res_y, hg.TickClock(), hg.ReadMouse(), hg.ReadKeyboard())
@@ -30,16 +39,18 @@ while not hg.ReadKeyboard().Key(hg.K_Escape):
 		generic_controller = hg.Joystick(joystick_name)
 		generic_controller.Update()
 		if generic_controller.IsConnected():
-			if hg.ImGuiCollapsingHeader(joystick_name):
+			dev_name = generic_controller.GetDeviceName()
+			if hg.ImGuiCollapsingHeader(joystick_name + " - " + dev_name):
 				hg.ImGuiIndent()
 				for j in range(generic_controller.ButtonsCount()):
 					hg.ImGuiText(f"button {j}: {generic_controller.Down(j)}")
 				for j in range(generic_controller.AxesCount()):
 					hg.ImGuiText(f"axe {j}: {generic_controller.Axes(j)}")
 				hg.ImGuiUnindent()
-		else:
-			hg.ImGuiText(f"Joystick not connected - " + joystick_name)
+		#else:
+		#	hg.ImGuiText(f"Joystick not connected - " + joystick_name)
 	
+	"""
 	gamespads = hg.GetGamepadNames()
 	
 	for gp_name in gamespads:
@@ -53,9 +64,9 @@ while not hg.ReadKeyboard().Key(hg.K_Escape):
 				for j in range(10):
 					hg.ImGuiText(f"axe {j}: {gamepad_controller.Axes(j)}")
 				hg.ImGuiUnindent()
-		else:
-			hg.ImGuiText("Gamepad Controller not connected - " + gp_name)
-	
+		#else:
+		#	hg.ImGuiText("Gamepad Controller not connected - " + gp_name)
+	"""
 
 	hg.SetView2D(0, 0, 0, res_x, res_y, -1, 1, hg.CF_Color | hg.CF_Depth, hg.Color.Black, 1, 0)
 	hg.ImGuiEndFrame(0)

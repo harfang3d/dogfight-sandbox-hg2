@@ -98,6 +98,23 @@ def deserialize_mat4(s):
 	return m
 
 
+def str_to_booleans(script):
+    for k, v in script.items():
+        if v.__class__ == str:
+            if v == "true": script[k] = True
+            elif v == "false": script[k] = False
+        elif v.__class__ == dict:
+            str_to_booleans(v)
+
+
+def booleans_to_str(script):
+    for k, v in script.items():
+        if v.__class__ == bool:
+            script[k] = "true" if v else "false"
+        elif v.__class__ == dict:
+            booleans_to_str(v)
+
+
 def load_json_matrix(file_name):
 	file = hg.OpenText(file_name)
 	json_script = hg.ReadString(file)
