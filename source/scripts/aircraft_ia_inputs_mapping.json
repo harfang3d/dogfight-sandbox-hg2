@@ -9,6 +9,14 @@
 		"Logitech Attack 3":
 		{
 			"ACTIVATE_USER_CONTROL": "LA3B_TopHead"
+		},
+		"Wired Gamepad":
+		{
+			"ACTIVATE_USER_CONTROL": "WGPB_RThumb"
+		},
+		"USB Game Controllers":
+		{
+			"ACTIVATE_USER_CONTROL": ""
 		}
 	}
 }

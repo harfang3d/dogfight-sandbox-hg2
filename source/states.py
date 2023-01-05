@@ -10,6 +10,42 @@ from overlays import *
 from MachineDevice import ControlDevice
 import Machines
 
+def create_inputs_names(df_device_name, control_device_name, inputs_mapping):
+    im = {}
+    for k, v in inputs_mapping[df_device_name][control_device_name].items():
+        if v != "":
+            if "name" in ControlDevice.device_configurations[control_device_name][v]:
+                v = ControlDevice.device_configurations[control_device_name][v]["name"]
+            elif "_" in v:
+                v = v.split("_")[1]
+        im[k] = v
+    return im
+
+def update_joystick_inputs():
+    if ControlDevice.is_joystick_connected():
+        imj = create_inputs_names("AircraftUserInputsMapping",ControlDevice.get_current_joystick().GetDeviceName(), Main.aircraft_inputs_mapping_encoded)
+        inpt = Main.inputs_commands["commands_dict"]
+        inpt["Pitch"]["joystick"] = "" if not "SET_PITCH" in imj else imj["SET_PITCH"]
+        inpt["Roll"]["joystick"]= "" if not "SET_ROLL" in imj else imj["SET_ROLL"]
+        inpt["Yaw"]["joystick"]= "" if not "SET_YAW" in imj else imj["SET_YAW"]
+        inpt["Gun"]["joystick"]= "" if not "FIRE_MACHINE_GUN" in imj else imj["FIRE_MACHINE_GUN"]
+        inpt["Missiles"]["joystick"]= "" if not "FIRE_MISSILE" in imj else imj["FIRE_MISSILE"]
+        inpt["Target selection"]["joystick"]= "" if not "NEXT_TARGET" in imj else imj["NEXT_TARGET"]
+        
+        if not "SET_THRUST_LEVEL" in imj and not "INCREASE_THRUST_LEVEL" in imj and not "DECREASE_THRUST_LEVEL" in imj:
+            t = ""
+        elif "SET_THRUST_LEVEL" in imj:
+            t = imj["SET_THRUST_LEVEL"]
+        else:
+            t = imj["INCREASE_THRUST_LEVEL"] + " / " + imj["DECREASE_THRUST_LEVEL"]
+        
+        inpt["Thrust level"]["joystick"] = t
+
+        inpt["Brake"]["joystick"]= ("" if not "INCREASE_BRAKE_LEVEL" in imj else (imj["INCREASE_BRAKE_LEVEL"] + " / ")) + ("" if "DECREASE_BRAKE_LEVEL" not in imj else imj["DECREASE_BRAKE_LEVEL"])
+        inpt["Flaps"]["joystick"]= ("" if not "INCREASE_FLAPS_LEVEL" in imj else (imj["INCREASE_FLAPS_LEVEL"] + " / ")) + ("" if "DECREASE_FLAPS_LEVEL" not in imj else imj["DECREASE_FLAPS_LEVEL"])
+        inpt["Post combustion (only thrust=100%)"]["joystick"]= "" if not "SWITCH_POST_COMBUSTION" in imj else imj["SWITCH_POST_COMBUSTION"]
+        inpt["Deploy / Undeploy gear"]["joystick"]= "" if not "SWITCH_GEAR" in imj else imj["SWITCH_GEAR"]
+
 def init_menu_state():
     Main.flag_display_selected_aircraft = False
     Main.flag_running = False
@@ -100,64 +136,28 @@ def init_menu_state():
         # pos, rot, fov = hg.Vec3(-28.444, 19.464, 41.583), hg.Vec3(0.010, 1.545, 0.000), 0.039 # missiles
         # pos, rot, fov = hg.Vec3(-7.179, 16.457, 832.241), hg.Vec3(-0.015, 3.130, 0.000), 0.052 # behind carrier
 
-    # Keyboard & gamepad commands:
-    inputs_mapping_encoded, inputs_mapping = ControlDevice.load_inputs_mapping_file(Aircraft.user_inputs_mapping_file, "AircraftUserInputsMapping")
+    # Keyboard commands:
+    Main.aircraft_inputs_mapping_encoded, _ = ControlDevice.load_inputs_mapping_file(Aircraft.user_inputs_mapping_file, "AircraftUserInputsMapping")
     
     imkb = {}
-    for k, v in inputs_mapping_encoded["AircraftUserInputsMapping"]["Keyboard"].items():
+    for k, v in Main.aircraft_inputs_mapping_encoded["AircraftUserInputsMapping"]["Keyboard"].items():
         if "_" in v:
             v = v.split("_")[1]
         imkb[k] = v
-    
-    
-    def create_inputs_names(df_device_name, control_device_name):
-        im = {}
-        for k, v in inputs_mapping_encoded[df_device_name][control_device_name].items():
-            if v != "":
-                if "name" in ControlDevice.device_configurations[control_device_name][v]:
-                    v = ControlDevice.device_configurations[control_device_name][v]["name"]
-                elif "_" in v:
-                    v = v.split("_")[1]
-            im[k] = v
-        return im
-    
-    imgp = create_inputs_names("AircraftUserInputsMapping","GamePad")
-    imgn = create_inputs_names("AircraftUserInputsMapping","LogitechAttack3")
 
-    Main.inputs_commands = [
-        ["START MISSION", {"keyboard": "SPACE", "gamepad": "Start", "generic": ControlDevice.get_device_input_name("LogitechAttack3", "button", 0)}],
+    commands = [
         ["Recenter view", {"keyboard": "F11"}],
-        ["Pitch" , {"keyboard": imkb["PITCH_UP"] + " / " + imkb["PITCH_DOWN"], "gamepad": imgp["SET_PITCH"], "generic": imgn["SET_PITCH"]}],
-        ["Roll" , {"keyboard": imkb["ROLL_LEFT"] + " / " + imkb["ROLL_RIGHT"], "gamepad": imgp["SET_ROLL"], "generic": imgn["SET_ROLL"]}],
-        ["Yaw" , {"keyboard": imkb["YAW_LEFT"] + " / " + imkb["YAW_RIGHT"], "gamepad": imgp["SET_YAW"], "generic": imgn["SET_YAW"]}],
-        ["Gun" , {"keyboard": imkb["FIRE_MACHINE_GUN"], "gamepad": imgp["FIRE_MACHINE_GUN"], "generic": imgn["FIRE_MACHINE_GUN"]}],
-        ["Missiles" , {"keyboard": imkb["FIRE_MISSILE"], "gamepad": imgp["FIRE_MISSILE"], "generic": imgn["FIRE_MISSILE"]}],
-        ["Target selection" , {"keyboard": imkb["NEXT_TARGET"], "gamepad": imgp["NEXT_TARGET"], "generic": imgn["NEXT_TARGET"]}],
-        ["Thrust level", {
-            "keyboard": imkb["INCREASE_THRUST_LEVEL"] + " / " + imkb["DECREASE_THRUST_LEVEL"],
-            "gamepad": imgp["SET_THRUST_LEVEL"] if imgp["SET_THRUST_LEVEL"] != "" else (imgp["INCREASE_THRUST_LEVEL"] + " / " + imgp["DECREASE_THRUST_LEVEL"]),
-            "generic": imgn["SET_THRUST_LEVEL"] if imgn["SET_THRUST_LEVEL"] != "" else (imgn["INCREASE_THRUST_LEVEL"] + " / " + imgn["DECREASE_THRUST_LEVEL"])
-            }],
-        ["Brake" , {
-            "keyboard": imkb["INCREASE_BRAKE_LEVEL"] + " / " + imkb["DECREASE_BRAKE_LEVEL"],
-            "gamepad": imgp["INCREASE_BRAKE_LEVEL"] + " / " + imgp["DECREASE_BRAKE_LEVEL"],
-            "generic": imgn["INCREASE_BRAKE_LEVEL"] + " / " + imgn["DECREASE_BRAKE_LEVEL"]
-            }],
-        ["Flaps" , {
-            "keyboard": imkb["INCREASE_FLAPS_LEVEL"] + " / " + imkb["DECREASE_FLAPS_LEVEL"],
-            "gamepad": imgp["INCREASE_FLAPS_LEVEL"] + " / " + imgp["DECREASE_FLAPS_LEVEL"],
-            "generic": imgn["INCREASE_FLAPS_LEVEL"] + " / " + imgn["DECREASE_FLAPS_LEVEL"]
-            }],
-        ["Post combustion (only thrust=100%)" ,
-            {"keyboard": imkb["SWITCH_POST_COMBUSTION"],
-             "gamepad": imgp["SWITCH_POST_COMBUSTION"],
-             "generic": imgn["SWITCH_POST_COMBUSTION"]
-             }],
-        ["Deploy / Undeploy gear",
-            {"keyboard": imkb["SWITCH_GEAR"],
-            "gamepad": imgp["SWITCH_GEAR"],
-            "generic": imgn["SWITCH_GEAR"]
-            }],
+        ["Pitch" , {"keyboard": imkb["PITCH_UP"] + " / " + imkb["PITCH_DOWN"]}],
+        ["Roll" , {"keyboard": imkb["ROLL_LEFT"] + " / " + imkb["ROLL_RIGHT"]}],
+        ["Yaw" , {"keyboard": imkb["YAW_LEFT"] + " / " + imkb["YAW_RIGHT"]}],
+        ["Gun" , {"keyboard": imkb["FIRE_MACHINE_GUN"]}],
+        ["Missiles" , {"keyboard": imkb["FIRE_MISSILE"]}],
+        ["Target selection" , {"keyboard": imkb["NEXT_TARGET"]}],
+        ["Thrust level", {"keyboard": imkb["INCREASE_THRUST_LEVEL"] + " / " + imkb["DECREASE_THRUST_LEVEL"]}],
+        ["Brake" , {"keyboard": imkb["INCREASE_BRAKE_LEVEL"] + " / " + imkb["DECREASE_BRAKE_LEVEL"]}],
+        ["Flaps" , {"keyboard": imkb["INCREASE_FLAPS_LEVEL"] + " / " + imkb["DECREASE_FLAPS_LEVEL"]}],
+        ["Post combustion (only thrust=100%)" ,{"keyboard": imkb["SWITCH_POST_COMBUSTION"]}],
+        ["Deploy / Undeploy gear",{"keyboard": imkb["SWITCH_GEAR"]}],
         ["Reset game" , {"keyboard": "TAB"}],
         ["Set View" , {"keyboard":"2/3/4/8/6/5/7/9"}],
         ["Zoom" , {"keyboard": "Insert / Page Up"}],
@@ -166,7 +166,14 @@ def init_menu_state():
         ["Activate User control" , {"keyboard": "U"}],
         ["HUD ON / OFF" , {"keyboard":"F10"}]
     ]
-
+    
+    Main.inputs_commands = {"display_order": [], "commands_dict": {}}
+    for cmd in commands:
+        Main.inputs_commands["commands_dict"][cmd[0]] = cmd[1]
+        Main.inputs_commands["display_order"].append(cmd[0])
+    
+    # Joystick commands (if joystick(s) connected)
+    update_joystick_inputs()
 
     Main.scene.SetCurrentCamera(Main.camera_intro)
     Main.t = 0
@@ -227,8 +234,8 @@ def menu_state(dts):
 
         # Number of colmuns for commands display
         n_col = 1
-        if Main.flag_paddle: n_col += 1
-        if Main.flag_generic_controller: n_col += 1
+        #if Main.flag_paddle: n_col += 1
+        #if Main.flag_generic_controller: n_col += 1
         x_step_cmds = 345 / 1600
         x_step = 200 / 1600
         w = x_step_cmds + n_col * x_step
@@ -238,55 +245,49 @@ def menu_state(dts):
         x = x_start
         y = 500 + yof7 * 900
         c = hg.Color(1., 0.9, 0.3, 1) * f
-        Overlays.add_text2D(Main.inputs_commands[0][0], hg.Vec2(x, (y+40) / 900), s, c, Main.hud_font)
         if Main.flag_vr:
-            Overlays.add_text2D(Main.inputs_commands[1][0], hg.Vec2(x, (y+20) / 900), s, c, Main.hud_font)
+            Overlays.add_text2D(Main.inputs_commands["display_order"][0], hg.Vec2(x, (y+20) / 900), s, c, Main.hud_font)
         stp = 0
-        for i in range(2,len(Main.inputs_commands)):
-            command = Main.inputs_commands[i]
-            Overlays.add_text2D(command[0], hg.Vec2(x, (y - stp) / 900), s, c, Main.hud_font)
+        for i in range(1,len(Main.inputs_commands["display_order"])):
+            Overlays.add_text2D(Main.inputs_commands["display_order"][i], hg.Vec2(x, (y - stp) / 900), s, c, Main.hud_font)
             stp += 20
     
         c2 = hg.Color.Grey * f
 
-        # Keyboard:
         x += x_step_cmds
+
         c = hg.Color.White * f
-        Overlays.add_text2D("Keyboard commands", hg.Vec2(x, (y+60) / 900), s, c2, Main.hud_font)
-        Overlays.add_text2D(Main.inputs_commands[0][1]["keyboard"], hg.Vec2(x, (y+40) / 900), s, c, Main.hud_font)
-        if Main.flag_vr:
-            Overlays.add_text2D(Main.inputs_commands[1][1]["keyboard"], hg.Vec2(x, (y+20) / 900), s, c, Main.hud_font)
-        stp = 0
-        for i in range(2, len(Main.inputs_commands)):
-            command = Main.inputs_commands[i]
-            if "keyboard" in command[1]:
-                Overlays.add_text2D(command[1]["keyboard"], hg.Vec2(x, (y - stp) / 900), s, c, Main.hud_font)
-            stp += 20
-       
-
-        # Paddle
-        if Main.flag_paddle:
-            x += x_step
-            Overlays.add_text2D("Gamepad commands", hg.Vec2(x, (y+60) / 900), s, c2, Main.hud_font)
-            Overlays.add_text2D(Main.inputs_commands[0][1]["gamepad"], hg.Vec2(x, (y+40) / 900), s, c, Main.hud_font)
-            stp = 0
-            for i in range(2, len(Main.inputs_commands)):
-                command = Main.inputs_commands[i]
-                if "gamepad" in command[1]:
-                    Overlays.add_text2D(command[1]["gamepad"],  hg.Vec2(x, (y - stp) / 900), s, c, Main.hud_font)
-                stp += 20
         
-        if Main.flag_generic_controller:
-            x += x_step
-            Overlays.add_text2D("Logitec Attack 3 commands", hg.Vec2(x, (y+60) / 900), s, c2, Main.hud_font)
-            Overlays.add_text2D(Main.inputs_commands[0][1]["generic"], hg.Vec2(x, (y+40) / 900), s, c, Main.hud_font)
+        # Keyboard:
+        if Main.control_mode == ControlDevice.CM_KEYBOARD:
+            
+            Overlays.add_text2D("Keyboard commands", hg.Vec2(x, (y+60) / 900), s, c2, Main.hud_font)
+            if Main.flag_vr:
+                Overlays.add_text2D(Main.inputs_commands["commands_dict"]["Recenter view"]["keyboard"], hg.Vec2(x, (y+20) / 900), s, c, Main.hud_font)
             stp = 0
-            for i in range(2, len(Main.inputs_commands)):
-                command = Main.inputs_commands[i]
-                if "generic" in command[1]:
-                    Overlays.add_text2D(command[1]["generic"],  hg.Vec2(x, (y - stp) / 900), s, c, Main.hud_font)
+            for i in range(1, len(Main.inputs_commands["display_order"])):
+                command_name = Main.inputs_commands["display_order"][i]
+                command = Main.inputs_commands["commands_dict"][command_name]
+                if "keyboard" in command:
+                    Overlays.add_text2D(command["keyboard"], hg.Vec2(x, (y - stp) / 900), s, c, Main.hud_font)
                 stp += 20
-
+       
+        # Joystick
+        elif Main.control_mode == ControlDevice.CM_JOYSTICK:
+            #x += x_step
+            Overlays.add_text2D("Joystick commands - " + ControlDevice.get_current_joystick().GetDeviceName() + " / " + ControlDevice.get_current_joystick_name(), hg.Vec2(x, (y+60) / 900), s, c2, Main.hud_font)
+            stp = 0
+            for i in range(1, len(Main.inputs_commands["display_order"])):
+                command_name = Main.inputs_commands["display_order"][i]
+                command = Main.inputs_commands["commands_dict"][command_name]
+                if "joystick" in command:
+                    if command["joystick"] != "":
+                        Overlays.add_text2D(command["joystick"],  hg.Vec2(x, (y - stp) / 900), s, c, Main.hud_font)
+                    elif "keyboard" in command:
+                        Overlays.add_text2D("Keyboard - " + command["keyboard"], hg.Vec2(x, (y - stp) / 900), s, c * 0.8, Main.hud_font)
+                elif "keyboard" in command:
+                    Overlays.add_text2D("Keyboard - " + command["keyboard"], hg.Vec2(x, (y - stp) / 900), s, c * 0.8, Main.hud_font)
+                stp += 20
 
         if vcr.is_init():
             vcr.update(Main, Main.simulation_dt)
@@ -301,25 +302,35 @@ def menu_state(dts):
     Main.smart_camera.update(Main.camera_intro, dts)
 
     if not Main.fading_to_next_state:
+        
         f_start = False
-        if Main.keyboard.Pressed(hg.K_Space):
+        f_key = False
+        exclude_keys = [hg.K_Escape, hg.K_Left, hg.K_Right]
+        for k in range(hg.K_Last):
+            if k not in exclude_keys:
+                if Main.keyboard.Pressed(k):
+                    f_key = True
+                    break
+        if f_key:
+            if Main.control_mode == AircraftUserControlDevice.CM_KEYBOARD:
+                f_start = True
+                Main.next_state = "main"
             Main.control_mode = AircraftUserControlDevice.CM_KEYBOARD
-            f_start = True
-            Main.next_state = "main"
+
+        elif ControlDevice.is_joystick_connected():
+            joystick = ControlDevice.get_joystick_button_pressed()
+            if joystick is not None:
+                if Main.control_mode == AircraftUserControlDevice.CM_JOYSTICK and ControlDevice.get_current_joystick() == joystick:
+                    f_start = True
+                    Main.next_state = "main"
+                Main.control_mode = AircraftUserControlDevice.CM_JOYSTICK
+                ControlDevice.set_current_joystick(joystick)
+                update_joystick_inputs()
+        
         elif vcr.request_state == "replay":
             Main.control_mode = AircraftUserControlDevice.CM_NONE
             f_start = True
             Main.next_state = "replay"
-        elif Main.flag_paddle:
-            if Main.gamepad.Pressed(hg.GB_Start):
-                Main.control_mode = AircraftUserControlDevice.CM_GAMEPAD
-                f_start = True
-                Main.next_state = "main"
-        elif Main.flag_generic_controller:
-            if Main.generic_controller.Down(1):
-                Main.control_mode = AircraftUserControlDevice.CM_LOGITECH_ATTACK_3
-                f_start = True                
-                Main.next_state = "main"
         
         if f_start:
             Main.post_process.setup_fading(1, -1)

@@ -51,6 +51,7 @@ class Main:
 
     control_mode = ControlDevice.CM_KEYBOARD
     devices_configurations_file = "scripts/devices_config.json"
+    aircraft_inputs_mapping_encoded = None # Used in menu state. Might be improved/remove in case of adding an input device configuration api.
 
     # VR mode
     flag_vr = False

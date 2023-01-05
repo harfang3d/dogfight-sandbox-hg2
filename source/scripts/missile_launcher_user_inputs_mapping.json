@@ -26,6 +26,24 @@
 			"NEXT_TARGET": "GB_ButtonY",
 			"FIRE_MISSILE" : "GB_ButtonX",
 			"REARM" : ""
+		},
+		"Wired Gamepad":{
+			"SWITCH_ACTIVATION": "",
+			"NEXT_PILOT": "",
+			"INCREASE_HEALTH_LEVEL": "",
+			"DECREASE_HEALTH_LEVEL": "",
+			"NEXT_TARGET": "WGPB_4",
+			"FIRE_MISSILE" : "WGPB_1",
+			"REARM" : ""
+		},
+		"USB Game Controllers":{
+			"SWITCH_ACTIVATION": "",
+			"NEXT_PILOT": "",
+			"INCREASE_HEALTH_LEVEL": "",
+			"DECREASE_HEALTH_LEVEL": "",
+			"NEXT_TARGET": "GCB_MiddleHead",
+			"FIRE_MISSILE" : "GCB_Trigger2",
+			"REARM" : ""
 		}
 	}
 }
