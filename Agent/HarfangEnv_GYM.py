@@ -1,11 +1,13 @@
 import numpy as np
 import dogfight_client as df
 from Constants import *
+import gym
 
 class HarfangEnv():
     def __init__(self):      
         self.done = False
         self.loc_diff = 0
+        self.action_space = gym.spaces.Box(low=np.array([-1.0,-1.0,-1.0]), high=np.array([1.0,1.0,1.0]), dtype=np.float64)
         self.Plane_ID_oppo = "ennemy_2" # Opponent aircrafts name
         self.Plane_ID_ally   = "ally_1" # our aircrafts name
         self.Aircraft_Loc = None
