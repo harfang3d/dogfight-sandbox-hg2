@@ -4,16 +4,28 @@ Air to air combat sandbox, created in Python 3 using the [HARFANG 3D 2 framework
 
 **Table of content**
 
-- [Overview](#dogfight-2-air-to-air-combat-sandbox)
-- [How to run the Dogfight Sandbox](#how-to-run-the-dogfight-sandbox)
-- [Recorder API](#recorder-api-overview)
-- [About VR mode](#about-vr-mode)
-- [Network mode overview](#network-mode-overview)
-- [Aircraft Commands](#aircraft-keyboard-commands)
-- [How to configure input devices](#how-to-configure-input-devices)
-- [Contributors](#contributors)
-- [Screenshots](#screenshots)
-- [Publications and citations](#publications-and-citations)
+- [Dogfight 2 (Air to air combat Sandbox)](#dogfight-2-air-to-air-combat-sandbox)
+  - [How to run the Dogfight Sandbox](#how-to-run-the-dogfight-sandbox)
+    - [Using the official release](#using-the-official-release)
+    - [Using the cloned repository](#using-the-cloned-repository)
+  - [About VR mode](#about-vr-mode)
+  - [Recorder API overview](#recorder-api-overview)
+    - [Replay](#replay)
+    - [Events](#events)
+  - [Network mode overview](#network-mode-overview)
+    - [Startup](#startup)
+  - [Aircraft keyboard Commands](#aircraft-keyboard-commands)
+  - [Commons Views commands](#commons-views-commands)
+  - [Aircrafts views commands](#aircrafts-views-commands)
+  - [FPS camera views commands](#fps-camera-views-commands)
+  - [Supported control devices](#supported-control-devices)
+  - [How to configure input devices](#how-to-configure-input-devices)
+    - [Devices configuration](#devices-configuration)
+    - [Inputs mapping files](#inputs-mapping-files)
+  - [Contributors](#contributors)
+  - [Screenshots](#screenshots)
+  - [Publications and citations](#publications-and-citations)
+    - [Harfang3D Dog-Fight Sandbox: A Reinforcement Learning Research Platform for the Customized Control Tasks of Fighter Aircrafts](#harfang3d-dog-fight-sandbox-a-reinforcement-learning-research-platform-for-the-customized-control-tasks-of-fighter-aircrafts)
 
 [![](screenshots/dogfight-sandbox-python-vr-yt.png)](https://www.youtube.com/watch?v=4Q2f0dKh8vE)
 
@@ -30,6 +42,8 @@ The source code and the graphics assets are made available for studying purpose.
 
 ## How to run the Dogfight Sandbox
 
+### Using the official release
+
 1. Download the [most recent release](https://github.com/harfang3d/dogfight-sandbox-hg2/releases) (dogfight-sandbox-hg2-win64.7z)
 1. Unzip it
 1. run *start.bat*
@@ -38,7 +52,13 @@ The source code and the graphics assets are made available for studying purpose.
    * Press the `start` button of the gamepad or the joystick depending on the device you want to use
    * If you press the `start/fire` button on the gamepad, the Sandbox will automatically define this controler as the input device of the aircraft (see **Aircraft keyboard Commands** below for the details of the keyboard inputs)
 
-(If you want to run the sandbox *from the cloned repository*, you will need to copy the Python and HARFANG binaries as well as the other modules in the [bin folder](https://github.com/harfang3d/dogfight-sandbox-hg2/tree/main/bin)). Follow the instructions detailled in the readme files found in each folder.
+### Using the cloned repository
+
+1. :warning: If you want to run the sandbox *from the cloned repository*, you will need install the requirements, following the `requirements.txt` files found in the `source\` and `Agent\` folders.
+   1. or run `0-install-requirements.bat`
+2. open a cmd line, enter the `source` folder (`cd source`) and run `python main.py`
+   1. or run `start.bat` or `1-start.bat`
+   2. or, in **VSCode** press `CTRL-F5`
 
 ## About VR mode
 

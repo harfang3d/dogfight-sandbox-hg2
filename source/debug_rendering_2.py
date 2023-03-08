@@ -6,10 +6,12 @@ from WaterReflection import WaterReflection
 from PostProcess import *
 import sys
 from Sprites import *
+import harfang.bin
 
 # --------------- Compile assets:
 print("Compiling assets...")
-dc.run_command("..\\bin\\assetc\\assetc assets -quiet -progress")
+# dc.run_command("..\\bin\\assetc\\assetc assets -quiet -progress")
+harfang.bin.assetc('..\\bin\\assetc\\assetc')
 
 
 hg.InputInit()
