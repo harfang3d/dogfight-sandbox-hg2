@@ -654,6 +654,8 @@ def get_plane_state(args):
 	if td is not None:
 		target_id = td.get_target_name()
 		target_locked = td.target_locked
+		target_out_of_range = td.target_out_of_range
+		target_angle = td.target_angle
 	else:
 		target_id = "- ! No TargettingDevice ! -"
 		target_locked = False
@@ -697,7 +699,9 @@ def get_plane_state(args):
 		"autopilot_speed": autopilot_speed,
 		"autopilot_altitude": autopilot_altitude,
 		"target_id": target_id,
-		"target_locked": target_locked
+		"target_locked": target_locked,
+		"target_out_of_range": target_out_of_range,
+		"target_angle": target_angle
 	}
 	if flag_print_log:
 		print(args["plane_id"])
