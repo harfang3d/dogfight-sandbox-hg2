@@ -11,6 +11,7 @@ import sys
 from os import path, getcwd
 import json
 from math import log, floor
+import harfang.bin
 
 # --------------- Inline arguments handler
 
@@ -59,13 +60,16 @@ if Main.flag_OpenGL:
 # --------------- Compile assets:
 print("Compiling assets...")
 if sys.platform == "linux" or sys.platform == "linux2":
-    assetc_cmd = [path.join(getcwd(), "../", "bin", "harfang", "bin", "assetc", "assetc"), "assets", "-quiet", "-progress"]
-    dc.run_command(assetc_cmd)
+    # assetc_cmd = [path.join(getcwd(), "../", "bin", "harfang", "bin", "assetc", "assetc"), "assets", "-quiet", "-progress"]
+    # dc.run_command(assetc_cmd)
+    harfang.bin.assetc('assets', '-api', 'GL')
 else:
     if Main.flag_OpenGL:
-        dc.run_command("../bin/harfang/bin/assetc/assetc assets -api GL -quiet -progress")
+        # dc.run_command("../bin/harfang/bin/assetc/assetc assets -api GL -quiet -progress")
+        harfang.bin.assetc('assets', '-api', 'GL')
     else:
-        dc.run_command("../bin/harfang/bin/assetc/assetc assets -quiet -progress")
+        # dc.run_command("../bin/harfang/bin/assetc/assetc assets -quiet -progress")
+        harfang.bin.assetc('assets')
 
 
 # --------------- Init system
