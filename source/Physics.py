@@ -31,10 +31,10 @@ def init_physics(scn, scn_physics, terrain_heightmap_file, p_terrain_pos, p_terr
 	hg.LoadPicture(terrain_heightmap, terrain_heightmap_file)
 
 
-def get_terrain_altitude(pos: hg.Vec3):
+def get_terrain_Y(pos: hg.Vec3):
 	global terrain_position, terrain_scale, terrain_heightmap, map_bounds
 	pos2 = hg.Vec2((pos.x - terrain_position.x) / terrain_scale.x, 1 - (pos.z - terrain_position.z) / terrain_scale.z)
-	return get_map_altitude(pos2), get_terrain_normale(pos2)
+	return get_map_altitude(pos2), get_terrain_XZ(pos2)
 
 
 def get_map_altitude(pos2d):
@@ -44,7 +44,7 @@ def get_map_altitude(pos2d):
 	return a
 
 
-def get_terrain_normale(pos2d):
+def get_terrain_XZ(pos2d):
 	w = terrain_heightmap.GetWidth()
 	h = terrain_heightmap.GetHeight()
 	f = 1 / max(w, h)
@@ -104,7 +104,7 @@ def update_collisions(matrix: hg.Mat4, collisions_object, collisions_raycasts):
 				ray_hits["hits"].append(hit)
 		rays_hits.append(ray_hits)
 
-	terrain_alt, terrain_nrm = get_terrain_altitude(hg.GetT(matrix))
+	terrain_alt, terrain_nrm = get_terrain_Y(hg.GetT(matrix))
 
 	return rays_hits, terrain_alt, terrain_nrm
 

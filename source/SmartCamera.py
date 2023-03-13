@@ -485,7 +485,7 @@ class SmartCamera:
 				self.set_projectil_node(None)
 		"""
 
-		t_alt, t_nrm = Physics.get_terrain_altitude(cam_pos)
+		t_alt, t_nrm = Physics.get_terrain_Y(cam_pos)
 		if cam_pos.y < t_alt + self.minimal_tactical_altitude:
 			cam_pos.y = t_alt + self.minimal_tactical_altitude
 

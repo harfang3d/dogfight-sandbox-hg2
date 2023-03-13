@@ -91,7 +91,7 @@ class MissileLauncherS400(LandVehicle):
 				p_pos = self.plateform.GetTransform().GetPos()
 				alt = p_pos.y
 			else:
-				alt = Physics.get_terrain_altitude(pos)
+				alt = Physics.get_terrain_Y(pos)
 
 			if pos.y < alt:
 				pos.y += (alt - pos.y) * 0.1 * 60 * dts
