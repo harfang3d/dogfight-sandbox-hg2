@@ -15,6 +15,9 @@ water_level = 0
 
 
 terrain_heightmap = None
+# the bounding box of the actual terrain island geometry, is 36000 x 708 x 11300 m
+# the lower point of the heightmap is below the sea level, at -296.87 m
+# the highest point of the mountain chains in the island is ~703 m
 terrain_position = hg.Vec3(-24896, -296.87, 9443)
 terrain_scale = hg.Vec3(41480, 1000, 19587)
 map_bounds = hg.Vec2(0, 255)
