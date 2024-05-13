@@ -24,7 +24,7 @@ Air to air combat sandbox, created in Python 3 using the [HARFANG 3D 2 framework
     - [Inputs mapping files](#inputs-mapping-files)
   - [Contributors](#contributors)
   - [Screenshots](#screenshots)
-  - [Publications and citations](#publications-and-citations)
+  - [Publications, citations and research projects](#publications-citations-and-research-projects)
     - [Harfang3D Dog-Fight Sandbox: A Reinforcement Learning Research Platform for the Customized Control Tasks of Fighter Aircrafts](#harfang3d-dog-fight-sandbox-a-reinforcement-learning-research-platform-for-the-customized-control-tasks-of-fighter-aircrafts)
 
 [![](screenshots/dogfight-sandbox-python-vr-yt.png)](https://www.youtube.com/watch?v=4Q2f0dKh8vE)
@@ -283,9 +283,9 @@ ____
 
 ![screenshot](screenshots/screenshot_3.png)
 
-## Publications and citations
+## Publications, citations and research projects
 
-### Harfang3D Dog-Fight Sandbox: A Reinforcement Learning Research Platform for the Customized Control Tasks of Fighter Aircrafts
+### 📎 Harfang3D Dog-Fight Sandbox: A Reinforcement Learning Research Platform for the Customized Control Tasks of Fighter Aircrafts
 
 (Muhammed Murat Özbek, Süleyman Yıldırım, Muhammet Aksoy, Eric Kernin, Emre Koyuncu)
 
@@ -303,3 +303,6 @@ _How to cite this publication:_
   Eprint = {arXiv:2210.07282},
 }
 ```
+### 🧠 Highly Imitative Reinforcement Learning for UCAV 
+
+Air to air combat sandbox, created in Python 3 using the HARFANG 3D 2 framework. This project provides a rich environment for air combat simulation and has been utilized in advanced research projects, including the latest in reinforcement learning strategies for unmanned combat aerial vehicles (UCAV), developed at a leading Chinese university. For more on this innovative approach, [see the HIRL4UCAV project on GitHub](https://github.com/zrc0622/HIRL4UCAV).
