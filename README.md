@@ -68,7 +68,7 @@ The source code and the graphics assets are made available for studying purpose.
 * Tested on the following headsets with success:
   * LENOVO VR Explorer
   * HTC Vive Pro
-  * Meta Quest 2 (in Oculus Link mode)
+  * Meta Quest 2, Meta Quest 3 (in Meta Quest Link)
 
 ## Recorder API overview
 
@@ -259,6 +259,7 @@ ____
 
 * Code, design, music / sfx:
   * Eric Kernin
+  * Quentin Rigagneau
 * 3D graphics:
   * Jean-Marie Lamarche
   * Bruno Lequitte
