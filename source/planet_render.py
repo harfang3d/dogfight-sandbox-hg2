@@ -5,6 +5,7 @@ import data_converter as dc
 import json
 from math import pi, atan, sqrt, exp, pow, cos, sin, acos, asin
 import os
+
 from vr_tools import *
 
 
@@ -371,8 +372,8 @@ class PlanetRender:
 		eye_left = vr_state.head * vr_state.left.offset
 		eye_right = vr_state.head * vr_state.right.offset
 
-		focal_distance_left = hg.ExtractZoomFactorFromProjectionMatrix(vs_left.proj)
-		focal_distance_right = hg.ExtractZoomFactorFromProjectionMatrix(vs_right.proj)
+		focal_distance_left = hg.ExtractZoomFactorFromProjectionMatrix(vs_left.proj, hg.Vec2(1.0, 0.75))
+		focal_distance_right = hg.ExtractZoomFactorFromProjectionMatrix(vs_right.proj, hg.Vec2(1.0, 0.75))
 
 		cam_normal_left = hg.GetRotationMatrix(eye_left)
 		cam_normal_right = hg.GetRotationMatrix(eye_right)

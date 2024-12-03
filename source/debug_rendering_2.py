@@ -1,12 +1,14 @@
 # Copyright (C) 2018-2021 Eric Kernin, NWNC HARFANG.
 
 import harfang as hg
-from planet_render import *
+import planet_render
 from WaterReflection import WaterReflection
 from PostProcess import *
 import sys
 from Sprites import *
 import harfang.bin
+
+from source.planet_render import PlanetRender
 
 # --------------- Compile assets:
 print("Compiling assets...")
@@ -58,8 +60,8 @@ if flag_vr:
 	rot.z = 0
 	initial_head_matrix = hg.TransformationMat4(hg.GetT(vr_state.head), rot)
 	vs_left, vs_right = hg.OpenVRStateToViewState(vr_state)
-	vr_fov_left = hg.ZoomFactorToFov(hg.ExtractZoomFactorFromProjectionMatrix(vs_left.proj))
-	vr_fov_right = hg.ZoomFactorToFov(hg.ExtractZoomFactorFromProjectionMatrix(vs_right.proj))
+	vr_fov_left = hg.ZoomFactorToFov(hg.ExtractZoomFactorFromProjectionMatrix(vs_left.proj, hg.Vec2(1,1)))
+	vr_fov_right = hg.ZoomFactorToFov(hg.ExtractZoomFactorFromProjectionMatrix(vs_right.proj, hg.Vec2(1,1)))
 
 scene = hg.Scene()
 hg.LoadSceneFromAssets("main.scn", scene, pl_resources, hg.GetForwardPipelineInfo())
