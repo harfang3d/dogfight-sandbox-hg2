@@ -16,8 +16,10 @@ class VRState:
 		self.eye_right_offset = vr_state.right.offset
 		# Fov
 		vs_left, vs_right = hg.OpenVRStateToViewState(vr_state)
-		self.fov_left = hg.ZoomFactorToFov(hg.ExtractZoomFactorFromProjectionMatrix(vs_left.proj))
-		self.fov_right = hg.ZoomFactorToFov(hg.ExtractZoomFactorFromProjectionMatrix(vs_right.proj))
+		vr_ratio = hg.Vec2(1 , 0.75)
+
+		self.fov_left = hg.ZoomFactorToFov(hg.ExtractZoomFactorFromProjectionMatrix(vs_left.proj, vr_ratio))
+		self.fov_right = hg.ZoomFactorToFov(hg.ExtractZoomFactorFromProjectionMatrix(vs_right.proj, vr_ratio))
 		self.resolution = hg.Vec2(vr_state.width, vr_state.height)
 		self.ratio = hg.Vec2(self.resolution.x / self.resolution.y, 1)
 
@@ -29,8 +31,9 @@ class VRState:
 		body_mtx = hg.TransformationMat4(hg.Vec3(0, 0, 0), hg.Vec3(0, 0, 0))
 		vr_state = hg.OpenVRGetState(body_mtx, 1, 1000)
 		vs_left, vs_right = hg.OpenVRStateToViewState(vr_state)
-		self.fov_left = hg.ZoomFactorToFov(hg.ExtractZoomFactorFromProjectionMatrix(vs_left.proj))
-		self.fov_right = hg.ZoomFactorToFov(hg.ExtractZoomFactorFromProjectionMatrix(vs_right.proj))
+		vr_ratio = hg.Vec2(1 , 0.75)
+		self.fov_left = hg.ZoomFactorToFov(hg.ExtractZoomFactorFromProjectionMatrix(vs_left.proj, vr_ratio))
+		self.fov_right = hg.ZoomFactorToFov(hg.ExtractZoomFactorFromProjectionMatrix(vs_right.proj, vr_ratio))
 		self.head_matrix = vr_state.head
 		self.eye_left_offset = vr_state.left.offset
 		self.eye_right_offset = vr_state.right.offset

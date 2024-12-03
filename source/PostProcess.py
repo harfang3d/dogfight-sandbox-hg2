@@ -78,9 +78,10 @@ class PostProcess:
 		return view_id + 1
 
 	def display_vr(self, view_id, vr_state: hg.OpenVRState, vs_left: hg.ViewState, vs_right: hg.ViewState, output_left_fb: hg.OpenVREyeFrameBuffer, output_right_fb: hg.OpenVREyeFrameBuffer, resources):
+		vr_ratio = hg.Vec2(1 , 0.75)
 
-		focal_distance_left = hg.ExtractZoomFactorFromProjectionMatrix(vs_left.proj)
-		focal_distance_right = hg.ExtractZoomFactorFromProjectionMatrix(vs_right.proj)
+		focal_distance_left = hg.ExtractZoomFactorFromProjectionMatrix(vs_left.proj, vr_ratio)
+		focal_distance_right = hg.ExtractZoomFactorFromProjectionMatrix(vs_right.proj, vr_ratio)
 
 		z_near, z_far = hg.ExtractZRangeFromProjectionMatrix(vs_left.proj)
 		z_ratio = (z_near + 0.01) / focal_distance_left

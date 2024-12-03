@@ -67,8 +67,10 @@ class WaterReflection():
 		mat_left_reflect = self.compute_reflect_matrix(eye_left)
 		mat_right_reflect = self.compute_reflect_matrix(eye_right)
 
-		fov_left = hg.ZoomFactorToFov(hg.ExtractZoomFactorFromProjectionMatrix(vs_left.proj))
-		fov_right = hg.ZoomFactorToFov(hg.ExtractZoomFactorFromProjectionMatrix(vs_right.proj))
+		vr_ratio = hg.Vec2(1 , 0.75)
+
+		fov_left = hg.ZoomFactorToFov(hg.ExtractZoomFactorFromProjectionMatrix(vs_left.proj, vr_ratio))
+		fov_right = hg.ZoomFactorToFov(hg.ExtractZoomFactorFromProjectionMatrix(vs_right.proj, vr_ratio))
 
 		znear = camera.GetCamera().GetZNear()
 		zfar = camera.GetCamera().GetZFar()
