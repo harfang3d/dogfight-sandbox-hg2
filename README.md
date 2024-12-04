@@ -67,9 +67,9 @@ The source code and the graphics assets are made available for studying purpose.
 * Requires SteamVR (1.22.x) at least
 * Tested on the following headsets with success:
   * LENOVO VR Explorer
-  * HTC Vive Pro
-  * Meta Quest 2, Meta Quest 3 (in Meta Quest Link)
-  * Pico Neo 3 Pro Eye (in Pico Buiseness Streaming)
+  * HTC Vive, HTC Vive Pro
+  * Meta Quest 2, Meta Quest 3, Meta Quest pro (using Meta Quest Link)
+  * Pico Neo 3 Pro Eye (using Pico Business Streaming)
 
 ## Recorder API overview
 
