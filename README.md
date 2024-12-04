@@ -69,6 +69,7 @@ The source code and the graphics assets are made available for studying purpose.
   * LENOVO VR Explorer
   * HTC Vive Pro
   * Meta Quest 2, Meta Quest 3 (in Meta Quest Link)
+  * Pico Neo 3 Pro Eye (in Pico Buiseness Streaming)
 
 ## Recorder API overview
 
