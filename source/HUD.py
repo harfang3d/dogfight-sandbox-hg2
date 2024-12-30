@@ -281,24 +281,24 @@ class HUD_Aircraft:
 				Overlays.add_text2D("Client connected", hg.Vec2(0.05, 0.98), 0.016, HUD.color_connected * f, Main.hud_font)
 			else:
 				h, p = Main.get_network()
-				Overlays.add_text2D("Host: " + h + " Port: " + str(p), hg.Vec2(0.05, 0.98), 0.016, HUD.color_wait_connect * f, Main.hud_font)
+				Overlays.add_text2D("Host: " + h + " Port: " + str(p), hg.Vec2(0.05, 0.93), 0.016, HUD.color_wait_connect * f, Main.hud_font)
 
 		if aircraft.flag_custom_physics_mode:
 			Overlays.add_text2D("Custom physics", hg.Vec2(0.05, 0.92), 0.016, hg.Color.White * f, Main.hud_font)
 
-		Overlays.add_text2D("Health: %d" % (aircraft.health_level * 100), hg.Vec2(0.05, 0.96), 0.016, (hg.Color.White * aircraft.health_level + hg.Color.Red * (1 - aircraft.health_level)) * f, Main.hud_font)
+		Overlays.add_text2D("Health: %d" % (aircraft.health_level * 100), hg.Vec2(0.05, 0.91), 0.016, (hg.Color.White * aircraft.health_level + hg.Color.Red * (1 - aircraft.health_level)) * f, Main.hud_font)
 
 		# Compute num bullets
 
-		Overlays.add_text2D("Bullets: %d" % (aircraft.get_num_bullets()), hg.Vec2(0.05, 0.94), 0.016, hg.Color.White * f, Main.hud_font)
-		Overlays.add_text2D("Heading: %d" % (aircraft.get_heading()), hg.Vec2(0.49, 0.96), 0.016, hg.Color.White * f, Main.hud_font)
+		Overlays.add_text2D("Bullets: %d" % (aircraft.get_num_bullets()), hg.Vec2(0.05, 0.89), 0.016, hg.Color.White * f, Main.hud_font)
+		Overlays.add_text2D("Heading: %d" % (aircraft.get_heading()), hg.Vec2(0.49, 0.93), 0.016, hg.Color.White * f, Main.hud_font)
 
 		iactrl = aircraft.get_device("IAControlDevice")
 		if iactrl.is_activated():
 			c = hg.Color.Orange
 		else:
 			c = HUD.color_inactive
-		Overlays.add_text2D("IA Activated", hg.Vec2(0.45, 0.94), 0.015, c * f, Main.hud_font)
+		Overlays.add_text2D("IA Activated", hg.Vec2(0.45, 0.91), 0.015, c * f, Main.hud_font)
 
 		# Gear HUD
 		gear = aircraft.get_device("Gear")
@@ -312,9 +312,9 @@ class HUD_Aircraft:
 			else:
 				gst = "RETRACTED"
 				c = HUD.color_inactive
-			Overlays.add_text2D("GEAR " + gst, hg.Vec2(0.52, 0.94), 0.015, c * f, Main.hud_font)
+			Overlays.add_text2D("GEAR " + gst, hg.Vec2(0.52, 0.91), 0.015, c * f, Main.hud_font)
 		else:
-			Overlays.add_text2D("No gear installed", hg.Vec2(0.52, 0.94), 0.015, HUD.color_inactive * f, Main.hud_font)
+			Overlays.add_text2D("No gear installed", hg.Vec2(0.52, 0.91), 0.015, HUD.color_inactive * f, Main.hud_font)
 
 		flag_internal_physics = not aircraft.get_custom_physics_mode()
 
