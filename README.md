@@ -18,6 +18,7 @@ Air to air combat sandbox, created in Python 3 using the [HARFANG 3D 2 framework
   - [Commons Views commands](#commons-views-commands)
   - [Aircrafts views commands](#aircrafts-views-commands)
   - [FPS camera views commands](#fps-camera-views-commands)
+  - [Debug views commands](documentation_debug.md)
   - [Supported control devices](#supported-control-devices)
   - [How to configure input devices](#how-to-configure-input-devices)
     - [Devices configuration](#devices-configuration)
