@@ -310,7 +310,7 @@ _How to cite this publication:_
 
 Air to air combat sandbox, created in Python 3 using the HARFANG 3D 2 framework. This project provides a rich environment for air combat simulation and has been utilized in advanced research projects, including the latest in reinforcement learning strategies for unmanned combat aerial vehicles (UCAV), developed at a leading Chinese university. For more on this innovative approach, [see the HIRL4UCAV project on GitHub](https://github.com/zrc0622/HIRL4UCAV).
 
-### Further Reading
+### :orange_book: Further Reading
 
 For a complete list of academic publications and citations related to the Dogfight Sandbox, refer to [Academic References](academic_references.md).
 
