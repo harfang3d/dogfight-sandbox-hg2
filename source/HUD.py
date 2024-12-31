@@ -312,7 +312,7 @@ class HUD_Aircraft:
 			else:
 				gst = "RETRACTED"
 				c = HUD.color_inactive
-			Overlays.add_text2D("GEAR " + gst, hg.Vec2(0.52, 0.91), 0.015, c * f, Main.hud_font)
+			Overlays.add_text2D("GEAR " + gst, hg.Vec2(0.55, 0.91), 0.015, c * f, Main.hud_font)
 		else:
 			Overlays.add_text2D("No gear installed", hg.Vec2(0.52, 0.91), 0.015, HUD.color_inactive * f, Main.hud_font)
 
