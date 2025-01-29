@@ -314,3 +314,21 @@ Air to air combat sandbox, created in Python 3 using the HARFANG 3D 2 framework.
 
 For a complete list of academic publications and citations related to the Dogfight Sandbox, refer to [Academic References](academic_references.md).
 
+### An Imitative Reinforcement Learning Framework for Autonomous Dogfight
+
+(Siyuan Li, Rongchang Zuo, Peng Liu, Yingnan Zhao)
+
+[An Imitative Reinforcement Learning Framework for Autonomous Dogfight]((https://arxiv.org/abs/2406.11562))
+
+_How to cite this publication:_
+
+```
+@misc{2406.11562,
+  Author = {Siyuan Li, Rongchang Zuo, Peng Liu, Yingnan Zhao}
+  Title = {An Imitative Reinforcement Learning Framework for Autonomous Dogfight}
+  publisher = {arXiv},
+  doi = {10.48550/ARXIV.2406.11562},
+  Year = {2024},
+  Eprint = {arXiv:2406.11562},  
+}
+```
