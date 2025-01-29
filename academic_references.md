@@ -1,7 +1,7 @@
 ## Publications, Citations, and Research Projects
 
 ### An Imitative Reinforcement Learning Framework for Autonomous Dogfight
-Siyuan Li, Rongchang Zuo, Peng Liu, Yingnan Zhao
+Li, S., Zuo, R., Liu, P., Zhao, Y. (2024).
 *An Imitative Reinforcement Learning Framework for Autonomous Dogfight*
 **arXiv.**  
 DOI: [10.48850/arXiv.2406.11562](https://doi.org/10.48550/arXiv.2406.11562)
