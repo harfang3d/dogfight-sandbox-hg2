@@ -318,7 +318,7 @@ For a complete list of academic publications and citations related to the Dogfig
 
 (Siyuan Li, Rongchang Zuo, Peng Liu, Yingnan Zhao)
 
-[An Imitative Reinforcement Learning Framework for Autonomous Dogfight]((https://arxiv.org/abs/2406.11562))
+[An Imitative Reinforcement Learning Framework for Autonomous Dogfight](https://arxiv.org/abs/2406.11562)
 
 _How to cite this publication:_
 
