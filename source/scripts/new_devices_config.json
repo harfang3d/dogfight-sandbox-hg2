@@ -1,4 +1,142 @@
 {
+    "Wireless Xbox Controller": {
+        "GA_LeftX": {
+            "type": "axis",
+            "name": "Left pad horizontal",
+            "reset": "true",
+            "invert": "false",
+            "id": 0,
+            "min": -1,
+            "max": 1,
+            "zero": -0.0156,
+            "zero_epsilon": 0.01
+        },
+        "GA_LeftY": {
+            "type": "axis",
+            "name": "Left pad vertical",
+            "reset": "true",
+            "invert": "true",
+            "id": 1,
+            "min": -1,
+            "max": 1,
+            "zero": -0.0156,
+            "zero_epsilon": 0.01
+        },
+        "GA_RightX": {
+            "type": "axis",
+            "name": "Right pad horizontal",
+            "reset": "true",
+            "invert": "false",
+            "id": 2,
+            "min": -1,
+            "max": 1,
+            "zero": -0.007797,
+            "zero_epsilon": 0.01
+        },
+        "GA_RightY": {
+            "type": "axis",
+            "name": "Right pad vertical",
+            "reset": "true",
+            "invert": "false",
+            "id": 3,
+            "min": -1,
+            "max": 1,
+            "zero": -0.007797,
+            "zero_epsilon": 0.01
+        },
+        "GA_LeftTrigger": {
+            "type": "axis",
+            "name": "Left Trigger",
+            "reset": "true",
+            "invert": "false",
+            "id": 4,
+            "min": -1,
+            "max": 1,
+            "zero": -1,
+            "zero_epsilon": 0.01
+        },
+        "GA_RightTrigger": {
+            "type": "axis",
+            "name": "Right Trigger",
+            "reset": "true",
+            "invert": "false",
+            "id": 5,
+            "min": -1,
+            "max": 1,
+            "zero": -1,
+            "zero_epsilon": 0.01
+        },
+        "GB_ButtonA": {
+            "type": "button",
+            "id": 0,
+            "name": "A"
+        },
+        "GB_ButtonB": {
+            "type": "button",
+            "id": 1,
+            "name": "B"
+        },
+        "GB_ButtonX": {
+            "type": "button",
+            "id": 2,
+            "name": "X"
+        },
+        "GB_ButtonY": {
+            "type": "button",
+            "id": 3,
+            "name": "Y"
+        },
+        "GB_LeftBumper": {
+            "type": "button",
+            "id": 4,
+            "name": "Left bumper"
+        },
+        "GB_RightBumper": {
+            "type": "button",
+            "id": 5,
+            "name": "Right bumper"
+        },
+        "GB_Back": {
+            "type": "button",
+            "id": 6,
+            "name": "Back"
+        },
+        "GB_Start": {
+            "type": "button",
+            "id": 7,
+            "name": "Start"
+        },
+        "GB_LeftThumb": {
+            "type": "button",
+            "id": 8,
+            "name": "Left Thumb"
+        },
+        "GB_RightThumb": {
+            "type": "button",
+            "id": 9,
+            "name": "Right Thumb"
+        },
+        "GB_DPadUp": {
+            "type": "button",
+            "id": 10,
+            "name": " Cross Up"
+        },
+        "GB_DPadRight": {
+            "type": "button",
+            "id": 11,
+            "name": "Cross Right"
+        },
+        "GB_DPadDown": {
+            "type": "button",
+            "id": 12,
+            "name": "Cross Down"
+        },
+        "GB_DPadLeft": {
+            "type": "button",
+            "id": 13,
+            "name": "Cross Left"
+        }
+    },
     "Xbox Controller": {
         "GA_LeftX": {
             "type": "axis",

@@ -3,6 +3,9 @@
 		"Keyboard":{
 			"ACTIVATE_USER_CONTROL": "K_U"
 		},
+		"Wireless Xbox Controller":{
+			"ACTIVATE_USER_CONTROL": "GB_RightThumb"
+		},
 		"Xbox Controller":{
 			"ACTIVATE_USER_CONTROL": "GB_RightThumb"
 		},

@@ -56,6 +56,28 @@
 			"FIRE_MISSILE": "K_F1",
 			"REARM": "K_F5"
 		},
+		"Wireless Xbox Controller":{
+			"SWITCH_ACTIVATION": "",
+			"NEXT_PILOT": "",
+			"INCREASE_HEALTH_LEVEL": "",
+			"DECREASE_HEALTH_LEVEL": "",
+			"SET_THRUST_LEVEL": "GA_LeftY",
+			"INCREASE_BRAKE_LEVEL": "GB_DPadUp",
+			"DECREASE_BRAKE_LEVEL": "GB_DPadDown",
+			"INCREASE_FLAPS_LEVEL": "GB_DPadRight",
+			"DECREASE_FLAPS_LEVEL": "GB_DPadLeft",
+			"SET_ROLL": "GA_RightX",
+			"SET_PITCH": "GA_RightY",
+			"SET_YAW": "GA_LeftX",
+			"SWITCH_POST_COMBUSTION": "GB_ButtonB",
+			"NEXT_TARGET": "GB_ButtonY",
+			"SWITCH_GEAR": "GB_Back",
+			"ACTIVATE_IA": "GB_LeftThumb",
+			"ACTIVATE_AUTOPILOT": "",
+			"SWITCH_EASY_STEERING": "",
+			"FIRE_MACHINE_GUN": "GB_ButtonA",
+			"FIRE_MISSILE" : "GB_ButtonX"
+		},
 		"Xbox Controller":{
 			"SWITCH_ACTIVATION": "",
 			"NEXT_PILOT": "",

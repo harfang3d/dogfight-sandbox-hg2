@@ -18,6 +18,15 @@
 			"FIRE_MISSILE" : "K_F1",
 			"REARM" : "K_F5"
 		},
+		"Wireless Xbox Controller":{
+			"SWITCH_ACTIVATION": "",
+			"NEXT_PILOT": "",
+			"INCREASE_HEALTH_LEVEL": "",
+			"DECREASE_HEALTH_LEVEL": "",
+			"NEXT_TARGET": "GB_ButtonY",
+			"FIRE_MISSILE" : "GB_ButtonX",
+			"REARM" : ""
+		},
 		"Xbox Controller":{
 			"SWITCH_ACTIVATION": "",
 			"NEXT_PILOT": "",
