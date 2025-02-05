@@ -9,6 +9,15 @@
 			"FIRE_MISSILE" : "LA3B_BottomHead",
 			"REARM" : ""
 		},
+		"Extreme 3D pro":{
+			"SWITCH_ACTIVATION": "",
+			"NEXT_PILOT": "",
+			"INCREASE_HEALTH_LEVEL": "",
+			"DECREASE_HEALTH_LEVEL": "",
+			"NEXT_TARGET": "LA3B_TopHead",
+			"FIRE_MISSILE" : "LA3B_BottomHead",
+			"REARM" : ""
+		},
 		"Keyboard":{
 			"SWITCH_ACTIVATION": "",
 			"NEXT_PILOT": "",

@@ -194,6 +194,7 @@ The "Network" mode allows you to control the planes from a third party machine.
 * Keyboard
 * XBox gamepad or any compatible model
 * Logitech "Attack 3" Joystick
+* Logitech "Extreme 3D pro" Joystick
 
 ## How to configure input devices
 

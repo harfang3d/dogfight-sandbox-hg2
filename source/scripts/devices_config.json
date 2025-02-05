@@ -365,6 +365,107 @@
             "name": "Right Top"
         }
     },
+    "Extreme 3D pro": {
+        "LA3A_AxisX": {
+            "type": "axis",
+            "name": "Axis Horizontal",
+            "reset": "true",
+            "invert": "false",
+            "id": 0,
+            "min": -1,
+            "max": 1,
+            "zero": 0,
+            "zero_epsilon": 0.01
+        },
+        "LA3A_AxisY": {
+            "type": "axis",
+            "name": "Axis Vertical",
+            "reset": "true",
+            "invert": "false",
+            "id": 1,
+            "min": -1,
+            "max": 1,
+            "zero": 0,
+            "zero_epsilon": 0.01
+        },
+        "LA3A_Throttle": {
+            "type": "axis",
+            "reset": "false",
+            "name": "Throttle",
+            "invert": "true",
+            "id": 3,
+            "min": -1,
+            "max": 1,
+            "zero": -1,
+            "zero_epsilon": 0.01
+        },
+        "LA3A_Cursor" : {
+            "type": "axis",
+            "reset": "false",
+            "name": "Cursor",
+            "invert": "false",
+            "id": 3,
+            "min": -1,
+            "max": 1,
+            "zero": -1,
+            "zero_epsilon": 0.01
+        },
+        "LA3B_Trigger": {
+            "type": "button",
+            "id": 0,
+            "name": "Trigger"
+        },
+        "LA3B_BottomHead": {
+            "type": "button",
+            "id": 1,
+            "name": "Bottom Head"
+        },
+        "LA3B_TopHead": {
+            "type": "button",
+            "id": 2,
+            "name": "Top Head"
+        },
+        "LA3B_LeftHead": {
+            "type": "button",
+            "id": 3,
+            "name": "Left Head"
+        },
+        "LA3B_RightHead": {
+            "type": "button",
+            "id": 4,
+            "name": "Right Head"
+        },
+        "LA3B_LeftTop": {
+            "type": "button",
+            "id": 5,
+            "name": "Left Top"
+        },
+        "LA3B_LeftBottom": {
+            "type": "button",
+            "id": 6,
+            "name": "Left Bottom"
+        },
+        "LA3B_MiddleLeft": {
+            "type": "button",
+            "id": 7,
+            "name": "Middle Left"
+        },
+        "LA3B_MiddleRight": {
+            "type": "button",
+            "id": 8,
+            "name": "Middle Right"
+        },
+        "LA3B_RightBottom": {
+            "type": "button",
+            "id": 9,
+            "name": "Right Bottom"
+        },
+        "LA3B_RightTop": {
+            "type": "button",
+            "id": 10,
+            "name": "Right Top"
+        }
+    },
     "Wired Gamepad": {
         "WGPB_1": {
             "type": "button",
