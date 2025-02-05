@@ -13,13 +13,17 @@
 		{
 			"ACTIVATE_USER_CONTROL": "LA3B_TopHead"
 		},
+		"Extreme 3D pro":
+		{
+			"ACTIVATE_USER_CONTROL": ""
+		},
 		"Wired Gamepad":
 		{
 			"ACTIVATE_USER_CONTROL": "WGPB_RThumb"
 		},
 		"USB Game Controllers":
 		{
-			"ACTIVATE_USER_CONTROL": ""
+			"ACTIVATE_USER_CONTROL": "LA3B_TopHead"
 		}
 	}
 }
