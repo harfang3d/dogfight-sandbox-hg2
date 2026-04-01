@@ -9,6 +9,7 @@ from Machines import *
 from overlays import *
 import math
 import Physics
+from carrier_deck_data import build_api_carrier_deck_payload, build_local_carrier_deck_data
 
 main = None
 dogfight_network_port = 50888
@@ -114,7 +115,11 @@ def init_server(main_):
 
 		# Missile launchers
 		"GET_MISSILE_LAUNCHERS_LIST": get_missile_launchers_list,
-		"GET_MISSILE_LAUNCHER_STATE": get_missile_launcher_state
+		"GET_MISSILE_LAUNCHER_STATE": get_missile_launcher_state,
+
+		# Carriers
+		"GET_CARRIERS_LIST": get_carriers_list,
+		"GET_CARRIER_DECK_PARAMETERS": get_carrier_deck_parameters
 	}
 	server_log = ""
 	msg = "Hostname: %s, IP: %s, port: %d" % (socket_lib.hostname, socket_lib.HOST, dogfight_network_port)
@@ -617,6 +622,56 @@ def compute_next_timestep_physics(args):
 		print(args["machine_id"])
 		print(str(physics_parameters))
 	socket_lib.send_message(str.encode(json.dumps(physics_parameters)))
+
+
+def get_runtime_carriers():
+	return main.aircraft_carrier_allies + main.aircraft_carrier_ennemies
+
+
+def get_carrier_by_name(carrier_id):
+	for carrier in get_runtime_carriers():
+		if carrier.name == carrier_id:
+			return carrier
+	return None
+
+
+def vec3_to_list(vec):
+	return [vec.x, vec.y, vec.z]
+
+
+def get_carriers_list(args):
+	carriers = []
+	print("Get carriers list")
+	for carrier in get_runtime_carriers():
+		print(carrier.name)
+		carriers.append(carrier.name)
+	socket_lib.send_message(str.encode(json.dumps(carriers)))
+
+
+def get_carrier_deck_parameters(args):
+	carrier_id = args["carrier_id"]
+	carrier = get_carrier_by_name(carrier_id)
+	if carrier is None:
+		socket_lib.send_message(str.encode(json.dumps({"error": "Carrier not found", "carrier_id": carrier_id})))
+		return
+
+	mat = carrier.get_parent_node().GetTransform().GetWorld()
+	state = build_api_carrier_deck_payload(
+		carrier.name,
+		carrier.nationality,
+		vec3_to_list(hg.GetT(mat)),
+		{
+			"x": vec3_to_list(hg.GetX(mat)),
+			"y": vec3_to_list(hg.GetY(mat)),
+			"z": vec3_to_list(hg.GetZ(mat)),
+		},
+		build_local_carrier_deck_data(),
+	)
+
+	if flag_print_log:
+		print(carrier_id)
+		print(str(state))
+	socket_lib.send_message(str.encode(json.dumps(state)))
 
 # Aircraft
 

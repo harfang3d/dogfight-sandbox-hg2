@@ -14,6 +14,7 @@ Air to air combat sandbox, created in Python 3 using the [HARFANG 3D 2 framework
     - [Events](#events)
   - [Network mode overview](#network-mode-overview)
     - [Startup](#startup)
+  - [Carrier Landing RL Research](#carrier-landing-rl-research)
   - [Aircraft keyboard Commands](#aircraft-keyboard-commands)
   - [Commons Views commands](#commons-views-commands)
   - [Aircrafts views commands](#aircrafts-views-commands)
@@ -125,6 +126,14 @@ The "Network" mode allows you to control the planes from a third party machine.
     * Enter the server ids in the "df.connect ()" function.  
     ![ServerID](screenshots/server_ids_client.png)
     * Start the file `client_sample.py`
+
+## Carrier Landing RL Research
+
+This repository can also be used as a research sandbox for static-deck carrier landing tasks.
+
+* Research guide and RL task specification: [documentation_carrier_rl_landing.md](documentation_carrier_rl_landing.md)
+* Carrier deck parameter exporter: `python source/scripts/export_carrier_deck_parameters.py`
+* Generated baseline deck metadata: [source/scripts/aircraft_carrier_deck_parameters.json](source/scripts/aircraft_carrier_deck_parameters.json)
 
 ## Aircraft keyboard Commands  
 

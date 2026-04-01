@@ -88,3 +88,15 @@ The "Network" mode allows you to control the planes from a third party machine o
 
 * list = **get_missile_launchers_list**()
 * dict = **get_missile_launcher_state**(string machine_id)
+
+### Carriers functions
+
+* list = **get_carriers_list**()
+* dict = **get_carrier_deck_parameters**(string carrier_id)
+
+`get_carrier_deck_parameters` returns:
+
+* `carrier_id`, `type`, `nationality`
+* `frame`: carrier world origin and world-space basis vectors
+* `local`: the same carrier-local deck metadata exported by `source/scripts/export_carrier_deck_parameters.py`
+* `world`: carrier-local anchors transformed into world space for the selected runtime carrier instance

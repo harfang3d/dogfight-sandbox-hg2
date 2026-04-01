@@ -1,0 +1,217 @@
+{
+  "export_version": 1,
+  "generated_from": {
+    "scene_asset": "source/assets/machines/aircraft_carrier_blend/aircraft_carrier_blend.scn",
+    "collision_geometry": [
+      "source/assets/machines/aircraft_carrier_blend/carrier_col_shape.geo",
+      "source/assets/machines/aircraft_carrier_blend/carrier_col_shape.001.geo",
+      "source/assets/machines/aircraft_carrier_blend/carrier_col_shape.002.geo"
+    ],
+    "notes": [
+      "Collision extents mirror runtime setup in source/Machines.py.",
+      "The exporter uses raw collision cube sizes and scene positions/rotations.",
+      "The source node 0.1 scale is intentionally ignored because runtime collision boxes are unscaled."
+    ]
+  },
+  "carrier_frame": {
+    "origin_local_m": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "axes": {
+      "+X": "starboard/right",
+      "+Y": "up",
+      "+Z": "ship-forward"
+    }
+  },
+  "collision_bounds_local": {
+    "min_m": [
+      -42.070335,
+      13.2988,
+      -121.515169
+    ],
+    "max_m": [
+      38.663691,
+      17.598809,
+      152.304808
+    ],
+    "size_m": [
+      80.734026,
+      4.300009,
+      273.819977
+    ]
+  },
+  "deck_top_y_m": 17.598809,
+  "aircraft_start_points": [
+    {
+      "name": "carrier_aircraft_start_point.001",
+      "local_position_m": [
+        10.0,
+        17.5,
+        40.0
+      ],
+      "local_yaw_deg": 0.0
+    },
+    {
+      "name": "carrier_aircraft_start_point.002",
+      "local_position_m": [
+        -23.519365,
+        17.36128,
+        -19.880642
+      ],
+      "local_yaw_deg": 6.056515
+    }
+  ],
+  "landing_point": {
+    "name": "landing_point.001",
+    "local_position_m": [
+      5.659461,
+      17.4,
+      -119.564606
+    ],
+    "local_yaw_deg": -9.999996
+  },
+  "approach_profile": {
+    "horizontal_amplitude_m": 6000.0,
+    "vertical_amplitude_m": 500.0,
+    "smooth_level": 5,
+    "approach_entry_local_m": [
+      1047.548134,
+      517.4,
+      -6028.411193
+    ]
+  },
+  "landing_vectors": {
+    "approach_vector_xz": [
+      0.173648,
+      -0.984808
+    ],
+    "rollout_vector_xz": [
+      -0.173648,
+      0.984808
+    ]
+  },
+  "recommended_landing_corridor": {
+    "centerline_anchor_local_m": [
+      5.659461,
+      17.4,
+      -119.564606
+    ],
+    "rollout_axis_xz": [
+      -0.173648,
+      0.984808
+    ],
+    "lateral_axis_xz": [
+      0.984808,
+      0.173648
+    ],
+    "lateral_half_width_m": 12.0,
+    "aft_margin_m": 5.0,
+    "forward_rollout_limit_m": 140.0,
+    "projected_rollout_bounds_on_collision_aabb_m": {
+      "min": -7.652052,
+      "max": 276.027298
+    },
+    "corners_local_m": [
+      [
+        -5.289991,
+        17.598809,
+        -126.572422
+      ],
+      [
+        18.345395,
+        17.598809,
+        -122.404867
+      ],
+      [
+        -6.833581,
+        17.598809,
+        20.392259
+      ],
+      [
+        -30.468967,
+        17.598809,
+        16.224704
+      ]
+    ]
+  },
+  "rl_landing_spec": {
+    "baseline_vehicle": "Rafale",
+    "observation_source": [
+      "Existing plane state from the network API",
+      "Offline deck metadata from this JSON file"
+    ],
+    "action_space": [
+      "pitch",
+      "roll",
+      "yaw",
+      "thrust"
+    ],
+    "configuration_policy": {
+      "auto_deploy_gear_below_along_track_m": 1200.0,
+      "auto_set_flaps_to_landing_below_along_track_m": 1500.0,
+      "auto_apply_brakes_after_valid_wheel_contact": true
+    },
+    "reset_distribution": {
+      "along_track_behind_touchdown_m": [
+        1500.0,
+        3000.0
+      ],
+      "cross_track_error_m": [
+        -60.0,
+        60.0
+      ],
+      "heading_error_deg": [
+        -8.0,
+        8.0
+      ],
+      "altitude_error_relative_to_glide_path_m": [
+        -25.0,
+        25.0
+      ],
+      "forward_speed_mps": [
+        72.0,
+        82.0
+      ]
+    },
+    "success_criteria": {
+      "touchdown_inside_valid_corridor": true,
+      "touchdown_sink_rate_mps_max": 4.0,
+      "absolute_roll_deg_max": 10.0,
+      "absolute_pitch_deg_max": 15.0,
+      "full_stop_inside_corridor_within_s": 20.0
+    },
+    "failure_criteria": {
+      "water_collision_or_crash_or_deck_miss": true,
+      "first_wheel_contact_outside_corridor": true,
+      "max_distance_past_touchdown_without_wheel_contact_m": 50.0,
+      "episode_timeout_s": 90.0
+    },
+    "reward_defaults": {
+      "per_step": [
+        "-0.002*abs(cross_track_m)",
+        "-0.002*abs(alt_error_m)",
+        "-0.25*(abs(heading_error_deg)/45)",
+        "-0.01*max(0, abs(sink_rate_mps)-4)",
+        "-0.002*abs(speed_mps-78)"
+      ],
+      "near_approach_gate_bonus": {
+        "reward": 25.0,
+        "conditions": {
+          "along_track_m_lt": 500.0,
+          "cross_track_m_abs_lt": 10.0,
+          "alt_error_m_abs_lt": 10.0,
+          "heading_error_deg_abs_lt": 5.0
+        }
+      },
+      "valid_touchdown_bonus": 100.0,
+      "valid_full_stop_bonus": 150.0,
+      "failure_penalty": -100.0
+    },
+    "scope_notes": [
+      "Static deck only in phase 1.",
+      "No arresting wire, catapult, sea-state, or real-carrier calibration."
+    ]
+  }
+}

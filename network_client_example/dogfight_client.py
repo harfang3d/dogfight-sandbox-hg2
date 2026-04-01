@@ -209,6 +209,17 @@ def compute_next_timestep_physics(machine_id, timestep):
 	state = json.loads((socket_lib.get_answer()).decode())
 	return state
 
+
+def get_carriers_list():
+	socket_lib.send_message(str.encode(json.dumps({"command": "GET_CARRIERS_LIST", "args": {}})))
+	return json.loads((socket_lib.get_answer()).decode())
+
+
+def get_carrier_deck_parameters(carrier_id):
+	socket_lib.send_message(str.encode(json.dumps({"command": "GET_CARRIER_DECK_PARAMETERS", "args": {"carrier_id": carrier_id}})))
+	return json.loads((socket_lib.get_answer()).decode())
+
+
 # Aircrafts
 
 def get_planes_list():
