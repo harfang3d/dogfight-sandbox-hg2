@@ -8,6 +8,7 @@ Air to air combat sandbox, created in Python 3 using the [HARFANG 3D 2 framework
   - [How to run the Dogfight Sandbox](#how-to-run-the-dogfight-sandbox)
     - [Using the official release](#using-the-official-release)
     - [Using the cloned repository](#using-the-cloned-repository)
+    - [Running on macOS (Apple Silicon)](#running-on-macos-apple-silicon)
   - [About VR mode](#about-vr-mode)
   - [Recorder API overview](#recorder-api-overview)
     - [Replay](#replay)
@@ -61,6 +62,24 @@ The source code and the graphics assets are made available for studying purpose.
 2. open a cmd line, enter the `source` folder (`cd source`) and run `python main.py`
    1. or run `start.bat` or `1-start.bat`
    2. or, in **VSCode** press `CTRL-F5`
+
+### Running on macOS (Apple Silicon)
+
+PyPI has no macOS wheel for `harfang`, so the module is built from source. On macOS the sandbox always renders with **Metal**; `"OpenGL": true` in **config.json** is ignored because the GL shaders do not compile on macOS's OpenGL 4.1, and VR is unavailable.
+
+1. Install the Xcode command line tools, `cmake` and `ninja` (e.g. `brew install cmake ninja`)
+2. From the repository root, build HARFANG 3.2.7 into a venv (about 5 minutes):
+   ```sh
+   tools/build_harfang_macos.sh harfang-build venv
+   ```
+   The script clones harfang3d with its submodules, applies the macOS fixes from [harfang3d#59](https://github.com/harfang3d/harfang3d/pull/59), builds the CPython module and `assetc`, and installs them into `venv`.
+3. Run the sandbox:
+   ```sh
+   cd source
+   ../venv/bin/python main.py
+   ```
+
+The first start compiles all assets for Metal. Expect around 50 minutes: two 2048×2048 BC7 textures of the MIUS take most of that, because the BC7 encoder has no SIMD path on arm64. Later starts only recompile changed assets.
 
 ## About VR mode
 

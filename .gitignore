@@ -4,3 +4,5 @@
 /.vscode
 /bin_
 /source/database.db
+/harfang-build
+/venv
