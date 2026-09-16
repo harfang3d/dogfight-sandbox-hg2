@@ -1,3 +1,4 @@
+import os
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -5,6 +6,8 @@ import torch.nn.functional as F
 import torchvision.transforms as T
 import numpy as np
 from ReplayMemory import *
+
+NNS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'NNs')
 
 def soft_update(target, source, tau):
     for target_param, param in zip(target.parameters(), source.parameters()):
@@ -95,10 +98,10 @@ class Critic(nn.Module):
         return Q1
     
     def saveCheckpoint(self,ajan):
-        torch.save(self.state_dict(),'.\\NNs\\{}'.format(ajan) + self.name)
+        torch.save(self.state_dict(), os.path.join(NNS_DIR, ajan + self.name))
         
     def loadCheckpoint(self,ajan):
-        self.load_state_dict(torch.load('.\\NNs\\{}'.format(ajan)  + self.name))
+        self.load_state_dict(torch.load(os.path.join(NNS_DIR, ajan + self.name), map_location=self.device))
             
 class Actor(nn.Module):
     def __init__(self, lr, stateDim, nActions, full1Dim, full2Dim, layerNorm, name):
@@ -138,10 +141,10 @@ class Actor(nn.Module):
         return torch.tanh(self.final(x))
     
     def saveCheckpoint(self,ajan):
-        torch.save(self.state_dict(),'.\\NNs\\{}'.format(ajan)  + self.name)
+        torch.save(self.state_dict(), os.path.join(NNS_DIR, ajan + self.name))
         
     def loadCheckpoint(self,ajan):
-        self.load_state_dict(torch.load('.\\NNs\\{}'.format(ajan) + self.name))
+        self.load_state_dict(torch.load(os.path.join(NNS_DIR, ajan + self.name), map_location=self.device))
     
 class Agent(nn.Module):
     def __init__(self, actorLR, criticLR, stateDim, actionDim,full1Dim,full2Dim, tau, gamma, bufferSize, batchSize,\

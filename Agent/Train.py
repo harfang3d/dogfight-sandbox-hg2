@@ -10,7 +10,10 @@ from statistics import mean
 from HarfangEnv_GYM import *
 import dogfight_client as df
 
-df.connect("192.168.1.28", 50888) #TODO:Change IP and PORT values
+# Address of the sandbox in NETWORK MODE: python Train.py [HOST] [PORT]
+host = sys.argv[1] if len(sys.argv) > 1 else "127.0.0.1"
+port = int(sys.argv[2]) if len(sys.argv) > 2 else 50888
+df.connect(host, port)
 
 start = time.time() #STARTING TIME
 df.disable_log() 
@@ -20,13 +23,11 @@ trainingEpisodes = 1000000
 validationEpisodes =30
 explorationEpisodes = 200
 
-Test = True
-if Test:
-    render = False
-else:
-    render = True
+Test = True # False to train, True to evaluate the saved checkpoints
+# Train without rendering; render while testing so the policy can be watched.
+renderless = not Test
     
-df.set_renderless_mode(render)
+df.set_renderless_mode(renderless)
 df.set_client_update_mode(True)
 
 bufferSize = (10**6)
