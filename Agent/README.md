@@ -11,17 +11,20 @@ Use pip to install the requirements.
 ~~~bash
 pip install -r requirements.txt
 ~~~
-3. Change IP and PORT
+3. Start the Sandbox
 --------------------------------------------------------------------------------
-Change IP and PORT values from Train.py file
+Start the Sandbox and choose the NETWORK MODE mission. Note the IP and port it displays.
 
 4. Run
 --------------------------------------------------------------------------------
-Run Train.py file
+Run Train.py with the Sandbox address (defaults: 127.0.0.1 50888)
+~~~bash
+python Train.py <IP> <PORT>
+~~~
 
 
 ## Train 
 
-If you want to train your agent, change line 24 at Train.py file.
+If you want to train your agent, set `Test = False` in Train.py.
 
   
