@@ -51,6 +51,17 @@ if Main.flag_vr:
     Main.resolution.x = 256
     Main.resolution.y = 256
 
+# --------------- macOS: the GL shaders fail to compile on its OpenGL 4.1 core profile, so use Metal
+if sys.platform == "darwin":
+    if Main.flag_OpenGL:
+        print("WARNING - OpenGL is not supported on macOS - using Metal")
+        Main.flag_OpenGL = False
+    if Main.flag_vr:
+        print("WARNING - VR mode only available under DirectX on Windows - VR is turned to OFF")
+        Main.flag_vr = False
+        Main.resolution.x = script_parameters["Resolution"][0]
+        Main.resolution.y = script_parameters["Resolution"][1]
+
 # --------------- VR mode only under DirectX
 if Main.flag_OpenGL:
     if Main.flag_vr:
@@ -63,6 +74,8 @@ if sys.platform == "linux" or sys.platform == "linux2":
     # assetc_cmd = [path.join(getcwd(), "../", "bin", "harfang", "bin", "assetc", "assetc"), "assets", "-quiet", "-progress"]
     # dc.run_command(assetc_cmd)
     harfang.bin.assetc('assets', '-api', 'GL')
+elif sys.platform == "darwin":
+    harfang.bin.assetc('assets', '-api', 'MTL')
 else:
     if Main.flag_OpenGL:
         # dc.run_command("../bin/harfang/bin/assetc/assetc assets -api GL -quiet -progress")
